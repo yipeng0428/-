@@ -1,0 +1,2535 @@
+{
+  "checks": [
+    {
+      "name": "inline JavaScript parses",
+      "ok": true,
+      "detail": {
+        "blocks": 186
+      }
+    },
+    {
+      "name": "offline startup has no uncaught errors",
+      "ok": true
+    },
+    {
+      "name": "canonical build and rule registry",
+      "ok": true,
+      "detail": {
+        "build": {
+          "version": "v237.1",
+          "display": "V237.1 · 四余三历元链 / 安全稳定修订版",
+          "build": "v237.1-stability-r1 · 2026-10-06",
+          "baseline": "v237",
+          "edition": "stability",
+          "stableFallback": "v218",
+          "architecture": "runtime-lite"
+        },
+        "footer": "版本 · V237.1 · 四余三历元链 / 安全稳定修订版",
+        "nav": 4098.399999999907,
+        "engines": [
+          "time.legacy",
+          "bazi.legacy",
+          "qimen.legacy",
+          "ziwei.legacy",
+          "meihua.legacy",
+          "tianji.legacy-all",
+          "time.context.v1",
+          "calendar.solar-term.v1",
+          "calendar.verify.lunar-js.v1",
+          "bazi.core.v1",
+          "bazi.verify.v84.v1",
+          "bazi.verify.mystilight.v1",
+          "ziwei.core.v1",
+          "ziwei.verify.v84.v1",
+          "ziwei.verify.iztro.v1",
+          "ziwei.core.v1.1",
+          "ziwei.core.v1.2",
+          "ziwei.core.v1.3",
+          "ziwei.core.v1.4",
+          "ziwei.core.v1.5",
+          "ziwei.core.v1.6",
+          "ziwei.core.v1.7",
+          "ziwei.core.v1.8",
+          "ziwei.core.v1.9",
+          "ziwei.core.v1.10",
+          "ziwei.core.v1.11",
+          "ziwei.core.v1.12",
+          "ziwei.core.v1.13",
+          "ziwei.core.v1.14",
+          "ziwei.core.v1.15",
+          "ziwei.core.v1.16",
+          "qimen.core.v1",
+          "qimen.verify.v84.v1",
+          "qimen.verify.mingpan.v1",
+          "qimen.core.v2",
+          "qimen.period.v1",
+          "meihua.core.v1",
+          "meihua.verify.v1",
+          "zeri.core.v1",
+          "zeri.verify.v1",
+          "qimen.crosscheck.v1",
+          "time.historical.v2",
+          "qimen.external.evidence.v2",
+          "qimen.doctrine.registry.v1",
+          "qimen.day.doctrine.v1",
+          "qizheng.foundation.v1",
+          "qizheng.ephemeris.astronomy-engine.v1",
+          "qizheng.ephemeris.adoption.v1",
+          "qizheng.vendor-cache.v1",
+          "qizheng.residual.epoch.v1",
+          "qizheng.xiu.frame.v1",
+          "qizheng.absolute-zero.v1",
+          "qizheng.residual.provider.v1",
+          "qizheng.life.rulepack.v1",
+          "qizheng.strength.rulepack.v1",
+          "qizheng.dongwei.preflight.v1",
+          "qizheng.liangtianchi.v1",
+          "qizheng.liangtianchi.grid.v2",
+          "qizheng.residual.drift-audit.v1"
+        ],
+        "rules": [
+          "qimen.day.classic-three-day-door",
+          "qizheng.ephemeris.adoption.gate.v1",
+          "qizheng.residual.mean-rates.v1",
+          "qizheng.life.gong-du-zhu.v1",
+          "qizheng.strength.rulepack.v1",
+          "qizheng.dongwei.preflight.v1",
+          "qizheng.liangtianchi.calibration.v1",
+          "qizheng.liangtianchi.grid.v2",
+          "qizheng.residual.long-baseline.v1"
+        ]
+      }
+    },
+    {
+      "name": "V237 and corrected V228 self-tests",
+      "ok": true,
+      "detail": {
+        "stats": {
+          "elapsedDays": 70884.352419,
+          "elapsedYears": 194.074765,
+          "meanAbsModernDeg": 22.235365,
+          "maxAbsModernDeg": 39.521365,
+          "nodeOppositionEpochErrorTraditional": 1.515e-06,
+          "decision": "KEEP_WANLI_PROVIDER",
+          "reason": "cross-source long-baseline residual is material; use Dàtǒng chain as audit evidence, not silent production recalibration"
+        },
+        "chain": [
+          {
+            "name": "紫炁",
+            "yuan": 1256.5224,
+            "elapsedDays": 37619.9775,
+            "predicted": 8194.9623,
+            "datong": 8194.9623,
+            "errorDays": 0
+          },
+          {
+            "name": "月孛",
+            "yuan": 2384.1092,
+            "elapsedDays": 37619.9775,
+            "predicted": 1220.4659,
+            "datong": 1220.4659,
+            "errorDays": 0
+          },
+          {
+            "name": "罗睺",
+            "yuan": 1680.8602,
+            "elapsedDays": 37619.9775,
+            "predicted": 5333.6217,
+            "datong": 5333.6217,
+            "errorDays": 0
+          },
+          {
+            "name": "计都",
+            "yuan": 5077.5818,
+            "elapsedDays": 37619.9775,
+            "predicted": 1936.9001,
+            "datong": 1936.9001,
+            "errorDays": 0
+          }
+        ],
+        "test": {
+          "ok": true,
+          "checks": [
+            {
+              "id": "frame.total",
+              "ok": true,
+              "d": "365.2564000"
+            },
+            {
+              "id": "chain.count",
+              "ok": true,
+              "d": "4"
+            },
+            {
+              "id": "chain.closure",
+              "ok": true,
+              "d": "[0,0,0,0]"
+            },
+            {
+              "id": "epoch.node.opposition",
+              "ok": true,
+              "d": "error=0.000001515; tolerance=0.000005376602001041367 traditional degrees (4-decimal phase rounding)"
+            },
+            {
+              "id": "wanli.anchor.count",
+              "ok": true,
+              "d": "4"
+            },
+            {
+              "id": "drift.detected",
+              "ok": true,
+              "d": "39.521365"
+            },
+            {
+              "id": "provider.policy",
+              "ok": true,
+              "d": "KEEP_WANLI_PROVIDER"
+            },
+            {
+              "id": "v229.present",
+              "ok": true,
+              "d": ""
+            },
+            {
+              "id": "v231.present",
+              "ok": true,
+              "d": ""
+            },
+            {
+              "id": "live.unchanged",
+              "ok": true,
+              "d": ""
+            }
+          ]
+        },
+        "anchor": {
+          "ok": true,
+          "checks": [
+            {
+              "id": "rate.count",
+              "ok": true,
+              "d": "3"
+            },
+            {
+              "id": "rate.aligned",
+              "ok": true,
+              "d": "罗计:0.068%, 月孛:0.1135%, 紫炁:0.0383%"
+            },
+            {
+              "id": "anchor.count",
+              "ok": true,
+              "d": "4"
+            },
+            {
+              "id": "anchor.date",
+              "ok": true,
+              "d": "1578-01-18"
+            },
+            {
+              "id": "node.policy",
+              "ok": true,
+              "d": "2"
+            },
+            {
+              "id": "legacy.unchanged",
+              "ok": true,
+              "d": "qzCalc not wrapped by V228"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "fixed input independent of form longitude",
+      "ok": true,
+      "detail": {
+        "isDay": true,
+        "hint": {
+          "state": "unresolved",
+          "text": "当前命度没有命中V235三组文字金样。需要原图格/量天尺或外部可靠盘例校准。"
+        },
+        "pillars": [
+          {
+            "s": 5,
+            "b": 5
+          },
+          {
+            "s": 3,
+            "b": 1
+          },
+          {
+            "s": 6,
+            "b": 4
+          },
+          {
+            "s": 8,
+            "b": 6
+          }
+        ],
+        "ming": "戌",
+        "degree": 24.739510766348303,
+        "auto": 19
+      }
+    },
+    {
+      "name": "invalid civil date rejected and leap day accepted",
+      "ok": true
+    },
+    {
+      "name": "missing degrees do not become eleven years",
+      "ok": true
+    },
+    {
+      "name": "people dates validated and zero coordinates preserved",
+      "ok": true
+    },
+    {
+      "name": "calibration isolated across users and batch input",
+      "ok": true,
+      "detail": {
+        "b": {
+          "startAge": null,
+          "source": "unresolved",
+          "note": "本次输入尚未校准",
+          "inputKey": "{\"rule\":\"liangtianchi-manual-v1\",\"civ\":{\"y\":2000,\"m\":6,\"d\":10,\"h\":7,\"mi\":0,\"s\":0},\"opt\":{\"gender\":\"F\",\"solar\":true,\"lon\":120,\"lat\":30},\"jd\":2451705.458333333}"
+        },
+        "a": {
+          "startAge": 19,
+          "source": "api-manual",
+          "note": "A only",
+          "inputKey": "{\"rule\":\"liangtianchi-manual-v1\",\"civ\":{\"y\":1990,\"m\":1,\"d\":15,\"h\":12,\"mi\":0,\"s\":0},\"opt\":{\"gender\":\"M\",\"solar\":true,\"lon\":117.8,\"lat\":24.5},\"jd\":2447906.6666666665}"
+        },
+        "abatch": {
+          "state": "unresolved",
+          "text": "当前命度没有命中V235三组文字金样。需要原图格/量天尺或外部可靠盘例校准。"
+        }
+      }
+    },
+    {
+      "name": "Ziwei flying depth input adapter",
+      "ok": true,
+      "detail": {
+        "ok": true,
+        "checks": [
+          {
+            "id": "layers.min",
+            "ok": true,
+            "detail": "6"
+          },
+          {
+            "id": "birth.four",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "id": "ji.chain",
+            "ok": true,
+            "detail": "6"
+          },
+          {
+            "id": "overlap.shape",
+            "ok": true,
+            "detail": "8"
+          },
+          {
+            "id": "evidence.shape",
+            "ok": true,
+            "detail": "28"
+          }
+        ]
+      }
+    },
+    {
+      "name": "malicious import ID remapped with relations preserved",
+      "ok": true
+    },
+    {
+      "name": "persisted import remains inert after reload",
+      "ok": true
+    },
+    {
+      "name": "per-input calibration persists across reload",
+      "ok": true
+    },
+    {
+      "name": "relationship result text escaped and unsupported modes normalized",
+      "ok": true
+    },
+    {
+      "name": "quota failure rolls back memory and preserves editor input",
+      "ok": true
+    },
+    {
+      "name": "legacy mirror failure does not discard primary commit",
+      "ok": true
+    },
+    {
+      "name": "manual complete QA executes",
+      "ok": true,
+      "detail": {
+        "summary": {
+          "total": 55,
+          "pass": 49,
+          "warn": 5,
+          "fail": 0,
+          "gate": {
+            "state": "conditional",
+            "label": "RC1 条件通过",
+            "tone": "warn",
+            "reason": "运行结构通过；5 个警告/已知限制"
+          }
+        },
+        "failures": []
+      }
+    },
+    {
+      "name": "build remains canonical after lazy modules and delayed callbacks",
+      "ok": true
+    },
+    {
+      "name": "seven main panes fit 390px document width",
+      "ok": true
+    },
+    {
+      "name": "mobile layout audit has no failed check",
+      "ok": true,
+      "detail": {
+        "summary": {
+          "total": 35,
+          "pass": 32,
+          "warn": 2,
+          "fail": 0,
+          "gate": {
+            "state": "conditional",
+            "label": "RC1 条件通过",
+            "tone": "warn",
+            "reason": "运行结构通过；2 个警告/已知限制"
+          }
+        }
+      }
+    },
+    {
+      "name": "no uncaught errors in exercised interactions",
+      "ok": true
+    },
+    {
+      "name": "original V237 historical numbers and sample chart preserved",
+      "ok": true
+    },
+    {
+      "name": "legacy unsafe IDs migrate with current/me/positions and relations",
+      "ok": true
+    },
+    {
+      "name": "verified fixtures load and concurrent iztro requests coalesce",
+      "ok": true,
+      "detail": {
+        "iztro": true,
+        "lunar": true,
+        "iztroFetch": 1
+      }
+    },
+    {
+      "name": "modified executable vendor caches rejected",
+      "ok": true
+    }
+  ],
+  "limitations": [
+    "HTTP loopback Chromium；file:// 被执行环境策略禁止，未测试直接双击打开",
+    "不验证传统术数解释或历史星历的独立科学准确度"
+  ],
+  "qa": {
+    "schema": "tianji.release.qa.v1",
+    "build": "v215 RC1 · 2026-10-06 15:02 +08:00",
+    "mode": "full",
+    "generatedAt": "2026-10-06T16:31:29.686Z",
+    "viewport": {
+      "width": 1440,
+      "height": 1000,
+      "dpr": 1
+    },
+    "performance": {
+      "nav": {
+        "type": "reload",
+        "domInteractive": 2900.8,
+        "domContentLoaded": 2908.9,
+        "loadEventEnd": 2918.9,
+        "transferSize": 5990530,
+        "decodedBodySize": 5990230
+      },
+      "paint": {
+        "first-paint": 248,
+        "first-contentful-paint": 248
+      },
+      "startup": {
+        "versionWrites": 0,
+        "homepageReady": false,
+        "windowLoaded": true,
+        "firstInteraction": true,
+        "idleDone": true,
+        "elapsedMs": 2017.1,
+        "consumerReportDeferred": true,
+        "qimenCrosscheckDeferred": true,
+        "globalLayoutAutoScan": false,
+        "versionMutationLocks": false
+      },
+      "lazy": {
+        "schema": "tianji.performance.v2",
+        "build": "v181 · 2026-10-05 22:18 +08:00",
+        "mode": "wide",
+        "sinceBootMs": 4395.2,
+        "homepageReady": true,
+        "lazy": {
+          "insight": "ready"
+        },
+        "optimizations": [
+          "critical wide/compact CSS before all legacy CSS",
+          "single initial main compute",
+          "aggregate compute throttled to minute/settings cadence",
+          "AI initialization deferred off homepage",
+          "Evidence/Consensus/Explain/AI/API/KnowledgeGraph deferred",
+          "inactive panes excluded from first layout"
+        ]
+      },
+      "now": 4445.6
+    },
+    "checks": [
+      {
+        "id": "lazy.insight-load",
+        "name": "Insight 懒链完整加载",
+        "state": "pass",
+        "detail": "145.7 ms",
+        "group": "regression",
+        "severity": "critical"
+      },
+      {
+        "id": "static.syntax",
+        "name": "构建期 JavaScript 语法",
+        "state": "pass",
+        "detail": "错误 0",
+        "group": "static",
+        "severity": "critical"
+      },
+      {
+        "id": "static.ids",
+        "name": "构建期重复 ID",
+        "state": "pass",
+        "detail": "重复 0",
+        "group": "static",
+        "severity": "critical"
+      },
+      {
+        "id": "static.escaped",
+        "name": "构建期转义换行泄漏",
+        "state": "pass",
+        "detail": "泄漏 0",
+        "group": "static",
+        "severity": "critical"
+      },
+      {
+        "id": "runtime.version",
+        "name": "版本一致性",
+        "state": "pass",
+        "detail": "title=子时 · 秋分后 · 天机盘；build=版本 · V237.1 · 四余三历元链 / 安全稳定修订版",
+        "group": "runtime",
+        "severity": "critical"
+      },
+      {
+        "id": "runtime.ids",
+        "name": "运行时重复 ID",
+        "state": "pass",
+        "detail": "0",
+        "group": "runtime",
+        "severity": "critical"
+      },
+      {
+        "id": "runtime.escaped",
+        "name": "body 直属转义文本",
+        "state": "pass",
+        "detail": "0",
+        "group": "runtime",
+        "severity": "critical"
+      },
+      {
+        "id": "runtime.viewport",
+        "name": "移动端 viewport",
+        "state": "pass",
+        "detail": "width=device-width,initial-scale=1,viewport-fit=cover",
+        "group": "mobile",
+        "severity": "critical"
+      },
+      {
+        "id": "runtime.notice-default",
+        "name": "升级期通知静默默认值",
+        "state": "pass",
+        "detail": "ticker=false popup=false notices=0",
+        "group": "runtime",
+        "severity": "critical"
+      },
+      {
+        "id": "runtime.notice-live",
+        "name": "当前跑马灯实际状态",
+        "state": "pass",
+        "detail": "global=false visible=false",
+        "group": "runtime",
+        "severity": "normal"
+      },
+      {
+        "id": "api.TianjiCore",
+        "name": "TianjiCore",
+        "state": "pass",
+        "detail": "manifest",
+        "group": "api",
+        "severity": "critical"
+      },
+      {
+        "id": "api.TianjiEvidence",
+        "name": "TianjiEvidence",
+        "state": "pass",
+        "detail": "catalog",
+        "group": "api",
+        "severity": "critical"
+      },
+      {
+        "id": "api.TianjiPerformance",
+        "name": "TianjiPerformance",
+        "state": "pass",
+        "detail": "status, load, groups",
+        "group": "api",
+        "severity": "critical"
+      },
+      {
+        "id": "api.TianjiLayoutGuard",
+        "name": "TianjiLayoutGuard",
+        "state": "pass",
+        "detail": "audit",
+        "group": "api",
+        "severity": "critical"
+      },
+      {
+        "id": "api.TianjiConsumerReport",
+        "name": "TianjiConsumerReport",
+        "state": "pass",
+        "detail": "build, toText",
+        "group": "api",
+        "severity": "critical"
+      },
+      {
+        "id": "api.TianjiQimenCrosscheck",
+        "name": "TianjiQimenCrosscheck",
+        "state": "pass",
+        "detail": "status, report",
+        "group": "api",
+        "severity": "critical"
+      },
+      {
+        "id": "api.TianjiLiuyaoDepth",
+        "name": "TianjiLiuyaoDepth",
+        "state": "pass",
+        "detail": "build",
+        "group": "api",
+        "severity": "critical"
+      },
+      {
+        "id": "api.TianjiZiweiFlyingDepthV2",
+        "name": "TianjiZiweiFlyingDepthV2",
+        "state": "pass",
+        "detail": "selfTest",
+        "group": "api",
+        "severity": "critical"
+      },
+      {
+        "id": "api.TianjiXuankongHouseV2",
+        "name": "TianjiXuankongHouseV2",
+        "state": "pass",
+        "detail": "selfTest",
+        "group": "api",
+        "severity": "critical"
+      },
+      {
+        "id": "api.TianjiSanhePolicy",
+        "name": "TianjiSanhePolicy",
+        "state": "pass",
+        "detail": "selfTest",
+        "group": "api",
+        "severity": "critical"
+      },
+      {
+        "id": "api.TianjiHistoricalTimeV3",
+        "name": "TianjiHistoricalTimeV3",
+        "state": "pass",
+        "detail": "selfTest",
+        "group": "api",
+        "severity": "critical"
+      },
+      {
+        "id": "api.TianjiRelationTimelineV2",
+        "name": "TianjiRelationTimelineV2",
+        "state": "pass",
+        "detail": "selfTest",
+        "group": "api",
+        "severity": "critical"
+      },
+      {
+        "id": "api.TianjiFormalEvidenceReport",
+        "name": "TianjiFormalEvidenceReport",
+        "state": "pass",
+        "detail": "selfTest, generate",
+        "group": "api",
+        "severity": "critical"
+      },
+      {
+        "id": "pane.registry",
+        "name": "主面板注册",
+        "state": "pass",
+        "detail": "35 panes",
+        "group": "runtime",
+        "severity": "critical"
+      },
+      {
+        "id": "startup.v201",
+        "name": "V201 启动优化状态",
+        "state": "pass",
+        "detail": "loaded=true homepage=false writes=0",
+        "group": "performance",
+        "severity": "critical"
+      },
+      {
+        "id": "lazy.insight",
+        "name": "Insight 懒加载状态",
+        "state": "pass",
+        "detail": "{\"insight\":\"ready\"}",
+        "group": "performance",
+        "severity": "normal"
+      },
+      {
+        "id": "perf.dcl",
+        "name": "DOMContentLoaded",
+        "state": "pass",
+        "detail": "2909 ms",
+        "group": "performance",
+        "severity": "normal"
+      },
+      {
+        "id": "perf.load",
+        "name": "load / 当前加载点",
+        "state": "pass",
+        "detail": "2919 ms",
+        "group": "performance",
+        "severity": "normal"
+      },
+      {
+        "id": "perf.fcp",
+        "name": "First Contentful Paint",
+        "state": "pass",
+        "detail": "248 ms",
+        "group": "performance",
+        "severity": "normal"
+      },
+      {
+        "id": "road.qimen",
+        "name": "奇门外部对拍缺口",
+        "state": "warn",
+        "detail": "时家已有基准；日/月/年真实第三方 reference 仍 pending",
+        "group": "product",
+        "severity": "known"
+      },
+      {
+        "id": "road.qizheng",
+        "name": "七政四余前置阻塞",
+        "state": "warn",
+        "detail": "星历 / 四余口径 / 许可证方案仍 blocked",
+        "group": "product",
+        "severity": "known"
+      },
+      {
+        "id": "selftest.TianjiQimenPeriod",
+        "name": "奇门日/月/年基础核",
+        "state": "pass",
+        "detail": "selfTest PASS",
+        "group": "regression",
+        "severity": "normal",
+        "raw": {
+          "ok": true,
+          "checks": [
+            {
+              "n": "year.fixed.1984",
+              "ok": true,
+              "d": "{\"y\":1984,\"yuan\":2,\"name\":\"下元\",\"start\":1984,\"off\":0,\"base\":7,\"ju\":7,\"idx\":0,\"policy\":\"fixed\"}"
+            },
+            {
+              "n": "year.fixed.2024",
+              "ok": true,
+              "d": "{\"y\":2024,\"yuan\":2,\"name\":\"下元\",\"start\":1984,\"off\":40,\"base\":7,\"ju\":7,\"idx\":40,\"policy\":\"fixed\"}"
+            },
+            {
+              "n": "year.rolling.2024",
+              "ok": true,
+              "d": "{\"y\":2024,\"yuan\":2,\"name\":\"下元\",\"start\":1984,\"off\":40,\"base\":7,\"ju\":3,\"idx\":40,\"policy\":\"rolling\"}"
+            },
+            {
+              "n": "year.fixed.2044",
+              "ok": true,
+              "d": "{\"y\":2044,\"yuan\":0,\"name\":\"上元\",\"start\":2044,\"off\":0,\"base\":1,\"ju\":1,\"idx\":0,\"policy\":\"fixed\"}"
+            },
+            {
+              "n": "day.jiazi",
+              "ok": true,
+              "d": ""
+            },
+            {
+              "n": "day.dingmao",
+              "ok": true,
+              "d": ""
+            },
+            {
+              "n": "period.structure",
+              "ok": true,
+              "d": ""
+            }
+          ]
+        }
+      },
+      {
+        "id": "selftest.TianjiQimenVerifier",
+        "name": "奇门时家验证器",
+        "state": "pass",
+        "detail": "selfTest PASS",
+        "group": "regression",
+        "severity": "normal",
+        "raw": {
+          "ok": true,
+          "checks": [
+            {
+              "id": "v110.base",
+              "ok": true
+            },
+            {
+              "id": "mingpan.golden",
+              "ok": true,
+              "failed": []
+            },
+            {
+              "id": "compare.golden",
+              "ok": true,
+              "summary": {
+                "PASS": 17,
+                "DIFF": 0,
+                "POLICY": 2,
+                "GAP": 4,
+                "N/A": 1
+              }
+            },
+            {
+              "id": "compare.winter",
+              "ok": true,
+              "summary": {
+                "PASS": 18,
+                "DIFF": 0,
+                "POLICY": 1,
+                "GAP": 4,
+                "N/A": 1
+              }
+            },
+            {
+              "id": "compare.spring",
+              "ok": true,
+              "summary": {
+                "PASS": 18,
+                "DIFF": 0,
+                "POLICY": 1,
+                "GAP": 4,
+                "N/A": 1
+              }
+            },
+            {
+              "id": "compare.equinox",
+              "ok": true,
+              "summary": {
+                "PASS": 18,
+                "DIFF": 0,
+                "POLICY": 1,
+                "GAP": 4,
+                "N/A": 1
+              }
+            },
+            {
+              "id": "compare.autumn",
+              "ok": true,
+              "summary": {
+                "PASS": 17,
+                "DIFF": 0,
+                "POLICY": 2,
+                "GAP": 4,
+                "N/A": 1
+              }
+            },
+            {
+              "id": "compare.override",
+              "ok": true,
+              "summary": {
+                "PASS": 18,
+                "DIFF": 0,
+                "POLICY": 1,
+                "GAP": 4,
+                "N/A": 1
+              }
+            },
+            {
+              "id": "policy.detect",
+              "ok": true
+            },
+            {
+              "id": "gaps.detect",
+              "ok": true
+            }
+          ],
+          "version": "1.0.0",
+          "build": "2026-10-04 11:44:12"
+        }
+      },
+      {
+        "id": "selftest.TianjiLiuyaoDepth",
+        "name": "六爻深度层",
+        "state": "warn",
+        "detail": "没有 selfTest()",
+        "group": "regression",
+        "severity": "normal",
+        "raw": null
+      },
+      {
+        "id": "selftest.TianjiZiweiFlyingDepthV2",
+        "name": "紫微飞星 V2",
+        "state": "pass",
+        "detail": "selfTest PASS",
+        "group": "regression",
+        "severity": "normal",
+        "raw": {
+          "ok": true,
+          "checks": [
+            {
+              "id": "layers.min",
+              "ok": true,
+              "detail": "6"
+            },
+            {
+              "id": "birth.four",
+              "ok": true,
+              "detail": ""
+            },
+            {
+              "id": "ji.chain",
+              "ok": true,
+              "detail": "6"
+            },
+            {
+              "id": "overlap.shape",
+              "ok": true,
+              "detail": "8"
+            },
+            {
+              "id": "evidence.shape",
+              "ok": true,
+              "detail": "28"
+            }
+          ]
+        }
+      },
+      {
+        "id": "selftest.TianjiXuankongHouse",
+        "name": "玄空宅盘 V1",
+        "state": "pass",
+        "detail": "selfTest PASS",
+        "group": "regression",
+        "severity": "normal",
+        "raw": {
+          "ok": true,
+          "checks": [
+            {
+              "id": "orientation.wu",
+              "ok": true,
+              "d": "{\"degree\":180,\"mountain\":\"午\",\"index\":13,\"center\":180,\"offset\":0,\"neighbor\":\"丁\",\"boundaryDistance\":7.5,\"mode\":\"下卦\",\"voidLine\":false,\"voidType\":\"\",\"crossTrigram\":false,\"description\":\"午正针\"}"
+            },
+            {
+              "id": "orientation.replace",
+              "ok": true,
+              "d": "{\"degree\":185.5,\"mountain\":\"午\",\"index\":13,\"center\":180,\"offset\":5.5,\"neighbor\":\"丁\",\"boundaryDistance\":2,\"mode\":\"替卦\",\"voidLine\":false,\"voidType\":\"\",\"crossTrigram\":false,\"description\":\"午兼丁5.5°\"}"
+            },
+            {
+              "id": "chart.shape",
+              "ok": true,
+              "d": "子/午"
+            },
+            {
+              "id": "replace.shape",
+              "ok": true,
+              "d": "{\"z\":{\"original\":5,\"sourceMountain\":\"子\",\"replacement\":5,\"dir\":0,\"changed\":false},\"x\":{\"original\":4,\"sourceMountain\":\"巽\",\"replacement\":6,\"dir\":1,\"changed\":true}}"
+            },
+            {
+              "id": "replace.mapping",
+              "ok": true,
+              "d": ""
+            }
+          ]
+        }
+      },
+      {
+        "id": "selftest.TianjiXuankongHouseV2",
+        "name": "玄空宅盘 V2",
+        "state": "pass",
+        "detail": "selfTest PASS",
+        "group": "regression",
+        "severity": "normal",
+        "raw": {
+          "ok": true,
+          "checks": [
+            {
+              "id": "patterns.array",
+              "ok": true,
+              "d": "9"
+            },
+            {
+              "id": "focus.finite",
+              "ok": true,
+              "d": "-1.73"
+            },
+            {
+              "id": "focus.fields",
+              "ok": true,
+              "d": "{\"pal\":9,\"name\":\"离·南\",\"space\":{\"name\":\"大门 / 入口\",\"shan\":0.25,\"xiang\":0.75,\"desc\":\"入口与动线以向星权重更高，只表示本页的阅读权重。\"},\"shan\":1,\"xiang\":8,\"yun\":4,\"year\":5,\"month\":3,\"qiS\":\"生气\",\"qiX\":\"退气\",\"pair\":{\"n\":\"相克\",\"t\":\"凶\",\"d\":\"水与土相克,气有冲突\",\"sc\":-0.5},\"score\":-1.73,\"grade\":\"偏弱\",\"why\":[\"山星1·生气 × 25%\",\"向星8·退气 × 75%\",\"山向组合：相克\",\"流年五黄标签\"]}"
+            },
+            {
+              "id": "validation.pending",
+              "ok": true,
+              "d": "tianji.xuankong.crosscheck.request.v1"
+            },
+            {
+              "id": "validation.warning",
+              "ok": true,
+              "d": "expected 必须来自独立第三方软件、人工金样或另一个独立实现；不要把 Tianji snapshot 原样复制进 expected。"
+            }
+          ]
+        }
+      },
+      {
+        "id": "selftest.TianjiSanheWaterCore",
+        "name": "三合水法 Core",
+        "state": "pass",
+        "detail": "selfTest PASS",
+        "group": "regression",
+        "severity": "normal",
+        "raw": {
+          "ok": true,
+          "checks": [
+            {
+              "id": "double-mountain.count",
+              "ok": true,
+              "d": "12"
+            },
+            {
+              "id": "mountain.partition",
+              "ok": true,
+              "d": "24"
+            },
+            {
+              "id": "ju.partition",
+              "ok": true,
+              "d": ""
+            },
+            {
+              "id": "fire.yang",
+              "ok": true,
+              "d": "[\"胎\",\"养\",\"长生\",\"沐浴\",\"冠带\",\"临官\",\"帝旺\",\"衰\",\"病\",\"死\",\"墓\",\"绝\"]"
+            },
+            {
+              "id": "fire.yin",
+              "ok": true,
+              "d": "[\"病\",\"衰\",\"帝旺\",\"临官\",\"冠带\",\"沐浴\",\"长生\",\"养\",\"胎\",\"绝\",\"墓\",\"死\"]"
+            },
+            {
+              "id": "water.yang",
+              "ok": true,
+              "d": "[\"帝旺\",\"衰\",\"病\",\"死\",\"墓\",\"绝\",\"胎\",\"养\",\"长生\",\"沐浴\",\"冠带\",\"临官\"]"
+            },
+            {
+              "id": "mouth.infer",
+              "ok": true,
+              "d": ""
+            }
+          ]
+        }
+      },
+      {
+        "id": "selftest.TianjiSanhePolicy",
+        "name": "三合水法规则层",
+        "state": "pass",
+        "detail": "selfTest PASS",
+        "group": "regression",
+        "severity": "normal",
+        "raw": {
+          "ok": true,
+          "checks": [
+            {
+              "id": "plate.heaven",
+              "ok": true,
+              "d": "{\"plate\":\"heaven\",\"plateName\":\"天盘缝针\",\"use\":\"纳水 / 去水\",\"physical\":7.5,\"effective\":0,\"mountain\":\"子\",\"pal\":1,\"gua\":\"坎\",\"double\":\"壬子\"}"
+            },
+            {
+              "id": "plate.human",
+              "ok": true,
+              "d": "{\"plate\":\"human\",\"plateName\":\"人盘中针\",\"use\":\"消砂\",\"physical\":352.5,\"effective\":0,\"mountain\":\"子\",\"pal\":1,\"gua\":\"坎\",\"double\":\"壬子\"}"
+            },
+            {
+              "id": "dragon.cover24",
+              "ok": true,
+              "d": "24"
+            },
+            {
+              "id": "dragon.kan",
+              "ok": true,
+              "d": "{\"id\":\"kan-gui-shen-chen\",\"name\":\"坎癸申辰来龙\",\"dragon\":[\"子\",\"癸\",\"申\",\"辰\"],\"three\":[\"巽\",\"艮\",\"卯\"],\"six\":[\"辛\",\"丙\",\"庚\"]}"
+            },
+            {
+              "id": "candidate.exists",
+              "ok": true,
+              "d": "2"
+            },
+            {
+              "id": "candidate.stages",
+              "ok": true,
+              "d": "[[\"长生\",\"墓\",\"帝旺\"],[\"帝旺\",\"墓\",\"长生\"]]"
+            },
+            {
+              "id": "validation.empty-expected",
+              "ok": true,
+              "d": "tianji.sanhe.policy.crosscheck.request.v1"
+            }
+          ]
+        }
+      },
+      {
+        "id": "selftest.TianjiHistoricalTime",
+        "name": "历史时间 V1",
+        "state": "pass",
+        "detail": "selfTest PASS",
+        "group": "regression",
+        "severity": "normal",
+        "raw": {
+          "ok": true,
+          "checks": [
+            {
+              "id": "iana.shanghai",
+              "ok": true,
+              "d": ""
+            },
+            {
+              "id": "china.1986.resolved",
+              "ok": true,
+              "d": "{\"off\":540,\"dst\":{\"known\":true,\"dstMinutes\":60,\"standardOffset\":480,\"yearOffsets\":[480,540],\"method\":\"same-year-minimum-offset-heuristic\"},\"bridge\":\"1986-06-05 16:30:00\"}"
+            },
+            {
+              "id": "china.1986.dst",
+              "ok": true,
+              "d": "{\"known\":true,\"dstMinutes\":60,\"standardOffset\":480,\"yearOffsets\":[480,540],\"method\":\"same-year-minimum-offset-heuristic\"}"
+            },
+            {
+              "id": "china.1986.legacy-delta",
+              "ok": true,
+              "d": "-60"
+            },
+            {
+              "id": "china.1992.standard",
+              "ok": true,
+              "d": "{\"off\":480,\"dst\":{\"known\":true,\"dstMinutes\":0,\"standardOffset\":480,\"yearOffsets\":[480],\"method\":\"same-year-minimum-offset-heuristic\"}}"
+            },
+            {
+              "id": "dst.gap",
+              "ok": true,
+              "d": "nonexistent-local-time"
+            },
+            {
+              "id": "dst.fold",
+              "ok": true,
+              "d": "[{\"utc\":\"2024-11-03T05:30:00.000Z\",\"offsetMinutes\":-240},{\"utc\":\"2024-11-03T06:30:00.000Z\",\"offsetMinutes\":-300}]"
+            }
+          ]
+        }
+      },
+      {
+        "id": "selftest.TianjiHistoricalTimeV2",
+        "name": "历史时间 V2",
+        "state": "pass",
+        "detail": "selfTest PASS",
+        "group": "regression",
+        "severity": "normal",
+        "raw": {
+          "ok": true,
+          "checks": [
+            {
+              "id": "bridge.1986",
+              "ok": true,
+              "d": "{\"y\":1986,\"m\":6,\"d\":5,\"h\":16,\"mi\":30,\"s\":0,\"text\":\"1986-06-05 16:30:00\",\"label\":\"旧引擎 UTC+8 等价瞬间\"}"
+            },
+            {
+              "id": "bridge.delta1986",
+              "ok": true,
+              "d": "-60"
+            },
+            {
+              "id": "bridge.1992",
+              "ok": true,
+              "d": "{\"y\":1992,\"m\":6,\"d\":5,\"h\":17,\"mi\":30,\"s\":0,\"text\":\"1992-06-05 17:30:00\",\"label\":\"旧引擎 UTC+8 等价瞬间\"}"
+            },
+            {
+              "id": "bridge.delta1992",
+              "ok": true,
+              "d": "0"
+            },
+            {
+              "id": "compute.wrapper",
+              "ok": true,
+              "d": ""
+            }
+          ]
+        }
+      },
+      {
+        "id": "selftest.TianjiHistoricalTimeV3",
+        "name": "历史时间 V3",
+        "state": "pass",
+        "detail": "selfTest PASS",
+        "group": "regression",
+        "severity": "normal",
+        "raw": {
+          "ok": true,
+          "checks": [
+            {
+              "id": "standard.bridge.identity",
+              "ok": true,
+              "d": "{\"y\":1992,\"m\":6,\"d\":5,\"h\":17,\"mi\":30,\"s\":0,\"text\":\"1992-06-05 17:30:00\",\"label\":\"旧引擎 UTC+8 等价瞬间\"}"
+            },
+            {
+              "id": "dst.bridge.shift",
+              "ok": true,
+              "d": "{\"bridge\":{\"y\":1986,\"m\":6,\"d\":5,\"h\":16,\"mi\":30,\"s\":0,\"text\":\"1986-06-05 16:30:00\",\"label\":\"旧引擎 UTC+8 等价瞬间\"},\"off\":540}"
+            },
+            {
+              "id": "module.functions",
+              "ok": true,
+              "d": ""
+            }
+          ]
+        }
+      },
+      {
+        "id": "selftest.TianjiRelationTimeline",
+        "name": "关系时间轴 V1",
+        "state": "pass",
+        "detail": "selfTest PASS",
+        "group": "regression",
+        "severity": "normal",
+        "raw": {
+          "ok": true,
+          "checks": [
+            {
+              "id": "store.events",
+              "ok": true,
+              "d": "0"
+            },
+            {
+              "id": "year.range",
+              "ok": true,
+              "d": "2021-2032"
+            },
+            {
+              "id": "year.gz",
+              "ok": true,
+              "d": "丙午"
+            },
+            {
+              "id": "relation.shape",
+              "ok": true,
+              "d": "{\"available\":true,\"score\":88.4}"
+            }
+          ]
+        }
+      },
+      {
+        "id": "selftest.TianjiRelationTimelineV2",
+        "name": "关系时间轴 V2",
+        "state": "pass",
+        "detail": "selfTest PASS",
+        "group": "regression",
+        "severity": "normal",
+        "raw": {
+          "ok": true,
+          "checks": [
+            {
+              "id": "range.valid",
+              "ok": true,
+              "d": "2021-2032"
+            },
+            {
+              "id": "selected.max",
+              "ok": true,
+              "d": "1"
+            },
+            {
+              "id": "report.schema",
+              "ok": true,
+              "d": "tianji.relation.long-report.v1"
+            },
+            {
+              "id": "evidence.layers",
+              "ok": true,
+              "d": ""
+            },
+            {
+              "id": "major.array",
+              "ok": true,
+              "d": "7"
+            }
+          ]
+        }
+      },
+      {
+        "id": "selftest.TianjiFormalEvidenceReport",
+        "name": "正式 Evidence 报告",
+        "state": "pass",
+        "detail": "selfTest PASS",
+        "group": "regression",
+        "severity": "normal",
+        "raw": {
+          "ok": true,
+          "checks": [
+            {
+              "id": "schemas",
+              "ok": true,
+              "d": "tianji.evidence.formal-report.v1"
+            },
+            {
+              "id": "task.report.done",
+              "ok": true,
+              "d": ""
+            },
+            {
+              "id": "task.qimen.not-faked",
+              "ok": true,
+              "d": ""
+            },
+            {
+              "id": "task.qizheng.blocked",
+              "ok": true,
+              "d": ""
+            },
+            {
+              "id": "on-demand",
+              "ok": true,
+              "d": "formal report is not generated on startup"
+            }
+          ]
+        }
+      },
+      {
+        "id": "selftest.TianjiQizhengResidualV228",
+        "name": "四余基础",
+        "state": "pass",
+        "detail": "selfTest PASS",
+        "group": "regression",
+        "severity": "normal",
+        "raw": {
+          "ok": true,
+          "checks": [
+            {
+              "id": "rate.count",
+              "ok": true,
+              "d": "3"
+            },
+            {
+              "id": "rate.aligned",
+              "ok": true,
+              "d": "罗计:0.068%, 月孛:0.1135%, 紫炁:0.0383%"
+            },
+            {
+              "id": "anchor.count",
+              "ok": true,
+              "d": "4"
+            },
+            {
+              "id": "anchor.date",
+              "ok": true,
+              "d": "1578-01-18"
+            },
+            {
+              "id": "node.policy",
+              "ok": true,
+              "d": "2"
+            },
+            {
+              "id": "legacy.unchanged",
+              "ok": true,
+              "d": "qzCalc not wrapped by V228"
+            }
+          ]
+        }
+      },
+      {
+        "id": "selftest.TianjiQizhengLiangtianchiV235",
+        "name": "人物校准",
+        "state": "pass",
+        "detail": "selfTest PASS",
+        "group": "regression",
+        "severity": "normal",
+        "raw": {
+          "ok": true,
+          "checks": [
+            {
+              "id": "base.capture",
+              "ok": true,
+              "d": ""
+            },
+            {
+              "id": "goldens",
+              "ok": true,
+              "d": "3"
+            },
+            {
+              "id": "rate.mao",
+              "ok": true,
+              "d": "3"
+            },
+            {
+              "id": "rate.guan",
+              "ok": true,
+              "d": "2"
+            },
+            {
+              "id": "rate.qian",
+              "ok": true,
+              "d": "3.75"
+            },
+            {
+              "id": "rate.ji",
+              "ok": true,
+              "d": "4.285714285714286"
+            },
+            {
+              "id": "rate.nu",
+              "ok": true,
+              "d": "6.666666666666667"
+            },
+            {
+              "id": "rate.cai",
+              "ok": true,
+              "d": "6"
+            },
+            {
+              "id": "endpoint.11",
+              "ok": true,
+              "d": "[{\"name\":\"命宫\",\"years\":10,\"ageStart\":11,\"ageEnd\":21,\"degreeRate\":null,\"status\":\"primary-endpoint\"},{\"name\":\"相貌\",\"years\":10,\"ageStart\":21,\"ageEnd\":31,\"degreeRate\":3,\"status\":\"primary-years/derived-rate\"}]"
+            },
+            {
+              "id": "endpoint.20",
+              "ok": true,
+              "d": "[{\"name\":\"命宫\",\"years\":19,\"ageStart\":20,\"ageEnd\":39,\"degreeRate\":null,\"status\":\"primary-endpoint\"},{\"name\":\"相貌\",\"years\":10,\"ageStart\":39,\"ageEnd\":49,\"degreeRate\":3,\"status\":\"primary-years/derived-rate\"}]"
+            },
+            {
+              "id": "no.auto",
+              "ok": true,
+              "d": ""
+            },
+            {
+              "id": "wrapper.install",
+              "ok": true,
+              "d": ""
+            }
+          ]
+        }
+      },
+      {
+        "id": "selftest.TianjiQizhengLiangtianchiV236",
+        "name": "量天尺图格",
+        "state": "pass",
+        "detail": "selfTest PASS",
+        "group": "regression",
+        "severity": "normal",
+        "raw": {
+          "ok": true,
+          "checks": [
+            {
+              "id": "base.capture",
+              "ok": true,
+              "d": ""
+            },
+            {
+              "id": "bins.count",
+              "ok": true,
+              "d": "10"
+            },
+            {
+              "id": "map.0",
+              "ok": true,
+              "d": "11"
+            },
+            {
+              "id": "map.2.999",
+              "ok": true,
+              "d": "11"
+            },
+            {
+              "id": "map.3",
+              "ok": true,
+              "d": "12"
+            },
+            {
+              "id": "map.14.999",
+              "ok": true,
+              "d": "15"
+            },
+            {
+              "id": "map.15",
+              "ok": true,
+              "d": "16"
+            },
+            {
+              "id": "map.27",
+              "ok": true,
+              "d": "20"
+            },
+            {
+              "id": "map.29.999",
+              "ok": true,
+              "d": "20"
+            },
+            {
+              "id": "grid.cells",
+              "ok": true,
+              "d": "360"
+            },
+            {
+              "id": "wrapper.install",
+              "ok": true,
+              "d": ""
+            }
+          ]
+        }
+      },
+      {
+        "id": "selftest.TianjiQizhengResidualDriftV237",
+        "name": "长期漂移",
+        "state": "pass",
+        "detail": "selfTest PASS",
+        "group": "regression",
+        "severity": "normal",
+        "raw": {
+          "ok": true,
+          "checks": [
+            {
+              "id": "frame.total",
+              "ok": true,
+              "d": "365.2564000"
+            },
+            {
+              "id": "chain.count",
+              "ok": true,
+              "d": "4"
+            },
+            {
+              "id": "chain.closure",
+              "ok": true,
+              "d": "[0,0,0,0]"
+            },
+            {
+              "id": "epoch.node.opposition",
+              "ok": true,
+              "d": "error=0.000001515; tolerance=0.000005376602001041367 traditional degrees (4-decimal phase rounding)"
+            },
+            {
+              "id": "wanli.anchor.count",
+              "ok": true,
+              "d": "4"
+            },
+            {
+              "id": "drift.detected",
+              "ok": true,
+              "d": "39.521365"
+            },
+            {
+              "id": "provider.policy",
+              "ok": true,
+              "d": "KEEP_WANLI_PROVIDER"
+            },
+            {
+              "id": "v229.present",
+              "ok": true,
+              "d": ""
+            },
+            {
+              "id": "v231.present",
+              "ok": true,
+              "d": ""
+            },
+            {
+              "id": "live.unchanged",
+              "ok": true,
+              "d": ""
+            }
+          ]
+        }
+      },
+      {
+        "id": "pane.smoke",
+        "name": "所有 pane factory smoke",
+        "state": "warn",
+        "detail": "house: non-string | hetu: non-string | review: non-string",
+        "group": "regression",
+        "severity": "normal",
+        "times": [
+          {
+            "id": "jinkou",
+            "ms": 1.1,
+            "size": 4050
+          },
+          {
+            "id": "qizheng",
+            "ms": 0.8,
+            "size": 4477
+          },
+          {
+            "id": "taiyi",
+            "ms": 0.8,
+            "size": 2897
+          },
+          {
+            "id": "fun",
+            "ms": 0.2,
+            "size": 3710
+          },
+          {
+            "id": "over",
+            "ms": 10.2,
+            "size": 18439
+          },
+          {
+            "id": "guide",
+            "ms": 9.3,
+            "size": 24494
+          },
+          {
+            "id": "astro",
+            "ms": 1.1,
+            "size": 11453
+          },
+          {
+            "id": "bazi",
+            "ms": 1.1,
+            "size": 16231
+          },
+          {
+            "id": "qimen",
+            "ms": 2.7,
+            "size": 13456
+          },
+          {
+            "id": "liuren",
+            "ms": 14.9,
+            "size": 22490
+          },
+          {
+            "id": "liuyao",
+            "ms": 4,
+            "size": 13687
+          },
+          {
+            "id": "yi",
+            "ms": 0.4,
+            "size": 6222
+          },
+          {
+            "id": "ziwei",
+            "ms": 1.8,
+            "size": 29771
+          },
+          {
+            "id": "xk",
+            "ms": 2.9,
+            "size": 23985
+          },
+          {
+            "id": "zeri",
+            "ms": 12.5,
+            "size": 13137
+          },
+          {
+            "id": "hepan",
+            "ms": 5.9,
+            "size": 9803
+          },
+          {
+            "id": "house",
+            "ms": 2.1,
+            "size": null
+          },
+          {
+            "id": "hetu",
+            "ms": 0.9,
+            "size": null
+          },
+          {
+            "id": "review",
+            "ms": 1.3,
+            "size": null
+          },
+          {
+            "id": "jiazi",
+            "ms": 0.3,
+            "size": 11211
+          },
+          {
+            "id": "jingluo",
+            "ms": 2.5,
+            "size": 29449
+          },
+          {
+            "id": "xingkong",
+            "ms": 0.4,
+            "size": 7695
+          },
+          {
+            "id": "sha",
+            "ms": 2,
+            "size": 24468
+          },
+          {
+            "id": "taisui",
+            "ms": 0.5,
+            "size": 4106
+          },
+          {
+            "id": "jifang",
+            "ms": 2.7,
+            "size": 11647
+          },
+          {
+            "id": "luopan",
+            "ms": 4.3,
+            "size": 46610
+          },
+          {
+            "id": "bridge",
+            "ms": 0.9,
+            "size": 28050
+          },
+          {
+            "id": "verify",
+            "ms": 10.1,
+            "size": 133686
+          },
+          {
+            "id": "natal",
+            "ms": 2.4,
+            "size": 24424
+          },
+          {
+            "id": "vedic",
+            "ms": 1.1,
+            "size": 7936
+          },
+          {
+            "id": "me",
+            "ms": 0.3,
+            "size": 2841
+          },
+          {
+            "id": "zwfly",
+            "ms": 28.7,
+            "size": 39718
+          },
+          {
+            "id": "wxflow",
+            "ms": 3.1,
+            "size": 18634
+          },
+          {
+            "id": "people",
+            "ms": 9.6,
+            "size": 35192
+          },
+          {
+            "id": "router",
+            "ms": 0.1,
+            "size": 1814
+          }
+        ]
+      },
+      {
+        "id": "layout.runtime-overflow",
+        "name": "当前视口未保护横向溢出",
+        "state": "pass",
+        "detail": "0",
+        "group": "layout",
+        "severity": "critical",
+        "offenders": []
+      },
+      {
+        "id": "layout.guard",
+        "name": "V200 全局 overflow audit",
+        "state": "info",
+        "detail": "检测 3，已加固 1",
+        "group": "layout",
+        "severity": "normal",
+        "raw": {
+          "offenders": [
+            {
+              "tag": "div",
+              "id": "livebar",
+              "cls": "livebar",
+              "overflow": 4
+            },
+            {
+              "tag": "button",
+              "id": "v126AvPick",
+              "cls": "v126-avpick",
+              "overflow": 4
+            },
+            {
+              "tag": "button",
+              "id": "v126BookPick",
+              "cls": "v126-avpick",
+              "overflow": 4
+            }
+          ],
+          "guarded": [
+            {
+              "tag": "div",
+              "id": "livebar",
+              "cls": "livebar",
+              "overflow": 4
+            }
+          ]
+        }
+      },
+      {
+        "id": "mobile.viewport-width",
+        "name": "当前 QA 视口宽度",
+        "state": "warn",
+        "detail": "1440px；建议在 390–430px 真实视口再运行一次完整 QA",
+        "group": "mobile",
+        "severity": "normal"
+      },
+      {
+        "id": "mobile.css-risk",
+        "name": "固定 min-width 风险规则",
+        "state": "pass",
+        "detail": "0",
+        "group": "mobile",
+        "severity": "normal",
+        "risks": []
+      },
+      {
+        "id": "mobile.header",
+        "name": "顶部区域视口约束",
+        "state": "pass",
+        "detail": "right=1401 / viewport=1440",
+        "group": "mobile",
+        "severity": "normal"
+      }
+    ],
+    "summary": {
+      "total": 55,
+      "pass": 49,
+      "warn": 5,
+      "fail": 0,
+      "gate": {
+        "state": "conditional",
+        "label": "RC1 条件通过",
+        "tone": "warn",
+        "reason": "运行结构通过；5 个警告/已知限制"
+      }
+    },
+    "knownLimitations": [
+      "奇门日家/月家/年家尚缺真实独立第三方 reference；不得把验证台框架当成已对拍。",
+      "七政四余核心化继续 blocked；当前 workbench 结果不提升验证等级。",
+      "移动端最终判断应至少在一个 390–430px 真实视口重新运行布局审计。",
+      "本 QA 不自动点击所有交互按钮，不替代人工关键路径验收。"
+    ],
+    "staticBaseline": {
+      "source_baseline": "v237.1-verified-html",
+      "syntax_errors": 0,
+      "duplicate_ids": 0,
+      "escaped_text_leaks": 0,
+      "notice_quiet": true,
+      "startup_v201_preserved": true,
+      "layout_v200_preserved": true,
+      "formal_report_v214_preserved": true
+    }
+  },
+  "mobileQA": {
+    "schema": "tianji.release.qa.v1",
+    "build": "v215 RC1 · 2026-10-06 15:02 +08:00",
+    "mode": "layout",
+    "generatedAt": "2026-10-06T16:31:32.352Z",
+    "viewport": {
+      "width": 390,
+      "height": 844,
+      "dpr": 1
+    },
+    "performance": {
+      "nav": {
+        "type": "reload",
+        "domInteractive": 2900.8,
+        "domContentLoaded": 2908.9,
+        "loadEventEnd": 2918.9,
+        "transferSize": 5990530,
+        "decodedBodySize": 5990230
+      },
+      "paint": {
+        "first-paint": 248,
+        "first-contentful-paint": 248
+      },
+      "startup": {
+        "versionWrites": 0,
+        "homepageReady": false,
+        "windowLoaded": true,
+        "firstInteraction": true,
+        "idleDone": true,
+        "elapsedMs": 4682.8,
+        "consumerReportDeferred": true,
+        "qimenCrosscheckDeferred": true,
+        "globalLayoutAutoScan": false,
+        "versionMutationLocks": false
+      },
+      "lazy": {
+        "schema": "tianji.performance.v2",
+        "build": "v181 · 2026-10-05 22:18 +08:00",
+        "mode": "compact",
+        "sinceBootMs": 7060.9,
+        "homepageReady": true,
+        "lazy": {
+          "insight": "ready"
+        },
+        "optimizations": [
+          "critical wide/compact CSS before all legacy CSS",
+          "single initial main compute",
+          "aggregate compute throttled to minute/settings cadence",
+          "AI initialization deferred off homepage",
+          "Evidence/Consensus/Explain/AI/API/KnowledgeGraph deferred",
+          "inactive panes excluded from first layout"
+        ]
+      },
+      "now": 7111.3
+    },
+    "checks": [
+      {
+        "id": "static.syntax",
+        "name": "构建期 JavaScript 语法",
+        "state": "pass",
+        "detail": "错误 0",
+        "group": "static",
+        "severity": "critical"
+      },
+      {
+        "id": "static.ids",
+        "name": "构建期重复 ID",
+        "state": "pass",
+        "detail": "重复 0",
+        "group": "static",
+        "severity": "critical"
+      },
+      {
+        "id": "static.escaped",
+        "name": "构建期转义换行泄漏",
+        "state": "pass",
+        "detail": "泄漏 0",
+        "group": "static",
+        "severity": "critical"
+      },
+      {
+        "id": "runtime.version",
+        "name": "版本一致性",
+        "state": "pass",
+        "detail": "title=子时 · 秋分后 · 天机盘；build=版本 · V237.1 · 四余三历元链 / 安全稳定修订版",
+        "group": "runtime",
+        "severity": "critical"
+      },
+      {
+        "id": "runtime.ids",
+        "name": "运行时重复 ID",
+        "state": "pass",
+        "detail": "0",
+        "group": "runtime",
+        "severity": "critical"
+      },
+      {
+        "id": "runtime.escaped",
+        "name": "body 直属转义文本",
+        "state": "pass",
+        "detail": "0",
+        "group": "runtime",
+        "severity": "critical"
+      },
+      {
+        "id": "runtime.viewport",
+        "name": "移动端 viewport",
+        "state": "pass",
+        "detail": "width=device-width,initial-scale=1,viewport-fit=cover",
+        "group": "mobile",
+        "severity": "critical"
+      },
+      {
+        "id": "runtime.notice-default",
+        "name": "升级期通知静默默认值",
+        "state": "pass",
+        "detail": "ticker=false popup=false notices=0",
+        "group": "runtime",
+        "severity": "critical"
+      },
+      {
+        "id": "runtime.notice-live",
+        "name": "当前跑马灯实际状态",
+        "state": "pass",
+        "detail": "global=false visible=false",
+        "group": "runtime",
+        "severity": "normal"
+      },
+      {
+        "id": "api.TianjiCore",
+        "name": "TianjiCore",
+        "state": "pass",
+        "detail": "manifest",
+        "group": "api",
+        "severity": "critical"
+      },
+      {
+        "id": "api.TianjiEvidence",
+        "name": "TianjiEvidence",
+        "state": "pass",
+        "detail": "catalog",
+        "group": "api",
+        "severity": "critical"
+      },
+      {
+        "id": "api.TianjiPerformance",
+        "name": "TianjiPerformance",
+        "state": "pass",
+        "detail": "status, load, groups",
+        "group": "api",
+        "severity": "critical"
+      },
+      {
+        "id": "api.TianjiLayoutGuard",
+        "name": "TianjiLayoutGuard",
+        "state": "pass",
+        "detail": "audit",
+        "group": "api",
+        "severity": "critical"
+      },
+      {
+        "id": "api.TianjiConsumerReport",
+        "name": "TianjiConsumerReport",
+        "state": "pass",
+        "detail": "build, toText",
+        "group": "api",
+        "severity": "critical"
+      },
+      {
+        "id": "api.TianjiQimenCrosscheck",
+        "name": "TianjiQimenCrosscheck",
+        "state": "pass",
+        "detail": "status, report",
+        "group": "api",
+        "severity": "critical"
+      },
+      {
+        "id": "api.TianjiLiuyaoDepth",
+        "name": "TianjiLiuyaoDepth",
+        "state": "pass",
+        "detail": "build",
+        "group": "api",
+        "severity": "critical"
+      },
+      {
+        "id": "api.TianjiZiweiFlyingDepthV2",
+        "name": "TianjiZiweiFlyingDepthV2",
+        "state": "pass",
+        "detail": "selfTest",
+        "group": "api",
+        "severity": "critical"
+      },
+      {
+        "id": "api.TianjiXuankongHouseV2",
+        "name": "TianjiXuankongHouseV2",
+        "state": "pass",
+        "detail": "selfTest",
+        "group": "api",
+        "severity": "critical"
+      },
+      {
+        "id": "api.TianjiSanhePolicy",
+        "name": "TianjiSanhePolicy",
+        "state": "pass",
+        "detail": "selfTest",
+        "group": "api",
+        "severity": "critical"
+      },
+      {
+        "id": "api.TianjiHistoricalTimeV3",
+        "name": "TianjiHistoricalTimeV3",
+        "state": "pass",
+        "detail": "selfTest",
+        "group": "api",
+        "severity": "critical"
+      },
+      {
+        "id": "api.TianjiRelationTimelineV2",
+        "name": "TianjiRelationTimelineV2",
+        "state": "pass",
+        "detail": "selfTest",
+        "group": "api",
+        "severity": "critical"
+      },
+      {
+        "id": "api.TianjiFormalEvidenceReport",
+        "name": "TianjiFormalEvidenceReport",
+        "state": "pass",
+        "detail": "selfTest, generate",
+        "group": "api",
+        "severity": "critical"
+      },
+      {
+        "id": "pane.registry",
+        "name": "主面板注册",
+        "state": "pass",
+        "detail": "35 panes",
+        "group": "runtime",
+        "severity": "critical"
+      },
+      {
+        "id": "startup.v201",
+        "name": "V201 启动优化状态",
+        "state": "pass",
+        "detail": "loaded=true homepage=false writes=0",
+        "group": "performance",
+        "severity": "critical"
+      },
+      {
+        "id": "lazy.insight",
+        "name": "Insight 懒加载状态",
+        "state": "pass",
+        "detail": "{\"insight\":\"ready\"}",
+        "group": "performance",
+        "severity": "normal"
+      },
+      {
+        "id": "perf.dcl",
+        "name": "DOMContentLoaded",
+        "state": "pass",
+        "detail": "2909 ms",
+        "group": "performance",
+        "severity": "normal"
+      },
+      {
+        "id": "perf.load",
+        "name": "load / 当前加载点",
+        "state": "pass",
+        "detail": "2919 ms",
+        "group": "performance",
+        "severity": "normal"
+      },
+      {
+        "id": "perf.fcp",
+        "name": "First Contentful Paint",
+        "state": "pass",
+        "detail": "248 ms",
+        "group": "performance",
+        "severity": "normal"
+      },
+      {
+        "id": "road.qimen",
+        "name": "奇门外部对拍缺口",
+        "state": "warn",
+        "detail": "时家已有基准；日/月/年真实第三方 reference 仍 pending",
+        "group": "product",
+        "severity": "known"
+      },
+      {
+        "id": "road.qizheng",
+        "name": "七政四余前置阻塞",
+        "state": "warn",
+        "detail": "星历 / 四余口径 / 许可证方案仍 blocked",
+        "group": "product",
+        "severity": "known"
+      },
+      {
+        "id": "layout.runtime-overflow",
+        "name": "当前视口未保护横向溢出",
+        "state": "pass",
+        "detail": "0",
+        "group": "layout",
+        "severity": "critical",
+        "offenders": []
+      },
+      {
+        "id": "layout.guard",
+        "name": "V200 全局 overflow audit",
+        "state": "info",
+        "detail": "检测 23，已加固 21",
+        "group": "layout",
+        "severity": "normal",
+        "raw": {
+          "offenders": [
+            {
+              "tag": "div",
+              "id": "",
+              "cls": "tn-groups",
+              "overflow": 357
+            },
+            {
+              "tag": "div",
+              "id": "livebar",
+              "cls": "livebar tj200-overflow-guard",
+              "overflow": 4
+            },
+            {
+              "tag": "div",
+              "id": "v59PersonLine",
+              "cls": "v59-person-line",
+              "overflow": 883
+            },
+            {
+              "tag": "button",
+              "id": "v126AvPick",
+              "cls": "v126-avpick",
+              "overflow": 4
+            },
+            {
+              "tag": "b",
+              "id": "",
+              "cls": "",
+              "overflow": 16
+            },
+            {
+              "tag": "div",
+              "id": "",
+              "cls": "panel dialbox",
+              "overflow": 6
+            },
+            {
+              "tag": "div",
+              "id": "",
+              "cls": "q224-tablewrap",
+              "overflow": 570
+            },
+            {
+              "tag": "div",
+              "id": "",
+              "cls": "q224-tablewrap",
+              "overflow": 570
+            },
+            {
+              "tag": "div",
+              "id": "",
+              "cls": "q228-tablewrap",
+              "overflow": 530
+            },
+            {
+              "tag": "div",
+              "id": "",
+              "cls": "q229-tablewrap",
+              "overflow": 590
+            },
+            {
+              "tag": "div",
+              "id": "",
+              "cls": "q231-tablewrap",
+              "overflow": 580
+            },
+            {
+              "tag": "div",
+              "id": "",
+              "cls": "q232-tablewrap",
+              "overflow": 570
+            },
+            {
+              "tag": "div",
+              "id": "",
+              "cls": "q233-tablewrap",
+              "overflow": 610
+            },
+            {
+              "tag": "div",
+              "id": "",
+              "cls": "q233-tablewrap",
+              "overflow": 610
+            },
+            {
+              "tag": "div",
+              "id": "",
+              "cls": "q233-tablewrap",
+              "overflow": 610
+            },
+            {
+              "tag": "div",
+              "id": "",
+              "cls": "q234-scroll",
+              "overflow": 630
+            },
+            {
+              "tag": "div",
+              "id": "",
+              "cls": "q234-tablewrap",
+              "overflow": 630
+            },
+            {
+              "tag": "div",
+              "id": "",
+              "cls": "q234-tablewrap",
+              "overflow": 630
+            },
+            {
+              "tag": "div",
+              "id": "",
+              "cls": "q237-scroll",
+              "overflow": 500
+            },
+            {
+              "tag": "div",
+              "id": "",
+              "cls": "q237-scroll",
+              "overflow": 500
+            },
+            {
+              "tag": "div",
+              "id": "",
+              "cls": "q236-scroll",
+              "overflow": 410
+            },
+            {
+              "tag": "div",
+              "id": "",
+              "cls": "q236-scroll",
+              "overflow": 910
+            },
+            {
+              "tag": "div",
+              "id": "",
+              "cls": "q235-tablewrap",
+              "overflow": 630
+            }
+          ],
+          "guarded": [
+            {
+              "tag": "div",
+              "id": "",
+              "cls": "tn-groups",
+              "overflow": 357
+            },
+            {
+              "tag": "div",
+              "id": "livebar",
+              "cls": "livebar tj200-overflow-guard",
+              "overflow": 4
+            },
+            {
+              "tag": "div",
+              "id": "v59PersonLine",
+              "cls": "v59-person-line",
+              "overflow": 883
+            },
+            {
+              "tag": "div",
+              "id": "",
+              "cls": "panel dialbox",
+              "overflow": 6
+            },
+            {
+              "tag": "div",
+              "id": "",
+              "cls": "q224-tablewrap",
+              "overflow": 570
+            },
+            {
+              "tag": "div",
+              "id": "",
+              "cls": "q224-tablewrap",
+              "overflow": 570
+            },
+            {
+              "tag": "div",
+              "id": "",
+              "cls": "q228-tablewrap",
+              "overflow": 530
+            },
+            {
+              "tag": "div",
+              "id": "",
+              "cls": "q229-tablewrap",
+              "overflow": 590
+            },
+            {
+              "tag": "div",
+              "id": "",
+              "cls": "q231-tablewrap",
+              "overflow": 580
+            },
+            {
+              "tag": "div",
+              "id": "",
+              "cls": "q232-tablewrap",
+              "overflow": 570
+            },
+            {
+              "tag": "div",
+              "id": "",
+              "cls": "q233-tablewrap",
+              "overflow": 610
+            },
+            {
+              "tag": "div",
+              "id": "",
+              "cls": "q233-tablewrap",
+              "overflow": 610
+            },
+            {
+              "tag": "div",
+              "id": "",
+              "cls": "q233-tablewrap",
+              "overflow": 610
+            },
+            {
+              "tag": "div",
+              "id": "",
+              "cls": "q234-scroll",
+              "overflow": 630
+            },
+            {
+              "tag": "div",
+              "id": "",
+              "cls": "q234-tablewrap",
+              "overflow": 630
+            },
+            {
+              "tag": "div",
+              "id": "",
+              "cls": "q234-tablewrap",
+              "overflow": 630
+            },
+            {
+              "tag": "div",
+              "id": "",
+              "cls": "q237-scroll",
+              "overflow": 500
+            },
+            {
+              "tag": "div",
+              "id": "",
+              "cls": "q237-scroll",
+              "overflow": 500
+            },
+            {
+              "tag": "div",
+              "id": "",
+              "cls": "q236-scroll",
+              "overflow": 410
+            },
+            {
+              "tag": "div",
+              "id": "",
+              "cls": "q236-scroll",
+              "overflow": 910
+            },
+            {
+              "tag": "div",
+              "id": "",
+              "cls": "q235-tablewrap",
+              "overflow": 630
+            }
+          ]
+        }
+      },
+      {
+        "id": "mobile.viewport-width",
+        "name": "当前 QA 视口宽度",
+        "state": "pass",
+        "detail": "390px",
+        "group": "mobile",
+        "severity": "normal"
+      },
+      {
+        "id": "mobile.css-risk",
+        "name": "固定 min-width 风险规则",
+        "state": "pass",
+        "detail": "0",
+        "group": "mobile",
+        "severity": "normal",
+        "risks": []
+      },
+      {
+        "id": "mobile.header",
+        "name": "顶部区域视口约束",
+        "state": "pass",
+        "detail": "right=382 / viewport=390",
+        "group": "mobile",
+        "severity": "normal"
+      }
+    ],
+    "summary": {
+      "total": 35,
+      "pass": 32,
+      "warn": 2,
+      "fail": 0,
+      "gate": {
+        "state": "conditional",
+        "label": "RC1 条件通过",
+        "tone": "warn",
+        "reason": "运行结构通过；2 个警告/已知限制"
+      }
+    },
+    "knownLimitations": [
+      "奇门日家/月家/年家尚缺真实独立第三方 reference；不得把验证台框架当成已对拍。",
+      "七政四余核心化继续 blocked；当前 workbench 结果不提升验证等级。",
+      "移动端最终判断应至少在一个 390–430px 真实视口重新运行布局审计。",
+      "本 QA 不自动点击所有交互按钮，不替代人工关键路径验收。"
+    ],
+    "staticBaseline": {
+      "source_baseline": "v237.1-verified-html",
+      "syntax_errors": 0,
+      "duplicate_ids": 0,
+      "escaped_text_leaks": 0,
+      "notice_quiet": true,
+      "startup_v201_preserved": true,
+      "layout_v200_preserved": true,
+      "formal_report_v214_preserved": true
+    }
+  },
+  "network": {
+    "offlineStartupRequests": 7,
+    "allRequests": [
+      "https://cdn.jsdelivr.net/npm/lunar-javascript@1.7.7/lunar.js",
+      "https://cdn.jsdelivr.net/gh/mystilight/mystilight-8char@1ca2923784128fca4d38959e46ae714e4ab6b9cb/index.js",
+      "https://cdn.jsdelivr.net/npm/iztro@2.6.1/dist/iztro-v2.6.1.min.js",
+      "https://unpkg.com/lunar-javascript@1.7.7/lunar.js",
+      "https://unpkg.com/iztro@2.6.1/dist/iztro-v2.6.1.min.js",
+      "https://raw.githack.com/mystilight/mystilight-8char/1ca2923784128fca4d38959e46ae714e4ab6b9cb/index.js",
+      "https://cdn.statically.io/gh/mystilight/mystilight-8char/1ca2923784128fca4d38959e46ae714e4ab6b9cb/index.js",
+      "https://cdn.jsdelivr.net/npm/lunar-javascript@1.7.7/lunar.js",
+      "https://cdn.jsdelivr.net/gh/mystilight/mystilight-8char@1ca2923784128fca4d38959e46ae714e4ab6b9cb/index.js",
+      "https://cdn.jsdelivr.net/npm/iztro@2.6.1/dist/iztro-v2.6.1.min.js",
+      "https://unpkg.com/lunar-javascript@1.7.7/lunar.js",
+      "https://raw.githack.com/mystilight/mystilight-8char/1ca2923784128fca4d38959e46ae714e4ab6b9cb/index.js",
+      "https://unpkg.com/iztro@2.6.1/dist/iztro-v2.6.1.min.js",
+      "https://cdn.statically.io/gh/mystilight/mystilight-8char/1ca2923784128fca4d38959e46ae714e4ab6b9cb/index.js"
+    ],
+    "originalStartupRequests": 53
+  },
+  "performance": {
+    "originalDCLms": 3426.6999999997206,
+    "revisedDCLms": 4098.399999999907,
+    "note": "单次样本，网络请求均被阻断，不能代表真实用户设备性能"
+  },
+  "ok": true,
+  "artifact": {
+    "file": "releases/天机盘_v237_安全稳定修订版.html",
+    "sha256": "c794911e7d4fd010996805d9873f7dcb49bfe927221c527dbd299d25c350e7fe"
+  }
+}
