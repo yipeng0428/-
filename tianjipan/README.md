@@ -2,6 +2,8 @@
 
 最新文件：[V237.2 代码整理与性能优化版](releases/天机盘_v237.2_代码整理性能优化版.html)。交付仍是一个独立 HTML，使用时不需要 Node、构建工具或后台服务。
 
+[下载 V237.2 压缩包](releases/tianjipan-v237.2.zip)：解压后得到 `tianjipan-v237.2.html`，内容与上述 HTML 完全一致。
+
 - [V237.2 整理说明与验证结果](reviews/V237.2-cleanup-and-validation.md)
 - [V237.2 浏览器验证证据](reviews/V237.2-validation.json)
 - [V237.1 安全稳定修订记录](reviews/V237.1-changes-and-validation.md)
