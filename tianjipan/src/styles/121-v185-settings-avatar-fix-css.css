@@ -1,0 +1,158 @@
+/* ===== v185 · 设置中心滚动修复 =====
+   关键：grid 子项必须 min-height:0，滚动只能交给右侧 tjs-main；
+   避免内容把 modal 撑高后看起来“无法下拉”。 */
+.tjs-shell {
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
+.tjs-body {
+  min-height: 0 !important;
+  height: 100% !important;
+  overflow: hidden !important;
+}
+.tjs-main {
+  min-height: 0 !important;
+  height: 100% !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  overscroll-behavior-y: contain !important;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-gutter: stable;
+  touch-action: pan-y;
+}
+.tjs-section {
+  min-height: min-content;
+  padding-bottom: 20px;
+}
+.tjs-main::-webkit-scrollbar {
+  width: 9px;
+}
+.tjs-main::-webkit-scrollbar-track {
+  background: transparent;
+}
+.tjs-main::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--gold) 28%, transparent);
+  border: 3px solid transparent;
+  background-clip: padding-box;
+  border-radius: 999px;
+}
+.tjs-main:hover::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--gold) 52%, transparent);
+  border: 3px solid transparent;
+  background-clip: padding-box;
+}
+
+/* ===== 人物头像空状态优化 =====
+   旧 v126 中 img 的 author CSS display:block 会覆盖 hidden 属性，
+   某些浏览器因此会绘制“破图”图标。这里彻底禁止无 src / hidden 图片显示。 */
+.v126-avpick img[hidden],
+.v126-avpick img:not([src]),
+.v126-avpick img[src=""] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
+
+/* 空头像：统一为干净的人物轮廓 + 小加号，不再让空 img 参与绘制。 */
+.v126-avatar-field.no-avatar .v126-avpick,
+.v126-book-avatar.no-avatar .v126-avpick {
+  overflow: visible !important;
+  background:
+    radial-gradient(
+      circle at 50% 34%,
+      color-mix(in srgb, var(--gold) 19%, transparent) 0 17%,
+      transparent 18%
+    ),
+    radial-gradient(
+      ellipse at 50% 82%,
+      color-mix(in srgb, var(--gold) 14%, transparent) 0 29%,
+      transparent 30%
+    ),
+    var(--panel2) !important;
+  border-style: dashed !important;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--gold) 5%, transparent) !important;
+}
+.v126-avatar-field.no-avatar .v126-avpick::before,
+.v126-book-avatar.no-avatar .v126-avpick::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 28%;
+  width: 10px;
+  height: 10px;
+  border: 1px solid color-mix(in srgb, var(--gold2) 74%, transparent);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-sizing: border-box;
+  pointer-events: none;
+}
+.v126-avatar-field.no-avatar .v126-avpick::after,
+.v126-book-avatar.no-avatar .v126-avpick::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 66%;
+  width: 20px;
+  height: 11px;
+  border: 1px solid color-mix(in srgb, var(--gold2) 64%, transparent);
+  border-bottom: 0;
+  border-radius: 12px 12px 0 0;
+  transform: translate(-50%, -50%);
+  box-sizing: border-box;
+  pointer-events: none;
+}
+.v126-avatar-field.no-avatar .v126-avplus,
+.v126-book-avatar.no-avatar .v126-avplus {
+  position: absolute !important;
+  right: -4px !important;
+  bottom: -3px !important;
+  z-index: 3;
+  width: 17px;
+  height: 17px;
+  display: grid !important;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid var(--line2);
+  background: var(--bg2);
+  color: var(--gold2);
+  font:
+    700 13px/1 Arial,
+    sans-serif !important;
+  opacity: 1 !important;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.18);
+}
+.v126-avatar-field:not(.no-avatar) .v126-avplus,
+.v126-book-avatar:not(.no-avatar) .v126-avplus {
+  display: none !important;
+}
+.v126-avatar-field.no-avatar .v126-avpick:hover,
+.v126-book-avatar.no-avatar .v126-avpick:hover {
+  background:
+    radial-gradient(
+      circle at 50% 34%,
+      color-mix(in srgb, var(--gold) 27%, transparent) 0 17%,
+      transparent 18%
+    ),
+    radial-gradient(
+      ellipse at 50% 82%,
+      color-mix(in srgb, var(--gold) 20%, transparent) 0 29%,
+      transparent 30%
+    ),
+    var(--wash) !important;
+}
+
+/* 首页头像位稍微扩大点击容错，但不改变人物表单整体高度。 */
+#v126HomeAvatar .v126-avpick {
+  isolation: isolate;
+}
+#v126BookAvatar .v126-avpick {
+  isolation: isolate;
+}
+
+/* 所有人物卡上的真实头像如果数据异常，隐藏破图并保留原首字占位底色。 */
+.prb55-avatar img[hidden],
+.prb-avatar img[hidden],
+.prb55-avatar img:not([src]),
+.prb-avatar img:not([src]) {
+  display: none !important;
+}

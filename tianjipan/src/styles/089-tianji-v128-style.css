@@ -1,0 +1,191 @@
+/* ===== v128 · 此刻命主强关联 / 删除此刻星盘放大键 / 大六壬 Evidence 5 ===== */
+#pane-now .wheelbox {
+  padding-bottom: 0 !important;
+}
+#pane-now .wheelbox > .zbtn {
+  display: none !important;
+}
+.v128-now-plain {
+  margin: 8px 0 0;
+  padding: 9px 11px;
+  border-left: 3px solid var(--gold);
+  background: color-mix(in srgb, var(--wash) 58%, transparent);
+  font-size: 11.5px;
+  line-height: 1.75;
+  color: var(--ink);
+  border-radius: 0 3px 3px 0;
+}
+.v128-now-plain.generic {
+  border-left-color: var(--line2);
+  background: var(--panel2);
+  color: var(--dim);
+}
+.v128-now-plain .v128-k {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-right: 7px;
+  color: var(--gold2);
+  font-weight: 600;
+}
+.v128-now-plain.generic .v128-k {
+  color: var(--dim);
+}
+.v128-now-plain b {
+  color: var(--gold2);
+  font-weight: 600;
+}
+.v128-now-plain .risk {
+  color: var(--bad);
+}
+.v128-now-plain .good {
+  color: var(--good);
+}
+.v128-now-mode {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 0 0 10px;
+  padding: 7px 10px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  font-size: 11px;
+  color: var(--dim);
+}
+.v128-now-mode b {
+  color: var(--gold2);
+}
+.v128-now-mode .dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--gold);
+}
+.v128-now-mode.generic .dot {
+  background: var(--dim2);
+}
+.lr128-card {
+  margin-top: 14px;
+  border-color: color-mix(in srgb, var(--gold) 38%, var(--line));
+}
+.lr128-head {
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.lr128-head h3 {
+  margin: 0;
+  color: var(--gold2);
+  font-size: 18px;
+}
+.lr128-head small {
+  display: block;
+  margin-top: 3px;
+  color: var(--dim);
+  line-height: 1.65;
+}
+.lr128-badge {
+  flex: none;
+  padding: 4px 9px;
+  border: 1px solid var(--line2);
+  border-radius: 12px;
+  font-size: 10.5px;
+  color: var(--gold);
+}
+.lr128-gates {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 7px;
+  margin: 10px 0;
+}
+.lr128-gate {
+  padding: 8px 9px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: var(--panel2);
+}
+.lr128-gate small {
+  display: block;
+  color: var(--dim);
+  font-size: 10px;
+}
+.lr128-gate b {
+  display: block;
+  margin-top: 2px;
+  color: var(--ink);
+  font-size: 14px;
+}
+.lr128-gate.ok b {
+  color: var(--good);
+}
+.lr128-gate.warn b {
+  color: var(--gold);
+}
+.lr128-trace {
+  display: grid;
+  gap: 5px;
+  margin-top: 8px;
+}
+.lr128-step {
+  display: grid;
+  grid-template-columns: 24px 92px 1fr;
+  gap: 7px;
+  align-items: start;
+  padding: 6px 8px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.018);
+  font-size: 11px;
+  line-height: 1.6;
+}
+.lr128-step i {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border: 1px solid var(--line2);
+  border-radius: 50%;
+  font-style: normal;
+  color: var(--gold);
+}
+.lr128-step b {
+  color: var(--ink);
+  font-weight: 600;
+}
+.lr128-tools {
+  display: flex;
+  gap: 7px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+.lr128-progress {
+  flex: 1 1 180px;
+  height: 6px;
+  border-radius: 4px;
+  background: var(--panel2);
+  overflow: hidden;
+}
+.lr128-progress i {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: var(--gold);
+}
+.lr128-out {
+  margin-top: 8px;
+  padding: 8px 9px;
+  border: 1px dashed var(--line);
+  font-size: 10.8px;
+  line-height: 1.7;
+  color: var(--dim);
+}
+@media (max-width: 760px) {
+  .lr128-gates {
+    grid-template-columns: 1fr 1fr;
+  }
+  .lr128-step {
+    grid-template-columns: 24px 76px 1fr;
+  }
+}

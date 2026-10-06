@@ -1,0 +1,1570 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+
+<!-- ===== v181 · 首屏关键启动层：必须位于 HEAD 最前部 ===== -->
+<script id="v181-critical-boot">
+<!-- TJ_BLOCK:js/000-v181-critical-boot.js -->
+</script>
+
+<!-- ===== v193 · 账号系统集中配置（Bearer Token 版）=====
+     部署时只需要把 API_BASE 改成 Cloudflare Worker 地址。
+     本版按最新版需求使用 Authorization: Bearer，不依赖跨站 Cookie，
+     因此可直接使用 surge.sh → workers.dev。
+-->
+<script id="tj-account-config">
+<!-- TJ_BLOCK:js/001-tj-account-config.js -->
+</script><!-- ===== V219 · Engineering Refactor Kernel =====
+     Goals: behavior preservation, XSS boundary hardening, visibility-aware animation,
+     stable scheduling, and a single place for V219 runtime utilities. -->
+<script id="v219-engineering-kernel">
+<!-- TJ_BLOCK:js/002-v219-engineering-kernel.js -->
+</script>
+<script id="tianji-pane-scheduler">
+<!-- TJ_BLOCK:js/pane-scheduler.js -->
+</script>
+<style id="v181-critical-css">
+<!-- TJ_BLOCK:styles/000-v181-critical-css.css -->
+</style>
+
+<script id="v183-settings-boot">
+<!-- TJ_BLOCK:js/003-v183-settings-boot.js -->
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>天机盘 V237.2 · 代码整理与性能优化版</title>
+<style>
+<!-- TJ_BLOCK:styles/001-theme-1.css -->
+</style>
+<style id="v36-merge-css">
+<!-- TJ_BLOCK:styles/002-v36-merge-css.css -->
+</style>
+
+<style>
+<!-- TJ_BLOCK:styles/003-theme-3.css -->
+</style>
+
+
+<style>
+<!-- TJ_BLOCK:styles/004-theme-4.css -->
+</style>
+
+<style id="v63-footer-zoom-style">
+<!-- TJ_BLOCK:styles/005-v63-footer-zoom-style.css -->
+</style>
+
+<style id="v66-ui-fix-css">
+<!-- TJ_BLOCK:styles/006-v66-ui-fix-css.css -->
+</style>
+
+<style id="v183-theme-tokens">
+<!-- TJ_BLOCK:styles/007-v183-theme-tokens.css -->
+</style>
+
+
+<style id="v184-nav-stability-css">
+<!-- TJ_BLOCK:styles/008-v184-nav-stability-css.css -->
+</style>
+
+
+<style id="v186-typography-quick-theme-css">
+<!-- TJ_BLOCK:styles/009-v186-typography-quick-theme-css.css -->
+</style>
+
+
+<!-- ===== v194 · 道长通知配置 =====
+  以后站长发布首页开屏通知 / 跑马灯，只需要修改下面 notices 数组，不必动通知系统代码。
+  字段：
+    id           每条必须唯一；建议使用版本号+日期，例如 "v194-20261006"
+    title        通知标题
+    summary      消息中心列表摘要
+    body         正文，可写简单 HTML
+    published_at 发布时间文本
+    popup        true = 新通知首次进入时自动开屏弹出
+    ticker       true = 加入导航下方信息跑马灯
+    active       false = 暂停该条通知
+-->
+<script id="tj-notice-config">
+<!-- TJ_BLOCK:js/004-tj-notice-config.js -->
+</script>
+
+
+<style id="v205-notice-quiet-css">
+<!-- TJ_BLOCK:styles/010-v205-notice-quiet-css.css -->
+</style>
+
+</head>
+<body>
+<canvas id="stars" aria-hidden="true"></canvas>
+<div class="bg-cloud tl" aria-hidden="true"></div><div class="bg-cloud br" aria-hidden="true"></div>
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <div class="seal" aria-hidden="true">天<br>机</div>
+      <div>
+        <h1>天机盘</h1>
+        <p class="sub">此刻 · 八字 · 紫微 · 奇门 · 六壬 · 六爻 · 梅花 · 玄空 · 择日 · 天象 · 五运六气 &nbsp;|&nbsp; 实时推演</p>
+      </div>
+    </div>
+    <div class="clock" id="clock" aria-live="off"></div>
+    <div class="top-btns"><button class="ghost cal-open" id="calBtn" title="万年历" aria-label="打开万年历">万年历</button>
+    <button class="ghost" id="tipBtn" title="赞赏" aria-label="赞赏">赏</button>
+    <button class="ghost" id="helpBtn" title="使用说明与术语表" aria-label="使用说明">?</button>
+    <button class="ghost" id="themeBtn" title="切换玄夜 / 宣纸主题" aria-label="切换主题">☯</button></div>
+  </header>
+
+  <div class="orn-band fret tight" aria-hidden="true"></div>
+  <div class="livebar" id="livebar" aria-label="实时状态"><span class="lb-dot"></span><b id="lbSc">—</b><span id="lbRem"></span><span class="lb-sep">|</span><span id="lbTerm"></span><span class="lb-sep">|</span><span id="lbDay"></span><span class="lb-sep">|</span><span id="lbMoon"></span><button id="lbBell" class="lb-bell" aria-pressed="false">🔕 报时 关</button><button class="lbbtn" id="lbBellSet" type="button" aria-label="报时设置" title="报时设置">⚙</button></div>
+
+  <section class="panel persona" id="persona" aria-label="人物信息"></section>
+
+  <main class="layout">
+    <section class="dialcol" aria-label="天机盘">
+      <div class="panel dialbox" style="padding:0">
+        <svg id="dial" viewBox="-108 -108 816 816" role="img" aria-label="天机盘:节气、时辰、六十四卦、八卦、五行,外加星象、干支、气运图层"></svg>
+        <svg id="dialFix" class="dial-fix" viewBox="-108 -108 816 816" aria-hidden="true"><line x1="300" y1="-96" x2="300" y2="696" class="fx-v"/><line x1="-96" y1="300" x2="696" y2="300" class="fx-h"/><path d="M300 -104 L292 -88 L308 -88 Z" class="fx-p"/><path d="M300 704 L292 688 L308 688 Z" class="fx-p2"/></svg>
+        <i class="dz-c tr" aria-hidden="true"></i><i class="dz-c bl" aria-hidden="true"></i>
+        <button class="dz-btn zoom-ui" id="dialZoom" aria-label="放大查看圆盘" title="放大查看">＋</button>
+      </div>
+      <div class="layersw" id="layerSw"><button data-layer="lp" class="on">罗盘</button><button data-layer="astro">星象</button><button data-layer="ppl">人物</button><button data-layer="bz">命局</button><button data-layer="sense">感应</button><button data-layer="gz">干支</button><button data-layer="yq">气运</button><button data-layer="none">基础</button></div>
+      <div id="layerCap"></div>
+      <div id="sensePanel" class="sensepanel" hidden></div>
+      <div id="compassMount"></div>
+      <div class="exportbox" id="exportBox" hidden><button id="expPng">导出 PNG</button><button id="expSvg">导出 SVG</button></div>
+      <div class="panel log" id="log" aria-live="polite"></div>
+      <div class="chips" id="chips"></div>
+    </section>
+
+    <section class="datacol" aria-label="排盘结果">
+      <div class="tabs" id="tabs" role="tablist"><div class="tgrp" role="presentation"><span class="tgl" title="看此刻的天象与节令">天时</span><div class="tgb"><button class="tab on" data-tab="now" role="tab">此刻</button><button class="tab" data-tab="season" role="tab">时令</button><button class="tab" data-tab="astro" role="tab">天象</button><button class="tab" data-tab="xingkong" role="tab">星空</button><button class="tab" data-tab="jingluo" role="tab">经络</button></div></div><div class="tgrp" role="presentation"><span class="tgl" title="看一个人的命盘">命局</span><div class="tgb"><button class="tab" data-tab="over" role="tab">总览</button><button class="tab" data-tab="guide" role="tab">个人指南</button><button class="tab" data-tab="bazi" role="tab">八字</button><button class="tab" data-tab="ziwei" role="tab">紫微斗数</button><button class="tab" data-tab="zwfly" role="tab">紫微飞星</button><button class="tab" data-tab="wxflow" role="tab">五行流通</button><button class="tab" data-tab="qizheng" role="tab">七政四余</button><button class="tab" data-tab="natal" role="tab">星盘</button><button class="tab" data-tab="vedic" role="tab">吠陀占星</button><button class="tab" data-tab="people" role="tab">人物关系册</button><button class="tab" data-tab="net" role="tab">关系图</button><button class="tab" data-tab="hepan" role="tab">合盘</button></div></div><div class="tgrp" role="presentation"><span class="tgl" title="问一件具体的事">占测</span><div class="tgb"><button class="tab" data-tab="router" role="tab">问事</button><button class="tab" data-tab="qimen" role="tab">奇门遁甲</button><button class="tab" data-tab="liuren" role="tab">大六壬</button><button class="tab" data-tab="jinkou" role="tab">金口诀</button><button class="tab" data-tab="liuyao" role="tab">六爻纳甲</button><button class="tab" data-tab="yi" role="tab">梅花易数</button><button class="tab" data-tab="taiyi" role="tab">太乙神数</button><button class="tab" data-tab="cezi" role="tab">测字</button><button class="tab" data-tab="fun" role="tab">占断</button></div></div><div class="tgrp" role="presentation"><span class="tgl" title="择日、起名、选址">择办</span><div class="tgb"><button class="tab" data-tab="zeri" role="tab">择日</button><button class="tab" data-tab="fate" role="tab">事项运势</button><button class="tab" data-tab="name" role="tab">姓名</button><button class="tab" data-tab="house" role="tab">房屋方位</button><button class="tab" data-tab="xk" role="tab">玄空飞星</button><button class="tab" data-tab="luopan" role="tab">综合罗盘</button><button class="tab" data-tab="sha" role="tab">神煞方位</button><button class="tab" data-tab="taisui" role="tab">犯太岁</button><button class="tab" data-tab="jifang" role="tab">吉方共识</button></div></div><div class="tgrp" role="presentation"><span class="tgl" title="查卦、查表、算数">数理</span><div class="tgb"><button class="tab" data-tab="zy" role="tab">周易</button><button class="tab" data-tab="hetu" role="tab">河图洛书</button><button class="tab" data-tab="jiazi" role="tab">甲子查表</button><button class="tab" data-tab="bridge" role="tab">地支枢纽</button><button class="tab" data-tab="tools" role="tab">命理工具</button></div></div><div class="tgrp" role="presentation"><span class="tgl" title="把多个盘叠在一起看">盘库</span><div class="tgb"><button class="tab" data-tab="studio" role="tab">盘库</button></div></div><div class="tgrp" role="presentation"><span class="tgl" title="读书、做功课、复盘">修习</span><div class="tgb"><button class="tab" data-tab="lib" role="tab">天机书院</button><button class="tab" data-tab="review" role="tab">复盘记录</button><button class="tab" data-tab="verify" role="tab">校验与口径</button></div></div></div>
+      <div class="orn-band fret" aria-hidden="true"></div>
+      <div class="pane on" id="pane-now"></div><div class="pane" id="pane-season"></div><div class="pane" id="pane-over"></div><div class="pane" id="pane-people"></div><div class="pane" id="pane-net"></div><div class="pane" id="pane-guide"></div><div class="pane" id="pane-fate"></div><div class="pane" id="pane-name"></div><div class="pane" id="pane-cezi"></div><div class="pane" id="pane-zy"></div><div class="pane" id="pane-tools"></div><div class="pane" id="pane-studio"></div><div class="pane" id="pane-lib"></div><div class="pane" id="pane-sha"></div><div class="pane" id="pane-taisui"></div><div class="pane" id="pane-jifang"></div><div class="pane" id="pane-luopan"></div><div class="pane" id="pane-bridge"></div><div class="pane" id="pane-verify"></div><div class="pane" id="pane-jingluo"></div><div class="pane" id="pane-xingkong"></div><div class="pane" id="pane-house"></div><div class="pane" id="pane-hetu"></div><div class="pane" id="pane-jiazi"></div><div class="pane" id="pane-review"></div><div class="pane" id="pane-jinkou"></div><div class="pane" id="pane-qizheng"></div><div class="pane" id="pane-me"></div><div class="pane" id="pane-natal"></div><div class="pane" id="pane-vedic"></div><div class="pane" id="pane-taiyi"></div><div class="pane" id="pane-fun"></div><div class="pane" id="pane-bazi"></div><div class="pane" id="pane-ziwei"></div><div class="pane" id="pane-zwfly"></div><div class="pane" id="pane-wxflow"></div><div class="pane" id="pane-router"></div><div class="pane" id="pane-qimen"></div><div class="pane" id="pane-liuren"></div><div class="pane" id="pane-liuyao"></div><div class="pane" id="pane-yi"></div><div class="pane" id="pane-xk"></div><div class="pane" id="pane-zeri"></div><div class="pane" id="pane-astro"></div><div class="pane" id="pane-hepan"></div>
+    </section>
+  </main>
+
+  <div class="orn-band wave" aria-hidden="true"></div>
+  <footer>
+    本页为传统术数与传统天文历法的算法演示与文化研究,不构成任何决策建议。各流派口径不同(奇门拆补/置闰、紫微诸派安星、六壬取传、玄空替卦兼向等),结果以所标注方法为准。节气时刻、农历、四柱、命宫胎元、奇门拆补、紫微星曜与小限、六壬天地盘、择日与择时历数、行星位置等均已与独立的开源实现或天文历库对拍;评分、喜用、解读、综合方位、个人指南等则是本页按传统章法编写的规则化倾向描述,请勿当作断语。日期范围 1901–2099。
+
+    <div class="dev-credit" id="devCredit" aria-label="开发者信息">
+      <div class="dev-meta">
+        <span class="dev-name">开发者 · 玄一道长</span>
+        <span class="dev-role">天机盘 · 独立开发</span>
+        <span class="dev-xhs">小红书号：<b>nian0596333</b></span>
+      </div>
+    </div>
+    <div class="build-version" id="buildVersion">版本 · V237.2 · 代码整理与性能优化版</div>
+    <div class="friend-links" id="friendLinks" aria-label="友情链接">
+      <div class="friend-links-title">友情链接</div>
+      <div class="friend-links-list">
+        <a class="friend-link" href="https://tianji-xuanmi.surge.sh/" target="_blank" rel="noopener noreferrer">天机玄秘<span aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+  </footer>
+</div>
+<button id="goBottom" class="fab fab-bottom hide" type="button" aria-label="到底部"><span class="fab-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/></svg></span><span class="fab-label">到底部</span></button>
+<button id="goTop" class="fab fab-top hide" type="button" aria-label="到顶部"><span class="fab-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg></span><span class="fab-label">到顶部</span></button>
+<div id="toast" role="status" aria-live="polite"></div>
+<div id="modal" hidden><div class="mbox" role="dialog" aria-label="文字报告"><h3 class="sec" style="margin:0">文字报告</h3><textarea id="repTxt" readonly></textarea><div class="row"><button class="gbtn" id="repCopy">复制</button><button class="gbtn" id="repSave" hidden>保存为文件</button><button class="gbtn" id="repClose">关闭</button></div></div></div>
+<div id="calModal" hidden role="dialog" aria-modal="true" aria-label="万年历"><div class="cal-box" id="calBox"></div></div>
+<div id="tipModal" hidden><div class="tipbox" role="dialog" aria-label="赞赏"><img class="tipimg" alt="微信赞赏码"><p class="tip-l">若此盘曾给你一点启发,欢迎随缘赞赏,权当添一盏清茶。</p><small>微信扫一扫 · 全凭自愿</small><button class="gbtn" id="tipClose">关闭</button></div></div>
+<div id="zoomModal" hidden role="dialog" aria-modal="true" aria-label="圆盘放大查看"><div class="zm-bar" id="zmBar"><span class="zm-t">天机盘 · 放大查看</span><span class="zm-read" id="zmRead"></span><span class="zm-ctl"><b id="zmZoom">100%</b><button id="zmFit" title="恢复圆盘到初始大小和位置">复位</button></span><span class="zm-lay" id="zmLayers"><button data-layer="lp">罗盘</button><button data-layer="astro">星象</button><button data-layer="ppl">人物</button><button data-layer="bz">命局</button><button data-layer="sense">感应</button><button data-layer="gz">干支</button><button data-layer="yq">气运</button><button data-layer="none">基础</button></span><button id="zmClose" class="zm-x" aria-label="关闭">✕ 关闭</button></div><div class="zm-body" id="zmBody"><div id="zmWrap"></div></div></div>
+<div id="helpModal" hidden><div id="helpBox" role="dialog" aria-label="使用说明"></div></div>
+<script>
+<!-- TJ_BLOCK:js/005-application-5.js -->
+</script>
+<script id="v36-claude-merge">
+<!-- TJ_BLOCK:js/006-v36-claude-merge.js -->
+</script>
+
+
+<style id="v39-panlib-css">
+<!-- TJ_BLOCK:styles/011-v39-panlib-css.css -->
+</style>
+
+
+<script id="v39-panlib-js">
+<!-- TJ_BLOCK:js/007-v39-panlib-js.js -->
+</script>
+
+
+<style id="v41-liuren-pan-css">
+<!-- TJ_BLOCK:styles/012-v41-liuren-pan-css.css -->
+</style>
+
+<script id="v41-liuren-pan-js">
+<!-- TJ_BLOCK:js/008-v41-liuren-pan-js.js -->
+</script>
+
+<style id="v42-qimen-turn-css">
+<!-- TJ_BLOCK:styles/013-v42-qimen-turn-css.css -->
+</style>
+<script id="v42-qimen-turn-js">
+<!-- TJ_BLOCK:js/009-v42-qimen-turn-js.js -->
+</script>
+
+
+<style id="v43-taiyi-pan-css">
+<!-- TJ_BLOCK:styles/014-v43-taiyi-pan-css.css -->
+</style>
+
+<script id="v43-taiyi-pan-js">
+<!-- TJ_BLOCK:js/010-v43-taiyi-pan-js.js -->
+</script>
+
+
+<style id="v44-xiu-sky-css">
+<!-- TJ_BLOCK:styles/015-v44-xiu-sky-css.css -->
+</style>
+
+<script id="v44-xiu-sky-js">
+<!-- TJ_BLOCK:js/011-v44-xiu-sky-js.js -->
+</script>
+
+
+<style>
+<!-- TJ_BLOCK:styles/016-theme-16.css -->
+</style>
+<script>
+<!-- TJ_BLOCK:js/012-application-12.js -->
+</script>
+
+<style>
+<!-- TJ_BLOCK:styles/017-theme-17.css -->
+</style>
+<script>
+<!-- TJ_BLOCK:js/013-application-13.js -->
+</script>
+<style id="v47-huntian-interactive-css">
+<!-- TJ_BLOCK:styles/018-v47-huntian-interactive-css.css -->
+</style>
+<script id="v47-huntian-interactive-js">
+<!-- TJ_BLOCK:js/014-v47-huntian-interactive-js.js -->
+</script>
+
+
+
+<style id="v48-msg-css">
+<!-- TJ_BLOCK:styles/019-v48-msg-css.css -->
+</style>
+
+<script id="v48-msg-js">
+<!-- TJ_BLOCK:js/015-v48-msg-js.js -->
+</script>
+
+<style id="v49-zlf-css">
+<!-- TJ_BLOCK:styles/020-v49-zlf-css.css -->
+</style>
+
+
+<script id="v49-zlf-js">
+<!-- TJ_BLOCK:js/016-v49-zlf-js.js -->
+</script>
+
+
+<script>
+<!-- TJ_BLOCK:js/017-application-17.js -->
+</script>
+
+
+<script>
+<!-- TJ_BLOCK:js/018-application-18.js -->
+</script>
+
+<script>
+<!-- TJ_BLOCK:js/019-application-19.js -->
+</script>
+
+<style id="v53-people-master-style">
+<!-- TJ_BLOCK:styles/021-v53-people-master-style.css -->
+</style>
+<script id="v53-people-master">
+<!-- TJ_BLOCK:js/020-v53-people-master.js -->
+</script>
+
+<style id="v54-people-stability-style">
+<!-- TJ_BLOCK:styles/022-v54-people-stability-style.css -->
+</style>
+<script id="v54-people-stability">
+<!-- TJ_BLOCK:js/021-v54-people-stability.js -->
+</script>
+
+<style id="v55-people-layout-style">
+<!-- TJ_BLOCK:styles/023-v55-people-layout-style.css -->
+</style>
+<script id="v55-people-layout-js">
+<!-- TJ_BLOCK:js/022-v55-people-layout-js.js -->
+</script>
+
+
+<style id="v55-people-container-fix">
+<!-- TJ_BLOCK:styles/024-v55-people-container-fix.css -->
+</style>
+
+<style id="v55-people-focus-style">
+<!-- TJ_BLOCK:styles/025-v55-people-focus-style.css -->
+</style>
+
+
+<style id="v56-jianchu-style">
+<!-- TJ_BLOCK:styles/026-v56-jianchu-style.css -->
+</style>
+<script id="v56-jianchu-js">
+<!-- TJ_BLOCK:js/023-v56-jianchu-js.js -->
+</script>
+
+
+<style id="v57-huanghei-css">
+<!-- TJ_BLOCK:styles/027-v57-huanghei-css.css -->
+</style>
+<script id="v57-huanghei-js">
+<!-- TJ_BLOCK:js/024-v57-huanghei-js.js -->
+</script>
+
+
+<style id="v58-home-people-css">
+<!-- TJ_BLOCK:styles/028-v58-home-people-css.css -->
+</style>
+<script id="v58-home-people-js">
+<!-- TJ_BLOCK:js/025-v58-home-people-js.js -->
+</script>
+
+<style id="v59-persona-compact-css">
+<!-- TJ_BLOCK:styles/029-v59-persona-compact-css.css -->
+</style>
+<script id="v59-persona-compact-js">
+<!-- TJ_BLOCK:js/026-v59-persona-compact-js.js -->
+</script>
+
+
+<style id="v60-semantic-color-css">
+<!-- TJ_BLOCK:styles/030-v60-semantic-color-css.css -->
+</style>
+<script id="v60-semantic-color-js">
+<!-- TJ_BLOCK:js/027-v60-semantic-color-js.js -->
+</script>
+
+
+<style id="v61-people-delete-css">
+<!-- TJ_BLOCK:styles/031-v61-people-delete-css.css -->
+</style>
+<script id="v61-people-delete-js">
+<!-- TJ_BLOCK:js/028-v61-people-delete-js.js -->
+</script>
+
+
+<style id="v62-life-navfix-css">
+<!-- TJ_BLOCK:styles/032-v62-life-navfix-css.css -->
+</style>
+<script id="v62-life-navfix-js">
+<!-- TJ_BLOCK:js/029-v62-life-navfix-js.js -->
+</script>
+
+
+<script id="v63-footer-zoom-js">
+<!-- TJ_BLOCK:js/030-v63-footer-zoom-js.js -->
+</script>
+
+<style id="v64-people-quick-footer-style">
+<!-- TJ_BLOCK:styles/033-v64-people-quick-footer-style.css -->
+</style>
+<script id="v64-people-quick-footer-js">
+<!-- TJ_BLOCK:js/031-v64-people-quick-footer-js.js -->
+</script>
+
+<style id="v65-jiazi-taisui-css">
+<!-- TJ_BLOCK:styles/034-v65-jiazi-taisui-css.css -->
+</style>
+
+
+<script id="v65-jiazi-taisui-js">
+<!-- TJ_BLOCK:js/032-v65-jiazi-taisui-js.js -->
+</script>
+
+
+<script id="v66-ui-fix-js">
+<!-- TJ_BLOCK:js/033-v66-ui-fix-js.js -->
+</script>
+
+<style id="v67-panlib-clean-css">
+<!-- TJ_BLOCK:styles/035-v67-panlib-clean-css.css -->
+</style>
+<script id="v67-version-js">
+<!-- TJ_BLOCK:js/034-v67-version-js.js -->
+</script>
+
+<style id="v68-icon-studio-performance-css">
+<!-- TJ_BLOCK:styles/036-v68-icon-studio-performance-css.css -->
+</style>
+
+<script id="v68-icon-studio-performance-js">
+<!-- TJ_BLOCK:js/035-v68-icon-studio-performance-js.js -->
+</script>
+
+
+<style id="v69-pan-stability-css">
+<!-- TJ_BLOCK:styles/037-v69-pan-stability-css.css -->
+</style>
+
+<script id="v69-pan-stability-js">
+<!-- TJ_BLOCK:js/036-v69-pan-stability-js.js -->
+</script>
+
+<style id="v70-person-time-lunar-css">
+<!-- TJ_BLOCK:styles/038-v70-person-time-lunar-css.css -->
+</style>
+
+<script id="v70-person-time-lunar-js">
+<!-- TJ_BLOCK:js/037-v70-person-time-lunar-js.js -->
+</script>
+
+<style id="v71-dizhi-hand-css">
+<!-- TJ_BLOCK:styles/039-v71-dizhi-hand-css.css -->
+</style>
+
+<script id="v71-dizhi-hand-js">
+<!-- TJ_BLOCK:js/038-v71-dizhi-hand-js.js -->
+</script>
+
+
+<style id="v72-wxflow-css">
+<!-- TJ_BLOCK:styles/040-v72-wxflow-css.css -->
+</style>
+<script id="v72-wxflow-js">
+<!-- TJ_BLOCK:js/039-v72-wxflow-js.js -->
+</script>
+
+<style id="v74-zeri-today-css">
+<!-- TJ_BLOCK:styles/041-v74-zeri-today-css.css -->
+</style>
+<script id="v74-zeri-today-js">
+<!-- TJ_BLOCK:js/040-v74-zeri-today-js.js -->
+</script>
+
+
+<style id="v75-friend-links-css">
+<!-- TJ_BLOCK:styles/042-v75-friend-links-css.css -->
+</style>
+<script id="v75-friend-links-js">
+<!-- TJ_BLOCK:js/041-v75-friend-links-js.js -->
+</script>
+
+
+
+<style id="v79-jingluo-body3d-css">
+<!-- TJ_BLOCK:styles/043-v79-jingluo-body3d-css.css -->
+</style>
+<script id="v79-jingluo-body3d-js">
+<!-- TJ_BLOCK:js/042-v79-jingluo-body3d-js.js -->
+</script>
+
+
+<style id="v80-jingluo-body3d-refine-css">
+<!-- TJ_BLOCK:styles/044-v80-jingluo-body3d-refine-css.css -->
+</style>
+
+<script id="v80-jingluo-body3d-refine-js">
+<!-- TJ_BLOCK:js/043-v80-jingluo-body3d-refine-js.js -->
+</script>
+
+
+<style id="v81-ziwuliuzhu-link-css">
+<!-- TJ_BLOCK:styles/045-v81-ziwuliuzhu-link-css.css -->
+</style>
+
+<script id="v81-ziwuliuzhu-link-js">
+<!-- TJ_BLOCK:js/044-v81-ziwuliuzhu-link-js.js -->
+</script>
+
+
+<style id="v82-real-human-3d-css">
+<!-- TJ_BLOCK:styles/046-v82-real-human-3d-css.css -->
+</style>
+
+<script id="v82-real-human-3d-js">
+<!-- TJ_BLOCK:js/045-v82-real-human-3d-js.js -->
+</script>
+
+
+<style id="v83-layered-human-css">
+<!-- TJ_BLOCK:styles/047-v83-layered-human-css.css -->
+</style>
+
+<script id="v83-layered-human-js">
+<!-- TJ_BLOCK:js/046-v83-layered-human-js.js -->
+</script>
+
+
+<style id="v84-canvas-human3d-css">
+<!-- TJ_BLOCK:styles/048-v84-canvas-human3d-css.css -->
+</style>
+
+<script id="v84-canvas-human3d-js">
+<!-- TJ_BLOCK:js/047-v84-canvas-human3d-js.js -->
+</script>
+
+
+
+<!-- ===== v85 · Tianji Core 基础设施（基于 v84）：不改变现有排盘结果，只建立统一内核接口 ===== -->
+<style id="v85-tianji-core-css">
+<!-- TJ_BLOCK:styles/049-v85-tianji-core-css.css -->
+</style>
+<script id="v85-tianji-core-js">
+<!-- TJ_BLOCK:js/048-v85-tianji-core-js.js -->
+</script>
+
+
+
+<!-- ===== v86 · Tianji Time & Calendar Core：统一时间上下文 / 节气 / 日界口径 ===== -->
+<style id="v86-time-core-css">
+<!-- TJ_BLOCK:styles/050-v86-time-core-css.css -->
+</style>
+<script id="v86-time-calendar-core-js">
+<!-- TJ_BLOCK:js/049-v86-time-calendar-core-js.js -->
+</script>
+
+
+<style id="v87-verifier-css">
+<!-- TJ_BLOCK:styles/051-v87-verifier-css.css -->
+</style>
+
+<script id="v87-verifier-js">
+<!-- TJ_BLOCK:js/050-v87-verifier-js.js -->
+</script>
+
+
+
+<style id="v88-bazi-core-css">
+<!-- TJ_BLOCK:styles/052-v88-bazi-core-css.css -->
+</style>
+<script id="v88-bazi-core-js">
+<!-- TJ_BLOCK:js/051-v88-bazi-core-js.js -->
+</script>
+
+<style id="v89-bazi-verifier-css">
+<!-- TJ_BLOCK:styles/053-v89-bazi-verifier-css.css -->
+</style>
+<script id="v89-bazi-verifier-js">
+<!-- TJ_BLOCK:js/052-v89-bazi-verifier-js.js -->
+</script>
+
+<!-- ===== v90 · Tianji Ziwei Core：紫微简盘核心抽离 / 新旧双轨验证 / 可回滚 ===== -->
+<style id="v90-ziwei-core-css">
+<!-- TJ_BLOCK:styles/054-v90-ziwei-core-css.css -->
+</style>
+<script id="v90-ziwei-core-js">
+<!-- TJ_BLOCK:js/053-v90-ziwei-core-js.js -->
+</script>
+
+
+
+<!-- ===== v91 · Ziwei Verification Layer / iztro ===== -->
+<style id="v91-ziwei-verifier-css">
+<!-- TJ_BLOCK:styles/055-v91-ziwei-verifier-css.css -->
+</style>
+<script id="v91-ziwei-verifier-js">
+<!-- TJ_BLOCK:js/054-v91-ziwei-verifier-js.js -->
+</script>
+
+<!-- ===== v92 · Tianji Ziwei Core 1.1：14辅星 / 庙旺 / 长生十二神 / 大限标准化 ===== -->
+<style id="v92-ziwei-enhance-css">
+<!-- TJ_BLOCK:styles/056-v92-ziwei-enhance-css.css -->
+</style>
+<script id="v92-ziwei-enhance-js">
+<!-- TJ_BLOCK:js/055-v92-ziwei-enhance-js.js -->
+</script>
+
+<!-- ===== v93 · Tianji Ziwei Core 1.2：博士/将前/岁前十二神 + 命主身主 ===== -->
+<style id="v93-ziwei-enhance-css">
+<!-- TJ_BLOCK:styles/057-v93-ziwei-enhance-css.css -->
+</style>
+<script id="v93-ziwei-enhance-js">
+<!-- TJ_BLOCK:js/056-v93-ziwei-enhance-js.js -->
+</script>
+<!-- ===== v94 · Ziwei Adjective Stars Batch 1 ===== -->
+<style id="v94-ziwei-adjective-css">
+<!-- TJ_BLOCK:styles/058-v94-ziwei-adjective-css.css -->
+</style>
+<script id="v94-ziwei-adjective-js">
+<!-- TJ_BLOCK:js/057-v94-ziwei-adjective-js.js -->
+</script>
+
+<!-- ===== v95 · Ziwei Adjective Stars Batch 2 ===== -->
+<style id="v95-ziwei-adjective-css">
+<!-- TJ_BLOCK:styles/059-v95-ziwei-adjective-css.css -->
+</style>
+<script id="v95-ziwei-adjective-js">
+<!-- TJ_BLOCK:js/058-v95-ziwei-adjective-js.js -->
+</script>
+
+<!-- ===== v96 · Ziwei Adjective Stars Batch 3 ===== -->
+<style id="v96-ziwei-adjective-css">
+<!-- TJ_BLOCK:styles/060-v96-ziwei-adjective-css.css -->
+</style>
+<script id="v96-ziwei-adjective-js">
+<!-- TJ_BLOCK:js/059-v96-ziwei-adjective-js.js -->
+</script>
+<!-- ===== v97 · Ziwei Default Natal Adjective Stars 38/38 ===== -->
+<style id="v97-ziwei-adjective-css">
+<!-- TJ_BLOCK:styles/061-v97-ziwei-adjective-css.css -->
+</style>
+<script id="v97-ziwei-adjective-js">
+<!-- TJ_BLOCK:js/060-v97-ziwei-adjective-js.js -->
+</script>
+<!-- ===== v98 · Ziwei Minor Period + Late Rat Hour Policy Layer ===== -->
+<style id="v98-ziwei-cycle-css">
+<!-- TJ_BLOCK:styles/062-v98-ziwei-cycle-css.css -->
+</style>
+<script id="v98-ziwei-cycle-js">
+<!-- TJ_BLOCK:js/061-v98-ziwei-cycle-js.js -->
+</script>
+
+<!-- ===== v99 · Ziwei Doctrine Layer: default / zhongzhou ===== -->
+<style id="v99-ziwei-doctrine-css">
+<!-- TJ_BLOCK:styles/063-v99-ziwei-doctrine-css.css -->
+</style>
+<script id="v99-ziwei-doctrine-js">
+<!-- TJ_BLOCK:js/062-v99-ziwei-doctrine-js.js -->
+</script>
+<!-- ===== v100 · Ziwei Zhongzhou Heaven / Earth / Human Chart Types ===== -->
+<style id="v100-ziwei-astrotype-css">
+<!-- TJ_BLOCK:styles/064-v100-ziwei-astrotype-css.css -->
+</style>
+<script id="v100-ziwei-astrotype-js">
+<!-- TJ_BLOCK:js/063-v100-ziwei-astrotype-js.js -->
+</script>
+
+<!-- ===== v101 · Ziwei Minor-Period Target-Date / ageDivide Layer ===== -->
+<style id="v101-ziwei-age-divide-css">
+<!-- TJ_BLOCK:styles/065-v101-ziwei-age-divide-css.css -->
+</style>
+<script id="v101-ziwei-age-divide-js">
+<!-- TJ_BLOCK:js/064-v101-ziwei-age-divide-js.js -->
+</script>
+
+<!-- ===== v102 · Ziwei Target-Date Cycle Query / 大限小限童限联合查询 ===== -->
+<style id="v102-ziwei-cycle-query-css">
+<!-- TJ_BLOCK:styles/066-v102-ziwei-cycle-query-css.css -->
+</style>
+<script id="v102-ziwei-cycle-query-js">
+<!-- TJ_BLOCK:js/065-v102-ziwei-cycle-query-js.js -->
+</script>
+
+<!-- ===== v103 · Ziwei Yearly Flow Layer / 流年十二宫 · 四化 · 流曜 · 岁前将前 ===== -->
+<style id="v103-ziwei-yearly-css">
+<!-- TJ_BLOCK:styles/067-v103-ziwei-yearly-css.css -->
+</style>
+<script id="v103-ziwei-yearly-js">
+<!-- TJ_BLOCK:js/066-v103-ziwei-yearly-js.js -->
+</script>
+
+
+<!-- ===== v104 · Ziwei Monthly Flow Layer / 流月十二宫 · 四化 · 月曜 · 闰月分段 ===== -->
+<style id="v104-ziwei-monthly-css">
+<!-- TJ_BLOCK:styles/068-v104-ziwei-monthly-css.css -->
+</style>
+<script id="v104-ziwei-monthly-js">
+<!-- TJ_BLOCK:js/067-v104-ziwei-monthly-js.js -->
+</script>
+
+<!-- ===== v105 · Ziwei Daily Flow Layer / 流日十二宫 · 四化 · 日曜 · 晚子时日界 ===== -->
+<style id="v105-ziwei-daily-css">
+<!-- TJ_BLOCK:styles/069-v105-ziwei-daily-css.css -->
+</style>
+<script id="v105-ziwei-daily-js">
+<!-- TJ_BLOCK:js/068-v105-ziwei-daily-js.js -->
+</script>
+
+<!-- ===== v106 · Ziwei Hourly Flow Layer / 流时十二宫 · 四化 · 时曜 · 晚子时联动 ===== -->
+<style id="v106-ziwei-hourly-css">
+<!-- TJ_BLOCK:styles/070-v106-ziwei-hourly-css.css -->
+</style>
+<script id="v106-ziwei-hourly-js">
+<!-- TJ_BLOCK:js/069-v106-ziwei-hourly-js.js -->
+</script>
+<!-- ===== v107 · Ziwei Unified Fortune Timeline API / 运限时间轴 · 前后跳转 · 批量窗口 ===== -->
+<style id="v107-ziwei-timeline-css">
+<!-- TJ_BLOCK:styles/071-v107-ziwei-timeline-css.css -->
+</style>
+<script id="v107-ziwei-timeline-js">
+<!-- TJ_BLOCK:js/070-v107-ziwei-timeline-js.js -->
+</script>
+
+<!-- ===== v110 · Tianji Qimen Core 1.0 / 时家转盘·拆补法 / 主路线回归 ===== -->
+<style id="v110-qimen-core-css">
+<!-- TJ_BLOCK:styles/072-v110-qimen-core-css.css -->
+</style>
+<script id="v110-qimen-core-js">
+<!-- TJ_BLOCK:js/071-v110-qimen-core-js.js -->
+</script>
+
+
+<!-- ===== v111 · Qimen Verification Layer / Mingpan 0.1.8 shadow verifier ===== -->
+<style id="v111-qimen-verify-css">
+<!-- TJ_BLOCK:styles/073-v111-qimen-verify-css.css -->
+</style>
+<script id="v111-qimen-verify-js">
+<!-- TJ_BLOCK:js/072-v111-qimen-verify-js.js -->
+</script>
+<!--
+Third-party reference notice:
+Mingpan by ChesterRa, version 0.1.8, commit d4cab8f27d14541c1219650318c0c40e80cb492c.
+Licensed under Apache License 2.0. v111 uses a compact independently-normalized shadow verifier and golden-test data for verification only.
+-->
+
+
+<!-- ===== v112 · Qimen Doctrine/Style Layer + Ziwei Timeline UI Repair ===== -->
+<style id="v112-ui-css">
+<!-- TJ_BLOCK:styles/074-v112-ui-css.css -->
+</style>
+<script id="v112-qimen-ziwei-js">
+<!-- TJ_BLOCK:js/073-v112-qimen-ziwei-js.js -->
+</script>
+
+
+<!-- ===== v113 · 3D 天象双模型 / Canvas 轻量渲染 / 真实比例太阳系 + 日地月 ===== -->
+<style id="v113-astro3d-css">
+<!-- TJ_BLOCK:styles/075-v113-astro3d-css.css -->
+</style>
+<script id="v113-astro3d-js">
+<!-- TJ_BLOCK:js/074-v113-astro3d-js.js -->
+</script>
+
+
+<style id="tianji-v114-style">
+<!-- TJ_BLOCK:styles/076-tianji-v114-style.css -->
+</style>
+
+
+<style id="tianji-v115-style">
+<!-- TJ_BLOCK:styles/077-tianji-v115-style.css -->
+</style>
+<script id="tianji-v114-patch">
+<!-- TJ_BLOCK:js/075-tianji-v114-patch.js -->
+</script>
+
+
+<style id="tianji-v116-perf-style">
+<!-- TJ_BLOCK:styles/078-tianji-v116-perf-style.css -->
+</style>
+<script id="tianji-v116-performance">
+<!-- TJ_BLOCK:js/076-tianji-v116-performance.js -->
+</script>
+
+<style id="tianji-v117-link-style">
+<!-- TJ_BLOCK:styles/079-tianji-v117-link-style.css -->
+</style>
+<script id="tianji-v117-astro-link">
+<!-- TJ_BLOCK:js/077-tianji-v117-astro-link.js -->
+</script>
+
+<style id="tianji-v118-astro-ui">
+<!-- TJ_BLOCK:styles/080-tianji-v118-astro-ui.css -->
+</style>
+<script id="tianji-v118-astro-interaction">
+<!-- TJ_BLOCK:js/078-tianji-v118-astro-interaction.js -->
+</script>
+
+<style id="tianji-v119-celestial-events">
+<!-- TJ_BLOCK:styles/081-tianji-v119-celestial-events.css -->
+</style>
+<script id="tianji-v119-celestial-events-js">
+<!-- TJ_BLOCK:js/079-tianji-v119-celestial-events-js.js -->
+</script>
+
+
+<style id="v121-liuren-core-css">
+<!-- TJ_BLOCK:styles/082-v121-liuren-core-css.css -->
+</style>
+<script id="v121-liuren-core-js">
+<!-- TJ_BLOCK:js/080-v121-liuren-core-js.js -->
+</script>
+
+
+<style id="v122-final-css">
+<!-- TJ_BLOCK:styles/083-v122-final-css.css -->
+</style>
+<script id="v122-final-js">
+<!-- TJ_BLOCK:js/081-v122-final-js.js -->
+</script>
+
+
+<style id="v123-core-css">
+<!-- TJ_BLOCK:styles/084-v123-core-css.css -->
+</style>
+
+<script id="v123-core-js">
+<!-- TJ_BLOCK:js/082-v123-core-js.js -->
+</script>
+
+
+<style id="v124-qimen-liuren-css">
+<!-- TJ_BLOCK:styles/085-v124-qimen-liuren-css.css -->
+</style>
+<script id="v124-qimen-liuren-js">
+<!-- TJ_BLOCK:js/083-v124-qimen-liuren-js.js -->
+</script>
+
+
+<style id="v125-liuren-astrofix-css">
+<!-- TJ_BLOCK:styles/086-v125-liuren-astrofix-css.css -->
+</style>
+<script id="v125-liuren-astrofix-js">
+<!-- TJ_BLOCK:js/084-v125-liuren-astrofix-js.js -->
+</script>
+
+
+<style id="v126-avatar-evidence-css">
+<!-- TJ_BLOCK:styles/087-v126-avatar-evidence-css.css -->
+</style>
+<script id="v126-avatar-evidence-js">
+<!-- TJ_BLOCK:js/085-v126-avatar-evidence-js.js -->
+</script>
+
+<style id="tianji-v127-style">
+<!-- TJ_BLOCK:styles/088-tianji-v127-style.css -->
+</style>
+<script id="tianji-v127-js">
+<!-- TJ_BLOCK:js/086-tianji-v127-js.js -->
+</script>
+
+<style id="tianji-v128-style">
+<!-- TJ_BLOCK:styles/089-tianji-v128-style.css -->
+</style>
+<script id="tianji-v128-js">
+<!-- TJ_BLOCK:js/087-tianji-v128-js.js -->
+</script>
+
+<style id="v129-style">
+<!-- TJ_BLOCK:styles/090-v129-style.css -->
+</style>
+<script id="v129-core">
+<!-- TJ_BLOCK:js/088-v129-core.js -->
+</script>
+
+<style id="v130-style">
+<!-- TJ_BLOCK:styles/091-v130-style.css -->
+</style>
+<script id="v130-core">
+<!-- TJ_BLOCK:js/089-v130-core.js -->
+</script>
+
+<!-- ===== v131 · 太阳系环图层校准 / 节气月份真实对位 / 文字防重叠 ===== -->
+<style id="v131-style">
+<!-- TJ_BLOCK:styles/092-v131-style.css -->
+</style>
+<script id="v131-solar-rings">
+<!-- TJ_BLOCK:js/090-v131-solar-rings.js -->
+</script>
+
+
+
+<!-- ===== v132 · 六壬 Evidence 总控 / 太阳系轨道间距扩展说明 ===== -->
+<style id="v132-style">
+<!-- TJ_BLOCK:styles/093-v132-style.css -->
+</style>
+<script id="v132-liuren-suite">
+<!-- TJ_BLOCK:js/091-v132-liuren-suite.js -->
+</script>
+
+
+
+<!-- ===== v133 · 太阳系365日刻度环 / 盘库风格界面增强 ===== -->
+<style id="v133-solar-ui">
+<!-- TJ_BLOCK:styles/094-v133-solar-ui.css -->
+</style>
+<script id="v133-version">
+<!-- TJ_BLOCK:js/092-v133-version.js -->
+</script>
+
+
+<!-- ===== v134 · 真实模型同步 / 星宿节气可点 / 日心俯视增强 ===== -->
+<style id="v134-solar-refine">
+<!-- TJ_BLOCK:styles/095-v134-solar-refine.css -->
+</style>
+<script id="v134-solar-refine-js">
+<!-- TJ_BLOCK:js/093-v134-solar-refine-js.js -->
+</script>
+
+<!-- ===== v135 · 真实1:1信息环 / 星座精度校核 / 全图层点击联动 ===== -->
+<style id="v135-style">
+<!-- TJ_BLOCK:styles/096-v135-style.css -->
+</style>
+<script id="v135-js">
+<!-- TJ_BLOCK:js/094-v135-js.js -->
+</script>
+
+
+<!-- ===== v136 · 跟踪锁定 / 出生时刻跳转 / 日心黄字修复 ===== -->
+<style id="v136-style">
+<!-- TJ_BLOCK:styles/097-v136-style.css -->
+</style>
+<script id="v136-script">
+<!-- TJ_BLOCK:js/095-v136-script.js -->
+</script>
+
+
+<!-- ===== v137 · 地球轨道时间环 / 提示浅色 / 日心白字 ===== -->
+<style id="v137-style">
+<!-- TJ_BLOCK:styles/098-v137-style.css -->
+</style>
+<script id="v137-script">
+<!-- TJ_BLOCK:js/096-v137-script.js -->
+</script>
+
+<!-- ===== v153 · 天机式 3.1 / 历法校准 · 易象彩环 · 全环可点 ===== -->
+<style id="tj152-style">
+<!-- TJ_BLOCK:styles/099-tj152-style.css -->
+</style>
+
+<style id="tj159-override">
+<!-- TJ_BLOCK:styles/100-tj159-override.css -->
+</style>
+
+<style id="tj162-override">
+<!-- TJ_BLOCK:styles/101-tj162-override.css -->
+</style>
+
+<style id="tj163-design-system">
+<!-- TJ_BLOCK:styles/102-tj163-design-system.css -->
+</style>
+<script id="tj152-script">
+<!-- TJ_BLOCK:js/097-tj152-script.js -->
+</script>
+<style id="v164-tiangan-hand-css">
+<!-- TJ_BLOCK:styles/103-v164-tiangan-hand-css.css -->
+</style>
+<script id="v164-tiangan-hand-js">
+<!-- TJ_BLOCK:js/098-v164-tiangan-hand-js.js -->
+</script>
+
+
+<style id="v165-qimen-period-css">
+<!-- TJ_BLOCK:styles/104-v165-qimen-period-css.css -->
+</style>
+<script id="v165-qimen-period-js">
+<!-- TJ_BLOCK:js/099-v165-qimen-period-js.js -->
+</script>
+
+<style id="v166-meihua-style">
+<!-- TJ_BLOCK:styles/105-v166-meihua-style.css -->
+</style>
+<script id="v166-meihua-core">
+<!-- TJ_BLOCK:js/100-v166-meihua-core.js -->
+</script>
+
+
+<!-- ===== v167 · 择日 Core 1.0 / 规则审计 / Legacy 回归 ===== -->
+<style id="v167-zeri-core-css">
+<!-- TJ_BLOCK:styles/106-v167-zeri-core-css.css -->
+</style>
+<script id="v167-zeri-core-js">
+<!-- TJ_BLOCK:js/101-v167-zeri-core-js.js -->
+</script>
+
+
+
+<style id="v168-evidence-css">
+<!-- TJ_BLOCK:styles/107-v168-evidence-css.css -->
+</style>
+<script id="v168-evidence-js" type="text/tianji-lazy" data-tj-lazy-group="insight">
+<!-- TJ_BLOCK:js/102-v168-evidence-js.js -->
+</script>
+
+
+
+<style id="v169-consensus-css">
+<!-- TJ_BLOCK:styles/108-v169-consensus-css.css -->
+</style>
+<script id="v169-consensus-js" type="text/tianji-lazy" data-tj-lazy-group="insight">
+<!-- TJ_BLOCK:js/103-v169-consensus-js.js -->
+</script>
+
+
+<style id="v170-explain-css">
+<!-- TJ_BLOCK:styles/109-v170-explain-css.css -->
+</style>
+<script id="v170-explain-js" type="text/tianji-lazy" data-tj-lazy-group="insight">
+<!-- TJ_BLOCK:js/104-v170-explain-js.js -->
+</script>
+
+
+
+<style id="v171-ai-explain-css">
+<!-- TJ_BLOCK:styles/110-v171-ai-explain-css.css -->
+</style>
+<script id="v171-ai-explain-js" type="text/tianji-lazy" data-tj-lazy-group="insight">
+<!-- TJ_BLOCK:js/105-v171-ai-explain-js.js -->
+</script>
+
+<style id="v172-api-gateway-css">
+<!-- TJ_BLOCK:styles/111-v172-api-gateway-css.css -->
+</style>
+<script id="v172-api-gateway-js" type="text/tianji-lazy" data-tj-lazy-group="insight">
+<!-- TJ_BLOCK:js/106-v172-api-gateway-js.js -->
+</script>
+
+
+<style id="v173-evidence-kg-css">
+<!-- TJ_BLOCK:styles/112-v173-evidence-kg-css.css -->
+</style>
+<script id="v173-evidence-kg-js" type="text/tianji-lazy" data-tj-lazy-group="insight">
+<!-- TJ_BLOCK:js/107-v173-evidence-kg-js.js -->
+</script>
+
+
+<style id="v174-tianjishi-surface-css">
+<!-- TJ_BLOCK:styles/113-v174-tianjishi-surface-css.css -->
+</style>
+
+<script id="v174-tianjishi-surface-js">
+<!-- TJ_BLOCK:js/108-v174-tianjishi-surface-js.js -->
+</script>
+
+
+<style id="v175-wide-layout-css">
+<!-- TJ_BLOCK:styles/114-v175-wide-layout-css.css -->
+</style>
+
+<script id="v175-wide-layout-js">
+<!-- TJ_BLOCK:js/109-v175-wide-layout-js.js -->
+</script>
+
+
+<style id="v176-tianjishi-unified-theme-css">
+<!-- TJ_BLOCK:styles/115-v176-tianjishi-unified-theme-css.css -->
+</style>
+
+<script id="v176-unified-theme-js">
+<!-- TJ_BLOCK:js/110-v176-unified-theme-js.js -->
+</script>
+
+
+<style id="v177-now-and-bigview-css">
+<!-- TJ_BLOCK:styles/116-v177-now-and-bigview-css.css -->
+</style>
+
+<script id="v177-now-and-bigview-js">
+<!-- TJ_BLOCK:js/111-v177-now-and-bigview-js.js -->
+</script>
+
+
+<style id="v178-left-focus-scroll-css">
+<!-- TJ_BLOCK:styles/117-v178-left-focus-scroll-css.css -->
+</style>
+
+<script id="v178-left-focus-scroll-js">
+<!-- TJ_BLOCK:js/112-v178-left-focus-scroll-js.js -->
+</script>
+
+
+<script id="v181-runtime-performance-js">
+<!-- TJ_BLOCK:js/113-v181-runtime-performance-js.js -->
+</script>
+
+
+<style id="v182-account-css">
+<!-- TJ_BLOCK:styles/118-v182-account-css.css -->
+</style>
+
+<script id="v193-account-js">
+<!-- TJ_BLOCK:js/114-v193-account-js.js -->
+</script>
+
+
+<style id="v183-settings-css">
+<!-- TJ_BLOCK:styles/119-v183-settings-css.css -->
+</style>
+
+<script id="v183-settings-js">
+<!-- TJ_BLOCK:js/115-v183-settings-js.js -->
+</script>
+
+
+<style id="v184-runtime-stability-css">
+<!-- TJ_BLOCK:styles/120-v184-runtime-stability-css.css -->
+</style>
+<script id="v184-runtime-stability-js">
+<!-- TJ_BLOCK:js/116-v184-runtime-stability-js.js -->
+</script>
+
+
+<style id="v185-settings-avatar-fix-css">
+<!-- TJ_BLOCK:styles/121-v185-settings-avatar-fix-css.css -->
+</style>
+
+<script id="v185-settings-avatar-fix-js">
+<!-- TJ_BLOCK:js/117-v185-settings-avatar-fix-js.js -->
+</script>
+
+
+
+<style id="v187-theme-engine-final">
+<!-- TJ_BLOCK:styles/122-v187-theme-engine-final.css -->
+</style>
+
+<script id="v186-typography-quick-theme-js">
+<!-- TJ_BLOCK:js/118-v186-typography-quick-theme-js.js -->
+</script>
+
+
+<script id="v187-theme-state-js">
+<!-- TJ_BLOCK:js/119-v187-theme-state-js.js -->
+</script>
+
+
+<style id="v188-brand-settings-swatch-css">
+<!-- TJ_BLOCK:styles/123-v188-brand-settings-swatch-css.css -->
+</style>
+
+<script id="v188-brand-settings-swatch-js">
+<!-- TJ_BLOCK:js/120-v188-brand-settings-swatch-js.js -->
+</script>
+
+
+<style id="v189-system-theme-css">
+<!-- TJ_BLOCK:styles/124-v189-system-theme-css.css -->
+</style>
+
+<script id="v189-system-theme-js">
+<!-- TJ_BLOCK:js/121-v189-system-theme-js.js -->
+</script>
+
+
+<style id="v190-cinnabar-nav-contrast-css">
+<!-- TJ_BLOCK:styles/125-v190-cinnabar-nav-contrast-css.css -->
+</style>
+
+<script id="v190-version-js">
+<!-- TJ_BLOCK:js/122-v190-version-js.js -->
+</script>
+
+
+<style id="v191-theme-swatch-glass-css">
+<!-- TJ_BLOCK:styles/126-v191-theme-swatch-glass-css.css -->
+</style>
+
+<script id="v191-version-js">
+<!-- TJ_BLOCK:js/123-v191-version-js.js -->
+</script>
+
+
+<style id="v192-theme-preview-xuanye-css">
+<!-- TJ_BLOCK:styles/127-v192-theme-preview-xuanye-css.css -->
+</style>
+
+<script id="v192-version-js">
+<!-- TJ_BLOCK:js/124-v192-version-js.js -->
+</script>
+
+
+<script id="v193-account-version-js">
+<!-- TJ_BLOCK:js/125-v193-account-version-js.js -->
+</script>
+
+
+<style id="v194-notice-css">
+<!-- TJ_BLOCK:styles/128-v194-notice-css.css -->
+</style>
+
+
+<style id="v195-notice-admin-css">
+<!-- TJ_BLOCK:styles/129-v195-notice-admin-css.css -->
+</style>
+
+<script id="v195-notice-js">
+<!-- TJ_BLOCK:js/126-v195-notice-js.js -->
+</script>
+
+
+<script id="v195-version-js">
+<!-- TJ_BLOCK:js/127-v195-version-js.js -->
+</script>
+
+
+<style id="v196-question-router-css">
+<!-- TJ_BLOCK:styles/130-v196-question-router-css.css -->
+</style>
+
+<script id="v196-question-router-js">
+<!-- TJ_BLOCK:js/128-v196-question-router-js.js -->
+</script>
+
+
+
+
+<script id="v197-marker-js">
+<!-- TJ_BLOCK:js/130-v197-marker-js.js -->
+</script>
+
+<style id="v198-consumer-css">
+<!-- TJ_BLOCK:styles/131-v198-consumer-css.css -->
+</style>
+<script id="v198-consumer-js">
+<!-- TJ_BLOCK:js/131-v198-consumer-js.js -->
+</script>
+
+
+<style id="v199-qimen-crosscheck-css">
+<!-- TJ_BLOCK:styles/132-v199-qimen-crosscheck-css.css -->
+</style>
+
+<script id="v199-qimen-crosscheck-js">
+<!-- TJ_BLOCK:js/132-v199-qimen-crosscheck-js.js -->
+</script>
+
+
+<style id="v200-global-layout-hardening-css">
+<!-- TJ_BLOCK:styles/133-v200-global-layout-hardening-css.css -->
+</style>
+
+<script id="v200-global-layout-hardening-js">
+<!-- TJ_BLOCK:js/133-v200-global-layout-hardening-js.js -->
+</script>
+
+
+<style id="v201-startup-performance-css">
+<!-- TJ_BLOCK:styles/134-v201-startup-performance-css.css -->
+</style>
+
+<script id="v201-startup-performance-js">
+<!-- TJ_BLOCK:js/134-v201-startup-performance-js.js -->
+</script>
+
+
+<style id="v202-liuyao-depth-css">
+<!-- TJ_BLOCK:styles/135-v202-liuyao-depth-css.css -->
+</style>
+
+<script id="v202-liuyao-depth-js">
+<!-- TJ_BLOCK:js/135-v202-liuyao-depth-js.js -->
+</script>
+
+
+<style id="v203-ziwei-flying-depth-css">
+<!-- TJ_BLOCK:styles/136-v203-ziwei-flying-depth-css.css -->
+</style>
+
+<script id="v203-ziwei-flying-depth-js">
+<!-- TJ_BLOCK:js/136-v203-ziwei-flying-depth-js.js -->
+</script>
+
+
+<style id="v204-ziwei-chain-timing-css">
+<!-- TJ_BLOCK:styles/137-v204-ziwei-chain-timing-css.css -->
+</style>
+
+<script id="v204-ziwei-chain-timing-js">
+<!-- TJ_BLOCK:js/137-v204-ziwei-chain-timing-js.js -->
+</script>
+
+
+<style id="v205-xuankong-depth-css">
+<!-- TJ_BLOCK:styles/138-v205-xuankong-depth-css.css -->
+</style>
+
+<script id="v205-xuankong-depth-js">
+<!-- TJ_BLOCK:js/138-v205-xuankong-depth-js.js -->
+</script>
+
+
+<style id="v206-xuankong-audit-css">
+<!-- TJ_BLOCK:styles/139-v206-xuankong-audit-css.css -->
+</style>
+
+<script id="v206-xuankong-audit-js">
+<!-- TJ_BLOCK:js/139-v206-xuankong-audit-js.js -->
+</script>
+
+
+<style id="v207-sanhe-water-css">
+<!-- TJ_BLOCK:styles/140-v207-sanhe-water-css.css -->
+</style>
+
+<script id="v207-sanhe-water-js">
+<!-- TJ_BLOCK:js/140-v207-sanhe-water-js.js -->
+</script>
+
+
+<style id="v208-sanhe-policy-css">
+<!-- TJ_BLOCK:styles/141-v208-sanhe-policy-css.css -->
+</style>
+
+<script id="v208-sanhe-policy-js">
+<!-- TJ_BLOCK:js/141-v208-sanhe-policy-js.js -->
+</script>
+
+
+<style id="v209-historical-time-css">
+<!-- TJ_BLOCK:styles/142-v209-historical-time-css.css -->
+</style>
+
+<script id="v209-historical-time-js">
+<!-- TJ_BLOCK:js/142-v209-historical-time-js.js -->
+</script>
+
+
+<style id="v210-time-regression-css">
+<!-- TJ_BLOCK:styles/143-v210-time-regression-css.css -->
+</style>
+
+<script id="v210-time-regression-js">
+<!-- TJ_BLOCK:js/143-v210-time-regression-js.js -->
+</script>
+
+
+<style id="v211-time-migration-css">
+<!-- TJ_BLOCK:styles/144-v211-time-migration-css.css -->
+</style>
+
+<script id="v211-time-migration-js">
+<!-- TJ_BLOCK:js/144-v211-time-migration-js.js -->
+</script>
+
+
+<style id="v212-relation-timeline-css">
+<!-- TJ_BLOCK:styles/145-v212-relation-timeline-css.css -->
+</style>
+
+<script id="v212-relation-timeline-js">
+<!-- TJ_BLOCK:js/145-v212-relation-timeline-js.js -->
+</script>
+
+
+<style id="v213-relation-depth-css">
+<!-- TJ_BLOCK:styles/146-v213-relation-depth-css.css -->
+</style>
+
+<script id="v213-relation-depth-js">
+<!-- TJ_BLOCK:js/146-v213-relation-depth-js.js -->
+</script>
+
+
+<style id="v214-formal-evidence-css">
+<!-- TJ_BLOCK:styles/147-v214-formal-evidence-css.css -->
+</style>
+
+<script id="v214-formal-evidence-js">
+<!-- TJ_BLOCK:js/147-v214-formal-evidence-js.js -->
+</script>
+
+
+<style id="v215-release-qa-css">
+<!-- TJ_BLOCK:styles/148-v215-release-qa-css.css -->
+</style>
+
+<script id="v215-release-qa-js">
+<!-- TJ_BLOCK:js/148-v215-release-qa-js.js -->
+</script>
+
+
+<style id="v217-release-freeze-css">
+<!-- TJ_BLOCK:styles/149-v217-release-freeze-css.css -->
+</style>
+
+<script id="v217-release-freeze-js">
+<!-- TJ_BLOCK:js/149-v217-release-freeze-js.js -->
+</script>
+
+
+<style id="v218-ziwei-render-fix-css">
+<!-- TJ_BLOCK:styles/150-v218-ziwei-render-fix-css.css -->
+</style>
+<script id="v219-ziwei-render-fix-js">
+<!-- TJ_BLOCK:js/150-v219-ziwei-render-fix-js.js -->
+</script>
+
+<script id="v219-final-authority-js">
+<!-- TJ_BLOCK:js/151-v219-final-authority-js.js -->
+</script>
+
+<style id="v221-qimen-external-evidence-css">
+<!-- TJ_BLOCK:styles/151-v221-qimen-external-evidence-css.css -->
+</style>
+
+<script id="v221-qimen-external-evidence-js">
+<!-- TJ_BLOCK:js/152-v221-qimen-external-evidence-js.js -->
+</script>
+
+
+
+
+<style id="v222-qimen-doctrine-css">
+<!-- TJ_BLOCK:styles/152-v222-qimen-doctrine-css.css -->
+</style>
+
+<script id="v222-qimen-doctrine-js">
+<!-- TJ_BLOCK:js/154-v222-qimen-doctrine-js.js -->
+</script>
+
+
+
+
+<style id="v223-qimen-day-doctrine-css">
+<!-- TJ_BLOCK:styles/153-v223-qimen-day-doctrine-css.css -->
+</style>
+
+<script id="v223-qimen-day-doctrine-js">
+<!-- TJ_BLOCK:js/156-v223-qimen-day-doctrine-js.js -->
+</script>
+
+
+
+
+<style id="v224-qizheng-foundation-css">
+<!-- TJ_BLOCK:styles/154-v224-qizheng-foundation-css.css -->
+</style>
+
+<script id="v224-qizheng-foundation-js">
+<!-- TJ_BLOCK:js/158-v224-qizheng-foundation-js.js -->
+</script>
+
+
+
+
+<style id="v225-qizheng-ephemeris-css">
+<!-- TJ_BLOCK:styles/155-v225-qizheng-ephemeris-css.css -->
+</style>
+
+<script id="v225-qizheng-ephemeris-js">
+<!-- TJ_BLOCK:js/160-v225-qizheng-ephemeris-js.js -->
+</script>
+
+
+
+
+<style id="v226-qizheng-adoption-css">
+<!-- TJ_BLOCK:styles/156-v226-qizheng-adoption-css.css -->
+</style>
+
+<script id="v226-qizheng-adoption-js">
+<!-- TJ_BLOCK:js/162-v226-qizheng-adoption-js.js -->
+</script>
+
+
+
+
+<style id="v227-qizheng-vendor-css">
+<!-- TJ_BLOCK:styles/157-v227-qizheng-vendor-css.css -->
+</style>
+
+<script id="v227-qizheng-vendor-js">
+<!-- TJ_BLOCK:js/164-v227-qizheng-vendor-js.js -->
+</script>
+
+
+
+
+<style id="v228-four-residuals-css">
+<!-- TJ_BLOCK:styles/158-v228-four-residuals-css.css -->
+</style>
+
+<script id="v228-four-residuals-js">
+<!-- TJ_BLOCK:js/166-v228-four-residuals-js.js -->
+</script>
+
+
+
+
+<style id="v229-xiu-frame-css">
+<!-- TJ_BLOCK:styles/159-v229-xiu-frame-css.css -->
+</style>
+
+<script id="v229-xiu-frame-js">
+<!-- TJ_BLOCK:js/168-v229-xiu-frame-js.js -->
+</script>
+
+
+
+
+<style id="v230-absolute-zero-css">
+<!-- TJ_BLOCK:styles/160-v230-absolute-zero-css.css -->
+</style>
+
+<script id="v230-absolute-zero-js">
+<!-- TJ_BLOCK:js/170-v230-absolute-zero-js.js -->
+</script>
+
+
+
+
+<style id="v231-residual-provider-css">
+<!-- TJ_BLOCK:styles/161-v231-residual-provider-css.css -->
+</style>
+
+<script id="v231-residual-provider-js">
+<!-- TJ_BLOCK:js/172-v231-residual-provider-js.js -->
+</script>
+
+
+
+
+<style id="v232-life-rulepack-css">
+<!-- TJ_BLOCK:styles/162-v232-life-rulepack-css.css -->
+</style>
+
+<script id="v232-life-rulepack-js">
+<!-- TJ_BLOCK:js/174-v232-life-rulepack-js.js -->
+</script>
+
+
+
+
+<style id="v233-strength-rulepack-css">
+<!-- TJ_BLOCK:styles/163-v233-strength-rulepack-css.css -->
+</style>
+
+<script id="v233-strength-rulepack-js">
+<!-- TJ_BLOCK:js/176-v233-strength-rulepack-js.js -->
+</script>
+
+
+
+
+<style id="v234-dongwei-css">
+<!-- TJ_BLOCK:styles/164-v234-dongwei-css.css -->
+</style>
+
+<script id="v234-dongwei-js">
+<!-- TJ_BLOCK:js/178-v234-dongwei-js.js -->
+</script>
+
+
+
+
+<style id="v235-liangtianchi-css">
+<!-- TJ_BLOCK:styles/165-v235-liangtianchi-css.css -->
+</style>
+
+<script id="v235-liangtianchi-js">
+<!-- TJ_BLOCK:js/180-v235-liangtianchi-js.js -->
+</script>
+
+
+
+
+<style id="v236-liangtianchi-grid-css">
+<!-- TJ_BLOCK:styles/166-v236-liangtianchi-grid-css.css -->
+</style>
+
+<script id="v236-liangtianchi-grid-js">
+<!-- TJ_BLOCK:js/182-v236-liangtianchi-grid-js.js -->
+</script>
+
+
+
+<style id="v237-residual-drift-css">
+<!-- TJ_BLOCK:styles/167-v237-residual-drift-css.css -->
+</style>
+
+<script id="v237-residual-drift-js">
+<!-- TJ_BLOCK:js/184-v237-residual-drift-js.js -->
+</script>
+
+
+
+<script id="tianji-release">
+<!-- TJ_BLOCK:js/release.js -->
+</script>
+</body>
+</html>

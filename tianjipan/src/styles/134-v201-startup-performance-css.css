@@ -1,0 +1,11 @@
+/* ===== V201 · 首屏优先 =====
+   启动阶段尽量不做会触发大范围 reflow 的诊断扫描。
+   页面内容先显示，后台能力后加载。
+*/
+html.tj201-booting * {
+  scroll-behavior: auto !important;
+}
+html.tj201-booting .tj198,
+html.tj201-booting #q199Lab {
+  contain: layout style;
+}

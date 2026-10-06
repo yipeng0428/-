@@ -1,0 +1,233 @@
+#tjQimenV2Badge,
+#tjZiweiTimelineV2Badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-left: 7px;
+  padding: 2px 7px;
+  border: 1px solid rgba(194, 161, 94, 0.28);
+  border-radius: 999px;
+  font-size: 10px;
+  color: var(--gold, #c9a45d);
+  vertical-align: middle;
+}
+#tjQimenV2Badge.warn,
+#tjZiweiTimelineV2Badge.warn {
+  color: #c87966;
+  border-color: rgba(200, 121, 102, 0.42);
+}
+.tjq112-policy {
+  display: flex;
+  align-items: end;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.tjq112-policy label {
+  display: grid;
+  gap: 4px;
+  font-size: 10px;
+  color: var(--dim);
+}
+.tjq112-policy select {
+  min-width: 118px;
+}
+.tjq112-policy .tjmode {
+  padding: 5px 8px;
+  border: 1px solid rgba(180, 160, 120, 0.15);
+  border-radius: 9px;
+  font-size: 10px;
+  color: var(--dim);
+}
+.tjz112 {
+  margin-top: 12px;
+  overflow: hidden;
+}
+.tjz112 * {
+  box-sizing: border-box;
+}
+.tjz112-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.tjz112-head h3 {
+  margin: 0 0 4px;
+}
+.tjz112-head p {
+  margin: 0;
+  color: var(--dim);
+  font-size: 11px;
+  line-height: 1.55;
+}
+.tjz112-date {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.tjz112-date input {
+  min-width: 185px;
+}
+.tjz112-tools {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 10px 0;
+}
+.tjz112-unit.on {
+  box-shadow: inset 0 0 0 1px rgba(213, 174, 96, 0.75);
+  background: rgba(213, 174, 96, 0.1);
+}
+.tjz112-cards {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(102px, 1fr));
+  gap: 6px;
+  margin: 9px 0;
+}
+.tjz112-card {
+  position: relative;
+  padding: 8px 9px;
+  border: 1px solid rgba(180, 160, 120, 0.14);
+  border-radius: 9px;
+  background: rgba(255, 255, 255, 0.018);
+  min-height: 58px;
+}
+.tjz112-card small {
+  display: block;
+  color: var(--dim);
+  font-size: 10px;
+}
+.tjz112-card b {
+  display: block;
+  font-size: 13px;
+  margin-top: 2px;
+}
+.tjz112-card em {
+  font-style: normal;
+  color: var(--dim);
+  font-size: 9px;
+}
+.tjz112-card.changed {
+  border-color: rgba(213, 174, 96, 0.62);
+}
+.tjz112-card.changed:after {
+  content: "变化";
+  position: absolute;
+  right: 6px;
+  top: 5px;
+  font-size: 8px;
+  color: #d9b96e;
+}
+.tjz112-track {
+  border: 1px solid rgba(180, 160, 120, 0.12);
+  border-radius: 10px;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.05);
+}
+#tjz112Range {
+  width: 100%;
+  accent-color: #c6a45d;
+}
+.tjz112-ticks {
+  display: grid;
+  grid-template-columns: repeat(9, minmax(0, 1fr));
+  gap: 2px;
+  margin-top: 5px;
+}
+.tjz112-ticks.decadal {
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+}
+.tjz112-tick {
+  appearance: none;
+  border: 0;
+  background: none;
+  color: var(--dim);
+  font-size: 8px;
+  padding: 3px 1px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.tjz112-tick.center {
+  color: #dfc078;
+  font-weight: 700;
+}
+.tjz112-foot {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 7px;
+  color: var(--dim);
+  font-size: 10px;
+}
+.tjz112-foot b {
+  color: #d9b96e;
+}
+.zc.v112-hit {
+  position: relative;
+}
+.zc .v112-flowmarks {
+  position: absolute;
+  right: 4px;
+  bottom: 20px;
+  display: flex;
+  gap: 2px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  max-width: 82%;
+  pointer-events: none;
+  z-index: 5;
+}
+.v112-flowmark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 15px;
+  height: 14px;
+  padding: 0 4px;
+  border-radius: 999px;
+  font-size: 8px;
+  font-weight: 800;
+  color: #171717;
+}
+.v112-flowmark.major {
+  background: #d5ae60;
+}
+.v112-flowmark.minor {
+  background: #aab1c0;
+}
+.v112-flowmark.year {
+  background: #c98470;
+}
+.v112-flowmark.month {
+  background: #8299c1;
+}
+.v112-flowmark.day {
+  background: #91a574;
+}
+.v112-flowmark.hour {
+  background: #aa86b2;
+}
+@media (max-width: 900px) {
+  .tjz112-cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 560px) {
+  .tjz112-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .tjz112-date {
+    width: 100%;
+  }
+  .tjz112-date input {
+    width: 100%;
+    min-width: 0;
+  }
+}

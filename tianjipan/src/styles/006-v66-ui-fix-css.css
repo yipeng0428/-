@@ -1,0 +1,78 @@
+/* ===== v66 · 异常文本 / 放大图标 / 巨盘自适应 / 个人指南标题 ===== */
+.guide-v66-head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 5px;
+}
+.guide-v66-head .sec {
+  margin: 0 !important;
+  font-size: 24px !important;
+  letter-spacing: 0.12em;
+}
+.guide-v66-sub {
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  color: var(--dim);
+  line-height: 1.5;
+}
+@media (max-width: 560px) {
+  .guide-v66-head {
+    display: block;
+  }
+  .guide-v66-sub {
+    margin-top: 3px;
+    font-size: 10px;
+  }
+}
+
+/* 所有真正的“放大查看 / 全屏查看”按钮统一使用小型放大镜 + 号。 */
+.v66-mag {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+.v66-mag::before {
+  content: "";
+  display: inline-block;
+  flex: 0 0 auto;
+  width: 14px;
+  height: 14px;
+  background: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cg fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='8.2' cy='8.2' r='5.1'/%3E%3Cpath d='M12 12l4.8 4.8M8.2 5.5v5.4M5.5 8.2h5.4'/%3E%3C/g%3E%3C/svg%3E")
+    center/contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cg fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='8.2' cy='8.2' r='5.1'/%3E%3Cpath d='M12 12l4.8 4.8M8.2 5.5v5.4M5.5 8.2h5.4'/%3E%3C/g%3E%3C/svg%3E")
+    center/contain no-repeat;
+}
+.v66-mag.icon-only {
+  font-size: 0 !important;
+  gap: 0;
+}
+.v66-mag.icon-only::before {
+  width: 16px;
+  height: 16px;
+}
+/* v63 修复后这些旧通用放大按钮已经有伪元素，避免重复图标。 */
+.zoom-ui.v66-mag::before,
+.zbtn.v66-mag::before,
+.dz-btn.v66-mag::before {
+  display: none !important;
+}
+
+/* 巨盘真正“适应”：盘面尺寸取可视容器宽高较小值，而不是一律占满宽度。 */
+#stuStage {
+  width: var(--stu-size-v66, 100%) !important;
+  height: var(--stu-size-v66, auto) !important;
+  max-width: none !important;
+  max-height: none !important;
+  aspect-ratio: 1/1 !important;
+  flex: none;
+}
+#stuScroll {
+  place-items: start center !important;
+}
+#stuScroll.v66-fit-ready {
+  scrollbar-gutter: stable both-edges;
+}

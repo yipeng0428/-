@@ -1,0 +1,35 @@
+/* V218 · 紫微飞星渲染稳定性修复：只修布局与容器，不改变算法 */
+#pane-zwfly {
+  min-width: 0;
+}
+#pane-zwfly .nt-wrap {
+  min-width: 0;
+  align-items: start;
+}
+#pane-zwfly .nt-fig,
+#pane-zwfly .nt-side {
+  min-width: 0;
+}
+#pane-zwfly #zfSvg {
+  width: min(100%, 640px);
+  height: auto;
+  overflow: visible;
+}
+#pane-zwfly .tbl-wrap {
+  max-width: 100%;
+  overflow-x: auto;
+}
+#pane-zwfly .zw203-card,
+#pane-zwfly .zw204-card {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 900px) {
+  #pane-zwfly .nt-wrap {
+    grid-template-columns: 1fr !important;
+  }
+  #pane-zwfly .nt-side {
+    width: 100%;
+    max-width: none;
+  }
+}

@@ -1,0 +1,26 @@
+#tjZiweiBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-left: 6px;
+  padding: 1px 7px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  color: var(--dim);
+  font-size: 10px;
+  line-height: 1.6;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+#tjZiweiBadge::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 6px var(--cyan);
+}
+#tjZiweiBadge.warn::before {
+  background: var(--bad);
+  box-shadow: 0 0 6px var(--bad);
+}

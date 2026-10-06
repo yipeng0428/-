@@ -1,0 +1,224 @@
+/* ===== v127 · 放大控件安全区 / 太阳系时间轴 / 六壬 Evidence 4.0 ===== */
+/* 此刻星盘：为放大按钮单独预留一条安全区，不再压住 ASC/MC/星体文字。 */
+#pane-now .wheelbox {
+  position: relative;
+  padding-bottom: 54px !important;
+  box-sizing: border-box;
+}
+#pane-now .wheelbox > .zbtn {
+  left: 6px !important;
+  right: auto !important;
+  top: auto !important;
+  bottom: 5px !important;
+  width: 46px !important;
+  height: 46px !important;
+  min-width: 46px !important;
+  min-height: 46px !important;
+  border-radius: 7px !important;
+  z-index: 16 !important;
+  background: color-mix(in srgb, var(--bg2) 90%, transparent) !important;
+  box-shadow: 0 5px 16px rgba(0, 0, 0, 0.22) !important;
+}
+#pane-now .wheelbox > .zbtn .v68-mag-svg {
+  width: 21px !important;
+  height: 21px !important;
+}
+#pane-now .wheelbox > .zbtn:hover,
+#pane-now .wheelbox > .zbtn:focus-visible {
+  background: var(--ink) !important;
+  color: var(--bg) !important;
+}
+/* 后续放大控件的设计约束：优先放在容器留白/工具栏，不覆盖图中正文。 */
+[data-v127-zoom-safe="1"] {
+  isolation: isolate;
+}
+
+/* 太阳系统一时间轴 */
+.v127-astro-timebar {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px 10px;
+  flex-wrap: wrap;
+  margin: 8px 0 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--panel2);
+}
+.v127-astro-timebar > label {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  color: var(--dim);
+  font-size: 11px;
+}
+.v127-astro-timebar input[type="datetime-local"],
+.v127-astro-timebar select {
+  min-height: 34px;
+  border: 1px solid var(--line2);
+  border-radius: 3px;
+  background: var(--panel);
+  color: var(--ink);
+  padding: 4px 7px;
+  font: inherit;
+  font-size: 12px;
+}
+.v127-astro-timebar .v127-time-nav {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.v127-astro-timebar .v127-birth {
+  border-color: color-mix(in srgb, var(--gold) 72%, var(--line));
+  color: var(--gold2);
+}
+.v127-astro-timebar .v127-state {
+  margin-left: auto;
+  align-self: center;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 30px;
+  padding: 3px 9px;
+  border-left: 2px solid var(--gold);
+  background: color-mix(in srgb, var(--wash) 70%, transparent);
+  font-size: 11px;
+  color: var(--dim);
+}
+.v127-astro-timebar .v127-state b {
+  color: var(--gold2);
+  font-weight: 600;
+}
+.v127-astro-timebar .v127-range {
+  flex-basis: 100%;
+  font-size: 10.5px;
+  color: var(--dim);
+  line-height: 1.6;
+}
+@media (max-width: 720px) {
+  .v127-astro-timebar {
+    align-items: stretch;
+  }
+  .v127-astro-timebar > label {
+    flex: 1 1 220px;
+  }
+  .v127-astro-timebar input[type="datetime-local"],
+  .v127-astro-timebar select {
+    width: 100%;
+  }
+  .v127-astro-timebar .v127-time-nav {
+    flex: 1 1 100%;
+  }
+  .v127-astro-timebar .v127-state {
+    margin-left: 0;
+    flex: 1 1 100%;
+  }
+}
+
+/* 六壬 Evidence 4.0 */
+.lr127-card {
+  border-color: color-mix(in srgb, var(--gold) 34%, var(--line));
+}
+.lr127-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+.lr127-head h3 {
+  margin: 0;
+  color: var(--gold2);
+  font-size: 17px;
+}
+.lr127-head small {
+  display: block;
+  margin-top: 3px;
+  color: var(--dim);
+  line-height: 1.65;
+}
+.lr127-score {
+  flex: none;
+  padding: 5px 10px;
+  border: 1px solid var(--good);
+  border-radius: 13px;
+  color: var(--good);
+  font-size: 11px;
+  white-space: nowrap;
+}
+.lr127-summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 7px;
+  margin-bottom: 10px;
+}
+.lr127-kpi {
+  padding: 8px 9px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  border-radius: 3px;
+}
+.lr127-kpi small {
+  display: block;
+  color: var(--dim);
+  font-size: 10px;
+}
+.lr127-kpi b {
+  display: block;
+  margin-top: 2px;
+  color: var(--ink);
+  font-size: 14px;
+}
+.lr127-kpi.ok b {
+  color: var(--good);
+}
+.lr127-cases {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 7px;
+}
+.lr127-case {
+  padding: 8px 9px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: var(--panel2);
+  font-size: 11px;
+  line-height: 1.65;
+}
+.lr127-case b {
+  color: var(--gold2);
+}
+.lr127-case .ok {
+  float: right;
+  color: var(--good);
+}
+.lr127-case .bad {
+  float: right;
+  color: var(--bad);
+}
+.lr127-case code {
+  font-family: ui-monospace, Consolas, monospace;
+  color: var(--ink);
+  font-size: 11px;
+}
+.lr127-note {
+  margin: 9px 0 0;
+  color: var(--dim);
+  font-size: 10.8px;
+  line-height: 1.75;
+}
+.lr127-note a {
+  color: var(--gold);
+}
+@media (max-width: 680px) {
+  .lr127-summary {
+    grid-template-columns: 1fr 1fr;
+  }
+  .lr127-head {
+    display: block;
+  }
+  .lr127-score {
+    display: inline-block;
+    margin-top: 7px;
+  }
+}

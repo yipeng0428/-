@@ -1,0 +1,306 @@
+/* ===== v168 · Evidence 总控 / 模块成熟度 / 一键轻量自检 ===== */
+.ev168 {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.ev168-hero {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--gold) 40%, var(--line));
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--wash) 58%, var(--panel)),
+    var(--panel)
+  );
+  padding: 15px 16px;
+}
+.ev168-hero:after {
+  content: "EVIDENCE";
+  position: absolute;
+  right: 15px;
+  top: -13px;
+  font:
+    700 66px/1 Arial,
+    sans-serif;
+  letter-spacing: 0.06em;
+  color: var(--gold);
+  opacity: 0.04;
+  pointer-events: none;
+}
+.ev168-head {
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  align-items: flex-start;
+  position: relative;
+  z-index: 1;
+}
+.ev168-head h3 {
+  margin: 0;
+  color: var(--gold2);
+  font-size: 20px;
+}
+.ev168-head p {
+  margin: 5px 0 0;
+  color: var(--dim);
+  font-size: 11.5px;
+  line-height: 1.72;
+  max-width: 880px;
+}
+.ev168-badge {
+  flex: none;
+  padding: 5px 10px;
+  border: 1px solid var(--line2);
+  border-radius: 999px;
+  color: var(--gold);
+  font-size: 10.5px;
+  background: var(--panel2);
+}
+.ev168-kpis {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 12px;
+}
+.ev168-kpi {
+  padding: 9px 10px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  min-width: 0;
+}
+.ev168-kpi small {
+  display: block;
+  color: var(--dim);
+  font-size: 9.5px;
+}
+.ev168-kpi b {
+  display: block;
+  margin-top: 3px;
+  color: var(--gold2);
+  font-size: 18px;
+}
+.ev168-kpi em {
+  display: block;
+  margin-top: 2px;
+  color: var(--dim);
+  font-style: normal;
+  font-size: 9.5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ev168-toolbar {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+}
+.ev168-toolbar .sp {
+  flex: 1;
+}
+.ev168-toolbar label {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  color: var(--dim);
+  font-size: 11px;
+}
+.ev168-toolbar select {
+  min-height: 30px;
+}
+.ev168-toolbar .gbtn {
+  min-height: 31px;
+}
+.ev168-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+.ev168-card {
+  position: relative;
+  padding: 12px 13px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  min-width: 0;
+}
+.ev168-card.freeze {
+  border-color: color-mix(in srgb, var(--good) 38%, var(--line));
+}
+.ev168-card.active {
+  border-color: color-mix(in srgb, var(--gold) 42%, var(--line));
+}
+.ev168-card.watch {
+  border-color: color-mix(in srgb, var(--bad) 32%, var(--line));
+}
+.ev168-card-head {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+.ev168-card h4 {
+  margin: 0;
+  color: var(--gold2);
+  font-size: 15px;
+}
+.ev168-card h4 small {
+  display: block;
+  margin-top: 3px;
+  color: var(--dim);
+  font-size: 9.5px;
+  font-weight: 400;
+}
+.ev168-state {
+  flex: none;
+  padding: 3px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  font-size: 9.5px;
+}
+.ev168-state.freeze {
+  color: var(--good);
+  border-color: color-mix(in srgb, var(--good) 45%, var(--line));
+}
+.ev168-state.active {
+  color: var(--gold2);
+  border-color: color-mix(in srgb, var(--gold) 45%, var(--line));
+}
+.ev168-state.watch {
+  color: var(--bad);
+  border-color: color-mix(in srgb, var(--bad) 45%, var(--line));
+}
+.ev168-level {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 3px;
+  margin: 9px 0;
+}
+.ev168-level i {
+  height: 5px;
+  background: var(--panel2);
+  border: 1px solid var(--line);
+}
+.ev168-level i.on {
+  background: var(--gold);
+  border-color: var(--gold);
+}
+.ev168-level i.good {
+  background: var(--good);
+  border-color: var(--good);
+}
+.ev168-meta {
+  display: grid;
+  grid-template-columns: 88px minmax(0, 1fr);
+  gap: 4px 8px;
+  font-size: 10.5px;
+  line-height: 1.55;
+}
+.ev168-meta span {
+  color: var(--dim);
+}
+.ev168-meta b {
+  font-weight: 500;
+  color: var(--ink);
+  min-width: 0;
+  word-break: break-word;
+}
+.ev168-gaps {
+  margin: 8px 0 0;
+  padding-top: 8px;
+  border-top: 1px dashed var(--line);
+  color: var(--dim);
+  font-size: 10.5px;
+  line-height: 1.6;
+}
+.ev168-card-actions {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+  margin-top: 9px;
+}
+.ev168-card-actions .gbtn {
+  min-height: 29px;
+  padding: 3px 8px;
+  font-size: 10px;
+}
+.ev168-test {
+  margin-top: 8px;
+  padding: 7px 8px;
+  border-left: 3px solid var(--line2);
+  background: var(--panel2);
+  color: var(--dim);
+  font-size: 10px;
+  line-height: 1.55;
+}
+.ev168-test.ok {
+  border-color: var(--good);
+}
+.ev168-test.bad {
+  border-color: var(--bad);
+}
+.ev168-chain {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 6px;
+}
+.ev168-chain > div {
+  padding: 9px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  text-align: center;
+}
+.ev168-chain b {
+  display: block;
+  color: var(--gold2);
+  font-size: 11px;
+}
+.ev168-chain small {
+  display: block;
+  color: var(--dim);
+  font-size: 9px;
+  margin-top: 3px;
+}
+.ev168-arrow {
+  display: none;
+}
+.ev168-out {
+  min-height: 38px;
+  padding: 9px 10px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  color: var(--dim);
+  font-size: 10.5px;
+  line-height: 1.6;
+}
+.ev168-out b {
+  color: var(--gold2);
+}
+@media (max-width: 980px) {
+  .ev168-kpis {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .ev168-grid {
+    grid-template-columns: 1fr;
+  }
+  .ev168-chain {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 620px) {
+  .ev168-kpis {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .ev168-chain {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .ev168-head {
+    flex-direction: column;
+  }
+  .ev168-badge {
+    align-self: flex-start;
+  }
+}

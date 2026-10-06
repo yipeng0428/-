@@ -1,0 +1,53 @@
+/* ===== v117：天体 → 黄经 / 二十八宿 / 十二次 跨盘联动 ===== */
+.tj117-linkbar {
+  margin: 8px 0;
+  padding: 7px 10px;
+  border: 1px solid rgba(217, 178, 95, 0.45);
+  border-radius: 3px;
+  background: rgba(217, 178, 95, 0.07);
+  font-size: 11.5px;
+  line-height: 1.65;
+  color: var(--dim);
+}
+.tj117-linkbar b {
+  color: var(--gold2);
+  font-weight: 600;
+}
+.tj117-linkbar .trad {
+  color: var(--gold);
+}
+#tradAstroSvg .ta-xiu.v117-link {
+  fill: var(--gold2) !important;
+  font-weight: 700;
+  font-size: 10px;
+  filter: drop-shadow(0 0 3px rgba(217, 178, 95, 0.45));
+}
+#tradAstroSvg .ta-ci.v117-link {
+  fill: var(--red) !important;
+  font-weight: 700;
+  font-size: 10px;
+  filter: drop-shadow(0 0 3px rgba(208, 80, 59, 0.35));
+}
+#tradAstroSvg .ta-planet.v117-link {
+  stroke: var(--gold2) !important;
+  stroke-width: 3 !important;
+  filter: drop-shadow(0 0 4px rgba(217, 178, 95, 0.65));
+}
+.stu-sec.v117-link {
+  stroke: var(--gold2) !important;
+  stroke-width: 2.4 !important;
+  fill-opacity: 0.62 !important;
+}
+.stu-t.v117-link {
+  fill: var(--gold2) !important;
+  font-weight: 700 !important;
+  filter: drop-shadow(0 0 3px rgba(217, 178, 95, 0.35));
+}
+.xap-xiu.v117-link {
+  stroke: var(--gold2) !important;
+  stroke-width: 2.2 !important;
+}
+.xap-ci.v117-link {
+  stroke: var(--red) !important;
+  stroke-width: 2 !important;
+}

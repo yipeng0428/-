@@ -1,0 +1,31 @@
+.tjzv15-live {
+  margin: 10px 0;
+}
+.tjzv15-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 8px;
+}
+.tjzv15-card {
+  border: 1px solid rgba(184, 151, 83, 0.2);
+  border-radius: 10px;
+  padding: 8px 10px;
+  background: rgba(255, 255, 255, 0.018);
+  font-size: 12px;
+  line-height: 1.65;
+}
+.tjzv15-card b {
+  color: var(--gold, #c9a96e);
+}
+.tjzv15-actions {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+@media (max-width: 880px) {
+  .tjzv15-grid {
+    grid-template-columns: 1fr;
+  }
+}

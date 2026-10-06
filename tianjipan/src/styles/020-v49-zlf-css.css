@@ -1,0 +1,538 @@
+/* ===== v49 · 盘库 09：子午流注 · 十二经脉时辰盘 ===== */
+.zlf-shell {
+  min-height: 760px;
+}
+.zlf-top {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.zlf-title {
+  margin-right: auto;
+}
+.zlf-title b {
+  font:
+    400 24px/1 "Ma Shan Zheng",
+    "STKaiti",
+    serif;
+  color: var(--gold2);
+  letter-spacing: 0.1em;
+}
+.zlf-title small {
+  display: block;
+  margin-top: 5px;
+  color: var(--dim);
+  font-size: 11px;
+}
+.zlf-grid {
+  display: grid;
+  grid-template-columns: 250px minmax(0, 1fr) 320px;
+  gap: 12px;
+  align-items: start;
+}
+.zlf-side,
+.zlf-info {
+  padding: 13px;
+}
+.zlf-side h4,
+.zlf-info h4 {
+  margin: 0 0 8px;
+  padding-bottom: 7px;
+  border-bottom: 1px dashed var(--line);
+  font:
+    400 17px/1.2 "Ma Shan Zheng",
+    "STKaiti",
+    serif;
+  color: var(--gold2);
+  letter-spacing: 0.08em;
+}
+.zlf-group {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.zlf-group label {
+  display: grid;
+  gap: 3px;
+  color: var(--dim);
+  font-size: 11px;
+}
+.zlf-group input[type="datetime-local"],
+.zlf-group select {
+  width: 100%;
+  min-height: 34px;
+  background: var(--panel2);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  padding: 5px 7px;
+  color: var(--ink);
+}
+.zlf-btnrow {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.zlf-btnrow .gbtn {
+  flex: 1 1 auto;
+}
+.zlf-mode {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+.zlf-mode .gbtn.on {
+  border-color: var(--gold);
+  background: var(--wash);
+  color: var(--gold2);
+}
+.zlf-layer {
+  display: flex !important;
+  grid-template-columns: auto 1fr !important;
+  align-items: flex-start;
+  gap: 8px !important;
+  padding: 5px 0;
+  border-bottom: 1px dashed var(--line);
+  font-size: 12px !important;
+}
+.zlf-layer input {
+  margin-top: 4px;
+  accent-color: var(--red);
+}
+.zlf-layer span {
+  color: var(--ink);
+}
+.zlf-layer small {
+  display: block;
+  color: var(--dim);
+  font-size: 10px;
+  line-height: 1.45;
+}
+.zlf-main {
+  min-width: 0;
+}
+.zlf-viewbar {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+.zlf-viewbar .hint {
+  color: var(--dim);
+  font-size: 11px;
+  margin-right: auto;
+}
+.zlf-z {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.zlf-z span {
+  min-width: 44px;
+  text-align: center;
+  color: var(--dim);
+  font-size: 11px;
+}
+.zlf-frame {
+  position: relative;
+  height: min(76vh, 820px);
+  min-height: 620px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(217, 178, 95, 0.085), transparent 40%), var(--panel);
+}
+#zlfSvg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: none;
+  user-select: none;
+  cursor: pointer;
+}
+.zlf-frame.pan #zlfSvg {
+  cursor: grab;
+}
+.zlf-frame.grab #zlfSvg {
+  cursor: grabbing;
+}
+.zlf-sector {
+  stroke: var(--line2);
+  stroke-width: 0.7;
+  transition:
+    fill-opacity 0.18s,
+    stroke-width 0.18s;
+}
+.zlf-sector:hover {
+  fill-opacity: 0.22 !important;
+  stroke: var(--gold);
+  stroke-width: 1.4;
+}
+.zlf-sector.current {
+  stroke: var(--red);
+  stroke-width: 2.3;
+  fill-opacity: 0.24 !important;
+}
+.zlf-sector.selected {
+  stroke: var(--gold2);
+  stroke-width: 2.3;
+  fill-opacity: 0.2 !important;
+}
+.zlf-ring {
+  fill: none;
+  stroke: var(--line);
+  stroke-width: 0.65;
+}
+.zlf-ring.strong {
+  stroke: var(--line2);
+  stroke-width: 1;
+}
+.zlf-sep {
+  stroke: var(--line);
+  stroke-width: 0.65;
+}
+.zlf-meridian {
+  fill: var(--ink);
+  font:
+    600 11px "Noto Serif SC",
+    serif;
+  pointer-events: none;
+}
+.zlf-organ {
+  fill: var(--gold2);
+  font:
+    400 19px "Ma Shan Zheng",
+    "STKaiti",
+    serif;
+  pointer-events: none;
+}
+.zlf-branch {
+  fill: var(--ink);
+  font:
+    600 13px "Noto Serif SC",
+    serif;
+  pointer-events: none;
+}
+.zlf-time {
+  fill: var(--dim);
+  font-size: 9px;
+  pointer-events: none;
+}
+.zlf-yy {
+  fill: var(--dim);
+  font-size: 9px;
+  pointer-events: none;
+}
+.zlf-wx {
+  font-size: 9px;
+  font-weight: 700;
+  pointer-events: none;
+}
+.zlf-flow {
+  fill: none;
+  stroke: var(--gold);
+  stroke-width: 1.1;
+  stroke-opacity: 0.64;
+}
+.zlf-pair {
+  fill: none;
+  stroke: var(--cyan);
+  stroke-width: 1;
+  stroke-dasharray: 4 4;
+  stroke-opacity: 0.45;
+}
+.zlf-pair-label {
+  fill: var(--cyan);
+  font-size: 8px;
+}
+.zlf-core {
+  fill: var(--panel);
+  stroke: var(--line2);
+  stroke-width: 1.2;
+}
+.zlf-core-big {
+  fill: var(--gold2);
+  font:
+    400 34px "Ma Shan Zheng",
+    "STKaiti",
+    serif;
+}
+.zlf-core-mid {
+  fill: var(--ink);
+  font-size: 12px;
+}
+.zlf-core-sm {
+  fill: var(--dim);
+  font-size: 9px;
+}
+.zlf-hand {
+  stroke: var(--red);
+  stroke-width: 2;
+  stroke-linecap: round;
+  pointer-events: none;
+}
+.zlf-hand-dot {
+  fill: var(--red);
+  stroke: var(--panel);
+  stroke-width: 2;
+}
+.zlf-selhand {
+  stroke: var(--gold2);
+  stroke-width: 1.2;
+  stroke-dasharray: 4 3;
+  pointer-events: none;
+}
+.zlf-progress {
+  fill: none;
+  stroke: var(--red);
+  stroke-width: 4;
+  stroke-linecap: round;
+}
+.zlf-hourtick {
+  stroke: var(--line2);
+  stroke-width: 0.8;
+}
+.zlf-hourtxt {
+  fill: var(--dim);
+  font-size: 8px;
+}
+.zlf-info-card {
+  margin-top: 10px;
+  padding: 9px 10px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  border-radius: 3px;
+  font-size: 11.5px;
+  line-height: 1.72;
+}
+.zlf-info-card b {
+  color: var(--gold2);
+}
+.zlf-facts {
+  display: grid;
+  grid-template-columns: 92px 1fr;
+  gap: 5px 8px;
+  font-size: 12px;
+  line-height: 1.55;
+}
+.zlf-facts span {
+  color: var(--dim);
+}
+.zlf-facts b {
+  font-weight: 500;
+  color: var(--ink);
+}
+.zlf-nowbox {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px;
+  margin: 8px 0;
+}
+.zlf-nowbox > div {
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  padding: 8px;
+  text-align: center;
+}
+.zlf-nowbox small {
+  display: block;
+  color: var(--dim);
+  font-size: 10px;
+}
+.zlf-nowbox b {
+  display: block;
+  font:
+    400 22px "Ma Shan Zheng",
+    "STKaiti",
+    serif;
+  color: var(--gold2);
+}
+.zlf-links {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  margin-top: 7px;
+}
+.zlf-timeline {
+  margin-top: 12px;
+  padding: 12px;
+}
+.zlf-timeline-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.zlf-timeline-head b {
+  font:
+    400 18px "Ma Shan Zheng",
+    "STKaiti",
+    serif;
+  color: var(--gold2);
+}
+.zlf-timeline-head small {
+  color: var(--dim);
+  font-size: 10px;
+}
+.zlf-hours {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(76px, 1fr));
+  gap: 5px;
+}
+.zlf-hcell {
+  appearance: none;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  padding: 7px 3px;
+  border-radius: 3px;
+  color: var(--ink);
+  cursor: pointer;
+  text-align: center;
+}
+.zlf-hcell:hover,
+.zlf-hcell.on {
+  border-color: var(--gold);
+  background: var(--wash);
+}
+.zlf-hcell.cur {
+  box-shadow: 0 0 0 1px var(--red) inset;
+}
+.zlf-hcell b {
+  display: block;
+  color: var(--gold2);
+  font:
+    400 18px "Ma Shan Zheng",
+    "STKaiti",
+    serif;
+}
+.zlf-hcell span {
+  display: block;
+  font-size: 10px;
+  line-height: 1.4;
+}
+.zlf-hcell small {
+  display: block;
+  color: var(--dim);
+  font-size: 9px;
+  line-height: 1.4;
+}
+.zlf-guide {
+  margin-top: 12px;
+  padding: 12px;
+}
+.zlf-guide summary {
+  cursor: pointer;
+  color: var(--gold2);
+  font:
+    400 17px "Ma Shan Zheng",
+    "STKaiti",
+    serif;
+}
+.zlf-guide-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-top: 10px;
+}
+.zlf-guide-grid > button {
+  appearance: none;
+  text-align: left;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  padding: 9px;
+  border-radius: 3px;
+  color: var(--ink);
+  cursor: pointer;
+}
+.zlf-guide-grid > button:hover {
+  border-color: var(--gold);
+  background: var(--wash);
+}
+.zlf-guide-grid b {
+  display: block;
+  color: var(--gold2);
+  font-size: 12px;
+  margin-bottom: 3px;
+}
+.zlf-guide-grid span {
+  font-size: 10.5px;
+  color: var(--dim);
+  line-height: 1.55;
+}
+.zlf-bottom {
+  margin-top: 12px;
+  padding: 11px 14px;
+  color: var(--dim);
+  font-size: 11px;
+  line-height: 1.78;
+}
+.zlf-bottom b {
+  color: var(--gold2);
+}
+.zlf-legend {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 7px;
+}
+.zlf-legend span {
+  font-size: 10px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 1px 7px;
+}
+.zlf-shell:fullscreen {
+  background: var(--bg);
+  padding: 10px;
+  overflow: auto;
+}
+.zlf-shell:fullscreen .zlf-frame {
+  height: calc(100vh - 116px);
+}
+@media (max-width: 1280px) {
+  .zlf-grid {
+    grid-template-columns: 230px minmax(0, 1fr);
+  }
+  .zlf-info {
+    grid-column: 1/-1;
+  }
+  .zlf-hours {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+@media (max-width: 860px) {
+  .zlf-grid {
+    grid-template-columns: 1fr;
+  }
+  .zlf-main {
+    order: -1;
+  }
+  .zlf-frame {
+    height: 70vh;
+    min-height: 500px;
+  }
+  .zlf-hours {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .zlf-guide-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width: 540px) {
+  .zlf-frame {
+    min-height: 420px;
+  }
+  .zlf-hours {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .zlf-guide-grid {
+    grid-template-columns: 1fr;
+  }
+  .zlf-top .gbtn {
+    flex: 1 1 auto;
+  }
+}

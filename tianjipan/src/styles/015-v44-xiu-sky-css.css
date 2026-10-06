@@ -1,0 +1,493 @@
+/* ===== v44 盘库 · 二十八宿全天星图 ===== */
+.xap-shell {
+  padding: 3px 0 22px;
+}
+.xap-top {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 8px 0 13px;
+}
+.xap-title {
+  margin-right: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 250px;
+}
+.xap-title b {
+  font:
+    400 25px/1.15 "Ma Shan Zheng",
+    "STKaiti",
+    serif;
+  color: var(--gold2);
+  letter-spacing: 0.11em;
+}
+.xap-title small {
+  font-size: 11px;
+  color: var(--dim);
+}
+.xap-grid {
+  display: grid;
+  grid-template-columns: 260px minmax(430px, 1fr) 316px;
+  gap: 12px;
+  align-items: start;
+}
+.xap-side,
+.xap-info {
+  padding: 14px;
+}
+.xap-side h4,
+.xap-info h4 {
+  margin: 0 0 9px;
+  color: var(--gold);
+  font-weight: 500;
+}
+.xap-group {
+  padding: 10px 0;
+  border-top: 1px solid var(--line);
+}
+.xap-group:first-of-type {
+  border-top: 0;
+  padding-top: 0;
+}
+.xap-side label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: var(--dim);
+  font-size: 11px;
+  margin-top: 7px;
+}
+.xap-side input,
+.xap-side select {
+  width: 100%;
+  min-height: 34px;
+  background: var(--panel2);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  color: var(--ink);
+  padding: 5px 7px;
+}
+.xap-btnrow {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  margin-top: 7px;
+}
+.xap-btnrow .gbtn {
+  flex: 1 1 auto;
+}
+.xap-layers {
+  display: grid;
+  gap: 4px;
+}
+.xap-layer {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: flex-start;
+  gap: 7px !important;
+  margin: 0 !important;
+  padding: 5px 6px;
+  border: 1px solid transparent;
+  border-radius: 3px;
+}
+.xap-layer:hover {
+  border-color: var(--line);
+  background: var(--panel2);
+}
+.xap-layer input {
+  width: auto !important;
+  min-height: 0 !important;
+  margin-top: 3px;
+}
+.xap-layer span {
+  color: var(--ink);
+  font-size: 12px;
+  line-height: 1.35;
+}
+.xap-layer small {
+  display: block;
+  color: var(--dim);
+  font-size: 10px;
+}
+.xap-play.on {
+  border-color: var(--red) !important;
+  color: var(--red) !important;
+}
+.xap-main {
+  min-width: 0;
+}
+.xap-viewbar {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-wrap: wrap;
+  min-height: 42px;
+  padding: 5px 7px;
+  border: 1px solid var(--line);
+  border-bottom: 0;
+  background: var(--panel);
+  border-radius: 4px 4px 0 0;
+}
+.xap-viewbar .hint {
+  font-size: 10px;
+  color: var(--dim);
+  margin-right: auto;
+}
+.xap-viewbar button.on {
+  background: var(--wash);
+  border-color: var(--gold);
+  color: var(--gold2);
+}
+.xap-z {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+.xap-z > span {
+  width: 43px;
+  text-align: center;
+  font-size: 11px;
+  color: var(--dim);
+  font-variant-numeric: tabular-nums;
+}
+.xap-frame {
+  height: min(76vh, 820px);
+  min-height: 600px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 0 0 4px 4px;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(20, 30, 52, 0.95),
+    rgba(5, 8, 18, 0.98) 62%,
+    #03050b 100%
+  );
+  touch-action: none;
+}
+.xap-frame.rotate,
+.xap-frame.pan {
+  cursor: grab;
+}
+.xap-frame.grab {
+  cursor: grabbing;
+}
+#xapSvg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  user-select: none;
+}
+.xap-gridc {
+  fill: none;
+  stroke: rgba(180, 195, 225, 0.15);
+  stroke-width: 0.75;
+}
+.xap-gridc.eq {
+  stroke: rgba(208, 80, 59, 0.58);
+  stroke-width: 1.3;
+}
+.xap-gridc.ecl {
+  stroke: rgba(217, 178, 95, 0.78);
+  stroke-width: 1.6;
+}
+.xap-gridline {
+  stroke: rgba(180, 195, 225, 0.12);
+  stroke-width: 0.7;
+}
+.xap-horizon {
+  fill: none;
+  stroke: rgba(99, 192, 144, 0.72);
+  stroke-width: 1.4;
+  stroke-dasharray: 5 4;
+}
+.xap-const {
+  fill: none;
+  stroke: rgba(151, 180, 226, 0.48);
+  stroke-width: 0.85;
+}
+.xap-const.z {
+  stroke: rgba(226, 187, 102, 0.65);
+  stroke-width: 1;
+}
+.xap-cname {
+  fill: rgba(202, 216, 240, 0.7);
+  font-size: 9px;
+  font-family: "Noto Serif SC", serif;
+  text-anchor: middle;
+  pointer-events: none;
+}
+.xap-cname.z {
+  fill: rgba(244, 212, 137, 0.88);
+  font-weight: 700;
+}
+.xap-star {
+  stroke: none;
+  cursor: pointer;
+}
+.xap-star.sel {
+  stroke: #fff;
+  stroke-width: 1.2;
+}
+.xap-starlab {
+  fill: rgba(225, 233, 247, 0.86);
+  font-size: 8px;
+  font-family: "Noto Serif SC", serif;
+  pointer-events: none;
+}
+.xap-planet {
+  cursor: pointer;
+}
+.xap-planet circle {
+  stroke: #080b11;
+  stroke-width: 1.2;
+}
+.xap-planet.sel circle {
+  stroke: #fff;
+  stroke-width: 2;
+}
+.xap-planet text {
+  fill: #f5e7bf;
+  font-size: 10px;
+  font-family: "Noto Serif SC", serif;
+  pointer-events: none;
+}
+.xap-xiu {
+  stroke: var(--line);
+  stroke-width: 0.55;
+  cursor: pointer;
+}
+.xap-xiu.x0 {
+  fill: rgba(79, 174, 143, 0.12);
+}
+.xap-xiu.x1 {
+  fill: rgba(123, 149, 214, 0.12);
+}
+.xap-xiu.x2 {
+  fill: rgba(215, 220, 226, 0.08);
+}
+.xap-xiu.x3 {
+  fill: rgba(224, 101, 90, 0.12);
+}
+.xap-xiu.sun {
+  stroke: var(--gold2);
+  stroke-width: 1.8;
+  fill-opacity: 0.28;
+}
+.xap-xiu.moon {
+  stroke: var(--cyan);
+  stroke-width: 1.8;
+}
+.xap-xiu.sel {
+  stroke: var(--red);
+  stroke-width: 2;
+}
+.xap-ringtxt {
+  fill: var(--ink);
+  font-family: "Noto Serif SC", "Songti SC", serif;
+  font-size: 10px;
+  text-anchor: middle;
+  dominant-baseline: central;
+  pointer-events: none;
+}
+.xap-ringtxt.gold {
+  fill: var(--gold2);
+  font-weight: 700;
+}
+.xap-ci {
+  fill: rgba(217, 178, 95, 0.04);
+  stroke: var(--line);
+  stroke-width: 0.55;
+  cursor: pointer;
+}
+.xap-ci.sel {
+  stroke: var(--red);
+  stroke-width: 1.6;
+}
+.xap-xiang {
+  stroke: var(--line2);
+  stroke-width: 0.7;
+}
+.xap-xiang.x0 {
+  fill: rgba(79, 174, 143, 0.15);
+}
+.xap-xiang.x1 {
+  fill: rgba(123, 149, 214, 0.15);
+}
+.xap-xiang.x2 {
+  fill: rgba(215, 220, 226, 0.09);
+}
+.xap-xiang.x3 {
+  fill: rgba(224, 101, 90, 0.15);
+}
+.xap-core {
+  fill: rgba(10, 15, 28, 0.88);
+  stroke: var(--line2);
+  stroke-width: 1.2;
+}
+.xap-core-main {
+  fill: var(--gold2);
+  font:
+    400 25px "Ma Shan Zheng",
+    "STKaiti",
+    serif;
+  letter-spacing: 0.08em;
+}
+.xap-core-sub {
+  fill: var(--dim);
+  font-size: 9px;
+}
+.xap-pole {
+  fill: var(--gold2);
+}
+.xap-axis {
+  stroke: rgba(217, 178, 95, 0.5);
+  stroke-width: 1;
+}
+.xap-note {
+  fill: var(--dim);
+  font-size: 8px;
+}
+.xap-info {
+  min-height: 600px;
+}
+.xap-facts {
+  display: grid;
+  grid-template-columns: 88px 1fr;
+  gap: 5px 8px;
+  font-size: 11px;
+  line-height: 1.55;
+}
+.xap-facts span {
+  color: var(--dim);
+}
+.xap-facts b {
+  font-weight: 500;
+  color: var(--ink);
+}
+.xap-seven {
+  margin-top: 10px;
+  border-top: 1px dashed var(--line);
+  padding-top: 8px;
+}
+.xap-seven-row {
+  display: grid;
+  grid-template-columns: 72px 1fr 58px;
+  gap: 5px;
+  padding: 4px 0;
+  border-bottom: 1px dashed var(--line);
+  font-size: 10.5px;
+}
+.xap-seven-row b {
+  color: var(--ink);
+  font-weight: 500;
+}
+.xap-seven-row span {
+  color: var(--dim);
+}
+.xap-seven-row em {
+  font-style: normal;
+  color: var(--gold);
+  text-align: right;
+}
+.xap-selbox {
+  margin-top: 10px;
+  padding: 9px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  border-radius: 3px;
+  font-size: 11px;
+  line-height: 1.7;
+}
+.xap-selbox h5 {
+  margin: 0 0 5px;
+  color: var(--gold2);
+  font-size: 13px;
+}
+.xap-selbox .tags {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  margin-top: 5px;
+}
+.xap-selbox .tags span {
+  padding: 1px 6px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  color: var(--dim);
+  font-size: 9px;
+}
+.xap-bottom {
+  margin-top: 12px;
+  padding: 12px 14px;
+  color: var(--dim);
+  font-size: 11px;
+  line-height: 1.8;
+}
+.xap-bottom b {
+  color: var(--gold2);
+}
+#xapShell:fullscreen {
+  background: var(--bg);
+  overflow: auto;
+  padding: 12px;
+}
+#xapShell:fullscreen .xap-top {
+  position: sticky;
+  top: 0;
+  z-index: 8;
+  background: var(--bg);
+  padding-top: 5px;
+}
+#xapShell:fullscreen .xap-frame {
+  height: calc(100vh - 145px);
+  min-height: 680px;
+}
+@media (max-width: 1200px) {
+  .xap-grid {
+    grid-template-columns: 230px minmax(420px, 1fr);
+  }
+  .xap-info {
+    grid-column: 1/-1;
+    min-height: 0;
+  }
+  .xap-info-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .xap-info-inner > .xap-wide {
+    grid-column: 1/-1;
+  }
+}
+@media (max-width: 820px) {
+  .xap-grid {
+    grid-template-columns: 1fr;
+  }
+  .xap-main {
+    order: 1;
+  }
+  .xap-side {
+    order: 2;
+  }
+  .xap-info {
+    order: 3;
+  }
+  .xap-frame {
+    height: 68vh;
+    min-height: 460px;
+  }
+  .xap-info-inner {
+    display: block;
+  }
+  .xap-title {
+    width: 100%;
+    order: -1;
+  }
+  .xap-side .xap-layers {
+    grid-template-columns: 1fr 1fr;
+  }
+}

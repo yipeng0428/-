@@ -1,0 +1,88 @@
+/* ===== v58 · 首页导航 + 人物保存逻辑简化 ===== */
+#saveP.v58-save {
+  min-width: 112px;
+  padding-inline: 24px;
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--red) 42%, transparent),
+    0 5px 16px color-mix(in srgb, var(--red) 18%, transparent);
+}
+#saveP.v58-save:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+.v58-create-guide {
+  display: grid;
+  grid-template-columns: auto 18px auto 18px auto;
+  align-items: center;
+  gap: 6px 8px;
+  margin: 8px 0 2px;
+  padding: 9px 12px;
+  border: 1px solid var(--line2);
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--red) 5%, var(--panel2)),
+    var(--panel2)
+  );
+  border-radius: 4px;
+  min-width: 0;
+}
+.v58-create-guide b {
+  font-size: 12px;
+  color: var(--ink);
+  font-weight: 600;
+  white-space: nowrap;
+}
+.v58-create-guide i {
+  font-style: normal;
+  color: var(--gold2);
+  text-align: center;
+}
+.v58-create-guide small {
+  grid-column: 1/-1;
+  color: var(--dim);
+  font-size: 11px;
+  line-height: 1.65;
+}
+.v58-create-guide strong {
+  color: var(--red);
+  font-weight: 600;
+}
+.f-tag.v58-rel label,
+.f-tag.v58-rel {
+  min-width: 0;
+}
+.f-tag.v58-rel .v58-rel-note {
+  display: block;
+  margin-top: 4px;
+  color: var(--dim);
+  font-size: 10.5px;
+  line-height: 1.45;
+}
+#prState.v58-state {
+  max-width: 520px;
+  white-space: normal;
+  line-height: 1.55;
+  border-radius: 3px;
+}
+#topnav #tnStudioDirect {
+  font-weight: 600;
+}
+#topnav #tnStudioDirect.on {
+  color: var(--gold2);
+  background: var(--wash);
+}
+@media (max-width: 760px) {
+  .v58-create-guide {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+  .v58-create-guide i {
+    display: none;
+  }
+  .v58-create-guide small {
+    grid-column: auto;
+  }
+  #saveP.v58-save {
+    width: 100%;
+  }
+}

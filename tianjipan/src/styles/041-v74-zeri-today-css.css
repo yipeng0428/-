@@ -1,0 +1,17 @@
+/* ===== v74 · 择日：回到今天紧邻“当事人生肖” ===== */
+#pane-zeri .xkctl {
+  align-items: flex-end;
+}
+#pane-zeri .xkctl > .zr-today {
+  margin-left: 0;
+  align-self: flex-end;
+  flex: 0 0 auto;
+  min-height: 36px;
+  padding: 0 18px;
+  white-space: nowrap;
+}
+@media (max-width: 720px) {
+  #pane-zeri .xkctl > .zr-today {
+    margin-left: 0;
+  }
+}

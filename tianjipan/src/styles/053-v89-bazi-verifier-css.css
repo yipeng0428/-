@@ -1,0 +1,129 @@
+/* ===== v89 · Bazi Verification Layer / Mystilight ===== */
+#tjBaziVerifyBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-left: 7px;
+  padding: 1px 7px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--dim);
+  font-size: 10px;
+  line-height: 1.7;
+  vertical-align: middle;
+  white-space: nowrap;
+  cursor: help;
+}
+#tjBaziVerifyBadge::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--dim2);
+}
+#tjBaziVerifyBadge.ready {
+  color: var(--good);
+  border-color: rgba(127, 214, 160, 0.45);
+}
+#tjBaziVerifyBadge.ready::before {
+  background: var(--good);
+  box-shadow: 0 0 6px var(--good);
+}
+#tjBaziVerifyBadge.diff {
+  color: var(--gold);
+  border-color: rgba(217, 178, 95, 0.5);
+}
+#tjBaziVerifyBadge.diff::before {
+  background: var(--gold);
+  box-shadow: 0 0 5px var(--gold);
+}
+#tjBaziVerifyBadge.bad {
+  color: var(--bad);
+  border-color: rgba(232, 115, 95, 0.45);
+}
+#tjBaziVerifyBadge.bad::before {
+  background: var(--bad);
+  box-shadow: 0 0 5px var(--bad);
+}
+.tjbv-live {
+  margin-bottom: 14px;
+}
+.tjbv-head {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.tjbv-head h4 {
+  margin: 0;
+  color: var(--gold2);
+  font-weight: 600;
+}
+.tjbv-head small {
+  display: block;
+  color: var(--dim);
+  margin-top: 3px;
+}
+.tjbv-stat {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.tjbv-stat span {
+  padding: 2px 7px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 11px;
+}
+.tjbv-stat .pass {
+  color: var(--good);
+}
+.tjbv-stat .diff {
+  color: var(--bad);
+}
+.tjbv-stat .policy {
+  color: var(--gold);
+}
+.tjbv-stat .na {
+  color: var(--dim);
+}
+.tjbv-cases {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 7px;
+  margin-top: 10px;
+}
+.tjbv-case {
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  padding: 7px 9px;
+  border-radius: 4px;
+}
+.tjbv-case b {
+  display: block;
+  font-size: 12px;
+  color: var(--ink);
+}
+.tjbv-case small {
+  display: block;
+  color: var(--dim);
+  font-size: 10px;
+  line-height: 1.5;
+  margin-top: 2px;
+}
+.tjbv-actions {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+.tjbv-note {
+  font-size: 11px;
+  color: var(--dim);
+  line-height: 1.7;
+  margin: 8px 0 0;
+}
+.tjbv-note strong {
+  color: var(--gold);
+}

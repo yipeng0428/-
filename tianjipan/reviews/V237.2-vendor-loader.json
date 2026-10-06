@@ -1,0 +1,20 @@
+{
+  "ok": true,
+  "rejected": {
+    "status": "unavailable",
+    "error": "八字校验器完整性校验失败",
+    "probe": 0
+  },
+  "accepted": {
+    "status": "ready",
+    "api": "function"
+  },
+  "requests": 4,
+  "sourceSHA256": "75893e7a97aaae4029137077ee0e06f4ecb5b10ea9e47191b4480b0056ffc9a1",
+  "checks": [
+    "same-length altered code is rejected before module execution",
+    "fixed snapshot loads after validation",
+    "parallel force loads share one fetch",
+    "in-memory module URL is revoked in finally"
+  ]
+}

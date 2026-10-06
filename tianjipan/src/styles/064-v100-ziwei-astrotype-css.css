@@ -1,0 +1,57 @@
+#tjZiweiV10Badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-left: 8px;
+  padding: 2px 7px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 10px;
+  color: var(--good);
+  vertical-align: middle;
+}
+#tjZiweiV10Badge::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--good);
+  box-shadow: 0 0 6px var(--good);
+}
+#tjZiweiV10Badge.warn {
+  color: var(--bad);
+}
+#tjZiweiV10Badge.warn::before {
+  background: var(--bad);
+  box-shadow: 0 0 6px var(--bad);
+}
+.tjzv10-live {
+  margin-bottom: 14px;
+}
+.tjzv10-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 7px;
+  margin-top: 8px;
+}
+.tjzv10-card {
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  padding: 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  line-height: 1.65;
+}
+.tjzv10-card b {
+  color: var(--gold2);
+}
+.tjzv10-actions {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 9px;
+}
+.tjzv10-actions .on {
+  outline: 1px solid var(--good);
+  color: var(--good);
+}

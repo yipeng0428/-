@@ -1,0 +1,28 @@
+.v118-planet-tip {
+  color: #e9eef6 !important;
+  border-color: rgba(232, 202, 132, 0.7) !important;
+  background: rgba(7, 10, 16, 0.94) !important;
+}
+.v118-planet-tip b {
+  color: #f3da98 !important;
+}
+.v118-planet-tip .trad {
+  color: #ffd77f !important;
+}
+.v118-planet-tip .dim {
+  color: #cfd7e4 !important;
+}
+#orrHelioSvg .oh-p text,
+#orrHelioSvg .v134-clickable,
+#orrHelioSvg [data-planet] text {
+  fill: #f5f7fb !important;
+  stroke: rgba(8, 10, 20, 0.82) !important;
+  stroke-width: 2.2px !important;
+  paint-order: stroke;
+}
+#orrHelioSvg .oh-ztext {
+  fill: rgba(245, 247, 251, 0.86) !important;
+  stroke: rgba(8, 10, 20, 0.7);
+  stroke-width: 1.6px;
+  paint-order: stroke;
+}

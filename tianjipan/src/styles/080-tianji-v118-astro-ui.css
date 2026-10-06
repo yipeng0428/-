@@ -1,0 +1,47 @@
+/* ===== v118：全天球首次切换 / 深度缩放 / 交互星座淡化 / 星体鼠标速览 ===== */
+.xk-cvwrap > #xkSky[hidden],
+.xk-cvwrap > #xkSky3d[hidden] {
+  display: none !important;
+}
+.orr3d-stage {
+  position: relative;
+}
+.v118-planet-tip {
+  position: absolute;
+  z-index: 8;
+  min-width: 190px;
+  max-width: min(280px, 72%);
+  padding: 8px 10px;
+  border: 1px solid rgba(217, 178, 95, 0.62);
+  border-radius: 4px;
+  background: rgba(8, 11, 17, 0.92);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.32);
+  color: var(--ink);
+  font-size: 11px;
+  line-height: 1.55;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(4px);
+  transition:
+    opacity 0.14s,
+    transform 0.14s;
+}
+.v118-planet-tip.on {
+  opacity: 1;
+  transform: none;
+}
+.v118-planet-tip b {
+  color: var(--gold2);
+  font-size: 12.5px;
+}
+.v118-planet-tip .trad {
+  color: var(--gold);
+}
+.v118-planet-tip .dim {
+  color: var(--dim);
+}
+#orr3dCv.v118-deep {
+  cursor: zoom-in;
+}

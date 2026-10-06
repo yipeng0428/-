@@ -1,0 +1,620 @@
+/* ===== v57 · 黄黑道十二神 · 日时流转盘 ===== */
+.hhd-shell {
+  padding: 0 12px 28px;
+  min-width: 0;
+}
+.hhd-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 4px 12px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 12px;
+}
+.hhd-title {
+  flex: 1;
+  min-width: 0;
+}
+.hhd-title b {
+  display: block;
+  font-family: "Ma Shan Zheng", "STKaiti", serif;
+  font-size: 25px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  color: var(--gold2);
+}
+.hhd-title small {
+  display: block;
+  color: var(--dim);
+  font-size: 11px;
+  line-height: 1.55;
+  margin-top: 2px;
+}
+.hhd-grid {
+  display: grid;
+  grid-template-columns: 248px minmax(540px, 1fr) 320px;
+  gap: 12px;
+  align-items: start;
+}
+.hhd-side,
+.hhd-info {
+  padding: 12px;
+  min-width: 0;
+}
+.hhd-side h4,
+.hhd-info h4 {
+  font-family: "Ma Shan Zheng", "STKaiti", serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--gold2);
+  margin: 0 0 8px;
+}
+.hhd-group {
+  padding: 10px 0;
+  border-top: 1px dashed var(--line);
+}
+.hhd-group:first-of-type {
+  border-top: 0;
+  padding-top: 0;
+}
+.hhd-group label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 6px 0;
+  color: var(--dim);
+  font-size: 11px;
+}
+.hhd-group input,
+.hhd-group select {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 34px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: var(--panel2);
+  color: var(--ink);
+  padding: 5px 7px;
+}
+.hhd-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.hhd-row > * {
+  flex: 1 1 72px;
+}
+.hhd-layer {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: flex-start;
+  gap: 7px !important;
+  color: var(--ink) !important;
+}
+.hhd-layer input {
+  width: auto !important;
+  min-height: 0 !important;
+  margin-top: 3px;
+}
+.hhd-layer span {
+  line-height: 1.35;
+}
+.hhd-layer small {
+  display: block;
+  color: var(--dim);
+  font-size: 9px;
+}
+.hhd-main {
+  min-width: 0;
+}
+.hhd-viewbar {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 8px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  border-radius: 3px 3px 0 0;
+}
+.hhd-viewbar .hint {
+  flex: 1;
+  min-width: 190px;
+  color: var(--dim);
+  font-size: 10px;
+}
+.hhd-viewbar #hhdZoom {
+  min-width: 38px;
+  text-align: center;
+  color: var(--dim);
+  font-size: 10px;
+}
+.hhd-frame {
+  position: relative;
+  height: min(71vh, 780px);
+  min-height: 620px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-top: 0;
+  background:
+    radial-gradient(circle at 50% 49%, rgba(217, 178, 95, 0.09), transparent 54%),
+    rgba(255, 255, 255, 0.012);
+}
+.hhd-frame.pan {
+  cursor: grab;
+}
+.hhd-frame.grab {
+  cursor: grabbing;
+}
+.hhd-frame svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: none;
+  user-select: none;
+}
+.hhd-ring {
+  fill: none;
+  stroke: var(--line2);
+  stroke-width: 1;
+}
+.hhd-ring.thin {
+  stroke: var(--line);
+  stroke-width: 0.6;
+}
+.hhd-sector {
+  stroke: var(--line);
+  stroke-width: 0.7;
+  cursor: pointer;
+  transition: 0.16s;
+}
+.hhd-sector.day {
+  fill: rgba(217, 178, 95, 0.025);
+}
+.hhd-sector.hour {
+  fill: rgba(76, 173, 181, 0.025);
+}
+.hhd-sector:hover {
+  stroke: var(--gold2);
+  filter: brightness(1.15);
+}
+.hhd-sector.huang {
+  fill: rgba(73, 155, 105, 0.07);
+}
+.hhd-sector.hei {
+  fill: rgba(208, 80, 59, 0.035);
+}
+.hhd-sector.current-day {
+  fill: rgba(217, 178, 95, 0.18);
+  stroke: var(--gold2);
+  stroke-width: 2;
+}
+.hhd-sector.current-hour {
+  fill: rgba(76, 173, 181, 0.16);
+  stroke: var(--cyan);
+  stroke-width: 2;
+}
+.hhd-text {
+  font-family: "Noto Serif SC", "STSong", serif;
+  text-anchor: middle;
+  dominant-baseline: central;
+  pointer-events: none;
+  fill: var(--ink);
+}
+.hhd-zhi {
+  font-family: "Ma Shan Zheng", "STKaiti", serif;
+  font-size: 22px;
+  fill: var(--gold2);
+}
+.hhd-god {
+  font-family: "Ma Shan Zheng", "STKaiti", serif;
+  font-size: 24px;
+}
+.hhd-god.huang {
+  fill: var(--good);
+}
+.hhd-god.hei {
+  fill: var(--red);
+}
+.hhd-sub {
+  font-size: 8px;
+  fill: var(--dim);
+}
+.hhd-day-label {
+  font-size: 9px;
+  fill: var(--gold2);
+}
+.hhd-hour-label {
+  font-size: 9px;
+  fill: var(--cyan);
+}
+.hhd-anchor-day {
+  fill: var(--gold2);
+  stroke: var(--bg);
+  stroke-width: 2;
+}
+.hhd-anchor-hour {
+  fill: var(--cyan);
+  stroke: var(--bg);
+  stroke-width: 2;
+}
+.hhd-pointer-day {
+  stroke: var(--gold2);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+.hhd-pointer-hour {
+  stroke: var(--cyan);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+.hhd-center {
+  fill: var(--panel);
+  stroke: var(--line2);
+  stroke-width: 1.25;
+}
+.hhd-center-kicker {
+  font-size: 8px;
+  fill: var(--dim);
+  letter-spacing: 0.14em;
+}
+.hhd-center-title {
+  font-family: "Ma Shan Zheng", "STKaiti", serif;
+  font-size: 31px;
+  fill: var(--gold2);
+}
+.hhd-center-hour {
+  font-family: "Ma Shan Zheng", "STKaiti", serif;
+  font-size: 27px;
+  fill: var(--cyan);
+}
+.hhd-center-sm {
+  font-size: 9px;
+  fill: var(--dim);
+}
+.hhd-legend {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 7px 9px;
+  border: 1px solid var(--line);
+  border-top: 0;
+  color: var(--dim);
+  font-size: 10px;
+}
+.hhd-legend i {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  margin-right: 4px;
+  vertical-align: -1px;
+}
+.hhd-legend .dy {
+  background: var(--gold2);
+}
+.hhd-legend .hr {
+  background: var(--cyan);
+}
+.hhd-legend .gd {
+  background: var(--good);
+}
+.hhd-legend .bd {
+  background: var(--red);
+}
+.hhd-info {
+  position: sticky;
+  top: 10px;
+  max-height: calc(100vh - 26px);
+  overflow: auto;
+}
+.hhd-kpis {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px;
+}
+.hhd-kpi {
+  padding: 8px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  border-radius: 3px;
+  min-width: 0;
+}
+.hhd-kpi small {
+  display: block;
+  color: var(--dim);
+  font-size: 9px;
+}
+.hhd-kpi b {
+  display: block;
+  color: var(--gold2);
+  font-size: 15px;
+  margin-top: 2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.hhd-kpi b.cyan {
+  color: var(--cyan);
+}
+.hhd-kpi b.good {
+  color: var(--good);
+}
+.hhd-kpi b.bad {
+  color: var(--red);
+}
+.hhd-facts {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  font-size: 11px;
+  margin-top: 10px;
+  border-top: 1px solid var(--line);
+}
+.hhd-facts span,
+.hhd-facts b {
+  padding: 6px 4px;
+  border-bottom: 1px dashed var(--line);
+  font-weight: 400;
+  overflow-wrap: anywhere;
+}
+.hhd-facts span {
+  color: var(--dim);
+}
+.hhd-card {
+  margin-top: 10px;
+  padding: 9px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  border-radius: 3px;
+  font-size: 11px;
+  line-height: 1.72;
+  min-width: 0;
+}
+.hhd-card > b {
+  color: var(--gold2);
+}
+.hhd-pills {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  margin-top: 5px;
+}
+.hhd-pills span {
+  font-size: 9px;
+  padding: 1px 6px;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+}
+.hhd-pills.ji span {
+  border-color: rgba(208, 80, 59, 0.35);
+  color: var(--red);
+}
+.hhd-links {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  margin-top: 7px;
+}
+.hhd-links button {
+  flex: 1 1 90px;
+}
+.hhd-board,
+.hhd-guide {
+  margin-top: 12px;
+  padding: 12px;
+}
+.hhd-board-head {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 9px;
+}
+.hhd-board-head b {
+  font-family: "Ma Shan Zheng", "STKaiti", serif;
+  font-size: 19px;
+  font-weight: 400;
+  color: var(--gold2);
+}
+.hhd-board-head small {
+  color: var(--dim);
+  font-size: 10px;
+}
+.hhd-hours {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(64px, 1fr));
+  gap: 5px;
+  overflow: auto;
+  padding-bottom: 2px;
+}
+.hhd-hour-card {
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: var(--panel2);
+  padding: 6px 4px;
+  text-align: center;
+  color: var(--ink);
+  cursor: pointer;
+}
+.hhd-hour-card:hover,
+.hhd-hour-card.on {
+  border-color: var(--cyan);
+  background: rgba(76, 173, 181, 0.07);
+}
+.hhd-hour-card b {
+  display: block;
+  font-family: "Ma Shan Zheng", "STKaiti", serif;
+  font-size: 17px;
+  color: var(--cyan);
+}
+.hhd-hour-card span {
+  display: block;
+  font-size: 10px;
+  margin: 2px 0;
+}
+.hhd-hour-card span.good {
+  color: var(--good);
+}
+.hhd-hour-card span.bad {
+  color: var(--red);
+}
+.hhd-hour-card small {
+  display: block;
+  color: var(--dim);
+  font-size: 8px;
+  white-space: nowrap;
+}
+.hhd-days {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(64px, 1fr));
+  gap: 5px;
+  overflow: auto;
+  padding-bottom: 2px;
+}
+.hhd-day-card {
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: var(--panel2);
+  padding: 6px 4px;
+  text-align: center;
+  cursor: pointer;
+  color: var(--ink);
+}
+.hhd-day-card:hover,
+.hhd-day-card.on {
+  border-color: var(--gold);
+  background: var(--wash);
+}
+.hhd-day-card b {
+  display: block;
+  color: var(--gold2);
+  font-size: 10px;
+}
+.hhd-day-card span {
+  display: block;
+  font-family: "Ma Shan Zheng", "STKaiti", serif;
+  font-size: 17px;
+  margin: 2px 0;
+}
+.hhd-day-card span.good {
+  color: var(--good);
+}
+.hhd-day-card span.bad {
+  color: var(--red);
+}
+.hhd-day-card small {
+  display: block;
+  color: var(--dim);
+  font-size: 8px;
+  white-space: nowrap;
+}
+.hhd-guide summary {
+  cursor: pointer;
+  font-family: "Ma Shan Zheng", "STKaiti", serif;
+  color: var(--gold2);
+  font-size: 19px;
+}
+.hhd-guide-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 7px;
+  margin-top: 10px;
+}
+.hhd-guide-grid button {
+  min-width: 0;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  color: var(--ink);
+  padding: 9px;
+  text-align: left;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.hhd-guide-grid button:hover {
+  border-color: var(--gold);
+}
+.hhd-guide-grid b {
+  display: block;
+  color: var(--gold2);
+  font-size: 12px;
+}
+.hhd-guide-grid span {
+  display: block;
+  color: var(--dim);
+  font-size: 10px;
+  line-height: 1.55;
+  margin-top: 3px;
+}
+.hhd-bottom {
+  margin-top: 12px;
+  padding: 10px 12px;
+  color: var(--dim);
+  font-size: 11px;
+  line-height: 1.8;
+}
+.hhd-bottom b {
+  color: var(--gold2);
+}
+@media (max-width: 1240px) {
+  .hhd-grid {
+    grid-template-columns: 220px minmax(470px, 1fr);
+  }
+  .hhd-info {
+    grid-column: 1/-1;
+    position: static;
+    max-height: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .hhd-info > h4,
+  .hhd-kpis {
+    grid-column: 1/-1;
+  }
+  .hhd-card {
+    margin-top: 0;
+  }
+  .hhd-hours,
+  .hhd-days {
+    grid-template-columns: repeat(6, minmax(76px, 1fr));
+  }
+}
+@media (max-width: 780px) {
+  .hhd-shell {
+    padding: 0 4px 20px;
+  }
+  .hhd-grid {
+    grid-template-columns: 1fr;
+  }
+  .hhd-frame {
+    min-height: 490px;
+    height: 68vh;
+  }
+  .hhd-info {
+    display: block;
+  }
+  .hhd-hours,
+  .hhd-days {
+    grid-template-columns: repeat(4, minmax(72px, 1fr));
+  }
+  .hhd-guide-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .hhd-top {
+    align-items: flex-start;
+  }
+  .hhd-title b {
+    font-size: 21px;
+  }
+}
+@media (max-width: 430px) {
+  .hhd-hours,
+  .hhd-days {
+    grid-template-columns: repeat(3, minmax(70px, 1fr));
+  }
+  .hhd-guide-grid {
+    grid-template-columns: 1fr;
+  }
+}

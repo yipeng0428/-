@@ -1,0 +1,686 @@
+/* ===== v71 · 盘库 15：十二地支掌 · 掌诀盘（v76 重构视觉） ===== */
+.dzh-shell {
+  padding: 0 12px 26px;
+}
+.dzh-top {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 10px 4px 12px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 12px;
+}
+.dzh-title {
+  flex: 1;
+  min-width: 0;
+}
+.dzh-title b {
+  display: block;
+  font:
+    24px/1.2 "Ma Shan Zheng",
+    "STKaiti",
+    serif;
+  color: var(--gold2);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+}
+.dzh-title small {
+  display: block;
+  margin-top: 3px;
+  color: var(--dim);
+  font-size: 10px;
+}
+.dzh-grid {
+  display: grid;
+  grid-template-columns: minmax(190px, 232px) minmax(510px, 1fr) minmax(238px, 298px);
+  gap: 12px;
+  align-items: start;
+}
+.dzh-side,
+.dzh-info {
+  padding: 12px;
+  min-width: 0;
+}
+.dzh-side h4,
+.dzh-info h4 {
+  margin: 0 0 8px;
+  font:
+    19px/1.2 "Ma Shan Zheng",
+    "STKaiti",
+    serif;
+  color: var(--gold2);
+  font-weight: 400;
+}
+.dzh-group {
+  padding: 10px 0;
+  border-top: 1px solid var(--line);
+}
+.dzh-group:first-of-type {
+  border-top: 0;
+  padding-top: 0;
+}
+.dzh-group label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: var(--dim);
+  font-size: 10px;
+}
+.dzh-group select {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  color: var(--ink);
+  padding: 6px 8px;
+  border-radius: 3px;
+}
+.dzh-btnrow {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+.dzh-btnrow > * {
+  flex: 1 1 70px;
+}
+.dzh-layer {
+  display: flex !important;
+  flex-direction: row !important;
+  gap: 7px !important;
+  align-items: flex-start !important;
+  color: var(--ink) !important;
+  padding: 4px 0;
+}
+.dzh-layer input {
+  width: auto !important;
+  margin-top: 3px;
+}
+.dzh-layer span {
+  line-height: 1.35;
+}
+.dzh-layer small {
+  display: block;
+  color: var(--dim);
+  font-size: 9px;
+  margin-top: 1px;
+}
+.dzh-main {
+  min-width: 0;
+}
+.dzh-viewbar {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 8px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  border-radius: 3px 3px 0 0;
+}
+.dzh-viewbar .hint {
+  flex: 1;
+  min-width: 190px;
+  color: var(--dim);
+  font-size: 10px;
+}
+.dzh-viewbar #dzhZoom {
+  min-width: 38px;
+  text-align: center;
+  color: var(--dim);
+  font-size: 10px;
+}
+.dzh-frame {
+  position: relative;
+  height: min(82vh, 900px);
+  min-height: 740px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-top: 0;
+  background:
+    radial-gradient(circle at 50% 42%, rgba(217, 178, 95, 0.09), transparent 55%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(0, 0, 0, 0.02));
+}
+.dzh-frame.pan {
+  cursor: grab;
+}
+.dzh-frame.grab {
+  cursor: grabbing;
+}
+.dzh-frame svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.dzh-hand {
+  fill: rgba(217, 178, 95, 0.032);
+  stroke: rgba(173, 134, 64, 0.48);
+  stroke-width: 2.2;
+}
+.dzh-hand-panel {
+  fill: rgba(217, 178, 95, 0.028);
+  stroke: rgba(173, 134, 64, 0.3);
+  stroke-width: 1.1;
+}
+.dzh-crease {
+  fill: none;
+  stroke: rgba(173, 134, 64, 0.3);
+  stroke-width: 1.1;
+  stroke-linecap: round;
+}
+.dzh-route {
+  fill: none;
+  stroke: rgba(173, 134, 64, 0.55);
+  stroke-width: 1.55;
+  stroke-dasharray: 6 6;
+  opacity: 0.82;
+}
+.dzh-route-dot {
+  fill: rgba(173, 134, 64, 0.42);
+}
+.dzh-zone-label {
+  font-size: 8.4px;
+  fill: var(--dim);
+  letter-spacing: 0.14em;
+}
+.dzh-finger-label {
+  font:
+    9.2px/1 "Ma Shan Zheng",
+    "STKaiti",
+    serif;
+  fill: #a68451;
+  letter-spacing: 0.18em;
+}
+.dzh-titlebar {
+  fill: rgba(255, 251, 241, 0.88);
+  stroke: rgba(173, 134, 64, 0.38);
+  stroke-width: 1;
+}
+.dzh-titletext {
+  font:
+    11px "Ma Shan Zheng",
+    "STKaiti",
+    serif;
+  fill: var(--gold2);
+  letter-spacing: 0.11em;
+}
+.dzh-subtext {
+  font-size: 8px;
+  fill: var(--dim);
+}
+.dzh-node {
+  cursor: pointer;
+}
+.dzh-node .halo {
+  fill: var(--bg2);
+  stroke: rgba(145, 116, 55, 0.62);
+  stroke-width: 1.8;
+  transition: 0.16s;
+}
+.dzh-node .core {
+  fill: rgba(255, 255, 255, 0.6);
+  opacity: 0.75;
+}
+.dzh-node:hover .halo {
+  stroke: var(--gold2);
+  stroke-width: 2.45;
+}
+.dzh-node.selected .halo {
+  stroke: var(--gold2);
+  stroke-width: 3.3;
+  filter: drop-shadow(0 0 8px rgba(217, 178, 95, 0.52));
+}
+.dzh-node.now .halo {
+  stroke: var(--red);
+  stroke-width: 3;
+}
+.dzh-node.demo .halo {
+  stroke: var(--cyan);
+  stroke-width: 3;
+  filter: drop-shadow(0 0 8px rgba(98, 205, 195, 0.55));
+}
+.dzh-node.person .halo {
+  stroke-dasharray: 4 3;
+}
+.dzh-node .zhi {
+  font:
+    23px "Ma Shan Zheng",
+    "STKaiti",
+    serif;
+  text-anchor: middle;
+  dominant-baseline: central;
+  fill: var(--gold2);
+  pointer-events: none;
+}
+.dzh-node .zod {
+  font-size: 7.2px;
+  text-anchor: middle;
+  fill: var(--dim);
+  pointer-events: none;
+}
+.dzh-node .stem {
+  font:
+    12px "Ma Shan Zheng",
+    "STKaiti",
+    serif;
+  text-anchor: middle;
+  fill: var(--cyan);
+  pointer-events: none;
+}
+.dzh-node .kong {
+  font-size: 8px;
+  text-anchor: middle;
+  fill: var(--bad);
+  font-weight: 700;
+  pointer-events: none;
+}
+.dzh-node .order-ring {
+  fill: rgba(255, 251, 241, 0.96);
+  stroke: rgba(173, 134, 64, 0.62);
+  stroke-width: 1;
+}
+.dzh-node .order-txt {
+  font-size: 8px;
+  font-weight: 700;
+  text-anchor: middle;
+  fill: #8c6a38;
+}
+.dzh-meta {
+  font-size: 8.5px;
+  fill: var(--dim);
+  pointer-events: none;
+}
+.dzh-meta-strong {
+  font-size: 9px;
+  fill: #9b7430;
+  pointer-events: none;
+}
+.dzh-markdot {
+  fill: rgba(255, 251, 241, 0.96);
+  stroke: var(--gold);
+  stroke-width: 0.95;
+}
+.dzh-marktxt {
+  font-size: 8px;
+  font-weight: 700;
+  text-anchor: middle;
+  fill: #7d5c2c;
+  pointer-events: none;
+}
+.dzh-wx0 .halo {
+  fill: rgba(99, 192, 144, 0.14);
+}
+.dzh-wx1 .halo {
+  fill: rgba(239, 106, 75, 0.15);
+}
+.dzh-wx2 .halo {
+  fill: rgba(214, 165, 76, 0.14);
+}
+.dzh-wx3 .halo {
+  fill: rgba(231, 227, 214, 0.16);
+}
+.dzh-wx4 .halo {
+  fill: rgba(95, 169, 234, 0.15);
+}
+.dzh-rel {
+  fill: none;
+  pointer-events: none;
+}
+.dzh-rel.chong {
+  stroke: var(--bad);
+  stroke-width: 2.25;
+}
+.dzh-rel.he {
+  stroke: var(--good);
+  stroke-width: 2.2;
+}
+.dzh-rel.sanhe {
+  stroke: var(--cyan);
+  stroke-width: 2;
+  stroke-dasharray: 7 4;
+}
+.dzh-rel.sanhui {
+  stroke: var(--gold2);
+  stroke-width: 2;
+  stroke-dasharray: 2 4;
+}
+.dzh-rel.xhp {
+  stroke: #d78f55;
+  stroke-width: 1.7;
+  stroke-dasharray: 3 4;
+}
+.dzh-rel-label {
+  font-size: 8px;
+  text-anchor: middle;
+  fill: var(--dim);
+  paint-order: stroke;
+  stroke: var(--bg);
+  stroke-width: 3px;
+  pointer-events: none;
+}
+.dzh-legend {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 7px 9px;
+  border: 1px solid var(--line);
+  border-top: 0;
+  color: var(--dim);
+  font-size: 10px;
+}
+.dzh-legend i {
+  display: inline-block;
+  width: 16px;
+  height: 2px;
+  margin-right: 4px;
+  vertical-align: 3px;
+}
+.dzh-legend .c {
+  background: var(--bad);
+}
+.dzh-legend .h {
+  background: var(--good);
+}
+.dzh-legend .s {
+  background: var(--cyan);
+}
+.dzh-legend .v {
+  background: var(--gold2);
+}
+.dzh-info {
+  position: sticky;
+  top: 10px;
+  max-height: calc(100vh - 26px);
+  overflow: auto;
+}
+.dzh-hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px;
+}
+.dzh-kpi {
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  padding: 8px;
+  border-radius: 3px;
+  min-width: 0;
+}
+.dzh-kpi small {
+  display: block;
+  color: var(--dim);
+  font-size: 9px;
+}
+.dzh-kpi b {
+  display: block;
+  color: var(--gold2);
+  font-size: 15px;
+  margin-top: 2px;
+  overflow-wrap: anywhere;
+}
+.dzh-kpi b.red {
+  color: var(--red);
+}
+.dzh-facts {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  font-size: 11px;
+  margin-top: 10px;
+  border-top: 1px solid var(--line);
+}
+.dzh-facts span,
+.dzh-facts b {
+  padding: 6px 4px;
+  border-bottom: 1px dashed var(--line);
+  font-weight: 400;
+  overflow-wrap: anywhere;
+}
+.dzh-facts span {
+  color: var(--dim);
+}
+.dzh-card {
+  margin-top: 10px;
+  padding: 9px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  border-radius: 3px;
+  font-size: 11px;
+  line-height: 1.72;
+}
+.dzh-card > b {
+  color: var(--gold2);
+}
+.dzh-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 6px;
+}
+.dzh-tags span {
+  padding: 2px 7px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  font-size: 9px;
+}
+.dzh-links {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  margin-top: 7px;
+}
+.dzh-links button {
+  flex: 1 1 90px;
+}
+.dzh-board,
+.dzh-guide {
+  margin-top: 12px;
+  padding: 12px;
+}
+.dzh-board-head {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 9px;
+}
+.dzh-board-head b {
+  font:
+    19px "Ma Shan Zheng",
+    "STKaiti",
+    serif;
+  color: var(--gold2);
+  font-weight: 400;
+}
+.dzh-board-head small {
+  color: var(--dim);
+  font-size: 10px;
+}
+.dzh-strip {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(64px, 1fr));
+  gap: 4px;
+  overflow: auto;
+  padding-bottom: 3px;
+}
+.dzh-chip {
+  min-width: 64px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  color: var(--ink);
+  padding: 7px 4px;
+  border-radius: 3px;
+  text-align: center;
+  cursor: pointer;
+}
+.dzh-chip:hover,
+.dzh-chip.on {
+  border-color: var(--gold2);
+  background: var(--wash);
+}
+.dzh-chip.now {
+  border-color: var(--red);
+}
+.dzh-chip b {
+  display: block;
+  font:
+    20px "Ma Shan Zheng",
+    "STKaiti",
+    serif;
+  color: var(--gold2);
+}
+.dzh-chip span,
+.dzh-chip small {
+  display: block;
+  color: var(--dim);
+  font-size: 8px;
+  white-space: nowrap;
+}
+.dzh-quiz {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: center;
+}
+.dzh-q {
+  padding: 10px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  border-radius: 3px;
+}
+.dzh-q small {
+  display: block;
+  color: var(--dim);
+  font-size: 9px;
+}
+.dzh-q b {
+  display: block;
+  color: var(--gold2);
+  font-size: 14px;
+  margin: 3px 0;
+}
+.dzh-q em {
+  font-style: normal;
+  font-size: 10px;
+}
+.dzh-q em.ok {
+  color: var(--good);
+}
+.dzh-q em.bad {
+  color: var(--bad);
+}
+.dzh-score {
+  font-size: 11px;
+  color: var(--dim);
+  text-align: right;
+}
+.dzh-score b {
+  display: block;
+  font-size: 20px;
+  color: var(--gold2);
+}
+.dzh-guide summary {
+  cursor: pointer;
+  font:
+    19px "Ma Shan Zheng",
+    "STKaiti",
+    serif;
+  color: var(--gold2);
+}
+.dzh-guide-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 7px;
+  margin-top: 9px;
+}
+.dzh-guide-grid > div {
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  padding: 9px;
+  border-radius: 3px;
+}
+.dzh-guide-grid b {
+  display: block;
+  color: var(--gold2);
+  font-size: 12px;
+}
+.dzh-guide-grid span {
+  display: block;
+  color: var(--dim);
+  font-size: 10px;
+  line-height: 1.6;
+  margin-top: 3px;
+}
+.dzh-bottom {
+  margin-top: 12px;
+  padding: 10px 12px;
+  color: var(--dim);
+  font-size: 11px;
+  line-height: 1.8;
+}
+.dzh-bottom b {
+  color: var(--gold2);
+}
+@media (max-width: 1050px) {
+  .dzh-grid {
+    grid-template-columns: 210px minmax(0, 1fr);
+  }
+  .dzh-info {
+    grid-column: 1/-1;
+    position: static;
+    max-height: none;
+  }
+  .dzh-hero {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+@media (max-width: 760px) {
+  .dzh-shell {
+    padding: 0 5px 20px;
+  }
+  .dzh-top {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  .dzh-grid {
+    grid-template-columns: 1fr;
+  }
+  .dzh-side,
+  .dzh-info {
+    position: static;
+    max-height: none;
+  }
+  .dzh-frame {
+    min-height: 560px;
+    height: 92vw;
+    max-height: 760px;
+  }
+  .dzh-hero {
+    grid-template-columns: 1fr 1fr;
+  }
+  .dzh-guide-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .dzh-strip {
+    grid-template-columns: repeat(12, 64px);
+  }
+}
+@media (max-width: 430px) {
+  .dzh-frame {
+    height: 520px;
+    min-height: 520px;
+  }
+  .dzh-guide-grid {
+    grid-template-columns: 1fr;
+  }
+  .dzh-quiz {
+    grid-template-columns: 1fr;
+  }
+  .dzh-score {
+    text-align: left;
+  }
+  .dzh-hero {
+    grid-template-columns: 1fr 1fr;
+  }
+}

@@ -1,0 +1,364 @@
+/* ===== v60 · 全站语义色规范 =====
+   绿色：可行 / 吉 / 宜 / 生 / 已启用
+   红色：忌 / 克 / 禁止 / 不吉
+   棕色：平 / 中性
+   黑色：大凶 / 极端警示
+   灰色：失效 / 未启用 / 不可用
+   金色仍只承担品牌、选中、焦点与装饰，不再兼任“平/吉凶”语义。
+*/
+:root {
+  --sem-good: #4fa873;
+  --sem-good-soft: rgba(79, 168, 115, 0.14);
+  --sem-bad: #d45143;
+  --sem-bad-soft: rgba(212, 81, 67, 0.14);
+  --sem-neutral: #9a6a3a;
+  --sem-neutral-soft: rgba(154, 106, 58, 0.15);
+  --sem-dire: #050505;
+  --sem-dire-text: #f2eee5;
+  --sem-disabled: #73777c;
+  --sem-disabled-soft: rgba(115, 119, 124, 0.12);
+  --good: var(--sem-good);
+  --bad: var(--sem-bad);
+  --mid: var(--sem-neutral);
+}
+:root[data-theme="light"] {
+  --sem-good: #2f7d54;
+  --sem-good-soft: rgba(47, 125, 84, 0.11);
+  --sem-bad: #b72f26;
+  --sem-bad-soft: rgba(183, 47, 38, 0.1);
+  --sem-neutral: #805126;
+  --sem-neutral-soft: rgba(128, 81, 38, 0.11);
+  --sem-dire: #090909;
+  --sem-dire-text: #fffaf0;
+  --sem-disabled: #8a8d91;
+  --sem-disabled-soft: rgba(138, 141, 145, 0.11);
+  --good: var(--sem-good);
+  --bad: var(--sem-bad);
+  --mid: var(--sem-neutral);
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --sem-good: #2f7d54;
+    --sem-good-soft: rgba(47, 125, 84, 0.11);
+    --sem-bad: #b72f26;
+    --sem-bad-soft: rgba(183, 47, 38, 0.1);
+    --sem-neutral: #805126;
+    --sem-neutral-soft: rgba(128, 81, 38, 0.11);
+    --sem-dire: #090909;
+    --sem-dire-text: #fffaf0;
+    --sem-disabled: #8a8d91;
+    --sem-disabled-soft: rgba(138, 141, 145, 0.11);
+    --good: var(--sem-good);
+    --bad: var(--sem-bad);
+    --mid: var(--sem-neutral);
+  }
+}
+
+/* 基础语义文本 */
+.good,
+.吉,
+.宜,
+.生,
+[data-sem="good"] {
+  color: var(--sem-good) !important;
+}
+.bad,
+.凶,
+.忌,
+.克,
+[data-sem="bad"] {
+  color: var(--sem-bad) !important;
+}
+.mid,
+.平,
+[data-sem="neutral"] {
+  color: var(--sem-neutral) !important;
+}
+[data-sem="disabled"],
+.disabled,
+.is-disabled {
+  color: var(--sem-disabled) !important;
+}
+.大凶,
+[data-sem="dire"] {
+  background: var(--sem-dire) !important;
+  color: var(--sem-dire-text) !important;
+  border-color: var(--sem-dire) !important;
+  border-radius: 3px;
+  padding-inline: 0.34em;
+}
+
+/* 标签 / 胶囊 / 状态块 */
+.pill.g,
+.pill.good,
+[data-sem="good"].pill {
+  color: var(--sem-good) !important;
+  border-color: color-mix(in srgb, var(--sem-good) 72%, transparent) !important;
+  background: var(--sem-good-soft) !important;
+}
+.pill.r,
+.pill.bad,
+[data-sem="bad"].pill {
+  color: var(--sem-bad) !important;
+  border-color: color-mix(in srgb, var(--sem-bad) 72%, transparent) !important;
+  background: var(--sem-bad-soft) !important;
+}
+.pill.mid,
+[data-sem="neutral"].pill {
+  color: var(--sem-neutral) !important;
+  border-color: color-mix(in srgb, var(--sem-neutral) 72%, transparent) !important;
+  background: var(--sem-neutral-soft) !important;
+}
+[data-sem="dire"].pill {
+  background: var(--sem-dire) !important;
+  color: var(--sem-dire-text) !important;
+  border-color: #333 !important;
+}
+[data-sem="disabled"].pill {
+  background: var(--sem-disabled-soft) !important;
+  color: var(--sem-disabled) !important;
+  border-color: color-mix(in srgb, var(--sem-disabled) 55%, transparent) !important;
+}
+
+/* 万年历 / 黄历：宜绿、忌红、平棕 */
+.yj .yl {
+  color: var(--sem-good) !important;
+  border-color: var(--sem-good) !important;
+  background: var(--sem-good-soft);
+}
+.yj .yl.j {
+  color: var(--sem-bad) !important;
+  border-color: var(--sem-bad) !important;
+  background: var(--sem-bad-soft);
+}
+.yj .yl.s {
+  color: var(--sem-good) !important;
+  border-color: var(--sem-good) !important;
+  background: var(--sem-good-soft);
+}
+.zd.t4,
+.zd.t3 {
+  border-color: color-mix(in srgb, var(--sem-good) 68%, transparent) !important;
+  background: var(--sem-good-soft) !important;
+}
+.zd.t4 em,
+.zd.t3 em {
+  color: var(--sem-good) !important;
+}
+.zd.t2 {
+  border-color: color-mix(in srgb, var(--sem-neutral) 65%, transparent) !important;
+  background: var(--sem-neutral-soft) !important;
+}
+.zd.t2 em {
+  color: var(--sem-neutral) !important;
+}
+.zd.t1 {
+  border-color: color-mix(in srgb, var(--sem-bad) 38%, transparent) !important;
+  background: color-mix(in srgb, var(--sem-bad-soft) 58%, transparent) !important;
+}
+.zd.t0 {
+  border-color: color-mix(in srgb, var(--sem-bad) 72%, transparent) !important;
+  background: var(--sem-bad-soft) !important;
+}
+.zd.t0 em,
+.zd.t1 em {
+  color: var(--sem-bad) !important;
+}
+
+/* 择日五档：吉/宜绿；平棕；慎/忌红 */
+.tb.t4,
+.tb.t3,
+.tier.t4,
+.tier.t3,
+.pill.tierp.t4,
+.pill.tierp.t3 {
+  background: var(--sem-good) !important;
+  color: #fff !important;
+  border-color: var(--sem-good) !important;
+}
+.tb.t2,
+.tier.t2,
+.pill.tierp.t2 {
+  background: var(--sem-neutral) !important;
+  color: #fff !important;
+  border-color: var(--sem-neutral) !important;
+}
+.tb.t1,
+.tier.t1,
+.pill.tierp.t1 {
+  background: color-mix(in srgb, var(--sem-bad) 78%, var(--sem-neutral)) !important;
+  color: #fff !important;
+  border-color: color-mix(in srgb, var(--sem-bad) 78%, var(--sem-neutral)) !important;
+}
+.tb.t0,
+.tier.t0,
+.pill.tierp.t0 {
+  background: var(--sem-bad) !important;
+  color: #fff !important;
+  border-color: var(--sem-bad) !important;
+}
+.rk.t4,
+.rk.t3 {
+  border-color: color-mix(in srgb, var(--sem-good) 64%, transparent) !important;
+}
+.rk.t4 em,
+.rk.t3 em {
+  color: var(--sem-good) !important;
+}
+.rk.t2 {
+  border-color: color-mix(in srgb, var(--sem-neutral) 60%, transparent) !important;
+}
+.rk.t2 em {
+  color: var(--sem-neutral) !important;
+}
+.rk.t1,
+.rk.t0 {
+  border-color: color-mix(in srgb, var(--sem-bad) 58%, transparent) !important;
+}
+.rk.t1 em,
+.rk.t0 em {
+  color: var(--sem-bad) !important;
+}
+
+/* 已有“吉 / 凶 / 平”组件统一 */
+.rs.good,
+.ri.good,
+.mcell.good,
+.nec.good,
+.rvstat.good,
+.hpring.good,
+.nmring.good,
+.nmg.good {
+  border-color: var(--sem-good) !important;
+}
+.rs.bad,
+.ri.bad,
+.mcell.bad,
+.nec.bad,
+.rvstat.bad,
+.hpring.bad,
+.nmring.bad,
+.nmg.bad {
+  border-color: var(--sem-bad) !important;
+}
+.rs.mid,
+.ri.mid,
+.nec.mid {
+  border-color: var(--sem-neutral) !important;
+}
+.ri.good .rk b,
+.mcell.good em,
+.mcell.good b,
+.nec.good b,
+.nmg.good em {
+  color: var(--sem-good) !important;
+}
+.ri.bad .rk b,
+.mcell.bad em,
+.mcell.bad b,
+.nec.bad b,
+.nmg.bad em {
+  color: var(--sem-bad) !important;
+}
+.nec.mid b,
+.cz-verdict.mid b,
+.sha-col.mid h4 {
+  color: var(--sem-neutral) !important;
+}
+.ppl-ed.good,
+.netsvg .ed.good .ln {
+  stroke: var(--sem-good) !important;
+}
+.ppl-ed.bad,
+.netsvg .ed.bad .ln {
+  stroke: var(--sem-bad) !important;
+}
+.ppl-ed.mid,
+.netsvg .ed.mid .ln {
+  stroke: var(--sem-neutral) !important;
+}
+.sn-log li.good {
+  border-color: var(--sem-good) !important;
+}
+.sn-log li.bad {
+  border-color: var(--sem-bad) !important;
+}
+.sn-log li.mid {
+  border-color: var(--sem-neutral) !important;
+}
+
+/* 生 / 克：关系类图形统一 */
+.lg.sheng,
+.wf-node.good circle.halo {
+  border-color: var(--sem-good) !important;
+  stroke: var(--sem-good) !important;
+}
+.lg.ke,
+.wf-node.bad circle.halo {
+  border-color: var(--sem-bad) !important;
+  stroke: var(--sem-bad) !important;
+}
+
+/* 建除 / 黄黑道盘中“吉”不再借青色表达 */
+.jc12-day.good span {
+  color: var(--sem-good) !important;
+}
+.jc12-day.bad span {
+  color: var(--sem-bad) !important;
+}
+.hhd-god.huang,
+.hhd-hour-card span.good,
+.hhd-day-card span.good {
+  fill: var(--sem-good) !important;
+  color: var(--sem-good) !important;
+}
+.hhd-god.hei,
+.hhd-hour-card span.bad,
+.hhd-day-card span.bad {
+  fill: var(--sem-bad) !important;
+  color: var(--sem-bad) !important;
+}
+.hhd-legend .gd {
+  background: var(--sem-good) !important;
+}
+.hhd-legend .bd {
+  background: var(--sem-bad) !important;
+}
+
+/* 状态控件：启用绿，禁用/错误红，失效灰 */
+input[type="checkbox"] {
+  accent-color: var(--sem-good) !important;
+}
+.btns button.toggle.on,
+[role="switch"][aria-checked="true"],
+button[data-sem="good"] {
+  border-color: var(--sem-good) !important;
+  color: var(--sem-good) !important;
+  background: var(--sem-good-soft) !important;
+}
+button:disabled,
+input:disabled,
+select:disabled,
+[aria-disabled="true"] {
+  color: var(--sem-disabled) !important;
+  border-color: color-mix(in srgb, var(--sem-disabled) 42%, transparent) !important;
+  background: var(--sem-disabled-soft) !important;
+  opacity: 0.72 !important;
+}
+
+/* 语义强调时，金色只保留“选中/焦点/品牌”，不承担平级语义 */
+.ftbig.good,
+.cz-verdict.good b,
+.TJ吉,
+.gj.吉,
+.gn.吉,
+.cj.吉 {
+  color: var(--sem-good) !important;
+}
+.ftbig.bad,
+.cz-verdict.bad b,
+.gj.凶,
+.gn.凶,
+.cj.凶 {
+  color: var(--sem-bad) !important;
+}

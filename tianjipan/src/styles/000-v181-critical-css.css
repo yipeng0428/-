@@ -1,0 +1,93 @@
+:root {
+  --site-wide-max: 1720px;
+  --site-wide-gutter: clamp(16px, 2vw, 34px);
+  --site-compact-gutter: 12px;
+}
+
+/* Desktop: first paint is already the final wide layout.
+   !important + higher specificity prevents older late rules from flashing first. */
+html[data-tj-layout="wide"] .wrap,
+html[data-tj-layout="wide"] .tn-in {
+  width: min(var(--site-wide-max), calc(100vw - 20px)) !important;
+  max-width: var(--site-wide-max) !important;
+  box-sizing: border-box !important;
+  padding-left: var(--site-wide-gutter) !important;
+  padding-right: var(--site-wide-gutter) !important;
+}
+html[data-tj-layout="wide"] .layout {
+  grid-template-columns: minmax(500px, 680px) minmax(0, 1fr) !important;
+  gap: 22px !important;
+}
+html[data-tj-layout="wide"] .dialbox {
+  max-width: 680px !important;
+}
+@media (min-width: 1500px) {
+  html[data-tj-layout="wide"] .layout {
+    grid-template-columns: minmax(560px, 700px) minmax(720px, 1fr) !important;
+    gap: 26px !important;
+  }
+}
+@media (min-width: 1850px) {
+  html[data-tj-layout="wide"] .wrap,
+  html[data-tj-layout="wide"] .tn-in {
+    width: min(1780px, calc(100vw - 24px)) !important;
+    max-width: 1780px !important;
+  }
+  html[data-tj-layout="wide"] .layout {
+    grid-template-columns: minmax(600px, 720px) minmax(780px, 1fr) !important;
+    gap: 28px !important;
+  }
+}
+
+/* Compact: independent mobile/tablet foundation. */
+html[data-tj-layout="compact"] .wrap,
+html[data-tj-layout="compact"] .tn-in {
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  padding-left: var(--site-compact-gutter) !important;
+  padding-right: var(--site-compact-gutter) !important;
+}
+html[data-tj-layout="compact"] .layout {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 14px !important;
+}
+html[data-tj-layout="compact"] .dialcol {
+  position: static !important;
+  top: auto !important;
+  transform: none !important;
+  width: 100% !important;
+  max-width: none !important;
+}
+html[data-tj-layout="compact"] .dialbox {
+  width: 100% !important;
+  max-width: none !important;
+}
+html[data-tj-layout="compact"] #v178LeftRail {
+  display: none !important;
+}
+html[data-tj-layout="compact"] .nw-grid,
+html[data-tj-layout="compact"] .lbgrid {
+  grid-template-columns: 1fr !important;
+}
+html[data-tj-layout="compact"] img,
+html[data-tj-layout="compact"] svg,
+html[data-tj-layout="compact"] canvas {
+  max-width: 100%;
+}
+
+/* Hidden panes do not participate in first-layout work. */
+.pane:not(.on) {
+  display: none !important;
+  content-visibility: hidden !important;
+  contain: strict !important;
+}
+@media (max-width: 640px) {
+  html[data-tj-layout="compact"] {
+    --site-compact-gutter: 8px;
+  }
+  html[data-tj-layout="compact"] .layout {
+    gap: 10px !important;
+  }
+}

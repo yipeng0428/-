@@ -1,0 +1,77 @@
+/* ===== v62 · 顶部导航净空 + 出生天数迁移 ===== */
+body {
+  padding-top: calc(var(--navh) + 12px) !important;
+}
+.wrap > .top {
+  margin-top: 2px;
+  padding-top: 12px !important;
+}
+.tj-life-stat {
+  display: inline-flex !important;
+  align-items: baseline;
+  gap: 6px;
+  min-width: 0;
+  padding: 3px 9px;
+  border-left: 2px solid color-mix(in srgb, var(--gold) 64%, transparent);
+  background: color-mix(in srgb, var(--wash) 60%, transparent);
+  border-radius: 2px;
+  color: var(--dim);
+  white-space: nowrap;
+}
+.tj-life-stat small {
+  font-size: 10px;
+  color: var(--dim);
+}
+.tj-life-stat b {
+  font-weight: 600;
+  color: var(--gold2);
+}
+.tj-life-stat em {
+  font-style: normal;
+  font-size: 10px;
+  color: var(--dim);
+}
+.tj-life-inline {
+  margin: 5px auto 2px;
+  width: max-content;
+  max-width: 94%;
+  padding: 3px 9px;
+  border-top: 1px dotted var(--line);
+  border-bottom: 1px dotted var(--line);
+  color: var(--dim);
+  font-size: 10.5px;
+  letter-spacing: 0.04em;
+}
+.tj-life-inline b {
+  color: var(--gold2);
+  font-weight: 600;
+}
+.tj-life-inline span {
+  opacity: 0.78;
+  margin-left: 4px;
+}
+/* 首页不再显示出生天数；旧 DOM 若被历史脚本重新写入也强制隐藏 */
+#persona #bornDays {
+  display: none !important;
+}
+@media (max-width: 760px) {
+  body {
+    padding-top: calc(var(--navh) + 8px) !important;
+  }
+  .wrap > .top {
+    padding-top: 8px !important;
+  }
+  .tj-life-stat {
+    white-space: normal;
+    flex-wrap: wrap;
+  }
+}
+@media print {
+  body {
+    padding-top: 0 !important;
+  }
+  .wrap > .top {
+    margin-top: 0;
+    padding-top: 10px !important;
+  }
+}

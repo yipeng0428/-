@@ -1,0 +1,24 @@
+/* v116：单文件离线优先。系统中文字体立即可用，不再等待第三方字体服务器。 */
+html {
+  font-synthesis: none;
+}
+body {
+  font-family: "Noto Serif CJK SC", "Source Han Serif SC", "Songti SC", "STSong", "SimSun", serif;
+}
+h1,
+.sec,
+.tab,
+.ph h3,
+.mod-head h3 {
+  font-family: "STKaiti", "KaiTi", "Kaiti SC", "Songti SC", serif;
+}
+/* 浏览器可跳过屏外超长区块的布局/绘制，进入视口时再恢复。 */
+.pane:not(.on) {
+  content-visibility: hidden;
+}
+@supports (content-visibility: auto) {
+  .pane.on > .panel {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 420px;
+  }
+}

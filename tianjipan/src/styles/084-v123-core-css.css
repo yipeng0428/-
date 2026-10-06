@@ -1,0 +1,220 @@
+/* ===== v123 · 大六壬特殊课体 Core / 特殊天象报时 / 地平基准全天球 ===== */
+.lr123-lab {
+  margin-top: 14px;
+}
+.lr123-head {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.lr123-head > div:first-child {
+  margin-right: auto;
+}
+.lr123-head h3 {
+  margin: 0;
+  font:
+    400 21px/1.2 "STKaiti",
+    "KaiTi",
+    "Songti SC",
+    "STSong",
+    serif;
+  color: var(--gold2);
+  letter-spacing: 0.07em;
+}
+.lr123-head small {
+  display: block;
+  color: var(--dim);
+  font-size: 11px;
+  margin-top: 3px;
+}
+.lr123-policy {
+  display: flex;
+  gap: 7px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.lr123-policy select {
+  background: var(--panel2);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  border-radius: 3px;
+  padding: 5px 7px;
+  font-size: 12px;
+}
+.lr123-sensitive {
+  display: inline-flex;
+  padding: 2px 7px;
+  border: 1px solid rgba(217, 178, 95, 0.55);
+  border-radius: 10px;
+  color: var(--gold);
+  font-size: 10px;
+}
+.lr123-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+  gap: 12px;
+}
+.lr123-card {
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  border-radius: 4px;
+  padding: 10px;
+}
+.lr123-card h4 {
+  margin: 0 0 7px;
+  color: var(--gold2);
+  font:
+    400 17px "STKaiti",
+    "KaiTi",
+    "Songti SC",
+    serif;
+}
+.lr123-matrix {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+}
+.lr123-matrix th,
+.lr123-matrix td {
+  padding: 5px 6px;
+  border-bottom: 1px dashed var(--line);
+  text-align: left;
+}
+.lr123-matrix th {
+  color: var(--dim);
+  font-weight: 400;
+}
+.lr123-matrix td b {
+  color: var(--gold2);
+  font-weight: 500;
+}
+.lr123-matrix tr.pick {
+  background: rgba(217, 178, 95, 0.08);
+}
+.lr123-branch {
+  display: grid;
+  gap: 6px;
+}
+.lr123-branch > div {
+  padding: 7px 8px;
+  border-left: 3px solid var(--line2);
+  background: rgba(255, 255, 255, 0.018);
+  font-size: 11.5px;
+  line-height: 1.6;
+}
+.lr123-branch > div.on {
+  border-left-color: var(--gold);
+  background: var(--wash);
+}
+.lr123-branch b {
+  color: var(--ink);
+  font-weight: 500;
+}
+.lr123-reg {
+  margin-top: 9px;
+  padding-top: 9px;
+  border-top: 1px dashed var(--line);
+}
+.lr123-reg .row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.lr123-progress {
+  height: 6px;
+  flex: 1 1 160px;
+  min-width: 120px;
+  background: var(--panel2);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.lr123-progress i {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: var(--gold);
+  transition: width 0.15s;
+}
+.lr123-regout {
+  font-size: 10.5px;
+  color: var(--dim);
+  line-height: 1.6;
+  margin-top: 6px;
+}
+.lr123-note {
+  font-size: 10.5px;
+  color: var(--dim);
+  line-height: 1.65;
+  margin: 8px 0 0;
+}
+.lr123-note b {
+  color: var(--gold);
+}
+.astro-bell-box {
+  margin-top: 12px;
+  padding: 10px 11px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  border-radius: 4px;
+}
+.astro-bell-box h4 {
+  margin: 0 0 8px;
+  color: var(--gold2);
+  font:
+    400 17px "STKaiti",
+    "KaiTi",
+    "Songti SC",
+    serif;
+}
+.astro-bell-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px 12px;
+}
+.astro-bell-grid label {
+  font-size: 12px;
+  color: var(--ink);
+}
+.astro-bell-leads {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 7px;
+  padding-top: 7px;
+  border-top: 1px dashed var(--line);
+}
+.astro-bell-leads small {
+  color: var(--dim);
+}
+.astro-bell-preview {
+  margin-top: 7px;
+  padding: 7px 8px;
+  border-left: 3px solid var(--line2);
+  background: rgba(255, 255, 255, 0.018);
+  font-size: 10.5px;
+  color: var(--dim);
+  line-height: 1.55;
+}
+.astro-bell-preview b {
+  color: var(--ink);
+  font-weight: 500;
+}
+#xkSky3d {
+  background: #050812;
+}
+.xk-horizon-note {
+  color: var(--good);
+}
+@media (max-width: 800px) {
+  .lr123-grid {
+    grid-template-columns: 1fr;
+  }
+  .astro-bell-grid {
+    grid-template-columns: 1fr;
+  }
+}

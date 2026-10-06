@@ -1,0 +1,75 @@
+/* ===== v54 人物关系册 / 关系图稳定性重构 ===== */
+.prb-health {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  flex-wrap: wrap;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  border-radius: 3px;
+  margin: -3px 0 14px;
+}
+.prb-health b {
+  color: var(--gold2);
+  font-weight: 500;
+}
+.prb-health .ok {
+  color: var(--cyan);
+}
+.prb-health .warn {
+  color: var(--red);
+}
+.prb-health .sp {
+  flex: 1;
+}
+.prb-health small {
+  color: var(--dim);
+}
+.net-recover {
+  display: grid;
+  gap: 10px;
+  padding: 14px;
+  border: 1px dashed var(--line2);
+  background: var(--panel2);
+  margin: 10px 0;
+}
+.net-recover .row3 {
+  margin: 0;
+}
+.net-invalid {
+  margin: 8px 0;
+  padding: 8px 10px;
+  border-left: 2px solid var(--gold);
+  background: var(--wash);
+  font-size: 11px;
+  color: var(--dim);
+}
+.prb-data-note {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 7px;
+  margin: 0 0 13px;
+}
+.prb-data-note > div {
+  padding: 8px 9px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+}
+.prb-data-note b {
+  display: block;
+  color: var(--gold2);
+  font-size: 12px;
+}
+.prb-data-note small {
+  color: var(--dim);
+  font-size: 10px;
+}
+@media (max-width: 700px) {
+  .prb-data-note {
+    grid-template-columns: 1fr;
+  }
+  .prb-health .sp {
+    display: none;
+  }
+}

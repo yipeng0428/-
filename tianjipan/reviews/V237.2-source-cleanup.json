@@ -1,0 +1,64 @@
+{
+  "baselineSHA256": "c794911e7d4fd010996805d9873f7dcb49bfe927221c527dbd299d25c350e7fe",
+  "removedBlocks": [
+    "v196-version-lock-js",
+    "v221-final-authority-js",
+    "v222-final-authority-js",
+    "v223-final-authority-js",
+    "v224-final-authority-js",
+    "v225-final-authority-js",
+    "v226-final-authority-js",
+    "v227-final-authority-js",
+    "v228-final-authority-js",
+    "v229-final-authority-js",
+    "v230-final-authority-js",
+    "v231-final-authority-js",
+    "v232-final-authority-js",
+    "v233-final-authority-js",
+    "v234-final-authority-js",
+    "v235-final-authority-js",
+    "v236-final-authority-js",
+    "v237-final-authority-js"
+  ],
+  "changes": {
+    "legacyMirrorWrites": 1,
+    "versionDOMWrites": 218,
+    "startupLogs": 52,
+    "metadataPreviousLinks": 111,
+    "automaticVendorRuns": 3,
+    "executableCacheReaders": 2,
+    "executableCacheWriters": 2,
+    "automaticZiweiSuites": 15,
+    "periodicPollingRemoved": 1,
+    "rendererWrappersConsolidated": 17,
+    "emptyHistoricalBranchesRemoved": 135,
+    "noOpCallsRemoved": 3,
+    "unverifiedAstronomyFallbacksRemoved": 2,
+    "coreSourceParts": 10,
+    "deadTabBranchesRemoved": 14,
+    "MystilightSHA256GateAdded": 1,
+    "MystilightConcurrentLoadCoalescingAdded": 1
+  },
+  "assets": [
+    {
+      "name": "cz_raw.txt",
+      "characters": 150662,
+      "sha256": "e801fe9d43b80d8fbdd8540b533838723a1a892c9555a914a2ff00e34594d022"
+    },
+    {
+      "name": "name_data.txt",
+      "characters": 33660,
+      "sha256": "16bc80f6f0068a5209c24e86622baec27fbf071225149731417fd2de9ef5867d"
+    },
+    {
+      "name": "donation-image.txt",
+      "characters": 117726,
+      "sha256": "56ff2b85c02525b2df3f2307bc740d81be85ca62553f938ad3cfccdb576616c1"
+    }
+  ],
+  "notes": [
+    "Removal counts describe migrated source locations; overlapping footer rewrite candidates are counted as candidates.",
+    "Algorithmic base references and previous solar-term records are preserved.",
+    "Source generation was a one-time review operation; current builds read src and do not replay migrations."
+  ]
+}

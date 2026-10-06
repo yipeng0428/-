@@ -1,0 +1,33 @@
+/* V205 · 通知频道默认静默。只有全局跑马灯开关开启且存在内容时才占高度。 */
+html:not(.tj-notice-ticker-on) {
+  --tj-noticeh: 0px !important;
+}
+html:not(.tj-notice-ticker-on) #tjNoticeTicker {
+  display: none !important;
+}
+.tjn-global-switches {
+  grid-column: 1/-1;
+  display: flex;
+  gap: 9px 16px;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 9px 10px;
+  border: 1px solid var(--line2);
+  background: var(--wash);
+  margin-bottom: 8px;
+}
+.tjn-global-switches strong {
+  color: var(--gold2);
+  font-size: 10px;
+}
+.tjn-global-switches label {
+  display: inline-flex !important;
+  flex-direction: row !important;
+  align-items: center;
+  gap: 5px;
+  color: var(--ink) !important;
+}
+.tjn-global-switches .state {
+  font-size: 8.5px;
+  color: var(--dim);
+}

@@ -1,0 +1,599 @@
+/* ===== v56 · 建除十二神 · 月建流转盘 ===== */
+.jc12-shell {
+  padding: 0 12px 26px;
+  min-width: 0;
+}
+.jc12-top {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 10px 4px 12px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 12px;
+}
+.jc12-title {
+  flex: 1;
+  min-width: 0;
+}
+.jc12-title b {
+  display: block;
+  font-family: "Ma Shan Zheng", "STKaiti", serif;
+  font-size: 25px;
+  font-weight: 400;
+  color: var(--gold2);
+  letter-spacing: 0.08em;
+}
+.jc12-title small {
+  display: block;
+  color: var(--dim);
+  font-size: 11px;
+  margin-top: 2px;
+  line-height: 1.55;
+}
+.jc12-grid {
+  display: grid;
+  grid-template-columns: 245px minmax(520px, 1fr) 310px;
+  gap: 12px;
+  align-items: start;
+}
+.jc12-side,
+.jc12-info {
+  padding: 12px;
+  min-width: 0;
+}
+.jc12-side h4,
+.jc12-info h4 {
+  margin: 0 0 8px;
+  font-family: "Ma Shan Zheng", "STKaiti", serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--gold2);
+}
+.jc12-group {
+  padding: 10px 0;
+  border-top: 1px dashed var(--line);
+}
+.jc12-group:first-of-type {
+  padding-top: 0;
+  border-top: 0;
+}
+.jc12-group label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 11px;
+  color: var(--dim);
+  margin: 6px 0;
+}
+.jc12-group input,
+.jc12-group select {
+  width: 100%;
+  min-height: 34px;
+  box-sizing: border-box;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  color: var(--ink);
+  padding: 5px 7px;
+  border-radius: 3px;
+}
+.jc12-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.jc12-row > * {
+  flex: 1 1 68px;
+}
+.jc12-mode {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px;
+}
+.jc12-mode button.on {
+  border-color: var(--gold);
+  background: var(--wash);
+  color: var(--gold2);
+}
+.jc12-layer {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: flex-start;
+  gap: 7px !important;
+  color: var(--ink) !important;
+  margin: 6px 0 !important;
+}
+.jc12-layer input {
+  width: auto;
+  min-height: 0;
+  margin: 3px 0 0;
+}
+.jc12-layer span {
+  display: block;
+  line-height: 1.35;
+}
+.jc12-layer small {
+  display: block;
+  color: var(--dim);
+  font-size: 9px;
+}
+.jc12-main {
+  min-width: 0;
+}
+.jc12-viewbar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  padding: 8px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  border-radius: 3px 3px 0 0;
+}
+.jc12-viewbar .hint {
+  flex: 1;
+  min-width: 180px;
+  color: var(--dim);
+  font-size: 10px;
+}
+.jc12-viewbar #jc12Zoom {
+  min-width: 38px;
+  text-align: center;
+  color: var(--dim);
+  font-size: 10px;
+}
+.jc12-frame {
+  position: relative;
+  height: min(71vh, 780px);
+  min-height: 620px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-top: 0;
+  background:
+    radial-gradient(circle at 50% 48%, rgba(217, 178, 95, 0.09), transparent 52%),
+    rgba(255, 255, 255, 0.012);
+}
+.jc12-frame.pan {
+  cursor: grab;
+}
+.jc12-frame.grab {
+  cursor: grabbing;
+}
+.jc12-frame svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: none;
+  user-select: none;
+}
+.jc12-ring {
+  fill: none;
+  stroke: var(--line2);
+  stroke-width: 1;
+}
+.jc12-ring.thin {
+  stroke: var(--line);
+  stroke-width: 0.65;
+}
+.jc12-sector {
+  fill: rgba(217, 178, 95, 0.025);
+  stroke: var(--line);
+  stroke-width: 0.7;
+  cursor: pointer;
+  transition: 0.18s;
+}
+.jc12-sector:hover {
+  fill: rgba(217, 178, 95, 0.11);
+  stroke: var(--gold);
+}
+.jc12-sector.current {
+  fill: rgba(208, 80, 59, 0.14);
+  stroke: var(--red);
+  stroke-width: 1.7;
+}
+.jc12-sector.month {
+  filter: drop-shadow(0 0 5px rgba(217, 178, 95, 0.32));
+  stroke: var(--gold2);
+  stroke-width: 1.4;
+}
+.jc12-sector.break {
+  fill: rgba(208, 80, 59, 0.065);
+}
+.jc12-text {
+  font-family: "Noto Serif SC", "STSong", serif;
+  text-anchor: middle;
+  dominant-baseline: central;
+  pointer-events: none;
+  fill: var(--ink);
+}
+.jc12-zhi {
+  font-family: "Ma Shan Zheng", "STKaiti", serif;
+  font-size: 23px;
+  fill: var(--gold2);
+}
+.jc12-god {
+  font-family: "Ma Shan Zheng", "STKaiti", serif;
+  font-size: 27px;
+  fill: var(--ink);
+}
+.jc12-god.good {
+  fill: var(--cyan);
+}
+.jc12-god.bad {
+  fill: var(--red);
+}
+.jc12-tone {
+  font-size: 9px;
+  fill: var(--dim);
+}
+.jc12-ts {
+  font-size: 10px;
+  fill: var(--dim);
+}
+.jc12-ts.huang {
+  fill: var(--good);
+}
+.jc12-pointer-month {
+  stroke: var(--gold2);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+.jc12-pointer-day {
+  stroke: var(--red);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+.jc12-pointer-dot {
+  fill: var(--red);
+  stroke: var(--bg);
+  stroke-width: 2;
+}
+.jc12-moon-dot {
+  fill: var(--gold2);
+  stroke: var(--bg);
+  stroke-width: 2;
+}
+.jc12-center {
+  fill: var(--panel);
+  stroke: var(--line2);
+  stroke-width: 1.3;
+}
+.jc12-center-title {
+  font-family: "Ma Shan Zheng", "STKaiti", serif;
+  font-size: 44px;
+  fill: var(--gold2);
+}
+.jc12-center-bad {
+  fill: var(--red);
+}
+.jc12-center-sub {
+  font-size: 12px;
+  fill: var(--ink);
+}
+.jc12-center-sm {
+  font-size: 9px;
+  fill: var(--dim);
+}
+.jc12-legend {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 7px 9px;
+  border: 1px solid var(--line);
+  border-top: 0;
+  color: var(--dim);
+  font-size: 10px;
+}
+.jc12-legend i {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  margin-right: 4px;
+  vertical-align: -1px;
+}
+.jc12-legend .m {
+  background: var(--gold2);
+}
+.jc12-legend .d {
+  background: var(--red);
+}
+.jc12-legend .h {
+  background: var(--good);
+}
+.jc12-info {
+  position: sticky;
+  top: 10px;
+  max-height: calc(100vh - 26px);
+  overflow: auto;
+}
+.jc12-kpis {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px;
+}
+.jc12-kpi {
+  padding: 8px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  border-radius: 3px;
+  min-width: 0;
+}
+.jc12-kpi small {
+  display: block;
+  color: var(--dim);
+  font-size: 9px;
+}
+.jc12-kpi b {
+  display: block;
+  color: var(--gold2);
+  font-size: 16px;
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.jc12-facts {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  font-size: 11px;
+  margin-top: 10px;
+  border-top: 1px solid var(--line);
+}
+.jc12-facts span,
+.jc12-facts b {
+  padding: 6px 4px;
+  border-bottom: 1px dashed var(--line);
+  font-weight: 400;
+  overflow-wrap: anywhere;
+}
+.jc12-facts span {
+  color: var(--dim);
+}
+.jc12-card {
+  margin-top: 10px;
+  padding: 9px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  border-radius: 3px;
+  font-size: 11px;
+  line-height: 1.75;
+}
+.jc12-card b {
+  color: var(--gold2);
+}
+.jc12-tags {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  margin-top: 5px;
+}
+.jc12-tags span {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 1px 7px;
+  font-size: 9px;
+}
+.jc12-tags .good {
+  border-color: var(--good);
+  color: var(--good);
+}
+.jc12-tags .bad {
+  border-color: var(--red);
+  color: var(--red);
+}
+.jc12-yj {
+  display: grid;
+  gap: 6px;
+  margin-top: 8px;
+}
+.jc12-yj > div {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 5px;
+  align-items: start;
+}
+.jc12-yj strong {
+  font-size: 10px;
+  color: var(--gold2);
+}
+.jc12-yj .pills {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+.jc12-yj .pills span {
+  font-size: 9px;
+  border: 1px solid var(--line);
+  padding: 1px 5px;
+  border-radius: 10px;
+}
+.jc12-yj .ji span {
+  border-color: rgba(208, 80, 59, 0.35);
+  color: var(--red);
+}
+.jc12-links {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  margin-top: 7px;
+}
+.jc12-links button {
+  flex: 1 1 86px;
+}
+.jc12-flow,
+.jc12-guide {
+  margin-top: 12px;
+  padding: 12px;
+}
+.jc12-flow-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 9px;
+}
+.jc12-flow-head b {
+  font-family: "Ma Shan Zheng", "STKaiti", serif;
+  font-size: 19px;
+  font-weight: 400;
+  color: var(--gold2);
+}
+.jc12-flow-head small {
+  color: var(--dim);
+  font-size: 10px;
+}
+.jc12-days {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(58px, 1fr));
+  gap: 5px;
+  overflow: auto;
+  padding-bottom: 2px;
+}
+.jc12-day {
+  min-width: 0;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  padding: 6px 4px;
+  text-align: center;
+  color: var(--ink);
+  border-radius: 3px;
+  cursor: pointer;
+}
+.jc12-day:hover,
+.jc12-day.on {
+  border-color: var(--gold);
+  background: var(--wash);
+}
+.jc12-day.today {
+  box-shadow: inset 0 0 0 1px var(--red);
+}
+.jc12-day b {
+  display: block;
+  color: var(--gold2);
+  font-size: 11px;
+}
+.jc12-day span {
+  display: block;
+  font-family: "Ma Shan Zheng", "STKaiti", serif;
+  font-size: 17px;
+  margin: 1px 0;
+}
+.jc12-day small {
+  display: block;
+  color: var(--dim);
+  font-size: 8px;
+  white-space: nowrap;
+}
+.jc12-day.bad span {
+  color: var(--red);
+}
+.jc12-day.good span {
+  color: var(--cyan);
+}
+.jc12-guide summary {
+  cursor: pointer;
+  font-family: "Ma Shan Zheng", "STKaiti", serif;
+  color: var(--gold2);
+  font-size: 19px;
+}
+.jc12-guide-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 7px;
+  margin-top: 10px;
+}
+.jc12-guide-grid button {
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  color: var(--ink);
+  padding: 9px;
+  text-align: left;
+  border-radius: 3px;
+  cursor: pointer;
+  min-width: 0;
+}
+.jc12-guide-grid button:hover {
+  border-color: var(--gold);
+}
+.jc12-guide-grid b {
+  display: block;
+  color: var(--gold2);
+  font-size: 12px;
+}
+.jc12-guide-grid span {
+  display: block;
+  color: var(--dim);
+  font-size: 10px;
+  line-height: 1.55;
+  margin-top: 3px;
+}
+.jc12-bottom {
+  margin-top: 12px;
+  padding: 10px 12px;
+  color: var(--dim);
+  font-size: 11px;
+  line-height: 1.8;
+}
+.jc12-bottom b {
+  color: var(--gold2);
+}
+@media (max-width: 1220px) {
+  .jc12-grid {
+    grid-template-columns: 220px minmax(460px, 1fr);
+  }
+  .jc12-info {
+    grid-column: 1/-1;
+    position: static;
+    max-height: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .jc12-info > h4 {
+    grid-column: 1/-1;
+  }
+  .jc12-kpis {
+    grid-column: 1/-1;
+  }
+  .jc12-card {
+    margin-top: 0;
+  }
+  .jc12-days {
+    grid-template-columns: repeat(6, minmax(78px, 1fr));
+  }
+}
+@media (max-width: 760px) {
+  .jc12-shell {
+    padding: 0 4px 20px;
+  }
+  .jc12-grid {
+    grid-template-columns: 1fr;
+  }
+  .jc12-frame {
+    min-height: 480px;
+    height: 68vh;
+  }
+  .jc12-info {
+    display: block;
+  }
+  .jc12-days {
+    grid-template-columns: repeat(4, minmax(72px, 1fr));
+  }
+  .jc12-guide-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .jc12-top {
+    align-items: flex-start;
+  }
+  .jc12-title b {
+    font-size: 21px;
+  }
+}
+@media (max-width: 430px) {
+  .jc12-days {
+    grid-template-columns: repeat(3, minmax(70px, 1fr));
+  }
+  .jc12-guide-grid {
+    grid-template-columns: 1fr;
+  }
+}

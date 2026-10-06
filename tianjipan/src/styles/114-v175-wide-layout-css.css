@@ -1,0 +1,95 @@
+/* ===== v175 · 全站宽屏布局 / 双栏扩容 =====
+   目标：在桌面宽屏上充分利用横向空间，不改变手机与窄屏逻辑。
+*/
+:root {
+  --site-wide-max: 1720px;
+  --site-wide-gutter: clamp(16px, 2vw, 34px);
+}
+
+/* 主页面：1360 → 1720，并尽量使用当前浏览器可用宽度 */
+.wrap {
+  width: min(var(--site-wide-max), calc(100vw - 20px));
+  max-width: var(--site-wide-max) !important;
+  box-sizing: border-box;
+  padding-left: var(--site-wide-gutter) !important;
+  padding-right: var(--site-wide-gutter) !important;
+}
+
+/* 顶部总导航与主体同宽，避免顶部仍显得收窄 */
+.tn-in {
+  width: min(var(--site-wide-max), calc(100vw - 20px));
+  max-width: var(--site-wide-max) !important;
+  box-sizing: border-box;
+  padding-left: var(--site-wide-gutter) !important;
+  padding-right: var(--site-wide-gutter) !important;
+}
+
+/* 双栏桌面：
+   左栏仍承担圆盘/主视觉，但给予更合理宽度；
+   右栏把扩出来的空间真正留给信息工作区。
+*/
+@media (min-width: 1080px) {
+  .layout {
+    grid-template-columns: minmax(500px, 680px) minmax(0, 1fr) !important;
+    gap: 22px !important;
+  }
+  .dialbox {
+    max-width: 680px !important;
+  }
+}
+
+/* 大屏进一步舒展，不让右栏被左栏继续吃掉太多空间 */
+@media (min-width: 1500px) {
+  .layout {
+    grid-template-columns: minmax(560px, 700px) minmax(720px, 1fr) !important;
+    gap: 26px !important;
+  }
+}
+
+/* 2K / 超宽屏：控制最大阅读宽度，而非无止境拉伸 */
+@media (min-width: 1850px) {
+  :root {
+    --site-wide-max: 1780px;
+  }
+  .layout {
+    grid-template-columns: minmax(600px, 720px) minmax(780px, 1fr) !important;
+    gap: 28px !important;
+  }
+}
+
+/* 常见内容网格也允许多吃一点横向空间 */
+@media (min-width: 1450px) {
+  .nw-grid {
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  }
+  .lbgrid {
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  }
+  .necnt {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+}
+
+/* 天机式自身不再额外卡在 1180px，跟随新的全站宽度。
+   主盘本身仍保留原来的视觉尺寸，避免图被盲目放大。 */
+#tj152Panel.tj174-mounted .tj152-shell {
+  max-width: none !important;
+  width: 100% !important;
+}
+#tj152Panel .tj174-stagecard,
+#tj152Panel .tj174-start,
+#tj152Panel .tj174-display,
+#tj152Panel .tj174-context,
+#tj152Panel .tj174-fold {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* 窄屏沿用原设计，不强行扩宽 */
+@media (max-width: 1079px) {
+  .wrap,
+  .tn-in {
+    width: 100%;
+    max-width: 100% !important;
+  }
+}

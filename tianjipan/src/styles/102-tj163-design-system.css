@@ -1,0 +1,480 @@
+/* v163 · 天机式界面视觉系统重构 */
+#tj152Panel {
+  --tj163-bg: linear-gradient(180deg, rgba(12, 16, 24, 0.96), rgba(7, 11, 18, 0.98));
+  --tj163-bg-soft: linear-gradient(180deg, rgba(18, 24, 35, 0.9), rgba(10, 14, 22, 0.96));
+  --tj163-card: linear-gradient(180deg, rgba(18, 24, 35, 0.94), rgba(10, 14, 22, 0.98));
+  --tj163-card-soft: linear-gradient(180deg, rgba(20, 26, 38, 0.8), rgba(11, 15, 23, 0.9));
+  --tj163-line: rgba(214, 181, 112, 0.17);
+  --tj163-line-strong: rgba(214, 181, 112, 0.32);
+  --tj163-gold: #f1ddb0;
+  --tj163-gold-soft: #cfb67e;
+  --tj163-ink: #ece3d1;
+  --tj163-dim: rgba(236, 227, 209, 0.62);
+  --tj163-cyan: #8de1d6;
+  --tj163-shadow: 0 18px 42px rgba(0, 0, 0, 0.24);
+}
+#tj152Panel .tj152-shell {
+  max-width: 1220px;
+}
+#tj152Panel .tj152-top {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr) auto;
+  gap: 12px;
+  align-items: stretch;
+  margin: 8px 0 12px;
+}
+#tj152Panel .tj152-seg,
+#tj152Panel .tj152-timebar,
+#tj152Panel .tj160-toptools,
+#tj152Panel .tj152-mode-help,
+#tj152Panel .tj152-card,
+#tj152Panel .tj152-river,
+#tj152Panel #tj155Inverse,
+#tj152Panel .tj156-guide,
+#tj152Panel .tj162-card,
+#tj152Panel .tj160-inv-card,
+#tj152Panel .tj157-extra,
+#tj152Panel .tj152-stage-shell {
+  background: var(--tj163-card) !important;
+  border: 1px solid var(--tj163-line) !important;
+  box-shadow: var(--tj163-shadow);
+}
+#tj152Panel .tj152-seg,
+#tj152Panel .tj152-timebar,
+#tj152Panel .tj160-toptools {
+  min-height: 64px;
+  padding: 12px !important;
+  border-radius: 18px !important;
+  position: relative;
+  align-content: start;
+}
+#tj152Panel .tj152-seg::before,
+#tj152Panel .tj152-timebar::before,
+#tj152Panel .tj160-toptools::before {
+  display: block;
+  width: 100%;
+  margin-bottom: 8px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(236, 227, 209, 0.48);
+}
+#tj152Panel .tj152-seg::before {
+  content: "模式切换";
+}
+#tj152Panel .tj152-timebar::before {
+  content: "时间控制";
+}
+#tj152Panel .tj160-toptools::before {
+  content: "视图偏好";
+}
+#tj152Panel .tj160-toptools {
+  display: grid !important;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  min-width: 240px;
+  margin-left: 0 !important;
+}
+#tj152Panel .tj160-toolgroup {
+  background: var(--tj163-bg-soft) !important;
+  border: 1px solid var(--tj163-line) !important;
+  border-radius: 14px !important;
+  padding: 9px 10px !important;
+}
+#tj152Panel .tj160-toolgroup > span {
+  font-size: 11px;
+  color: rgba(236, 227, 209, 0.54) !important;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+#tj152Panel button.tj152-btn,
+#tj152Panel .tj152-layer-row button,
+#tj152Panel .tj162-actions button,
+#tj152Panel .tj162-presets button,
+#tj152Panel .tj155-result button,
+#tj152Panel .tj162-score button,
+#tj152Panel .tj152-floating button,
+#tj152Panel .tj157-angle-presets button {
+  min-height: 36px;
+  padding: 6px 12px;
+  border-radius: 12px !important;
+  border: 1px solid rgba(214, 181, 112, 0.18) !important;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.03),
+    rgba(255, 255, 255, 0.015)
+  ) !important;
+  color: var(--tj163-ink) !important;
+  transition: all 0.18s ease;
+}
+#tj152Panel button.tj152-btn:hover,
+#tj152Panel .tj152-layer-row button:hover,
+#tj152Panel .tj162-actions button:hover,
+#tj152Panel .tj162-presets button:hover,
+#tj152Panel .tj155-result button:hover,
+#tj152Panel .tj162-score button:hover,
+#tj152Panel .tj152-floating button:hover,
+#tj152Panel .tj157-angle-presets button:hover {
+  transform: translateY(-1px);
+  border-color: rgba(214, 181, 112, 0.34) !important;
+  background: linear-gradient(
+    180deg,
+    rgba(214, 181, 112, 0.12),
+    rgba(214, 181, 112, 0.05)
+  ) !important;
+}
+#tj152Panel button.tj152-btn.on,
+#tj152Panel .tj152-layer-row button.on,
+#tj152Panel .tj162-actions button.on,
+#tj152Panel .tj162-presets button.on {
+  border-color: rgba(214, 181, 112, 0.42) !important;
+  background: linear-gradient(
+    180deg,
+    rgba(214, 181, 112, 0.16),
+    rgba(214, 181, 112, 0.07)
+  ) !important;
+  color: #fff3cf !important;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+#tj152Panel select,
+#tj152Panel input[type="number"],
+#tj152Panel input[type="text"],
+#tj152Panel input[type="date"],
+#tj152Panel input[type="time"] {
+  min-height: 38px !important;
+  border-radius: 12px !important;
+  border: 1px solid rgba(214, 181, 112, 0.18) !important;
+  background: #0d1420 !important;
+  color: #f2e7d1 !important;
+  padding: 0 12px !important;
+  box-sizing: border-box;
+}
+#tj152Panel .tj152-mode-help {
+  padding: 14px 16px !important;
+  border-radius: 18px !important;
+  grid-template-columns: minmax(0, 1fr) auto !important;
+}
+#tj152Panel .tj152-mode-help b {
+  font-size: 15px !important;
+  color: #f5e0b4 !important;
+}
+#tj152Panel .tj152-mode-help p {
+  font-size: 12.5px !important;
+  color: rgba(236, 227, 209, 0.72) !important;
+}
+#tj152Panel .tj152-mode-help .tj152-mode-tag {
+  border-radius: 999px !important;
+  background: rgba(214, 181, 112, 0.1) !important;
+  border-color: rgba(214, 181, 112, 0.24) !important;
+  color: #f0d99e !important;
+}
+#tj152Panel .tj155-workspace {
+  gap: 14px !important;
+  align-items: start;
+}
+#tj152Panel .tj155-control,
+#tj152Panel .tj155-main {
+  gap: 14px !important;
+}
+#tj152Panel .tj152-card,
+#tj152Panel .tj156-guide,
+#tj152Panel #tj155Inverse,
+#tj152Panel .tj152-river {
+  border-radius: 20px !important;
+  padding: 16px !important;
+}
+#tj152Panel .tj152-card h4,
+#tj152Panel #tj155Inverse h4,
+#tj152Panel .tj156-guide h4 {
+  position: relative;
+  padding-left: 14px;
+  margin: 0 0 12px !important;
+  color: var(--tj163-gold) !important;
+  font:
+    600 16px/1.25 "STKaiti",
+    "KaiTi",
+    "Songti SC",
+    serif !important;
+}
+#tj152Panel .tj152-card h4::before,
+#tj152Panel #tj155Inverse h4::before,
+#tj152Panel .tj156-guide h4::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 4px;
+  bottom: 4px;
+  width: 4px;
+  border-radius: 99px;
+  background: linear-gradient(180deg, #f0dca9, #8de1d6);
+}
+#tj152Panel .tj152-card h4 small {
+  font-size: 11px;
+  color: rgba(236, 227, 209, 0.5) !important;
+}
+#tj152Panel .tj152-layer-help,
+#tj152Panel .tj155-inverse-head p,
+#tj152Panel .tj156-guide li,
+#tj152Panel .tj156-value p,
+#tj152Panel .tj156-roadmap p,
+#tj152Panel .tj162-card p {
+  color: var(--tj163-dim) !important;
+}
+#tj152Panel .tj152-layer-groups {
+  gap: 12px !important;
+}
+#tj152Panel .tj152-layer-row {
+  padding: 12px 12px !important;
+  border-radius: 16px !important;
+  background: var(--tj163-card-soft) !important;
+  border: 1px solid rgba(214, 181, 112, 0.12) !important;
+}
+#tj152Panel .tj152-layer-row > b {
+  font-size: 13px !important;
+  color: #f2ddb2 !important;
+}
+#tj152Panel .tj152-layer-row > b small {
+  font-size: 10px !important;
+  color: rgba(236, 227, 209, 0.45) !important;
+}
+#tj152Panel .tj152-layer-chipset {
+  gap: 7px !important;
+}
+#tj152Panel .tj152-presets {
+  gap: 8px !important;
+  padding-top: 14px !important;
+}
+#tj152Panel .tj152-hintline {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px dashed rgba(214, 181, 112, 0.14);
+}
+#tj152Panel .tj152-hintline span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.02);
+  color: rgba(236, 227, 209, 0.68);
+  font-size: 11.5px;
+}
+#tj152Panel .tj152-hintline i {
+  font-style: normal;
+  color: #f1ddb0;
+}
+#tj152Panel #tj155Inverse {
+  padding: 16px !important;
+  border-radius: 22px !important;
+  overflow: hidden;
+}
+#tj152Panel .tj155-inverse-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: start;
+  padding-bottom: 12px !important;
+  border-bottom: 1px solid rgba(214, 181, 112, 0.12) !important;
+}
+#tj152Panel .tj155-inverse-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(141, 225, 214, 0.08);
+  border: 1px solid rgba(141, 225, 214, 0.22);
+  color: #bfece4;
+  font-size: 11px;
+  white-space: nowrap;
+}
+#tj152Panel .tj160-inv-toolbar {
+  margin: 14px 0 10px !important;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(214, 181, 112, 0.12);
+}
+#tj152Panel .tj160-inv-card,
+#tj152Panel .tj162-card,
+#tj152Panel .tj157-extra,
+#tj152Panel .tj155-searchbar,
+#tj152Panel .tj155-targets,
+#tj152Panel .tj155-results,
+#tj152Panel .tj162-sim-results {
+  border-radius: 16px !important;
+}
+#tj152Panel .tj155-searchbar,
+#tj152Panel .tj155-targets,
+#tj152Panel .tj155-results,
+#tj152Panel .tj162-sim-results {
+  padding-top: 34px !important;
+}
+#tj152Panel .tj155-targets,
+#tj152Panel .tj162-feature-list {
+  gap: 10px !important;
+}
+#tj152Panel .tj155-target,
+#tj152Panel .tj157-cond,
+#tj152Panel .tj162-feature,
+#tj152Panel .tj155-result,
+#tj152Panel .tj162-sim-result {
+  background: var(--tj163-bg-soft) !important;
+  border: 1px solid rgba(214, 181, 112, 0.12) !important;
+  border-radius: 14px !important;
+}
+#tj152Panel .tj155-target b,
+#tj152Panel .tj157-cond label,
+#tj152Panel .tj162-feature b,
+#tj152Panel .tj162-sim-result h6 {
+  color: #f0deb6 !important;
+}
+#tj152Panel .tj155-status,
+#tj152Panel #tj157ExtraSummary,
+#tj152Panel .tj162-note {
+  border-radius: 14px !important;
+  background: linear-gradient(
+    180deg,
+    rgba(116, 216, 204, 0.08),
+    rgba(116, 216, 204, 0.03)
+  ) !important;
+  border: 1px solid rgba(116, 216, 204, 0.14) !important;
+  color: rgba(216, 244, 238, 0.75) !important;
+}
+#tj152Panel .tj162-engine-tabs {
+  padding: 8px !important;
+  border-radius: 16px !important;
+  background: var(--tj163-bg-soft) !important;
+  border-color: rgba(214, 181, 112, 0.14) !important;
+}
+#tj152Panel .tj162-engine-tabs button {
+  min-height: 42px !important;
+  border-radius: 12px !important;
+  font-size: 13px;
+}
+#tj152Panel .tj162-grid2 {
+  gap: 12px !important;
+}
+#tj152Panel .tj162-card {
+  border-radius: 16px !important;
+}
+#tj152Panel .tj162-card h5 {
+  font-size: 13.5px !important;
+  color: #f0deb8 !important;
+}
+#tj152Panel .tj162-range {
+  gap: 10px !important;
+}
+#tj152Panel .tj162-range label {
+  font-size: 11px !important;
+  color: rgba(236, 227, 209, 0.56) !important;
+}
+#tj152Panel .tj162-sim-result {
+  padding: 12px !important;
+}
+#tj152Panel .tj162-score b {
+  font-size: 20px !important;
+  color: #9fe7da !important;
+}
+#tj152Panel #tj162SimilarRun {
+  border-radius: 14px !important;
+  min-height: 44px !important;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+}
+#tj152Panel .tj152-stage-shell {
+  padding: 14px !important;
+  border-radius: 24px !important;
+  overflow: hidden;
+}
+#tj152Panel .tj152-stage {
+  border-radius: 18px !important;
+  border-color: rgba(214, 181, 112, 0.18) !important;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+}
+#tj152Panel .tj152-legend {
+  left: 16px !important;
+  top: 16px !important;
+  gap: 8px !important;
+}
+#tj152Panel .tj152-chip {
+  padding: 5px 10px !important;
+  border-radius: 999px !important;
+  background: rgba(5, 9, 16, 0.72) !important;
+  border-color: rgba(214, 181, 112, 0.18) !important;
+  color: #e7dbc0 !important;
+}
+#tj152Panel .tj152-floating {
+  right: 16px !important;
+  top: 16px !important;
+  padding: 6px !important;
+  border-radius: 16px !important;
+  background: rgba(7, 11, 18, 0.72) !important;
+  border-color: rgba(214, 181, 112, 0.18) !important;
+}
+#tj152Panel .tj152-floating .read {
+  min-width: 52px !important;
+  color: #ebd7a6 !important;
+  font-weight: 600;
+}
+#tj152Panel .tj152-river-head {
+  margin-bottom: 10px !important;
+}
+#tj152Panel .tj152-river-head span {
+  color: rgba(236, 227, 209, 0.62) !important;
+}
+#tj152Panel .tj152-river-head b {
+  color: #f1ddb0 !important;
+}
+#tj152Panel .tj152-detail {
+  gap: 10px 14px !important;
+  font-size: 13px !important;
+}
+#tj152Panel .tj152-detail span {
+  color: rgba(236, 227, 209, 0.54) !important;
+}
+#tj152Panel .tj152-detail b {
+  color: #f0e7d6 !important;
+}
+#tj152Panel #tj152Big .tj157-big-controls .tj152-top,
+#tj152Panel #tj152Big .tj157-big-controls .tj152-mode-help {
+  box-shadow: var(--tj163-shadow);
+}
+#tj152Big .tj155-control .tj152-card,
+#tj152Big .tj155-control .tj156-guide,
+#tj152Big #tj152StageShell,
+#tj152Big #tj152River,
+#tj152Big .tj155-main > .tj152-card,
+#tj152Big #tj155Inverse {
+  background: var(--tj163-card) !important;
+  border: 1px solid var(--tj163-line) !important;
+  box-shadow: var(--tj163-shadow) !important;
+}
+#tj152Big .tj152-big-close {
+  box-shadow: var(--tj163-shadow);
+}
+@media (max-width: 1360px) {
+  #tj152Panel .tj152-top {
+    grid-template-columns: 1fr !important;
+  }
+  #tj152Panel .tj160-toptools {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+@media (max-width: 860px) {
+  #tj152Panel .tj152-hintline {
+    grid-template-columns: 1fr;
+  }
+  #tj152Panel .tj160-toptools {
+    grid-template-columns: 1fr !important;
+  }
+}
+@media (max-width: 720px) {
+  #tj152Panel .tj152-mode-help {
+    grid-template-columns: 1fr !important;
+  }
+  #tj152Panel .tj152-top {
+    gap: 10px !important;
+  }
+}

@@ -1,0 +1,9 @@
+/* 防止旧 transform 残留影响观象区 */
+.layout > .dialcol {
+  --v178-left-shift: 0px;
+}
+@media (min-width: 1080px) {
+  .layout > .dialcol.v184-focus-scroll {
+    transform: none !important;
+  }
+}

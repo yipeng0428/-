@@ -1,0 +1,94 @@
+/* ===== v63 · 开发者署名 + 全站放大查看图标统一 ===== */
+footer .dev-credit {
+  margin-top: 14px;
+  padding: 11px 12px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid color-mix(in srgb, var(--line) 68%, transparent);
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  min-width: 0;
+  background: color-mix(in srgb, var(--panel) 82%, transparent);
+}
+
+footer .dev-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px 12px;
+  flex-wrap: wrap;
+  min-width: 0;
+  line-height: 1.55;
+}
+footer .dev-name {
+  font-family: "ZCOOL XiaoWei", "Ma Shan Zheng", "STKaiti", serif;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  color: var(--ink);
+  white-space: nowrap;
+}
+footer .dev-role {
+  padding: 2px 7px;
+  border: 1px solid color-mix(in srgb, var(--gold) 32%, var(--line));
+  border-radius: 999px;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--gold2);
+  white-space: nowrap;
+}
+footer .dev-xhs {
+  font-size: 11px;
+  color: var(--dim);
+  white-space: nowrap;
+}
+footer .dev-xhs b {
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: 0.05em;
+  font-variant-numeric: tabular-nums;
+}
+footer .build-version {
+  margin-top: 7px;
+  padding-top: 7px;
+}
+@media (max-width: 640px) {
+  footer .dev-credit {
+    align-items: flex-start;
+    padding: 9px 10px;
+  }
+
+  footer .dev-meta {
+    gap: 4px 8px;
+  }
+  footer .dev-name {
+    font-size: 13px;
+  }
+  footer .dev-role {
+    font-size: 9px;
+  }
+  footer .dev-xhs {
+    width: 100%;
+    white-space: normal;
+  }
+}
+
+/* 所有“小型放大查看”控件统一为：放大镜 + 号。
+   保留原有点击逻辑、title 与 aria-label，只替换视觉符号。 */
+.zoom-ui,
+.zbtn,
+.dz-btn {
+  font-size: 0 !important;
+  letter-spacing: 0 !important;
+}
+.zoom-ui::before,
+.zbtn::before,
+.dz-btn::before {
+  content: "";
+  display: block;
+  width: 17px;
+  height: 17px;
+  background: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cg fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='8.2' cy='8.2' r='5.1'/%3E%3Cpath d='M12 12l4.8 4.8M8.2 5.5v5.4M5.5 8.2h5.4'/%3E%3C/g%3E%3C/svg%3E")
+    center/contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cg fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='8.2' cy='8.2' r='5.1'/%3E%3Cpath d='M12 12l4.8 4.8M8.2 5.5v5.4M5.5 8.2h5.4'/%3E%3C/g%3E%3C/svg%3E")
+    center/contain no-repeat;
+}

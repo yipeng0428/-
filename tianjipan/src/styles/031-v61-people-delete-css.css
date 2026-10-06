@@ -1,0 +1,106 @@
+/* ===== v61 · 人物删除统一修复 / 首页快捷删除 ===== */
+#prBook .pchip-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;
+  margin: 2px 3px 2px 0;
+  isolation: isolate;
+}
+#prBook .pchip-wrap .pchip {
+  padding-right: 24px;
+  max-width: 220px;
+  min-width: 0;
+}
+#prBook .pchip-wrap .pchip b {
+  display: block;
+  max-width: 118px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+#prBook .pchip-x {
+  position: absolute;
+  right: -3px;
+  top: -5px;
+  z-index: 3;
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  min-height: 18px;
+  padding: 0;
+  border: 1px solid color-mix(in srgb, var(--red) 76%, var(--line));
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--panel);
+  color: var(--red);
+  font:
+    700 13px/1 Arial,
+    sans-serif;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+  transition: 0.15s ease;
+}
+#prBook .pchip-x:hover,
+#prBook .pchip-x:focus-visible {
+  background: var(--red);
+  color: #fff;
+  border-color: var(--red);
+  transform: scale(1.08);
+  outline: none;
+}
+#prBook .pchip-x.armed {
+  background: var(--red);
+  color: #fff;
+  border-color: var(--red);
+  animation: v61delPulse 0.7s ease-in-out infinite alternate;
+}
+@keyframes v61delPulse {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.12);
+  }
+}
+.prb55-danger {
+  border-color: color-mix(in srgb, var(--red) 58%, var(--line)) !important;
+  color: var(--red) !important;
+}
+.prb55-danger:hover,
+.prb55-danger.armed {
+  background: var(--red) !important;
+  color: #fff !important;
+  border-color: var(--red) !important;
+}
+.prb55-danger.armed {
+  min-width: 82px;
+}
+.prb55-delete-note {
+  display: none;
+  margin-top: 5px;
+  color: var(--red);
+  font-size: 9px;
+  line-height: 1.45;
+}
+.prb55-person.delete-armed {
+  border-color: var(--red) !important;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--red) 55%, transparent);
+}
+.prb55-person.delete-armed .prb55-delete-note {
+  display: block;
+}
+@media (max-width: 560px) {
+  #prBook .pchip-wrap .pchip {
+    max-width: 180px;
+  }
+  #prBook .pchip-wrap .pchip b {
+    max-width: 92px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  #prBook .pchip-x.armed {
+    animation: none;
+  }
+}

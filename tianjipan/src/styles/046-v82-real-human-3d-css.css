@@ -1,0 +1,185 @@
+/* ===== v82 · 真实 WebGL 3D 人体模型 ===== */
+#pane-jingluo .bdreal-shell {
+  margin-top: 10px;
+}
+#pane-jingluo .bdreal-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex-wrap: wrap;
+  margin-bottom: 9px;
+}
+#pane-jingluo .bdreal-toolbar .group {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+#pane-jingluo .bdreal-toolbar .gbtn.on {
+  background: var(--wash);
+  border-color: var(--gold);
+  color: var(--gold2);
+}
+#pane-jingluo .bdreal-toolbar .spacer {
+  flex: 1;
+}
+#pane-jingluo .bdreal-toolbar label {
+  display: inline-flex;
+  gap: 5px;
+  align-items: center;
+  color: var(--dim);
+  font-size: 11px;
+  cursor: pointer;
+}
+#pane-jingluo .bdreal-toolbar input {
+  accent-color: var(--gold);
+}
+#pane-jingluo .bdreal-stage {
+  position: relative;
+  height: min(76vh, 760px);
+  min-height: 570px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 35%, rgba(217, 178, 95, 0.11), transparent 46%),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--panel2) 90%, #0f1524 10%),
+      color-mix(in srgb, var(--panel) 84%, #080d16 16%)
+    );
+}
+#pane-jingluo .bdreal-stage canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  cursor: grab;
+}
+#pane-jingluo .bdreal-stage canvas:active {
+  cursor: grabbing;
+}
+#pane-jingluo .bdreal-status {
+  position: absolute;
+  inset: auto 14px 14px 14px;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border: 1px solid color-mix(in srgb, var(--line) 75%, transparent);
+  border-radius: 9px;
+  background: color-mix(in srgb, var(--panel) 84%, transparent);
+  backdrop-filter: blur(7px);
+  color: var(--dim);
+  font-size: 11px;
+  pointer-events: none;
+}
+#pane-jingluo .bdreal-status b {
+  color: var(--gold2);
+}
+#pane-jingluo .bdreal-status.ok {
+  opacity: 0.65;
+}
+#pane-jingluo .bdreal-status.err {
+  color: var(--bad);
+}
+#pane-jingluo .bdreal-badge {
+  position: absolute;
+  left: 14px;
+  top: 14px;
+  z-index: 4;
+  padding: 5px 8px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--panel) 86%, transparent);
+  color: var(--gold2);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  backdrop-filter: blur(7px);
+  pointer-events: none;
+}
+#pane-jingluo .bdreal-cardgrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(250px, 0.85fr);
+  gap: 12px;
+  margin-top: 10px;
+}
+#pane-jingluo .bdreal-info {
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  background: var(--panel2);
+  padding: 11px;
+}
+#pane-jingluo .bdreal-info h4 {
+  margin: 0 0 7px;
+  color: var(--gold2);
+  font-size: 14px;
+}
+#pane-jingluo .bdreal-info p {
+  font-size: 11.5px;
+  line-height: 1.75;
+  margin: 4px 0;
+}
+#pane-jingluo .bdreal-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  margin-top: 7px;
+}
+#pane-jingluo .bdreal-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--dim);
+  font-size: 10px;
+}
+#pane-jingluo .bdreal-legend i {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  display: inline-block;
+}
+#pane-jingluo .bdreal-credit {
+  font-size: 9.5px !important;
+  color: var(--dim);
+}
+#pane-jingluo .bdreal-credit a {
+  color: var(--gold2);
+}
+#pane-jingluo .bdreal-stage:fullscreen {
+  width: 100vw !important;
+  height: 100vh !important;
+  min-height: 100vh !important;
+  max-height: none !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: #0d111b !important;
+}
+#pane-jingluo .bdreal-stage:fullscreen .bdreal-badge {
+  top: 18px;
+  left: 18px;
+}
+#pane-jingluo .bdreal-stage:fullscreen .bdreal-status {
+  left: 18px;
+  right: 18px;
+  bottom: 18px;
+}
+@media (max-width: 900px) {
+  #pane-jingluo .bdreal-cardgrid {
+    grid-template-columns: 1fr;
+  }
+  #pane-jingluo .bdreal-stage {
+    height: 68vh;
+    min-height: 500px;
+  }
+}
+@media (max-width: 640px) {
+  #pane-jingluo .bdreal-stage {
+    height: 72vh;
+    min-height: 460px;
+  }
+  #pane-jingluo .bdreal-toolbar .spacer {
+    display: none;
+  }
+}

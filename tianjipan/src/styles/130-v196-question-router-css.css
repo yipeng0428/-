@@ -1,0 +1,371 @@
+/* ===== v196 · 自然语言问事路由 ===== */
+.tj196 {
+  display: grid;
+  gap: 10px;
+  margin: 0 0 16px;
+}
+.tj196-hero {
+  position: relative;
+  overflow: hidden;
+  padding: 15px 16px;
+  border: 1px solid color-mix(in srgb, var(--cyan) 35%, var(--line));
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--wash2) 60%, var(--panel)),
+    color-mix(in srgb, var(--wash) 24%, var(--panel))
+  );
+}
+.tj196-hero::after {
+  content: "问";
+  position: absolute;
+  right: 20px;
+  top: -26px;
+  font:
+    700 108px/1 "STKaiti",
+    "KaiTi",
+    serif;
+  color: var(--cyan);
+  opacity: 0.045;
+  pointer-events: none;
+}
+.tj196-head {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  position: relative;
+  z-index: 1;
+}
+.tj196-head-main {
+  flex: 1;
+  min-width: 0;
+}
+.tj196-head h3 {
+  margin: 0;
+  color: var(--gold2);
+  font-size: 20px;
+}
+.tj196-head p {
+  margin: 5px 0 0;
+  color: var(--dim);
+  font-size: 10.5px;
+  line-height: 1.75;
+  max-width: 900px;
+}
+.tj196-schema {
+  flex: none;
+  padding: 4px 8px;
+  border: 1px solid var(--line2);
+  color: var(--cyan);
+  font:
+    9px/1.3 ui-monospace,
+    Consolas,
+    monospace;
+  white-space: nowrap;
+}
+.tj196-ask {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 7px;
+  margin-top: 11px;
+  position: relative;
+  z-index: 1;
+}
+.tj196-ask textarea {
+  min-height: 74px;
+  resize: vertical;
+  border: 1px solid var(--line2);
+  background: var(--panel2);
+  color: var(--ink);
+  padding: 9px 10px;
+  line-height: 1.7;
+  font: inherit;
+}
+.tj196-ask button {
+  min-width: 112px;
+  border: 1px solid var(--cyan);
+  background: color-mix(in srgb, var(--cyan) 10%, var(--panel));
+  color: var(--cyan);
+  cursor: pointer;
+  padding: 8px 12px;
+}
+.tj196-examples {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+  position: relative;
+  z-index: 1;
+}
+.tj196-examples button {
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--dim);
+  padding: 4px 7px;
+  font-size: 9px;
+  cursor: pointer;
+}
+.tj196-examples button:hover {
+  border-color: var(--line2);
+  color: var(--gold2);
+  background: var(--wash);
+}
+.tj196-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(280px, 0.55fr);
+  gap: 9px;
+}
+.tj196-box {
+  border: 1px solid var(--line);
+  background: var(--panel);
+  padding: 11px 12px;
+}
+.tj196-box h4 {
+  margin: 0 0 8px;
+  color: var(--gold2);
+  font-size: 12px;
+}
+.tj196-kpis {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 7px;
+  margin-bottom: 9px;
+}
+.tj196-kpi {
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  padding: 8px 9px;
+}
+.tj196-kpi small {
+  display: block;
+  color: var(--dim);
+  font-size: 8.7px;
+}
+.tj196-kpi b {
+  display: block;
+  margin-top: 3px;
+  color: var(--gold2);
+  font-size: 14px;
+}
+.tj196-kpi.cyan b {
+  color: var(--cyan);
+}
+.tj196-kpi.good b {
+  color: var(--good);
+}
+.tj196-route-list {
+  display: grid;
+  gap: 6px;
+}
+.tj196-route {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: center;
+  padding: 8px 9px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+}
+.tj196-rank {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line2);
+  color: var(--gold2);
+  font-weight: 700;
+}
+.tj196-route.primary {
+  border-color: color-mix(in srgb, var(--cyan) 44%, var(--line));
+}
+.tj196-route.primary .tj196-rank {
+  border-color: var(--cyan);
+  color: var(--cyan);
+}
+.tj196-route b {
+  display: block;
+  color: var(--ink);
+  font-size: 11px;
+}
+.tj196-route small {
+  display: block;
+  color: var(--dim);
+  font-size: 9px;
+  line-height: 1.55;
+  margin-top: 2px;
+}
+.tj196-route button {
+  border: 1px solid var(--line2);
+  background: transparent;
+  color: var(--gold);
+  padding: 5px 8px;
+  cursor: pointer;
+  font-size: 9px;
+}
+.tj196-route button:hover {
+  background: var(--wash);
+  color: var(--gold2);
+}
+.tj196-tags {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+.tj196-tag {
+  padding: 3px 6px;
+  border: 1px solid var(--line);
+  font-size: 8.8px;
+  color: var(--dim);
+}
+.tj196-tag.on {
+  color: var(--cyan);
+  border-color: color-mix(in srgb, var(--cyan) 45%, var(--line));
+}
+.tj196-reason {
+  margin: 7px 0 0;
+  padding: 8px 9px;
+  border-left: 3px solid var(--gold);
+  background: var(--wash);
+  font-size: 9.5px;
+  line-height: 1.7;
+  color: var(--dim);
+}
+.tj196-actions {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 9px;
+}
+.tj196-actions button {
+  border: 1px solid var(--line2);
+  background: transparent;
+  color: var(--ink);
+  padding: 6px 9px;
+  cursor: pointer;
+}
+.tj196-actions button.primary {
+  background: var(--red);
+  border-color: var(--red);
+  color: #fff;
+}
+.tj196-actions button:hover {
+  background: var(--wash);
+  color: var(--gold2);
+}
+.tj196-recent {
+  display: grid;
+  gap: 5px;
+}
+.tj196-recent button {
+  text-align: left;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  color: var(--ink);
+  padding: 7px 8px;
+  cursor: pointer;
+}
+.tj196-recent button:hover {
+  border-color: var(--line2);
+  background: var(--wash);
+}
+.tj196-recent b {
+  display: block;
+  font-size: 9.8px;
+  font-weight: 600;
+}
+.tj196-recent small {
+  display: block;
+  color: var(--dim);
+  font-size: 8.5px;
+  margin-top: 2px;
+}
+.tj196-boundary {
+  padding: 8px 10px;
+  border: 1px dashed var(--line);
+  color: var(--dim);
+  font-size: 9.2px;
+  line-height: 1.7;
+  background: var(--panel2);
+}
+/* task status strip used in 校验与口径 */
+.tj196-roadmap {
+  margin: 0 0 10px;
+  padding: 10px 11px;
+  border: 1px solid color-mix(in srgb, var(--cyan) 30%, var(--line));
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--wash2) 42%, var(--panel)),
+    var(--panel)
+  );
+}
+.tj196-roadmap-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+}
+.tj196-roadmap h4 {
+  margin: 0;
+  color: var(--gold2);
+  font-size: 13px;
+}
+.tj196-roadmap .progress {
+  color: var(--cyan);
+  font-size: 10px;
+}
+.tj196-roadmap-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 5px;
+  margin-top: 8px;
+}
+.tj196-roadmap-item {
+  padding: 6px 7px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  font-size: 8.8px;
+  color: var(--dim);
+}
+.tj196-roadmap-item b {
+  display: block;
+  color: var(--ink);
+  font-size: 9.2px;
+  margin-bottom: 2px;
+}
+.tj196-roadmap-item.done {
+  border-color: color-mix(in srgb, var(--good) 38%, var(--line));
+}
+.tj196-roadmap-item.doing {
+  border-color: color-mix(in srgb, var(--cyan) 42%, var(--line));
+}
+@media (max-width: 900px) {
+  .tj196-grid {
+    grid-template-columns: 1fr;
+  }
+  .tj196-kpis {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .tj196-roadmap-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 620px) {
+  .tj196-ask {
+    grid-template-columns: 1fr;
+  }
+  .tj196-ask button {
+    min-width: 0;
+  }
+  .tj196-head {
+    flex-direction: column;
+  }
+  .tj196-schema {
+    align-self: flex-start;
+  }
+  .tj196-route {
+    grid-template-columns: 38px minmax(0, 1fr);
+  }
+  .tj196-route button {
+    grid-column: 2;
+  }
+}

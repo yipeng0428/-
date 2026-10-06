@@ -1,0 +1,530 @@
+/* ===== v174 · 天机式表面重构：先简单，后专业；主盘 SVG / 算法不改 ===== */
+#tj152Panel.tj174-mounted {
+  --tj174-bg: #0b1017;
+  --tj174-panel: #111821;
+  --tj174-panel2: #151e29;
+  --tj174-line: rgba(219, 190, 128, 0.16);
+  --tj174-line2: rgba(219, 190, 128, 0.28);
+  --tj174-gold: #e7cf9b;
+  --tj174-gold2: #f6e7bd;
+  --tj174-cyan: #89d8d1;
+  --tj174-ink: #ece7db;
+  --tj174-dim: rgba(236, 231, 219, 0.58);
+  --tj174-shadow: 0 18px 48px rgba(0, 0, 0, 0.22);
+}
+#tj152Panel.tj174-mounted .tj152-shell {
+  max-width: 1180px !important;
+}
+#tj152Panel.tj174-mounted > .tj152-shell > .tj152-top,
+#tj152Panel.tj174-mounted > .tj152-shell > #tj152ModeHelp,
+#tj152Panel.tj174-mounted > .tj152-shell > .tj155-workspace,
+#tj152Panel.tj174-mounted #tj156Guide,
+#tj152Panel.tj174-mounted #tj156ValueCard,
+#tj152Panel.tj174-mounted #tj156Roadmap,
+#tj152Panel.tj174-mounted #tj160TopTools {
+  display: none !important;
+}
+#tj152Panel.tj174-mounted #tj152BigBtn {
+  display: none !important;
+}
+
+/* Surface */
+#tj152Panel .tj174-surface {
+  display: grid;
+  gap: 14px;
+  margin: 10px 0 20px;
+}
+#tj152Panel .tj174-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 18px;
+  align-items: end;
+  padding: 6px 2px 4px;
+}
+#tj152Panel .tj174-eyebrow {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: rgba(231, 207, 155, 0.62);
+  text-transform: uppercase;
+}
+#tj152Panel .tj174-title {
+  margin: 5px 0 3px;
+  color: var(--tj174-gold2);
+  font:
+    500 28px/1.18 "STKaiti",
+    "KaiTi",
+    "Songti SC",
+    serif;
+  letter-spacing: 0.08em;
+}
+#tj152Panel .tj174-sub {
+  margin: 0;
+  color: var(--tj174-dim);
+  font-size: 12px;
+  line-height: 1.7;
+  max-width: 720px;
+}
+#tj152Panel .tj174-now {
+  text-align: right;
+  min-width: 190px;
+}
+#tj152Panel .tj174-now small {
+  display: block;
+  color: rgba(236, 231, 219, 0.45);
+  font-size: 9.5px;
+  letter-spacing: 0.06em;
+}
+#tj152Panel .tj174-now b {
+  display: block;
+  margin-top: 3px;
+  color: var(--tj174-ink);
+  font-size: 12px;
+  font-weight: 600;
+}
+#tj152Panel .tj174-now span {
+  display: inline-flex;
+  margin-top: 5px;
+  padding: 3px 8px;
+  border: 1px solid var(--tj174-line);
+  border-radius: 999px;
+  color: var(--tj174-cyan);
+  font-size: 9.5px;
+  background: rgba(137, 216, 209, 0.04);
+}
+
+/* Primary actions */
+#tj152Panel .tj174-start {
+  padding: 13px 14px;
+  border: 1px solid var(--tj174-line);
+  border-radius: 18px;
+  background: var(--tj174-panel);
+  box-shadow: var(--tj174-shadow);
+}
+#tj152Panel .tj174-starthead {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: baseline;
+  margin-bottom: 10px;
+}
+#tj152Panel .tj174-starthead b {
+  color: var(--tj174-gold2);
+  font-size: 13px;
+}
+#tj152Panel .tj174-starthead span {
+  color: var(--tj174-dim);
+  font-size: 10px;
+}
+#tj152Panel .tj174-actions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 9px;
+}
+#tj152Panel .tj174-action {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  gap: 9px;
+  align-items: center;
+  text-align: left;
+  min-height: 68px;
+  padding: 10px 11px;
+  border: 1px solid var(--tj174-line);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.018);
+  color: var(--tj174-ink);
+  cursor: pointer;
+  transition: 0.16s ease;
+}
+#tj152Panel .tj174-action:hover {
+  transform: translateY(-1px);
+  border-color: var(--tj174-line2);
+  background: rgba(231, 207, 155, 0.045);
+}
+#tj152Panel .tj174-action.on {
+  border-color: rgba(137, 216, 209, 0.4);
+  background: linear-gradient(180deg, rgba(137, 216, 209, 0.08), rgba(137, 216, 209, 0.025));
+  box-shadow: inset 0 0 0 1px rgba(137, 216, 209, 0.035);
+}
+#tj152Panel .tj174-action i {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  border: 1px solid var(--tj174-line);
+  font:
+    600 11px/1 ui-monospace,
+    Consolas,
+    monospace;
+  color: var(--tj174-gold);
+}
+#tj152Panel .tj174-action b {
+  display: block;
+  color: var(--tj174-gold2);
+  font-size: 12.5px;
+}
+#tj152Panel .tj174-action small {
+  display: block;
+  margin-top: 3px;
+  color: var(--tj174-dim);
+  font-size: 10px;
+  line-height: 1.45;
+}
+
+/* Simple display strip */
+#tj152Panel .tj174-display {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 10px 12px;
+  border: 1px solid var(--tj174-line);
+  border-radius: 14px;
+  background: rgba(17, 24, 33, 0.76);
+}
+#tj152Panel .tj174-display > span {
+  color: var(--tj174-dim);
+  font-size: 10px;
+  margin-right: 2px;
+}
+#tj152Panel .tj174-chip {
+  min-height: 30px;
+  padding: 4px 10px;
+  border: 1px solid var(--tj174-line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--tj174-ink);
+  cursor: pointer;
+  font-size: 10px;
+}
+#tj152Panel .tj174-chip:hover,
+#tj152Panel .tj174-chip.on {
+  border-color: rgba(231, 207, 155, 0.34);
+  background: rgba(231, 207, 155, 0.075);
+  color: var(--tj174-gold2);
+}
+#tj152Panel .tj174-display .note {
+  margin-left: auto;
+  color: rgba(236, 231, 219, 0.38);
+  font-size: 9px;
+}
+
+/* Main chart: keep the original stage untouched, only rebuild outer layout */
+#tj152Panel .tj174-stagecard {
+  padding: 12px;
+  border: 1px solid var(--tj174-line);
+  border-radius: 22px;
+  background: var(--tj174-bg);
+  box-shadow: var(--tj174-shadow);
+}
+#tj152Panel .tj174-stagehead {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  padding: 2px 3px 10px;
+}
+#tj152Panel .tj174-stagehead b {
+  color: var(--tj174-gold2);
+  font-size: 12.5px;
+}
+#tj152Panel .tj174-stagehead span {
+  color: var(--tj174-dim);
+  font-size: 9.5px;
+}
+#tj152Panel .tj174-stagehost {
+  display: grid;
+  place-items: center;
+}
+#tj152Panel .tj174-stagehost #tj152StageShell {
+  width: min(900px, 100%) !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 18px !important;
+}
+#tj152Panel .tj174-stagehost #tj152Stage {
+  border-radius: 18px !important;
+}
+#tj152Panel .tj174-stagehost .tj152-floating {
+  right: 13px !important;
+  top: 13px !important;
+}
+#tj152Panel .tj174-stagehost .tj152-floating button {
+  border-radius: 10px !important;
+}
+#tj152Panel .tj174-stagehost .tj152-legend {
+  left: 13px !important;
+  top: 13px !important;
+}
+#tj152Panel .tj174-stagehost .tj152-chip {
+  font-size: 10px !important;
+  padding: 4px 8px !important;
+}
+
+/* Current state */
+#tj152Panel .tj174-state {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 7px;
+}
+#tj152Panel .tj174-state > div {
+  padding: 8px 9px;
+  border: 1px solid var(--tj174-line);
+  border-radius: 11px;
+  background: var(--tj174-panel);
+}
+#tj152Panel .tj174-state small {
+  display: block;
+  color: rgba(236, 231, 219, 0.42);
+  font-size: 8.8px;
+}
+#tj152Panel .tj174-state b {
+  display: block;
+  margin-top: 3px;
+  color: var(--tj174-ink);
+  font-size: 10.5px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Timeline stays contextual: only original mode logic decides when it appears */
+#tj152Panel .tj174-timelinehost #tj152River {
+  margin: 0 !important;
+  border-radius: 15px !important;
+  background: var(--tj174-panel) !important;
+  border-color: var(--tj174-line) !important;
+  box-shadow: none !important;
+}
+
+/* Selection detail is contextual, not a whole second workbench */
+#tj152Panel .tj174-context {
+  padding: 11px 12px;
+  border: 1px solid var(--tj174-line);
+  border-radius: 15px;
+  background: var(--tj174-panel);
+}
+#tj152Panel .tj174-contexthead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+#tj152Panel .tj174-contexthead b {
+  color: var(--tj174-gold2);
+  font-size: 11.5px;
+}
+#tj152Panel .tj174-contexthead span {
+  color: var(--tj174-dim);
+  font-size: 9px;
+}
+#tj152Panel .tj174-context .tj152-card {
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}
+#tj152Panel .tj174-context .tj152-card > h4 {
+  display: none !important;
+}
+#tj152Panel .tj174-context .tj152-detail {
+  grid-template-columns: 82px minmax(0, 1fr) !important;
+  font-size: 11px !important;
+  gap: 6px 10px !important;
+}
+
+/* Progressive disclosure */
+#tj152Panel .tj174-fold {
+  border: 1px solid var(--tj174-line);
+  border-radius: 16px;
+  background: var(--tj174-panel);
+  overflow: hidden;
+}
+#tj152Panel .tj174-fold > summary {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  min-height: 54px;
+  padding: 9px 12px;
+  cursor: pointer;
+  user-select: none;
+}
+#tj152Panel .tj174-fold > summary::-webkit-details-marker {
+  display: none;
+}
+#tj152Panel .tj174-fold > summary i {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--tj174-line);
+  border-radius: 9px;
+  color: var(--tj174-gold);
+  font-style: normal;
+  font-size: 11px;
+}
+#tj152Panel .tj174-fold > summary b {
+  display: block;
+  color: var(--tj174-gold2);
+  font-size: 11.5px;
+}
+#tj152Panel .tj174-fold > summary small {
+  display: block;
+  margin-top: 2px;
+  color: var(--tj174-dim);
+  font-size: 9.5px;
+}
+#tj152Panel .tj174-fold > summary em {
+  font-style: normal;
+  color: rgba(236, 231, 219, 0.35);
+  font-size: 16px;
+  transition: 0.16s;
+}
+#tj152Panel .tj174-fold[open] > summary em {
+  transform: rotate(90deg);
+}
+#tj152Panel .tj174-foldbody {
+  padding: 0 12px 12px;
+  border-top: 1px solid rgba(219, 190, 128, 0.08);
+}
+#tj152Panel .tj174-foldlabel {
+  margin: 11px 0 7px;
+  color: rgba(236, 231, 219, 0.45);
+  font-size: 9.5px;
+  letter-spacing: 0.08em;
+}
+#tj152Panel .tj174-advancedtime .tj152-timebar {
+  display: flex !important;
+  align-items: center !important;
+  gap: 7px !important;
+  flex-wrap: wrap !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+#tj152Panel .tj174-advancedtime .tj152-timebar:before {
+  display: none !important;
+}
+#tj152Panel .tj174-advancedtime .tj152-timebar button,
+#tj152Panel .tj174-advancedtime .tj152-timebar select {
+  min-height: 34px !important;
+}
+
+/* Full layers inside a fold, not a permanent left rail */
+#tj152Panel .tj174-layerhost #tj160LayerCard {
+  position: static !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}
+#tj152Panel .tj174-layerhost #tj160LayerCard > h4 {
+  display: none !important;
+}
+#tj152Panel .tj174-layerhost .tj152-layer-help {
+  font-size: 10px !important;
+  margin: 0 0 8px !important;
+}
+#tj152Panel .tj174-layerhost .tj152-layer-groups {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 8px !important;
+}
+#tj152Panel .tj174-layerhost .tj152-layer-row {
+  padding: 9px !important;
+  border-radius: 11px !important;
+  background: rgba(255, 255, 255, 0.014) !important;
+}
+
+/* Professional section */
+#tj152Panel .tj174-prointro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid rgba(137, 216, 209, 0.12);
+  border-radius: 12px;
+  background: rgba(137, 216, 209, 0.025);
+}
+#tj152Panel .tj174-prointro b {
+  display: block;
+  color: var(--tj174-gold2);
+  font-size: 11px;
+}
+#tj152Panel .tj174-prointro small {
+  display: block;
+  margin-top: 3px;
+  color: var(--tj174-dim);
+  font-size: 9.5px;
+  line-height: 1.5;
+}
+#tj152Panel .tj174-prointro button {
+  min-height: 34px;
+  padding: 5px 11px;
+  border: 1px solid rgba(137, 216, 209, 0.24);
+  border-radius: 10px;
+  background: rgba(137, 216, 209, 0.06);
+  color: #b8ece6;
+  cursor: pointer;
+}
+#tj152Panel .tj174-prohost #tj155Inverse {
+  margin: 0 !important;
+  padding: 11px !important;
+  border-radius: 13px !important;
+  box-shadow: none !important;
+}
+#tj152Panel .tj174-prohost #tj155Inverse:not(.on) {
+  display: none !important;
+}
+
+/* suppress legacy explanation noise on the simplified surface */
+#tj152Panel.tj174-mounted .tj160-inv-toolbar,
+#tj152Panel.tj174-mounted .tj161-wizard {
+}
+
+/* Big mode deliberately not redesigned in v174 */
+#tj152Big {
+}
+
+/* Responsive */
+@media (max-width: 850px) {
+  #tj152Panel .tj174-hero {
+    grid-template-columns: 1fr;
+  }
+  #tj152Panel .tj174-now {
+    text-align: left;
+  }
+  #tj152Panel .tj174-actions {
+    grid-template-columns: 1fr;
+  }
+  #tj152Panel .tj174-state {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  #tj152Panel .tj174-layerhost .tj152-layer-groups {
+    grid-template-columns: 1fr !important;
+  }
+}
+@media (max-width: 520px) {
+  #tj152Panel .tj174-title {
+    font-size: 24px;
+  }
+  #tj152Panel .tj174-state {
+    grid-template-columns: 1fr;
+  }
+  #tj152Panel .tj174-display .note {
+    width: 100%;
+    margin-left: 0;
+  }
+}

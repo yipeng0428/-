@@ -1,0 +1,361 @@
+/* ===== v194 · 导航下方信息跑马灯 ===== */
+:root {
+  --tj-noticeh: 30px;
+}
+body {
+  padding-top: calc(var(--navh) + var(--tj-noticeh)) !important;
+}
+#tjNoticeTicker {
+  position: fixed;
+  top: var(--navh);
+  left: 0;
+  right: 0;
+  height: var(--tj-noticeh);
+  z-index: 44;
+  display: flex;
+  align-items: center;
+  background: color-mix(in srgb, var(--bg2) 96%, transparent);
+  border-bottom: 1px solid var(--line);
+  box-shadow: 0 5px 15px -12px rgba(0, 0, 0, 0.48);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+}
+#tjNoticeTicker[hidden] {
+  display: none !important;
+}
+.tjn-ticker-in {
+  width: min(var(--site-wide-max, 1720px), calc(100vw - 20px));
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 9px;
+  align-items: center;
+  overflow: hidden;
+  padding: 0 var(--site-wide-gutter, 16px);
+  box-sizing: border-box;
+}
+.tjn-ticker-label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--gold2);
+  font-size: 10.5px;
+  white-space: nowrap;
+  letter-spacing: 0.08em;
+}
+.tjn-ticker-label::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--red);
+  box-shadow: 0 0 7px color-mix(in srgb, var(--red) 60%, transparent);
+}
+.tjn-ticker-viewport {
+  min-width: 0;
+  overflow: hidden;
+  cursor: pointer;
+  mask-image: linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent);
+}
+.tjn-ticker-track {
+  display: inline-block;
+  min-width: max-content;
+  padding-left: 100%;
+  white-space: nowrap;
+  color: var(--ink);
+  font-size: 10.5px;
+  line-height: var(--tj-noticeh);
+  animation: tjnMarquee var(--tjn-speed, 32s) linear infinite;
+  will-change: transform;
+}
+.tjn-ticker-viewport:hover .tjn-ticker-track {
+  animation-play-state: paused;
+}
+.tjn-ticker-sep {
+  display: inline-block;
+  padding: 0 16px;
+  color: var(--gold);
+}
+@keyframes tjnMarquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+.tjn-ticker-mail {
+  border: 0;
+  background: transparent;
+  color: var(--gold);
+  font-size: 9px;
+  cursor: pointer;
+  padding: 2px 4px;
+  white-space: nowrap;
+}
+
+/* 让原有固定/锚点组件知道通知条占了一层 */
+.livebar {
+  top: calc(var(--navh) + var(--tj-noticeh)) !important;
+}
+.tn-panel {
+  top: calc(var(--navh) + var(--tj-noticeh)) !important;
+}
+#tabs,
+.pane,
+#persona,
+#dial {
+  scroll-margin-top: calc(var(--navh) + var(--tj-noticeh) + 70px) !important;
+}
+.fab-bottom {
+  top: calc(var(--navh) + var(--tj-noticeh) + var(--lbh, 52px)) !important;
+}
+
+/* ===== 右上角信封 ===== */
+#tnNotice {
+  position: relative;
+  width: 31px;
+  height: 31px;
+  display: grid;
+  place-items: center;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  border-radius: 50%;
+  flex: none;
+}
+#tnNotice:hover {
+  color: var(--gold2);
+  border-color: var(--line);
+  background: var(--wash);
+}
+#tnNotice svg {
+  width: 17px;
+  height: 17px;
+  display: block;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.65;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+#tnNoticeCount {
+  position: absolute;
+  right: -3px;
+  top: -3px;
+  min-width: 14px;
+  height: 14px;
+  padding: 0 3px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--red);
+  color: #fff;
+  font:
+    700 8px/1 system-ui,
+    sans-serif;
+  border: 1px solid var(--bg2);
+  box-sizing: border-box;
+}
+#tnNoticeCount[hidden] {
+  display: none !important;
+}
+
+/* ===== 消息中心 / 道长通知弹窗 ===== */
+#tjNoticeModal {
+  position: fixed;
+  inset: 0;
+  z-index: 155;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: rgba(18, 14, 10, 0.38);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+#tjNoticeModal[hidden] {
+  display: none !important;
+}
+.tjn-box {
+  width: min(820px, calc(100vw - 26px));
+  max-height: min(760px, calc(100vh - 28px));
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  overflow: hidden;
+  border: 1px solid var(--line2);
+  outline: 1px solid var(--line);
+  outline-offset: -5px;
+  background: var(--bg2);
+  box-shadow: 0 26px 70px -22px rgba(0, 0, 0, 0.62);
+}
+.tjn-head {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 14px 16px 11px;
+  border-bottom: 1px solid var(--line);
+  background: var(--panel);
+}
+.tjn-head-main {
+  flex: 1;
+  min-width: 0;
+}
+.tjn-head h2 {
+  margin: 0;
+  color: var(--gold2);
+  font:
+    25px/1.2 "Ma Shan Zheng",
+    "STKaiti",
+    serif;
+  letter-spacing: 0.08em;
+}
+.tjn-head p {
+  margin: 4px 0 0;
+  color: var(--dim);
+  font-size: 10px;
+}
+.tjn-close {
+  flex: none;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  padding: 6px 10px;
+  cursor: pointer;
+}
+.tjn-content {
+  min-height: 0;
+  overflow: auto;
+  padding: 13px 15px 18px;
+}
+.tjn-feature {
+  padding: 14px 15px;
+  border: 1px solid var(--line2);
+  background: linear-gradient(135deg, var(--wash), transparent 64%), var(--panel);
+  margin-bottom: 10px;
+}
+.tjn-feature .meta,
+.tjn-item .meta {
+  color: var(--dim);
+  font-size: 9.5px;
+  margin-bottom: 5px;
+}
+.tjn-feature h3 {
+  margin: 0 0 8px;
+  color: var(--gold2);
+  font-size: 17px;
+}
+.tjn-feature .body {
+  font-size: 11px;
+  line-height: 1.85;
+  color: var(--ink);
+}
+.tjn-feature .body p {
+  margin: 5px 0;
+}
+.tjn-actions {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+.tjn-actions button {
+  border: 1px solid var(--line2);
+  background: transparent;
+  color: var(--ink);
+  padding: 6px 9px;
+  cursor: pointer;
+}
+.tjn-actions button:hover {
+  background: var(--wash);
+  color: var(--gold2);
+}
+.tjn-actions .primary {
+  background: var(--red);
+  border-color: var(--red);
+  color: #fff;
+}
+.tjn-list {
+  display: grid;
+  gap: 6px;
+}
+.tjn-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  padding: 9px 10px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  cursor: pointer;
+}
+.tjn-item:hover {
+  border-color: var(--line2);
+  background: var(--wash);
+}
+.tjn-item.unread {
+  box-shadow: inset 3px 0 var(--red);
+}
+.tjn-item b {
+  display: block;
+  color: var(--ink);
+  font-size: 11px;
+}
+.tjn-item small {
+  display: block;
+  color: var(--dim);
+  font-size: 9.5px;
+  line-height: 1.55;
+  margin-top: 2px;
+}
+.tjn-item .dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--red);
+}
+.tjn-item:not(.unread) .dot {
+  background: var(--dim2);
+}
+.tjn-empty {
+  padding: 20px;
+  text-align: center;
+  color: var(--dim);
+  border: 1px dashed var(--line);
+  font-size: 11px;
+}
+
+/* ===== 底部开发调试徽章全部移除，只保留最新版版本号 ===== */
+footer span[id$="Badge"],
+footer [id*="Badge"] {
+  display: none !important;
+}
+#buildVersion {
+  margin-top: 7px;
+  color: var(--dim);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+}
+@media (max-width: 700px) {
+  :root {
+    --tj-noticeh: 28px;
+  }
+  .tjn-ticker-in {
+    grid-template-columns: auto minmax(0, 1fr);
+    padding: 0 9px;
+  }
+  .tjn-ticker-mail {
+    display: none;
+  }
+  .tjn-ticker-label {
+    font-size: 9.5px;
+  }
+  .tjn-ticker-track {
+    font-size: 9.5px;
+  }
+  #tnNotice {
+    width: 29px;
+    height: 29px;
+  }
+}

@@ -1,0 +1,321 @@
+/* ===== v126 · 人物头像 / 关系网头像节点 / 六壬 Evidence 3.0 ===== */
+#persona .v59-person-line {
+  grid-template-columns:
+    64px minmax(92px, 0.8fr) minmax(105px, 0.95fr) minmax(95px, 0.85fr) minmax(195px, 1.65fr)
+    minmax(140px, 1.25fr) minmax(82px, 0.72fr) minmax(86px, 0.75fr) minmax(92px, 0.8fr) minmax(
+      104px,
+      0.9fr
+    )
+    minmax(96px, 0.82fr);
+}
+.v126-avatar-field {
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  min-width: 56px !important;
+  width: 64px !important;
+  color: var(--dim);
+  font-size: 10px;
+  line-height: 1;
+}
+.v126-avatar-field > .v126-av-label {
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+}
+.v126-avwrap {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+}
+.v126-avpick {
+  position: relative;
+  width: 40px !important;
+  height: 40px !important;
+  min-width: 40px !important;
+  min-height: 40px !important;
+  padding: 0 !important;
+  border: 1px solid var(--line2) !important;
+  border-radius: 50% !important;
+  overflow: hidden;
+  background: var(--panel2) !important;
+  color: var(--gold) !important;
+  display: grid !important;
+  place-items: center !important;
+  cursor: pointer;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--gold) 6%, transparent);
+}
+.v126-avpick:hover {
+  border-color: var(--gold) !important;
+  box-shadow: 0 0 0 3px var(--wash);
+}
+.v126-avpick img {
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
+  display: block;
+}
+.v126-avpick .v126-avplus {
+  font: 400 18px/1 sans-serif;
+  opacity: 0.8;
+}
+.v126-avrm {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 17px;
+  height: 17px;
+  min-width: 17px;
+  padding: 0;
+  border: 1px solid var(--line2);
+  border-radius: 50%;
+  background: var(--panel);
+  color: var(--dim);
+  font:
+    700 12px/15px Arial,
+    sans-serif;
+  cursor: pointer;
+  z-index: 2;
+}
+.v126-avrm:hover {
+  background: var(--red);
+  border-color: var(--red);
+  color: #fff;
+}
+.v126-avatar-field.no-avatar .v126-avrm {
+  display: none;
+}
+.v126-avatar-tip {
+  display: none;
+}
+/* 人物关系册编辑器 */
+.v126-book-avatar {
+  grid-column: 1/-1;
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr);
+  gap: 9px;
+  align-items: center;
+  padding: 7px;
+  border: 1px dashed var(--line);
+  background: color-mix(in srgb, var(--panel2) 72%, transparent);
+  border-radius: 3px;
+}
+.v126-book-avatar .v126-avpick {
+  width: 48px !important;
+  height: 48px !important;
+  min-width: 48px !important;
+  min-height: 48px !important;
+}
+.v126-book-avatar .v126-book-avtext {
+  min-width: 0;
+}
+.v126-book-avatar b {
+  display: block;
+  color: var(--ink);
+  font-size: 11px;
+  font-weight: 500;
+}
+.v126-book-avatar small {
+  display: block;
+  color: var(--dim);
+  font-size: 9px;
+  line-height: 1.55;
+  margin-top: 2px;
+}
+/* 档案卡与首页人物条 */
+.prb55-avatar img,
+.prb-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+  display: block;
+}
+.prb55-avatar.has-photo,
+.prb-avatar.has-photo {
+  padding: 0;
+  overflow: hidden;
+}
+#prBook .v126-chip-avatar {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex: none;
+  border: 1px solid var(--line2);
+}
+#prBook .pchip.has-v126-avatar .pdot {
+  display: none;
+}
+/* 关系网头像：保留五行色外圈与“我”印章，头像只占内圈 */
+.netsvg .v126-net-avatar,
+.netsvg .v126-net-ring,
+.netsvg .v126-net-stem-bg,
+.netsvg .v126-net-stem {
+  pointer-events: none;
+}
+.netsvg .v126-net-ring {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.56);
+  stroke-width: 1.1;
+}
+.netsvg .v126-net-stem-bg {
+  fill: var(--bg2);
+  stroke: var(--c);
+  stroke-width: 1.2;
+}
+.netsvg .v126-net-stem {
+  font-family: "STKaiti", "KaiTi", serif;
+  font-size: 10px;
+  font-weight: 700;
+  fill: var(--c);
+}
+.net-detail .v126-detail-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--line2);
+  float: left;
+  margin: 0 8px 5px 0;
+}
+/* Evidence 3.0 */
+.lr126-card {
+  margin-top: 14px;
+}
+.lr126-head {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 9px;
+}
+.lr126-head > div {
+  margin-right: auto;
+}
+.lr126-head h3 {
+  margin: 0;
+  color: var(--gold2);
+  font:
+    400 20px/1.25 "STKaiti",
+    "KaiTi",
+    "Songti SC",
+    serif;
+}
+.lr126-head small {
+  display: block;
+  color: var(--dim);
+  font-size: 10.5px;
+  margin-top: 3px;
+}
+.lr126-badge {
+  padding: 2px 8px;
+  border: 1px solid color-mix(in srgb, var(--gold) 55%, var(--line));
+  border-radius: 11px;
+  font-size: 10px;
+  color: var(--gold2);
+}
+.lr126-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 7px;
+}
+.lr126-kpi {
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  padding: 9px;
+  border-radius: 4px;
+  min-width: 0;
+}
+.lr126-kpi small {
+  display: block;
+  color: var(--dim);
+  font-size: 9.5px;
+}
+.lr126-kpi b {
+  display: block;
+  margin-top: 3px;
+  color: var(--gold2);
+  font-size: 18px;
+}
+.lr126-kpi.ok b {
+  color: var(--good);
+}
+.lr126-kpi.warn b {
+  color: var(--gold);
+}
+.lr126-conclusion {
+  margin-top: 8px;
+  padding: 9px 10px;
+  border-left: 3px solid var(--gold);
+  background: var(--panel2);
+  font-size: 10.7px;
+  line-height: 1.75;
+  color: var(--dim);
+}
+.lr126-conclusion strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+.lr126-actions {
+  display: flex;
+  gap: 7px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+.lr126-list {
+  margin-top: 8px;
+  max-height: 230px;
+  overflow: auto;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.012);
+  padding: 8px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 4px 8px;
+  font-size: 9.5px;
+  color: var(--dim);
+}
+.lr126-list[hidden] {
+  display: none;
+}
+.lr126-list span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-bottom: 1px dotted var(--line);
+  padding: 2px 0;
+}
+.lr126-src {
+  margin-top: 8px;
+  font-size: 9.5px;
+  line-height: 1.6;
+  color: var(--dim);
+}
+.lr126-src a {
+  color: var(--gold);
+  text-decoration: none;
+}
+.lr126-src a:hover {
+  text-decoration: underline;
+}
+@media (max-width: 850px) {
+  .lr126-grid {
+    grid-template-columns: 1fr;
+  }
+  .lr126-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 520px) {
+  .lr126-list {
+    grid-template-columns: 1fr;
+  }
+}

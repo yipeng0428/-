@@ -1,0 +1,347 @@
+/* ===== v129 · 六爻 Core / 太阳系多图层 / 十二宫联动 / 五运六气与子午流注命主关联 ===== */
+.ly129-quick {
+  border-color: color-mix(in srgb, var(--gold) 42%, var(--line));
+  background: linear-gradient(
+    135deg,
+    var(--panel),
+    color-mix(in srgb, var(--wash) 42%, var(--panel))
+  );
+}
+.ly129-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+.ly129-head h3 {
+  margin: 0;
+  color: var(--gold2);
+  font-size: 19px;
+}
+.ly129-head p {
+  margin: 4px 0 0;
+  color: var(--dim);
+  font-size: 11.5px;
+}
+.ly129-badge {
+  flex: none;
+  border: 1px solid var(--line2);
+  padding: 4px 9px;
+  border-radius: 14px;
+  color: var(--gold);
+  font-size: 10.5px;
+}
+.ly129-form {
+  display: grid;
+  grid-template-columns: minmax(200px, 1fr) 120px 145px auto;
+  gap: 8px;
+  align-items: end;
+}
+.ly129-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: var(--dim);
+  font-size: 11px;
+}
+.ly129-form input,
+.ly129-form select {
+  min-height: 38px;
+  padding: 7px 9px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  color: var(--ink);
+  border-radius: 3px;
+}
+.ly129-go {
+  min-height: 38px !important;
+  background: var(--red) !important;
+  border-color: var(--red) !important;
+  color: #fff !important;
+  font-weight: 600;
+}
+.ly129-five {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+  margin-top: 10px;
+}
+.ly129-five span {
+  padding: 7px 8px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.018);
+  font-size: 10.5px;
+  line-height: 1.55;
+  color: var(--dim);
+}
+.ly129-five b {
+  display: block;
+  color: var(--ink);
+  font-size: 11px;
+  margin-bottom: 2px;
+}
+.ly129-plain {
+  margin: 10px 0 0;
+  padding: 10px 12px;
+  border-left: 3px solid var(--gold);
+  background: var(--panel2);
+  font-size: 12px;
+  line-height: 1.75;
+}
+.ly129-plain b {
+  color: var(--gold2);
+}
+.ly129-core {
+  margin-top: 14px;
+}
+.ly129-coregrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 7px;
+}
+.ly129-corecell {
+  padding: 8px 9px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+}
+.ly129-corecell small {
+  display: block;
+  color: var(--dim);
+  font-size: 10px;
+}
+.ly129-corecell b {
+  display: block;
+  margin-top: 3px;
+  font-size: 14px;
+  color: var(--good);
+}
+.ly129-trace {
+  display: grid;
+  gap: 5px;
+  margin-top: 10px;
+}
+.ly129-step {
+  display: grid;
+  grid-template-columns: 24px 105px 1fr;
+  gap: 8px;
+  padding: 6px 8px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.018);
+  font-size: 11px;
+  line-height: 1.6;
+}
+.ly129-step i {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border: 1px solid var(--line2);
+  border-radius: 50%;
+  font-style: normal;
+  color: var(--gold);
+}
+.ly129-step b {
+  color: var(--ink);
+}
+.ly129-audit {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+.ly129-progress {
+  height: 6px;
+  flex: 1 1 180px;
+  min-width: 120px;
+  background: var(--panel2);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.ly129-progress i {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: var(--gold);
+}
+.ly129-auditout {
+  margin-top: 7px;
+  color: var(--dim);
+  font-size: 10.8px;
+  line-height: 1.7;
+}
+.orr129-layerbox {
+  margin: 8px 0 4px;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+}
+.orr129-layerbox .cap {
+  font-size: 10px;
+  color: var(--dim);
+  margin-right: 7px;
+}
+.orr129-layerbox label {
+  white-space: nowrap;
+}
+.orr129-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  margin: 7px 0 10px;
+  padding: 8px 10px;
+  border-left: 3px solid var(--gold);
+  background: var(--panel2);
+  font-size: 11px;
+}
+.orr129-meta span {
+  color: var(--dim);
+}
+.orr129-meta b {
+  color: var(--gold2);
+}
+.z129 {
+  margin-top: 14px;
+}
+.z129-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: start;
+}
+.z129-head h3 {
+  margin: 0;
+}
+.z129-main {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 0.55fr);
+  gap: 12px;
+  margin-top: 10px;
+}
+.z129-signs {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 6px;
+}
+.z129-sign {
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  color: var(--ink);
+  padding: 7px 5px;
+  cursor: pointer;
+  border-radius: 3px;
+  text-align: center;
+}
+.z129-sign b {
+  display: block;
+  font-size: 17px;
+  color: var(--gold2);
+}
+.z129-sign small {
+  display: block;
+  color: var(--dim);
+  font-size: 9.5px;
+}
+.z129-sign.on {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 1px var(--gold) inset;
+  background: var(--wash);
+}
+.z129-info {
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.018);
+  font-size: 11.5px;
+  line-height: 1.75;
+}
+.z129-info h4 {
+  margin: 0 0 5px;
+  color: var(--gold2);
+  font-size: 16px;
+}
+.z129-kv {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+.z129-kv .pill {
+  cursor: default;
+}
+.v129-person-bridge {
+  margin-top: 8px;
+  padding: 8px 10px;
+  border-left: 3px solid var(--gold);
+  background: color-mix(in srgb, var(--wash) 45%, transparent);
+  font-size: 11.2px;
+  line-height: 1.75;
+}
+.v129-person-bridge.generic {
+  border-left-color: var(--line2);
+  background: var(--panel2);
+  color: var(--dim);
+}
+.v129-person-bridge b {
+  color: var(--gold2);
+}
+.v129-person-bridge .good {
+  color: var(--good);
+}
+.v129-person-bridge .bad {
+  color: var(--bad);
+}
+.v129-yqlz {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 14px;
+}
+.v129-mini {
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  font-size: 11.5px;
+  line-height: 1.75;
+}
+.v129-mini h4 {
+  margin: 0 0 6px;
+  color: var(--gold2);
+}
+@media (max-width: 900px) {
+  .ly129-form {
+    grid-template-columns: 1fr 1fr;
+  }
+  .ly129-go {
+    grid-column: 1/-1;
+  }
+  .ly129-five {
+    grid-template-columns: 1fr 1fr;
+  }
+  .ly129-coregrid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .z129-main {
+    grid-template-columns: 1fr;
+  }
+  .z129-signs {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .v129-yqlz {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 560px) {
+  .ly129-form {
+    grid-template-columns: 1fr;
+  }
+  .ly129-go {
+    grid-column: auto;
+  }
+  .ly129-five {
+    grid-template-columns: 1fr;
+  }
+  .z129-signs {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

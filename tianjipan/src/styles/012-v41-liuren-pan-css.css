@@ -1,0 +1,473 @@
+/* ===== v41 独立盘 · 大六壬天地盘 ===== */
+.lrp-shell {
+  padding: 3px 0 22px;
+}
+.lrp-top {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 8px 0 13px;
+  flex-wrap: wrap;
+}
+.lrp-title {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  margin-right: auto;
+  min-width: 220px;
+}
+.lrp-title b {
+  font:
+    400 25px/1.15 "Ma Shan Zheng",
+    "STKaiti",
+    serif;
+  color: var(--gold2);
+  letter-spacing: 0.11em;
+}
+.lrp-title small {
+  font-size: 11px;
+  color: var(--dim);
+  letter-spacing: 0.06em;
+}
+.lrp-grid {
+  display: grid;
+  grid-template-columns: 255px minmax(420px, 1fr) 304px;
+  gap: 12px;
+  align-items: start;
+}
+.lrp-side,
+.lrp-info {
+  padding: 14px;
+}
+.lrp-side h4,
+.lrp-info h4 {
+  margin: 0 0 9px;
+  color: var(--gold);
+  font-weight: 500;
+}
+.lrp-group {
+  padding: 10px 0;
+  border-top: 1px solid var(--line);
+}
+.lrp-group:first-of-type {
+  border-top: 0;
+  padding-top: 0;
+}
+.lrp-mode {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+.lrp-mode button.on,
+.lrp-viewbar button.on {
+  background: var(--wash);
+  border-color: var(--gold);
+  color: var(--gold2);
+}
+.lrp-side label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: var(--dim);
+  font-size: 11px;
+  margin-top: 8px;
+}
+.lrp-side input,
+.lrp-side select {
+  width: 100%;
+  min-height: 34px;
+  background: var(--panel2);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  color: var(--ink);
+  padding: 5px 7px;
+}
+.lrp-manual[hidden] {
+  display: none;
+}
+.lrp-layers {
+  display: grid;
+  gap: 5px;
+}
+.lrp-layer {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: flex-start;
+  gap: 7px !important;
+  margin: 0 !important;
+  padding: 5px 6px;
+  border: 1px solid transparent;
+  border-radius: 3px;
+}
+.lrp-layer:hover {
+  border-color: var(--line);
+  background: var(--panel2);
+}
+.lrp-layer input {
+  width: auto !important;
+  min-height: 0 !important;
+  margin-top: 3px;
+}
+.lrp-layer span {
+  color: var(--ink);
+  font-size: 12px;
+  line-height: 1.35;
+}
+.lrp-layer small {
+  display: block;
+  color: var(--dim);
+  font-size: 10px;
+}
+.lrp-btnrow {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  margin-top: 7px;
+}
+.lrp-btnrow .gbtn {
+  flex: 1 1 auto;
+}
+.lrp-main {
+  min-width: 0;
+}
+.lrp-viewbar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 42px;
+  padding: 5px 7px;
+  border: 1px solid var(--line);
+  border-bottom: 0;
+  background: var(--panel);
+  border-radius: 4px 4px 0 0;
+  flex-wrap: wrap;
+}
+.lrp-viewbar .hint {
+  font-size: 10px;
+  color: var(--dim);
+  margin-right: auto;
+}
+.lrp-z {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-variant-numeric: tabular-nums;
+}
+.lrp-z > span {
+  width: 43px;
+  text-align: center;
+  font-size: 11px;
+  color: var(--dim);
+}
+.lrp-frame {
+  height: min(72vh, 760px);
+  min-height: 540px;
+  border: 1px solid var(--line);
+  border-radius: 0 0 4px 4px;
+  background: radial-gradient(circle, var(--wash), transparent 55%), var(--panel2);
+  overflow: hidden;
+  position: relative;
+  touch-action: none;
+  cursor: default;
+}
+.lrp-frame.turn {
+  cursor: grab;
+}
+.lrp-frame.pan {
+  cursor: grab;
+}
+.lrp-frame.grab {
+  cursor: grabbing;
+}
+.lrp-frame svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  user-select: none;
+}
+.lrp-earth {
+  fill: var(--panel2);
+  stroke: var(--line2);
+  stroke-width: 1;
+}
+.lrp-earth.alt {
+  fill: var(--wash);
+  fill-opacity: 0.28;
+}
+.lrp-earth.hot {
+  fill: var(--red);
+  fill-opacity: 0.15;
+  stroke: var(--red);
+}
+.lrp-earth.kong {
+  stroke: var(--bad);
+  stroke-dasharray: 4 3;
+}
+.lrp-sky {
+  fill: var(--panel);
+  stroke: var(--line);
+  stroke-width: 1;
+}
+.lrp-sky.good {
+  fill: rgba(127, 214, 160, 0.09);
+}
+.lrp-sky.bad {
+  fill: rgba(232, 115, 95, 0.08);
+}
+.lrp-sky.chu {
+  stroke: var(--red);
+  stroke-width: 2;
+  fill: rgba(208, 80, 59, 0.14);
+}
+.lrp-ring {
+  fill: none;
+  stroke: var(--line2);
+  stroke-width: 1;
+}
+.lrp-txt {
+  fill: var(--ink);
+  font-family: "Noto Serif SC", "Songti SC", serif;
+  pointer-events: none;
+}
+.lrp-txt.gold {
+  fill: var(--gold2);
+  font-weight: 700;
+}
+.lrp-txt.dim {
+  fill: var(--dim);
+}
+.lrp-txt.good {
+  fill: var(--good);
+}
+.lrp-txt.bad {
+  fill: var(--bad);
+}
+.lrp-txt.red {
+  fill: var(--red);
+  font-weight: 700;
+}
+.lrp-heaven {
+  transform-origin: 0 0;
+  will-change: transform;
+}
+.lrp-hit {
+  cursor: pointer;
+}
+.lrp-core {
+  fill: var(--panel);
+  stroke: var(--line2);
+  stroke-width: 1.2;
+}
+.lrp-core2 {
+  fill: none;
+  stroke: var(--line);
+  stroke-width: 1;
+}
+.lrp-core-title {
+  fill: var(--gold2);
+  font:
+    400 31px "Ma Shan Zheng",
+    "STKaiti",
+    serif;
+  letter-spacing: 0.08em;
+}
+.lrp-core-sub {
+  fill: var(--dim);
+  font-size: 10px;
+}
+.lrp-mark {
+  fill: var(--red);
+  stroke: #fff;
+  stroke-width: 0.8;
+}
+.lrp-mark.good {
+  fill: var(--good);
+}
+.lrp-mark.gold {
+  fill: var(--gold);
+}
+.lrp-mark.cyan {
+  fill: var(--cyan);
+}
+.lrp-mark-t {
+  fill: #fff;
+  font-size: 8px;
+  font-weight: 700;
+  pointer-events: none;
+}
+.lrp-info {
+  min-height: 540px;
+}
+.lrp-facts {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 5px 9px;
+  font-size: 11px;
+}
+.lrp-facts span {
+  color: var(--dim);
+}
+.lrp-facts b {
+  font-weight: 500;
+  color: var(--ink);
+}
+.lrp-formula {
+  padding: 9px 10px;
+  margin: 10px 0;
+  border-left: 2px solid var(--gold);
+  background: var(--wash);
+  font-size: 11px;
+  line-height: 1.65;
+}
+.lrp-kecards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px;
+  margin-top: 7px;
+}
+.lrp-kc {
+  padding: 7px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  text-align: center;
+  border-radius: 3px;
+  line-height: 1.3;
+}
+.lrp-kc small {
+  display: block;
+  color: var(--dim);
+  font-size: 9px;
+}
+.lrp-kc b {
+  font:
+    400 22px "Ma Shan Zheng",
+    "STKaiti",
+    serif;
+}
+.lrp-kc em {
+  display: block;
+  font-style: normal;
+  color: var(--dim);
+  font-size: 9px;
+}
+.lrp-chuan {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
+  margin-top: 7px;
+}
+.lrp-cc {
+  padding: 7px 3px;
+  border: 1px solid var(--line);
+  text-align: center;
+  background: var(--panel2);
+  border-radius: 3px;
+}
+.lrp-cc small {
+  display: block;
+  font-size: 9px;
+  color: var(--dim);
+}
+.lrp-cc b {
+  display: block;
+  font:
+    400 25px "Ma Shan Zheng",
+    "STKaiti",
+    serif;
+  color: var(--gold2);
+  line-height: 1.15;
+}
+.lrp-cc span {
+  font-size: 10px;
+}
+.lrp-info .note {
+  font-size: 10px;
+}
+.lrp-sel {
+  margin-top: 10px;
+  padding: 9px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  font-size: 11px;
+  line-height: 1.7;
+  border-radius: 3px;
+}
+.lrp-sel b {
+  color: var(--gold2);
+}
+.lrp-play.on {
+  border-color: var(--red) !important;
+  color: var(--red) !important;
+}
+.lrp-bottom {
+  margin-top: 12px;
+  padding: 12px 14px;
+  font-size: 11px;
+  line-height: 1.8;
+  color: var(--dim);
+}
+#lrpShell:fullscreen {
+  background: var(--bg);
+  overflow: auto;
+  padding: 12px;
+}
+#lrpShell:fullscreen .lrp-frame {
+  height: calc(100vh - 150px);
+  min-height: 650px;
+}
+#lrpShell:fullscreen .lrp-top {
+  position: sticky;
+  top: 0;
+  z-index: 8;
+  background: var(--bg);
+  padding-top: 6px;
+}
+@media (max-width: 1180px) {
+  .lrp-grid {
+    grid-template-columns: 220px minmax(420px, 1fr);
+  }
+  .lrp-info {
+    grid-column: 1/-1;
+    min-height: 0;
+  }
+  .lrp-info-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .lrp-info-inner > .lrp-wide {
+    grid-column: 1/-1;
+  }
+}
+@media (max-width: 800px) {
+  .lrp-grid {
+    grid-template-columns: 1fr;
+  }
+  .lrp-side {
+    order: 2;
+  }
+  .lrp-main {
+    order: 1;
+  }
+  .lrp-info {
+    order: 3;
+  }
+  .lrp-frame {
+    min-height: 430px;
+    height: 68vh;
+  }
+  .lrp-info-inner {
+    display: block;
+  }
+  .lrp-title {
+    width: 100%;
+    order: -1;
+  }
+  .lrp-top .gbtn {
+    font-size: 11px;
+    padding: 0 9px;
+  }
+  .lrp-side .lrp-layers {
+    grid-template-columns: 1fr 1fr;
+  }
+}

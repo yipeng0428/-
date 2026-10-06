@@ -1,0 +1,16 @@
+#tjQimenVerifyBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-left: 7px;
+  padding: 2px 7px;
+  border: 1px solid rgba(111, 157, 183, 0.28);
+  border-radius: 999px;
+  font-size: 10px;
+  color: #8fb6ca;
+  vertical-align: middle;
+}
+#tjQimenVerifyBadge.warn {
+  color: #c87966;
+  border-color: rgba(200, 121, 102, 0.42);
+}

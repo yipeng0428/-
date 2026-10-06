@@ -1,0 +1,94 @@
+/* ===== v125 · 涉害四级 Evidence / 天象生命周期回归修复 ===== */
+.lr125-card {
+  margin-top: 14px;
+}
+.lr125-head {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 9px;
+}
+.lr125-head > div:first-child {
+  margin-right: auto;
+}
+.lr125-head h3 {
+  margin: 0;
+  color: var(--gold2);
+  font:
+    400 20px/1.25 "STKaiti",
+    "KaiTi",
+    "Songti SC",
+    serif;
+}
+.lr125-head small {
+  display: block;
+  color: var(--dim);
+  font-size: 10.5px;
+  margin-top: 3px;
+}
+.lr125-state {
+  padding: 2px 8px;
+  border: 1px solid var(--line2);
+  border-radius: 11px;
+  font-size: 10px;
+  color: var(--good);
+}
+.lr125-cases {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 7px;
+}
+.lr125-case {
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  border-radius: 4px;
+  padding: 8px;
+  font-size: 10.5px;
+  line-height: 1.6;
+}
+.lr125-case b {
+  display: block;
+  color: var(--gold2);
+  font-size: 12px;
+}
+.lr125-case .ok {
+  color: var(--good);
+}
+.lr125-case .bad {
+  color: var(--bad);
+}
+.lr125-counts {
+  margin-top: 8px;
+  padding: 8px 9px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.018);
+  font-size: 10.5px;
+  line-height: 1.7;
+  color: var(--dim);
+}
+.lr125-counts b {
+  color: var(--ink);
+  font-weight: 500;
+}
+.lr125-note {
+  font-size: 10.5px;
+  color: var(--dim);
+  line-height: 1.65;
+  margin: 8px 0 0;
+}
+.lr125-note strong {
+  color: var(--gold);
+  font-weight: 500;
+}
+@media (max-width: 900px) {
+  .lr125-cases {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width: 560px) {
+  .lr125-cases {
+    grid-template-columns: 1fr;
+  }
+}

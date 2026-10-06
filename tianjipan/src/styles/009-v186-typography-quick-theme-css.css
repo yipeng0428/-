@@ -1,0 +1,128 @@
+/* ===== v186 · 字体 / 字间距 Design Tokens ===== */
+:root {
+  --tj-font-body: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", "SimSun", serif;
+  --tj-letter-spacing: 0.015em;
+}
+html[data-tj-font="serif"] {
+  --tj-font-body: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", "SimSun", serif;
+}
+html[data-tj-font="kai"] {
+  --tj-font-body: "Kaiti SC", "STKaiti", "KaiTi", "KaiTi_GB2312", "Noto Serif SC", serif;
+}
+html[data-tj-font="fangsong"] {
+  --tj-font-body: "FangSong", "STFangsong", "FangSong_GB2312", "Noto Serif SC", serif;
+}
+html[data-tj-font="sans"] {
+  --tj-font-body:
+    "Noto Sans SC", "Source Han Sans SC", "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB",
+    sans-serif;
+}
+html[data-tj-font="system"] {
+  --tj-font-body:
+    system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+body {
+  font-family: var(--tj-font-body) !important;
+  letter-spacing: var(--tj-letter-spacing) !important;
+}
+button,
+input,
+select,
+textarea {
+  font-family: inherit !important;
+}
+/* 标题、篆印、术数符号中已有明确专用字体的地方继续保留原设计。 */
+
+.tjs-font-preview {
+  margin-top: 8px;
+  padding: 12px 14px;
+  border: 1px dashed var(--line);
+  background: var(--panel2);
+  color: var(--ink);
+  line-height: 1.9;
+  font-family: var(--tj-font-body);
+  letter-spacing: var(--tj-letter-spacing);
+}
+.tjs-font-preview b {
+  display: block;
+  color: var(--gold2);
+  font-size: 1.08em;
+  margin-bottom: 2px;
+}
+.tjs-font-preview small {
+  display: block;
+  color: var(--dim);
+  font-size: 0.82em;
+}
+.tjs-typopresets {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+.tjs-typopresets button {
+  min-height: 28px;
+  padding: 3px 9px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--dim);
+  cursor: pointer;
+}
+.tjs-typopresets button:hover {
+  border-color: var(--gold);
+  color: var(--gold2);
+  background: var(--wash);
+}
+
+/* 太极快捷切换：宣纸/浅色 ↔ 玄夜墨青 */
+#themeBtn {
+  position: relative;
+  display: grid !important;
+  place-items: center;
+}
+#themeBtn .tj-taiji-icon {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: block;
+  position: relative;
+  border: 1px solid color-mix(in srgb, var(--gold) 70%, var(--line));
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--bg) 65%, transparent),
+    0 2px 8px rgba(0, 0, 0, 0.14);
+  background:
+    radial-gradient(circle at 50% 25%, #0b1015 0 11%, #efe6d1 12% 25%, transparent 26%),
+    radial-gradient(circle at 50% 75%, #efe6d1 0 11%, #0b1015 12% 25%, transparent 26%),
+    linear-gradient(90deg, #efe6d1 0 50%, #0b1015 50% 100%);
+  transition:
+    transform 0.28s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+#themeBtn:hover .tj-taiji-icon {
+  transform: rotate(18deg);
+  border-color: var(--gold);
+}
+#themeBtn[data-night="1"] .tj-taiji-icon {
+  transform: rotate(180deg);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--gold) 30%, transparent),
+    0 0 14px color-mix(in srgb, var(--cyan) 28%, transparent);
+}
+#themeBtn[data-night="1"]:hover .tj-taiji-icon {
+  transform: rotate(198deg);
+}
+#themeBtn::after {
+  content: "";
+  position: absolute;
+  right: 2px;
+  bottom: 2px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--gold);
+  opacity: 0.78;
+  box-shadow: 0 0 5px color-mix(in srgb, var(--gold) 70%, transparent);
+}
+#themeBtn[data-night="1"]::after {
+  background: var(--cyan);
+}

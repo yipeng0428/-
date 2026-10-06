@@ -1,0 +1,213 @@
+/* ===== v192 · 主题预览改为“单主题色磨砂块” =====
+   未选中时也直接显示该主题的主视觉色，不再用三栏色块。
+*/
+.tjs-theme .tjs-swatch {
+  display: block !important;
+  position: relative !important;
+  overflow: hidden !important;
+  border-radius: 3px !important;
+  min-height: 54px !important;
+}
+.tjs-theme .tjs-swatch i {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  background: transparent !important;
+  opacity: 0 !important;
+}
+
+/* 宣纸雅白：淡暖黄纸色 */
+.tjs-theme[data-theme="xuanpaper"] .tjs-swatch {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(247, 236, 207, 0.94),
+      rgba(226, 198, 134, 0.62) 58%,
+      rgba(255, 248, 228, 0.86)
+    ),
+    rgba(238, 220, 178, 0.7) !important;
+  border-color: rgba(169, 121, 46, 0.38) !important;
+}
+
+/* 玄夜墨青：明亮一点的青墨色 */
+.tjs-theme[data-theme="xuanye"] .tjs-swatch {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(32, 92, 91, 0.92),
+      rgba(43, 133, 127, 0.74) 48%,
+      rgba(103, 218, 204, 0.5)
+    ),
+    radial-gradient(140px 55px at 18% 16%, rgba(161, 248, 235, 0.24), transparent 58%),
+    rgba(30, 97, 94, 0.76) !important;
+  border-color: rgba(92, 210, 198, 0.48) !important;
+}
+
+/* 宫阙朱砂：朱砂红 */
+.tjs-theme[data-theme="cinnabar"] .tjs-swatch {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(171, 58, 47, 0.92),
+      rgba(196, 72, 59, 0.74) 52%,
+      rgba(232, 137, 114, 0.44)
+    ),
+    rgba(164, 54, 44, 0.76) !important;
+  border-color: rgba(159, 47, 38, 0.48) !important;
+}
+
+/* 月白青玉：青玉色 */
+.tjs-theme[data-theme="jade"] .tjs-swatch {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(71, 145, 124, 0.9),
+      rgba(83, 170, 145, 0.7) 50%,
+      rgba(177, 225, 207, 0.48)
+    ),
+    rgba(76, 153, 131, 0.72) !important;
+  border-color: rgba(52, 140, 120, 0.44) !important;
+}
+
+/* 紫微星垣：亮紫曜色 */
+.tjs-theme[data-theme="ziwei"] .tjs-swatch {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(121, 92, 190, 0.94),
+      rgba(151, 114, 225, 0.76) 50%,
+      rgba(208, 178, 255, 0.48)
+    ),
+    rgba(135, 101, 204, 0.76) !important;
+  border-color: rgba(151, 117, 224, 0.5) !important;
+}
+
+/* 统一磨砂高光 */
+.tjs-theme .tjs-swatch::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.26),
+    rgba(255, 255, 255, 0.04) 42%,
+    rgba(255, 255, 255, 0.08) 100%
+  );
+  backdrop-filter: blur(10px) saturate(118%);
+  -webkit-backdrop-filter: blur(10px) saturate(118%);
+  pointer-events: none;
+}
+.tjs-theme .tjs-swatch::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(170px 46px at 16% 13%, rgba(255, 255, 255, 0.3), transparent 56%),
+    radial-gradient(120px 36px at 82% 82%, rgba(255, 255, 255, 0.14), transparent 58%);
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+/* 选中态不改变色块主体，只加强边缘与光晕 */
+.tjs-theme.on .tjs-swatch {
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.2),
+    0 0 0 1px var(--tj-theme-indicator),
+    0 0 16px color-mix(in srgb, var(--tj-theme-indicator) 30%, transparent) !important;
+}
+
+/* ===== 玄夜墨青强化 =====
+   增加青色占比：标题、导航、按钮、边框、反白字都更多转向青色。
+*/
+html[data-tj-theme="xuanye"] {
+  --line: rgba(83, 202, 191, 0.25) !important;
+  --line2: rgba(93, 220, 207, 0.58) !important;
+  --gold: #5ecabf !important;
+  --gold2: #a9eee6 !important;
+  --cyan: #6fe0d3 !important;
+  --wash: rgba(94, 202, 191, 0.1) !important;
+  --wash2: rgba(73, 171, 169, 0.1) !important;
+  --tj-theme-indicator: #69d8cc !important;
+  --tj-nav-ink: #c9f5ef !important;
+  --tj-nav-border: rgba(91, 214, 203, 0.34) !important;
+  --tj-card-glow: rgba(87, 205, 194, 0.034) !important;
+}
+
+/* 顶部导航：普通字改浅青，选中更亮 */
+html[data-tj-theme="xuanye"] #topnav .tn-brand b,
+html[data-tj-theme="xuanye"] #topnav .tn-b,
+html[data-tj-theme="xuanye"] #topnav .tn-cur {
+  color: #bceae4 !important;
+}
+html[data-tj-theme="xuanye"] #topnav .tn-b:hover,
+html[data-tj-theme="xuanye"] #topnav .tn-b.on {
+  color: #e2fffb !important;
+  border-bottom-color: #69d8cc !important;
+  background: rgba(93, 216, 204, 0.08) !important;
+  text-shadow: 0 0 10px rgba(105, 216, 204, 0.22) !important;
+}
+html[data-tj-theme="xuanye"] #topnav .tn-brand b {
+  background: linear-gradient(90deg, #d5fff8, #6fd9ce 55%, #b8f4ec);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent !important;
+}
+
+/* 主标题与大多数区块标题加入青色渐变 */
+html[data-tj-theme="xuanye"] h1,
+html[data-tj-theme="xuanye"] .sec,
+html[data-tj-theme="xuanye"] .tjs-title,
+html[data-tj-theme="xuanye"] .tjs-card h4,
+html[data-tj-theme="xuanye"] .tja-head h2,
+html[data-tj-theme="xuanye"] .tja-panel h3 {
+  background: linear-gradient(90deg, #d7fff9 0%, #69d8cc 56%, #b5f2ea 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent !important;
+}
+
+/* 按钮/标签的“反白字”更多使用青白，而不是普通白 */
+html[data-tj-theme="xuanye"] .gbtn,
+html[data-tj-theme="xuanye"] .ghost,
+html[data-tj-theme="xuanye"] .tjs-btn,
+html[data-tj-theme="xuanye"] .pill,
+html[data-tj-theme="xuanye"] .tag,
+html[data-tj-theme="xuanye"] .chip {
+  color: #aee9e2 !important;
+  border-color: rgba(92, 211, 199, 0.42) !important;
+}
+html[data-tj-theme="xuanye"] .gbtn:hover,
+html[data-tj-theme="xuanye"] .ghost:hover,
+html[data-tj-theme="xuanye"] .tjs-btn:hover {
+  color: #e7fffc !important;
+  background: linear-gradient(
+    135deg,
+    rgba(52, 126, 123, 0.26),
+    rgba(87, 201, 191, 0.12)
+  ) !important;
+}
+
+/* 卡片边缘和表单增加淡青墨质感 */
+html[data-tj-theme="xuanye"] .panel,
+html[data-tj-theme="xuanye"] .nw-card,
+html[data-tj-theme="xuanye"] .tjs-card,
+html[data-tj-theme="xuanye"] .tja-panel {
+  border-color: rgba(87, 205, 194, 0.25) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(151, 244, 232, 0.035),
+    0 8px 24px -20px rgba(67, 193, 184, 0.34) !important;
+}
+html[data-tj-theme="xuanye"] input,
+html[data-tj-theme="xuanye"] select,
+html[data-tj-theme="xuanye"] textarea {
+  border-color: rgba(82, 191, 183, 0.28) !important;
+  color: #d9f8f3 !important;
+}
+
+/* 太极鱼状态点保持玄夜青 */
+html[data-tj-theme="xuanye"] #themeBtn::after {
+  background: #69d8cc !important;
+  box-shadow: 0 0 8px rgba(105, 216, 204, 0.78) !important;
+}

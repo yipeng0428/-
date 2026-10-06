@@ -1,0 +1,597 @@
+/* ===== v65 · 六十甲子太岁值年神盘 ===== */
+.jts-shell {
+  padding: 0 12px 26px;
+}
+.jts-top {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 10px 4px 12px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 12px;
+}
+.jts-title {
+  flex: 1;
+  min-width: 0;
+}
+.jts-title b {
+  display: block;
+  font:
+    24px/1.2 "Ma Shan Zheng",
+    "STKaiti",
+    serif;
+  color: var(--gold2);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+}
+.jts-title small {
+  display: block;
+  margin-top: 3px;
+  color: var(--dim);
+  font-size: 10px;
+}
+.jts-grid {
+  display: grid;
+  grid-template-columns: minmax(188px, 228px) minmax(480px, 1fr) minmax(220px, 280px);
+  gap: 12px;
+  align-items: start;
+}
+.jts-side,
+.jts-info {
+  padding: 12px;
+  min-width: 0;
+}
+.jts-side h4,
+.jts-info h4 {
+  margin: 0 0 8px;
+  font:
+    19px/1.2 "Ma Shan Zheng",
+    "STKaiti",
+    serif;
+  color: var(--gold2);
+  font-weight: 400;
+}
+.jts-group {
+  padding: 10px 0;
+  border-top: 1px solid var(--line);
+}
+.jts-group:first-of-type {
+  border-top: 0;
+  padding-top: 0;
+}
+.jts-group label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: var(--dim);
+  font-size: 10px;
+}
+.jts-group input,
+.jts-group select {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  color: var(--ink);
+  padding: 6px 8px;
+  border-radius: 3px;
+}
+.jts-row {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+.jts-row > * {
+  flex: 1 1 68px;
+}
+.jts-layer {
+  display: flex !important;
+  flex-direction: row !important;
+  gap: 7px !important;
+  align-items: flex-start !important;
+  color: var(--ink) !important;
+  padding: 4px 0;
+}
+.jts-layer input {
+  width: auto !important;
+  min-height: 0 !important;
+  margin-top: 3px;
+}
+.jts-layer span {
+  line-height: 1.35;
+}
+.jts-layer small {
+  display: block;
+  color: var(--dim);
+  font-size: 9px;
+  margin-top: 1px;
+}
+.jts-main {
+  min-width: 0;
+}
+.jts-viewbar {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 8px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  border-radius: 3px 3px 0 0;
+}
+.jts-viewbar .hint {
+  flex: 1;
+  min-width: 190px;
+  color: var(--dim);
+  font-size: 10px;
+}
+.jts-viewbar #jtsZoom {
+  min-width: 38px;
+  text-align: center;
+  color: var(--dim);
+  font-size: 10px;
+}
+.jts-frame {
+  position: relative;
+  height: min(72vh, 790px);
+  min-height: 620px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-top: 0;
+  background:
+    radial-gradient(circle at 50% 48%, rgba(217, 178, 95, 0.09), transparent 55%),
+    rgba(255, 255, 255, 0.012);
+}
+.jts-frame.pan {
+  cursor: grab;
+}
+.jts-frame.grab {
+  cursor: grabbing;
+}
+.jts-frame svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: none;
+  user-select: none;
+}
+.jts-sec {
+  stroke: var(--line);
+  stroke-width: 0.7;
+  cursor: pointer;
+  transition: 0.13s;
+}
+.jts-sec:hover {
+  stroke: var(--gold2);
+  stroke-width: 1.8;
+  filter: brightness(1.12);
+}
+.jts-sec.current {
+  stroke: var(--red);
+  stroke-width: 2.4;
+  fill: rgba(185, 45, 38, 0.15) !important;
+}
+.jts-sec.selected {
+  stroke: var(--gold2);
+  stroke-width: 2.2;
+  fill: rgba(190, 145, 52, 0.16) !important;
+}
+.jts-nayin {
+  stroke: var(--line);
+  stroke-width: 0.65;
+}
+.jts-zodiac {
+  stroke: var(--line);
+  stroke-width: 0.8;
+}
+.jts-xun {
+  fill: none;
+  stroke: var(--gold);
+  stroke-width: 3;
+  opacity: 0.46;
+}
+.jts-tx {
+  text-anchor: middle;
+  dominant-baseline: central;
+  pointer-events: none;
+  fill: var(--ink);
+  font-family: "Noto Serif SC", "STSong", serif;
+}
+.jts-gz {
+  font-size: 9px;
+}
+.jts-gz.current {
+  fill: var(--red);
+  font-weight: 700;
+}
+.jts-gz.selected {
+  fill: var(--gold2);
+  font-weight: 700;
+}
+.jts-ny {
+  font-size: 9px;
+  fill: var(--dim);
+}
+.jts-zhi {
+  font:
+    21px "Ma Shan Zheng",
+    "STKaiti",
+    serif;
+  fill: var(--gold2);
+}
+.jts-sheng {
+  font-size: 8px;
+  fill: var(--dim);
+}
+.jts-xunlab {
+  font-size: 8px;
+  fill: var(--gold2);
+}
+.jts-pointer {
+  stroke: var(--red);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+.jts-pointer.sel {
+  stroke: var(--gold2);
+  stroke-width: 2;
+  stroke-dasharray: 5 5;
+}
+.jts-center {
+  fill: var(--panel);
+  stroke: var(--line2);
+  stroke-width: 1.2;
+}
+.jts-center-year {
+  font:
+    35px "Ma Shan Zheng",
+    "STKaiti",
+    serif;
+  fill: var(--gold2);
+}
+.jts-center-gz {
+  font:
+    28px "Ma Shan Zheng",
+    "STKaiti",
+    serif;
+  fill: var(--red);
+}
+.jts-center-name {
+  font:
+    20px "ZCOOL XiaoWei",
+    "STKaiti",
+    serif;
+  fill: var(--ink);
+}
+.jts-center-sm {
+  font-size: 9px;
+  fill: var(--dim);
+}
+.jts-legend {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 7px 9px;
+  border: 1px solid var(--line);
+  border-top: 0;
+  color: var(--dim);
+  font-size: 10px;
+}
+.jts-legend i {
+  display: inline-block;
+  width: 13px;
+  height: 8px;
+  margin-right: 4px;
+  border-radius: 2px;
+  vertical-align: -1px;
+}
+.jts-legend .cur {
+  background: var(--red);
+}
+.jts-legend .sel {
+  background: var(--gold2);
+}
+.jts-legend .ny {
+  background: var(--sem-neutral);
+}
+.jts-legend .pos {
+  background: var(--sem-good);
+}
+.jts-legend .neg {
+  background: var(--sem-bad);
+}
+.jts-info {
+  position: sticky;
+  top: 10px;
+  max-height: calc(100vh - 26px);
+  overflow: auto;
+}
+.jts-hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px;
+}
+.jts-kpi {
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  padding: 8px;
+  border-radius: 3px;
+  min-width: 0;
+}
+.jts-kpi small {
+  display: block;
+  color: var(--dim);
+  font-size: 9px;
+}
+.jts-kpi b {
+  display: block;
+  color: var(--gold2);
+  font-size: 15px;
+  margin-top: 2px;
+  overflow-wrap: anywhere;
+}
+.jts-kpi b.red {
+  color: var(--red);
+}
+.jts-facts {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  font-size: 11px;
+  margin-top: 10px;
+  border-top: 1px solid var(--line);
+}
+.jts-facts span,
+.jts-facts b {
+  padding: 6px 4px;
+  border-bottom: 1px dashed var(--line);
+  font-weight: 400;
+  overflow-wrap: anywhere;
+}
+.jts-facts span {
+  color: var(--dim);
+}
+.jts-card {
+  margin-top: 10px;
+  padding: 9px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  border-radius: 3px;
+  font-size: 11px;
+  line-height: 1.72;
+}
+.jts-card > b {
+  color: var(--gold2);
+}
+.jts-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 6px;
+}
+.jts-tags span {
+  padding: 2px 7px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  font-size: 9px;
+}
+.jts-tags .good {
+  border-color: var(--sem-good);
+  color: var(--sem-good);
+}
+.jts-tags .bad {
+  border-color: var(--sem-bad);
+  color: var(--sem-bad);
+}
+.jts-tags .mid {
+  border-color: var(--sem-neutral);
+  color: var(--sem-neutral);
+}
+.jts-links {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  margin-top: 7px;
+}
+.jts-links button {
+  flex: 1 1 92px;
+}
+.jts-board,
+.jts-guide {
+  margin-top: 12px;
+  padding: 12px;
+}
+.jts-board-head {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 9px;
+}
+.jts-board-head b {
+  font:
+    19px "Ma Shan Zheng",
+    "STKaiti",
+    serif;
+  color: var(--gold2);
+  font-weight: 400;
+}
+.jts-board-head small {
+  color: var(--dim);
+  font-size: 10px;
+}
+.jts-years {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(82px, 1fr));
+  gap: 5px;
+  overflow: auto;
+  padding-bottom: 3px;
+}
+.jts-ycard {
+  min-width: 0;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  color: var(--ink);
+  padding: 7px 5px;
+  border-radius: 3px;
+  text-align: center;
+  cursor: pointer;
+}
+.jts-ycard:hover,
+.jts-ycard.on {
+  border-color: var(--gold2);
+  background: var(--wash);
+}
+.jts-ycard.current {
+  border-color: var(--red);
+}
+.jts-ycard b {
+  display: block;
+  font-size: 11px;
+  color: var(--gold2);
+}
+.jts-ycard span {
+  display: block;
+  font:
+    17px "Ma Shan Zheng",
+    "STKaiti",
+    serif;
+  margin: 2px 0;
+}
+.jts-ycard small {
+  display: block;
+  color: var(--dim);
+  font-size: 8px;
+  white-space: nowrap;
+}
+.jts-table {
+  display: grid;
+  grid-template-columns: repeat(10, minmax(72px, 1fr));
+  gap: 4px;
+  overflow: auto;
+}
+.jts-cell {
+  min-width: 0;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  border-radius: 2px;
+  padding: 5px;
+  text-align: center;
+  cursor: pointer;
+  color: var(--ink);
+}
+.jts-cell:hover,
+.jts-cell.on {
+  border-color: var(--gold2);
+  background: var(--wash);
+}
+.jts-cell b {
+  display: block;
+  font-size: 10px;
+}
+.jts-cell span {
+  display: block;
+  font-size: 8px;
+  color: var(--dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.jts-guide summary {
+  cursor: pointer;
+  font:
+    19px "Ma Shan Zheng",
+    "STKaiti",
+    serif;
+  color: var(--gold2);
+}
+.jts-guide-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 7px;
+  margin-top: 9px;
+}
+.jts-guide-grid > div {
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  padding: 9px;
+  border-radius: 3px;
+}
+.jts-guide-grid b {
+  display: block;
+  color: var(--gold2);
+  font-size: 12px;
+}
+.jts-guide-grid span {
+  display: block;
+  color: var(--dim);
+  font-size: 10px;
+  line-height: 1.6;
+  margin-top: 3px;
+}
+.jts-bottom {
+  margin-top: 12px;
+  padding: 10px 12px;
+  color: var(--dim);
+  font-size: 11px;
+  line-height: 1.8;
+}
+.jts-bottom b {
+  color: var(--gold2);
+}
+@media (max-width: 1050px) {
+  .jts-grid {
+    grid-template-columns: 210px minmax(0, 1fr);
+  }
+  .jts-info {
+    grid-column: 1/-1;
+    position: static;
+    max-height: none;
+  }
+  .jts-hero {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+@media (max-width: 760px) {
+  .jts-shell {
+    padding: 0 5px 20px;
+  }
+  .jts-top {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  .jts-grid {
+    grid-template-columns: 1fr;
+  }
+  .jts-side,
+  .jts-info {
+    position: static;
+    max-height: none;
+  }
+  .jts-frame {
+    min-height: 470px;
+    height: 64vw;
+    max-height: 600px;
+  }
+  .jts-hero {
+    grid-template-columns: 1fr 1fr;
+  }
+  .jts-guide-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .jts-years {
+    grid-template-columns: repeat(12, 80px);
+  }
+  .jts-table {
+    grid-template-columns: repeat(10, 74px);
+  }
+}
+@media (max-width: 430px) {
+  .jts-guide-grid {
+    grid-template-columns: 1fr;
+  }
+  .jts-frame {
+    height: 440px;
+    min-height: 440px;
+  }
+}

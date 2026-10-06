@@ -1,0 +1,266 @@
+/* ===== V229 · 二十八宿历史宿界 / 明代黄道框架 ===== */
+.q229 {
+  display: grid;
+  gap: 9px;
+  margin: 0 0 10px;
+}
+.q229-hero {
+  position: relative;
+  overflow: hidden;
+  padding: 13px 14px;
+  border: 1px solid color-mix(in srgb, var(--cyan) 44%, var(--line));
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--wash2) 58%, var(--panel)),
+    var(--panel)
+  );
+}
+.q229-hero:after {
+  content: "HISTORICAL XIU FRAME";
+  position: absolute;
+  right: 10px;
+  top: -10px;
+  font:
+    800 36px/1 Arial,
+    sans-serif;
+  color: var(--cyan);
+  opacity: 0.035;
+  letter-spacing: 0.025em;
+  pointer-events: none;
+}
+.q229-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start;
+  position: relative;
+  z-index: 1;
+}
+.q229-head h3 {
+  margin: 0;
+  color: var(--gold2);
+  font-size: 17px;
+}
+.q229-head p {
+  margin: 4px 0 0;
+  color: var(--dim);
+  font-size: 9.8px;
+  line-height: 1.72;
+  max-width: 980px;
+}
+.q229-schema {
+  flex: none;
+  padding: 3px 7px;
+  border: 1px solid var(--line2);
+  color: var(--cyan);
+  font:
+    8.3px/1.4 ui-monospace,
+    Consolas,
+    monospace;
+}
+.q229-tools {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 9px;
+  position: relative;
+  z-index: 1;
+}
+.q229-tools button {
+  border: 1px solid var(--line2);
+  background: transparent;
+  color: var(--ink);
+  padding: 5px 8px;
+  font-size: 9px;
+  cursor: pointer;
+}
+.q229-tools button.primary {
+  border-color: var(--cyan);
+  color: var(--cyan);
+}
+.q229-kpis {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 5px;
+}
+.q229-kpi {
+  padding: 7px 8px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+}
+.q229-kpi small {
+  display: block;
+  color: var(--dim);
+  font-size: 8px;
+}
+.q229-kpi b {
+  display: block;
+  margin-top: 2px;
+  color: var(--gold2);
+  font-size: 11.5px;
+}
+.q229-kpi.good b {
+  color: var(--good);
+}
+.q229-kpi.bad b {
+  color: var(--bad);
+}
+.q229-kpi.cyan b {
+  color: var(--cyan);
+}
+.q229-kpi.gold b {
+  color: var(--gold2);
+}
+.q229-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(340px, 0.92fr);
+  gap: 8px;
+}
+.q229-card {
+  min-width: 0;
+  padding: 10px 11px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+}
+.q229-card h4 {
+  margin: 0 0 7px;
+  color: var(--gold2);
+  font-size: 11.5px;
+}
+.q229-list {
+  display: grid;
+  gap: 5px;
+}
+.q229-item {
+  padding: 7px 8px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+}
+.q229-item.good {
+  border-left: 3px solid var(--good);
+}
+.q229-item.bad {
+  border-left: 3px solid var(--bad);
+}
+.q229-item.warn {
+  border-left: 3px solid var(--gold2);
+}
+.q229-item.cyan {
+  border-left: 3px solid var(--cyan);
+}
+.q229-item b {
+  display: block;
+  color: var(--ink);
+  font-size: 9.5px;
+}
+.q229-item small {
+  display: block;
+  color: var(--dim);
+  font-size: 8.5px;
+  line-height: 1.62;
+  margin-top: 2px;
+}
+.q229-badges {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  margin-top: 5px;
+}
+.q229-badge {
+  display: inline-flex;
+  padding: 2px 5px;
+  border: 1px solid var(--line);
+  font-size: 8px;
+  color: var(--dim);
+}
+.q229-badge.good {
+  color: var(--good);
+}
+.q229-badge.bad {
+  color: var(--bad);
+}
+.q229-badge.gold {
+  color: var(--gold2);
+}
+.q229-badge.cyan {
+  color: var(--cyan);
+}
+.q229-tablewrap {
+  max-width: 100%;
+  overflow: auto;
+}
+.q229-table {
+  width: 100%;
+  min-width: 940px;
+  border-collapse: collapse;
+  font-size: 8.25px;
+}
+.q229-table th,
+.q229-table td {
+  padding: 6px 7px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+  text-align: left;
+}
+.q229-table th {
+  position: sticky;
+  top: 0;
+  background: var(--panel);
+  color: var(--dim);
+  font-weight: 500;
+  z-index: 1;
+}
+.q229-state {
+  display: inline-flex;
+  padding: 2px 5px;
+  border: 1px solid var(--line);
+  font-size: 8px;
+  white-space: nowrap;
+}
+.q229-state.good {
+  color: var(--good);
+}
+.q229-state.warn {
+  color: var(--gold2);
+}
+.q229-state.bad {
+  color: var(--bad);
+}
+.q229-state.cyan {
+  color: var(--cyan);
+}
+.q229-note {
+  padding: 7px 8px;
+  border: 1px dashed var(--line);
+  background: var(--panel2);
+  color: var(--dim);
+  font-size: 8.6px;
+  line-height: 1.65;
+}
+.q229-code {
+  font:
+    8px/1.45 ui-monospace,
+    Consolas,
+    monospace;
+  color: var(--dim);
+  overflow-wrap: anywhere;
+}
+@media (max-width: 960px) {
+  .q229-grid {
+    grid-template-columns: 1fr;
+  }
+  .q229-kpis {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 620px) {
+  .q229-head {
+    flex-direction: column;
+  }
+  .q229-schema {
+    align-self: flex-start;
+  }
+  .q229-kpis {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

@@ -1,0 +1,468 @@
+/* ===== v42 盘库 · 奇门遁甲转盘式盘 ===== */
+.qtp-shell {
+  padding: 3px 0 22px;
+}
+.qtp-top {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 8px 0 13px;
+  flex-wrap: wrap;
+}
+.qtp-title {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  margin-right: auto;
+  min-width: 230px;
+}
+.qtp-title b {
+  font:
+    400 25px/1.15 "Ma Shan Zheng",
+    "STKaiti",
+    serif;
+  color: var(--gold2);
+  letter-spacing: 0.11em;
+}
+.qtp-title small {
+  font-size: 11px;
+  color: var(--dim);
+  letter-spacing: 0.06em;
+}
+.qtp-grid {
+  display: grid;
+  grid-template-columns: 258px minmax(420px, 1fr) 310px;
+  gap: 12px;
+  align-items: start;
+}
+.qtp-side,
+.qtp-info {
+  padding: 14px;
+}
+.qtp-side h4,
+.qtp-info h4 {
+  margin: 0 0 9px;
+  color: var(--gold);
+  font-weight: 500;
+}
+.qtp-group {
+  padding: 10px 0;
+  border-top: 1px solid var(--line);
+}
+.qtp-group:first-of-type {
+  border-top: 0;
+  padding-top: 0;
+}
+.qtp-mode {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+.qtp-mode button.on,
+.qtp-viewbar button.on,
+.qtp-ringpick button.on {
+  background: var(--wash);
+  border-color: var(--gold);
+  color: var(--gold2);
+}
+.qtp-side label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: var(--dim);
+  font-size: 11px;
+  margin-top: 8px;
+}
+.qtp-side input,
+.qtp-side select {
+  width: 100%;
+  min-height: 34px;
+  background: var(--panel2);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  color: var(--ink);
+  padding: 5px 7px;
+}
+.qtp-layers {
+  display: grid;
+  gap: 5px;
+}
+.qtp-layer {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: flex-start;
+  gap: 7px !important;
+  margin: 0 !important;
+  padding: 5px 6px;
+  border: 1px solid transparent;
+  border-radius: 3px;
+}
+.qtp-layer:hover {
+  border-color: var(--line);
+  background: var(--panel2);
+}
+.qtp-layer input {
+  width: auto !important;
+  min-height: 0 !important;
+  margin-top: 3px;
+}
+.qtp-layer span {
+  color: var(--ink);
+  font-size: 12px;
+  line-height: 1.35;
+}
+.qtp-layer small {
+  display: block;
+  color: var(--dim);
+  font-size: 10px;
+}
+.qtp-btnrow,
+.qtp-ringpick {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  margin-top: 7px;
+}
+.qtp-btnrow .gbtn,
+.qtp-ringpick .gbtn {
+  flex: 1 1 auto;
+}
+.qtp-offsets {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 4px 8px;
+  margin-top: 7px;
+  font-size: 10px;
+}
+.qtp-offsets span {
+  color: var(--dim);
+}
+.qtp-offsets b {
+  font-weight: 500;
+  color: var(--ink);
+}
+.qtp-main {
+  min-width: 0;
+}
+.qtp-viewbar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 42px;
+  padding: 5px 7px;
+  border: 1px solid var(--line);
+  border-bottom: 0;
+  background: var(--panel);
+  border-radius: 4px 4px 0 0;
+  flex-wrap: wrap;
+}
+.qtp-viewbar .hint {
+  font-size: 10px;
+  color: var(--dim);
+  margin-right: auto;
+}
+.qtp-z {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-variant-numeric: tabular-nums;
+}
+.qtp-z > span {
+  width: 43px;
+  text-align: center;
+  font-size: 11px;
+  color: var(--dim);
+}
+.qtp-frame {
+  height: min(72vh, 770px);
+  min-height: 550px;
+  border: 1px solid var(--line);
+  border-radius: 0 0 4px 4px;
+  background: radial-gradient(circle, var(--wash), transparent 58%), var(--panel2);
+  overflow: hidden;
+  position: relative;
+  touch-action: none;
+}
+.qtp-frame.turn,
+.qtp-frame.pan {
+  cursor: grab;
+}
+.qtp-frame.grab {
+  cursor: grabbing;
+}
+.qtp-frame svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  user-select: none;
+}
+.qtp-sector {
+  stroke: var(--line);
+  stroke-width: 0.8;
+}
+.qtp-sector.w0 {
+  fill: rgba(99, 192, 144, 0.07);
+}
+.qtp-sector.w1 {
+  fill: rgba(239, 106, 75, 0.07);
+}
+.qtp-sector.w2 {
+  fill: rgba(214, 165, 76, 0.07);
+}
+.qtp-sector.w3 {
+  fill: rgba(231, 227, 214, 0.05);
+}
+.qtp-sector.w4 {
+  fill: rgba(95, 169, 234, 0.07);
+}
+.qtp-ring {
+  fill: none;
+  stroke: var(--line2);
+  stroke-width: 1;
+}
+.qtp-sep {
+  stroke: var(--line);
+  stroke-width: 0.7;
+}
+.qtp-txt {
+  fill: var(--ink);
+  font-family: "Noto Serif SC", "Songti SC", serif;
+  pointer-events: none;
+}
+.qtp-txt.gold {
+  fill: var(--gold2);
+  font-weight: 700;
+}
+.qtp-txt.dim {
+  fill: var(--dim);
+}
+.qtp-txt.good {
+  fill: var(--good);
+}
+.qtp-txt.bad {
+  fill: var(--bad);
+}
+.qtp-txt.red {
+  fill: var(--red);
+  font-weight: 700;
+}
+.qtp-godsec,
+.qtp-starsec,
+.qtp-doorsec,
+.qtp-earthsec {
+  stroke: var(--line);
+  stroke-width: 0.65;
+}
+.qtp-godsec {
+  fill: rgba(217, 178, 95, 0.045);
+}
+.qtp-godsec.good {
+  fill: rgba(127, 214, 160, 0.1);
+}
+.qtp-godsec.bad {
+  fill: rgba(232, 115, 95, 0.08);
+}
+.qtp-starsec {
+  fill: rgba(98, 205, 195, 0.045);
+}
+.qtp-starsec.good {
+  fill: rgba(127, 214, 160, 0.08);
+}
+.qtp-starsec.bad {
+  fill: rgba(232, 115, 95, 0.07);
+}
+.qtp-doorsec {
+  fill: rgba(217, 178, 95, 0.035);
+}
+.qtp-doorsec.good {
+  fill: rgba(127, 214, 160, 0.11);
+}
+.qtp-doorsec.bad {
+  fill: rgba(232, 115, 95, 0.09);
+}
+.qtp-earthsec {
+  fill: rgba(255, 255, 255, 0.018);
+}
+.qtp-turn {
+  transform-origin: 0 0;
+  will-change: transform;
+}
+.qtp-hit {
+  cursor: pointer;
+}
+.qtp-core {
+  fill: var(--panel);
+  stroke: var(--line2);
+  stroke-width: 1.2;
+}
+.qtp-core2 {
+  fill: none;
+  stroke: var(--line);
+  stroke-width: 1;
+}
+.qtp-core-title {
+  fill: var(--gold2);
+  font:
+    400 29px "Ma Shan Zheng",
+    "STKaiti",
+    serif;
+  letter-spacing: 0.08em;
+}
+.qtp-core-sub {
+  fill: var(--dim);
+  font-size: 10px;
+}
+.qtp-mark {
+  fill: var(--red);
+  stroke: #fff;
+  stroke-width: 0.7;
+}
+.qtp-mark.cyan {
+  fill: var(--cyan);
+}
+.qtp-mark.gold {
+  fill: var(--gold);
+}
+.qtp-mark.bad {
+  fill: var(--bad);
+}
+.qtp-mark-t {
+  fill: #fff;
+  font-size: 8px;
+  font-weight: 700;
+  pointer-events: none;
+}
+.qtp-info {
+  min-height: 550px;
+}
+.qtp-facts {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 5px 9px;
+  font-size: 11px;
+}
+.qtp-facts span {
+  color: var(--dim);
+}
+.qtp-facts b {
+  font-weight: 500;
+  color: var(--ink);
+}
+.qtp-formula {
+  padding: 9px 10px;
+  margin: 10px 0;
+  border-left: 2px solid var(--gold);
+  background: var(--wash);
+  font-size: 11px;
+  line-height: 1.68;
+}
+.qtp-sel {
+  margin-top: 10px;
+  padding: 9px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  font-size: 11px;
+  line-height: 1.72;
+  border-radius: 3px;
+}
+.qtp-sel b {
+  color: var(--gold2);
+}
+.qtp-sel .tags {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  margin-top: 5px;
+}
+.qtp-sel .tags span {
+  padding: 1px 6px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  font-size: 9px;
+  color: var(--dim);
+}
+.qtp-play.on {
+  border-color: var(--red) !important;
+  color: var(--red) !important;
+}
+.qtp-bottom {
+  margin-top: 12px;
+  padding: 12px 14px;
+  font-size: 11px;
+  line-height: 1.8;
+  color: var(--dim);
+}
+.qtp-manwarn {
+  margin-top: 7px;
+  padding: 7px 8px;
+  border: 1px solid rgba(208, 80, 59, 0.32);
+  background: rgba(208, 80, 59, 0.05);
+  font-size: 10px;
+  color: var(--dim);
+  line-height: 1.6;
+}
+#qtpShell:fullscreen {
+  background: var(--bg);
+  overflow: auto;
+  padding: 12px;
+}
+#qtpShell:fullscreen .qtp-frame {
+  height: calc(100vh - 150px);
+  min-height: 650px;
+}
+#qtpShell:fullscreen .qtp-top {
+  position: sticky;
+  top: 0;
+  z-index: 8;
+  background: var(--bg);
+  padding-top: 6px;
+}
+@media (max-width: 1180px) {
+  .qtp-grid {
+    grid-template-columns: 220px minmax(420px, 1fr);
+  }
+  .qtp-info {
+    grid-column: 1/-1;
+    min-height: 0;
+  }
+  .qtp-info-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .qtp-info-inner > .qtp-wide {
+    grid-column: 1/-1;
+  }
+}
+@media (max-width: 800px) {
+  .qtp-grid {
+    grid-template-columns: 1fr;
+  }
+  .qtp-side {
+    order: 2;
+  }
+  .qtp-main {
+    order: 1;
+  }
+  .qtp-info {
+    order: 3;
+  }
+  .qtp-frame {
+    min-height: 440px;
+    height: 68vh;
+  }
+  .qtp-info-inner {
+    display: block;
+  }
+  .qtp-title {
+    width: 100%;
+    order: -1;
+  }
+  .qtp-top .gbtn {
+    font-size: 11px;
+    padding: 0 9px;
+  }
+  .qtp-side .qtp-layers {
+    grid-template-columns: 1fr 1fr;
+  }
+}

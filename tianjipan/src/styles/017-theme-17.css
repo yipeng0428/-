@@ -1,0 +1,394 @@
+/* ===== v46 · 浑天仪 / 日晷 / 太阳时工作台完整增强 ===== */
+.htd-grid {
+  grid-template-columns: 272px minmax(560px, 1fr) 326px;
+}
+.htd-frame {
+  min-height: 660px;
+}
+.htd-refbar {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: var(--panel2);
+}
+.htd-refbar .gbtn {
+  min-height: 28px;
+  padding: 0 9px;
+}
+.htd-refbar .gbtn.on {
+  border-color: var(--gold);
+  background: var(--wash);
+  color: var(--gold2);
+}
+.htd-gridline {
+  fill: none;
+  stroke: var(--line);
+  stroke-width: 0.62;
+  stroke-dasharray: 3 5;
+  opacity: 0.45;
+}
+.htd-season-eq {
+  fill: none;
+  stroke: var(--cyan);
+  stroke-width: 1.1;
+  stroke-dasharray: 4 5;
+  opacity: 0.45;
+}
+.htd-season-summer {
+  fill: none;
+  stroke: #d79b36;
+  stroke-width: 1.15;
+  stroke-dasharray: 6 4;
+  opacity: 0.62;
+}
+.htd-season-winter {
+  fill: none;
+  stroke: #668eaa;
+  stroke-width: 1.15;
+  stroke-dasharray: 6 4;
+  opacity: 0.62;
+}
+.htd-term-tick {
+  stroke: var(--gold);
+  stroke-width: 0.75;
+  opacity: 0.68;
+}
+.htd-term-label {
+  font:
+    7.2px "Noto Serif SC",
+    serif;
+  fill: var(--dim);
+  paint-order: stroke;
+  stroke: var(--panel);
+  stroke-width: 2px;
+}
+.htd-term-label.major {
+  font-size: 8.8px;
+  fill: var(--gold2);
+  font-weight: 600;
+}
+.htd-season-key {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 5px 0 0;
+  color: var(--dim);
+  font-size: 10px;
+}
+.htd-season-key span::before {
+  content: "";
+  display: inline-block;
+  width: 18px;
+  border-top: 2px solid;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+.htd-season-key .now::before {
+  border-color: #d6a34e;
+}
+.htd-season-key .eq::before {
+  border-color: var(--cyan);
+  border-top-style: dashed;
+}
+.htd-season-key .su::before {
+  border-color: #d79b36;
+  border-top-style: dashed;
+}
+.htd-season-key .wi::before {
+  border-color: #668eaa;
+  border-top-style: dashed;
+}
+.htd-quick {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px;
+}
+.htd-quick .gbtn {
+  padding: 0 6px;
+}
+.htd-coord3 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 7px;
+}
+.htd-coord {
+  padding: 8px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  border-radius: 3px;
+}
+.htd-coord h5 {
+  margin: 0 0 4px;
+  font-size: 11.5px;
+  color: var(--gold2);
+  font-weight: 600;
+}
+.htd-coord p {
+  margin: 2px 0;
+  font-size: 11px;
+  color: var(--dim);
+}
+.htd-coord b {
+  color: var(--ink);
+}
+.htd-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.htd-status::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--gold);
+}
+.htd-status.day::before {
+  background: #d9a13c;
+  box-shadow: 0 0 8px rgba(217, 161, 60, 0.45);
+}
+.htd-status.twilight::before {
+  background: #9276a8;
+}
+.htd-status.night::before {
+  background: #46647f;
+}
+.htd-timechain {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr;
+  gap: 6px;
+  align-items: stretch;
+  margin-top: 8px;
+}
+.htd-timebox {
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  border-radius: 3px;
+  padding: 8px;
+  text-align: center;
+}
+.htd-timebox small {
+  display: block;
+  color: var(--dim);
+  font-size: 9px;
+}
+.htd-timebox b {
+  display: block;
+  color: var(--gold2);
+  font-size: 15px;
+  margin-top: 2px;
+}
+.htd-timebox em {
+  display: block;
+  font-style: normal;
+  color: var(--dim);
+  font-size: 9px;
+}
+.htd-arrow {
+  align-self: center;
+  color: var(--gold);
+  font-size: 15px;
+}
+.htd-lower {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(300px, 0.75fr);
+  gap: 9px;
+}
+.htd-lower-card {
+  padding: 11px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  border-radius: 3px;
+  min-width: 0;
+}
+.htd-lower-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 7px;
+}
+.htd-lower-head b {
+  font-family: "ZCOOL XiaoWei", "Ma Shan Zheng", serif;
+  color: var(--gold2);
+  font-size: 17px;
+  font-weight: 400;
+}
+.htd-lower-head small {
+  font-size: 10px;
+  color: var(--dim);
+}
+#htdAnalemma {
+  display: block;
+  width: 100%;
+  height: auto;
+  min-height: 330px;
+}
+.ana-axis {
+  stroke: var(--line2);
+  stroke-width: 1;
+}
+.ana-grid {
+  stroke: var(--line);
+  stroke-width: 0.7;
+  stroke-dasharray: 3 5;
+}
+.ana-curve {
+  fill: none;
+  stroke: var(--gold2);
+  stroke-width: 2;
+}
+.ana-dot {
+  fill: var(--gold);
+  stroke: var(--panel);
+  stroke-width: 1;
+}
+.ana-now {
+  fill: var(--red);
+  stroke: var(--panel);
+  stroke-width: 2;
+}
+.ana-lab {
+  fill: var(--dim);
+  font:
+    9px "Noto Serif SC",
+    serif;
+}
+.ana-term {
+  fill: var(--gold2);
+  font:
+    8px "Noto Serif SC",
+    serif;
+  paint-order: stroke;
+  stroke: var(--panel);
+  stroke-width: 2px;
+}
+.htd-daytable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+}
+.htd-daytable th,
+.htd-daytable td {
+  padding: 5px 4px;
+  border-bottom: 1px dashed var(--line);
+  text-align: left;
+}
+.htd-daytable th {
+  color: var(--dim);
+  font-weight: 400;
+}
+.htd-daytable td {
+  color: var(--ink);
+}
+.sd-datecurve {
+  fill: none;
+  stroke-width: 1;
+  stroke-dasharray: 3 4;
+  opacity: 0.7;
+}
+.sd-datecurve.su {
+  stroke: #d79b36;
+}
+.sd-datecurve.eq {
+  stroke: var(--cyan);
+}
+.sd-datecurve.wi {
+  stroke: #668eaa;
+}
+.sd-gnomon-line {
+  stroke: var(--red);
+  stroke-width: 1.2;
+  stroke-dasharray: 3 3;
+}
+.sd-note {
+  fill: var(--dim);
+  font:
+    8.5px "Noto Serif SC",
+    serif;
+}
+.sd-face {
+  fill: var(--gold2);
+  font:
+    11px "Noto Serif SC",
+    serif;
+}
+.htd-bottom {
+  font-size: 11px;
+  line-height: 1.75;
+}
+.htd-bottom b {
+  color: var(--gold2);
+}
+@media (max-width: 1320px) {
+  .htd-grid {
+    grid-template-columns: 250px minmax(0, 1fr);
+  }
+  .htd-info {
+    grid-column: 1/-1;
+    position: static;
+    max-height: none;
+  }
+  .htd-info-inner {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .htd-info-inner > h4 {
+    grid-column: 1/-1;
+  }
+  .htd-info-inner > .htd-card,
+  .htd-info-inner > .htd-coord3,
+  .htd-info-inner > .htd-facts-wrap {
+    margin-top: 0;
+  }
+  .htd-coord3 {
+    grid-template-columns: repeat(3, 1fr);
+    grid-column: 1/-1;
+  }
+  .htd-facts-wrap {
+    grid-column: 1/-1;
+  }
+}
+@media (max-width: 900px) {
+  .htd-grid {
+    grid-template-columns: 1fr;
+  }
+  .htd-side {
+    order: 2;
+  }
+  .htd-main {
+    order: 1;
+  }
+  .htd-info {
+    order: 3;
+  }
+  .htd-instruments,
+  .htd-lower {
+    grid-template-columns: 1fr;
+  }
+  .htd-info-inner {
+    display: block;
+  }
+  .htd-coord3 {
+    grid-template-columns: 1fr;
+  }
+  .htd-frame {
+    min-height: 520px;
+  }
+}
+@media (max-width: 600px) {
+  .htd-timechain {
+    grid-template-columns: 1fr;
+  }
+  .htd-arrow {
+    transform: rotate(90deg);
+    justify-self: center;
+  }
+  .htd-frame {
+    min-height: 400px;
+  }
+}

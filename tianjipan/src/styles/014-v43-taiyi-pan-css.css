@@ -1,0 +1,409 @@
+/* ===== v43 盘库 · 太乙神数式盘 ===== */
+.typ-shell {
+  padding: 3px 0 22px;
+}
+.typ-top {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 8px 0 13px;
+  flex-wrap: wrap;
+}
+.typ-title {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  margin-right: auto;
+  min-width: 230px;
+}
+.typ-title b {
+  font:
+    400 25px/1.15 "Ma Shan Zheng",
+    "STKaiti",
+    serif;
+  color: var(--gold2);
+  letter-spacing: 0.11em;
+}
+.typ-title small {
+  font-size: 11px;
+  color: var(--dim);
+  letter-spacing: 0.06em;
+}
+.typ-grid {
+  display: grid;
+  grid-template-columns: 258px minmax(420px, 1fr) 320px;
+  gap: 12px;
+  align-items: start;
+}
+.typ-side,
+.typ-info {
+  padding: 14px;
+}
+.typ-side h4,
+.typ-info h4 {
+  margin: 0 0 9px;
+  color: var(--gold);
+  font-weight: 500;
+}
+.typ-group {
+  padding: 10px 0;
+  border-top: 1px solid var(--line);
+}
+.typ-group:first-of-type {
+  border-top: 0;
+  padding-top: 0;
+}
+.typ-side label {
+  display: grid;
+  gap: 4px;
+  color: var(--dim);
+  font-size: 11px;
+}
+.typ-side input[type="number"] {
+  width: 100%;
+  min-height: 34px;
+  background: var(--panel2);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  color: var(--ink);
+  padding: 5px 7px;
+}
+.typ-btnrow {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 7px;
+}
+.typ-btnrow .gbtn {
+  flex: 1 1 auto;
+}
+.typ-layers {
+  display: grid;
+  gap: 3px;
+}
+.typ-layer {
+  display: flex !important;
+  grid-template-columns: none !important;
+  flex-direction: row !important;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 0;
+  border-bottom: 1px dashed var(--line);
+  font-size: 12px !important;
+  color: var(--ink) !important;
+}
+.typ-layer input {
+  accent-color: var(--red);
+}
+.typ-layer span {
+  flex: 1;
+}
+.typ-layer small {
+  display: block;
+  color: var(--dim);
+  font-size: 9.5px;
+}
+.typ-main {
+  min-width: 0;
+}
+.typ-viewbar {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+.typ-viewbar .hint {
+  color: var(--dim);
+  font-size: 11px;
+  margin-right: auto;
+}
+.typ-z {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.typ-z span {
+  min-width: 44px;
+  text-align: center;
+  color: var(--dim);
+  font-size: 11px;
+}
+.typ-frame {
+  position: relative;
+  min-height: 650px;
+  height: min(76vh, 860px);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(217, 178, 95, 0.075), transparent 42%), var(--panel);
+}
+#typSvg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: none;
+  user-select: none;
+  cursor: grab;
+}
+.typ-frame.grab #typSvg {
+  cursor: grabbing;
+}
+.typ-sec {
+  fill: rgba(217, 178, 95, 0.035);
+  stroke: var(--line2);
+  stroke-width: 0.7;
+}
+.typ-sec.alt {
+  fill: rgba(98, 205, 195, 0.035);
+}
+.typ-sec.on {
+  stroke: var(--gold2);
+  stroke-width: 1.4;
+  fill: rgba(217, 178, 95, 0.09);
+}
+.typ-godsec {
+  fill: rgba(255, 255, 255, 0.016);
+  stroke: var(--line);
+  stroke-width: 0.55;
+}
+.typ-godsec.alt {
+  fill: rgba(217, 178, 95, 0.04);
+}
+.typ-godsec.on {
+  stroke: var(--cyan);
+  stroke-width: 1.25;
+  fill: rgba(98, 205, 195, 0.08);
+}
+.typ-t {
+  fill: var(--ink);
+  font-family: "Noto Serif SC", "Songti SC", serif;
+}
+.typ-d {
+  fill: var(--dim);
+  font-family: "Noto Serif SC", "Songti SC", serif;
+}
+.typ-g {
+  fill: var(--gold2);
+  font-family: "Ma Shan Zheng", "STKaiti", serif;
+}
+.typ-palname {
+  fill: var(--gold);
+  font:
+    400 16px "Ma Shan Zheng",
+    "STKaiti",
+    serif;
+}
+.typ-door {
+  fill: var(--ink);
+  font-size: 11px;
+  font-weight: 600;
+}
+.typ-role {
+  cursor: pointer;
+}
+.typ-role circle {
+  stroke: var(--panel);
+  stroke-width: 2;
+}
+.typ-role text {
+  fill: var(--ink);
+  font-size: 9px;
+  font-weight: 700;
+  pointer-events: none;
+}
+.typ-role.ty circle {
+  fill: var(--gold2);
+}
+.typ-role.wc circle {
+  fill: var(--cyan);
+}
+.typ-role.sj circle {
+  fill: var(--red);
+}
+.typ-role.js circle {
+  fill: var(--good);
+}
+.typ-role.dm circle {
+  fill: var(--mid);
+}
+.typ-role.zj circle,
+.typ-role.kj circle,
+.typ-role.dj circle {
+  fill: var(--panel);
+  stroke: var(--gold);
+  stroke-width: 1.6;
+}
+.typ-role.zj text,
+.typ-role.kj text,
+.typ-role.dj text {
+  fill: var(--gold2);
+}
+.typ-center {
+  fill: var(--panel2);
+  stroke: var(--line2);
+  stroke-width: 1.1;
+}
+.typ-center-main {
+  fill: var(--gold2);
+  font:
+    400 24px "Ma Shan Zheng",
+    "STKaiti",
+    serif;
+}
+.typ-center-sub {
+  fill: var(--dim);
+  font-size: 10px;
+}
+.typ-ray {
+  stroke: var(--line);
+  stroke-width: 0.6;
+  stroke-dasharray: 3 4;
+}
+.typ-sweep {
+  stroke: var(--gold2);
+  stroke-width: 1.2;
+  opacity: 0.55;
+}
+.typ-sweepdot {
+  fill: var(--gold2);
+}
+.typ-facts {
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: 6px 9px;
+  font-size: 12px;
+  line-height: 1.55;
+}
+.typ-facts span {
+  color: var(--dim);
+}
+.typ-facts b {
+  font-weight: 500;
+  color: var(--ink);
+}
+.typ-suan {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin: 9px 0;
+}
+.typ-suan > div {
+  padding: 7px 6px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  border-radius: 3px;
+  text-align: center;
+}
+.typ-suan small {
+  display: block;
+  color: var(--dim);
+  font-size: 9.5px;
+}
+.typ-suan b {
+  display: block;
+  color: var(--gold2);
+  font:
+    400 21px "Ma Shan Zheng",
+    "STKaiti",
+    serif;
+}
+.typ-suan span {
+  font-size: 10px;
+  color: var(--dim);
+}
+.typ-rolelist {
+  display: grid;
+  gap: 5px;
+  margin-top: 8px;
+}
+.typ-rolelist div {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 7px;
+  padding: 5px 0;
+  border-bottom: 1px dashed var(--line);
+  font-size: 11px;
+}
+.typ-rolelist span {
+  color: var(--dim);
+}
+.typ-legend {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+.typ-legend i {
+  font-style: normal;
+  padding: 2px 6px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  font-size: 9.5px;
+  color: var(--dim);
+}
+.typ-bottom {
+  margin-top: 12px;
+  padding: 12px 15px;
+  color: var(--dim);
+  font-size: 11.5px;
+  line-height: 1.75;
+}
+.typ-play.on {
+  border-color: var(--gold);
+  background: var(--wash);
+}
+.typ-shell:fullscreen {
+  background: var(--bg);
+  padding: 10px;
+  overflow: auto;
+}
+.typ-shell:fullscreen .typ-grid {
+  min-height: calc(100vh - 74px);
+}
+.typ-shell:fullscreen .typ-frame {
+  height: calc(100vh - 105px);
+}
+@media (max-width: 1280px) {
+  .typ-grid {
+    grid-template-columns: 230px minmax(0, 1fr);
+  }
+  .typ-info {
+    grid-column: 1/-1;
+  }
+  .typ-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .typ-info > h4 {
+    grid-column: 1/-1;
+  }
+}
+@media (max-width: 860px) {
+  .typ-grid {
+    grid-template-columns: 1fr;
+  }
+  .typ-main {
+    order: -1;
+  }
+  .typ-frame {
+    height: 70vh;
+    min-height: 500px;
+  }
+  .typ-info {
+    display: block;
+  }
+}
+@media (max-width: 540px) {
+  .typ-frame {
+    min-height: 430px;
+  }
+  .typ-top .gbtn {
+    flex: 1 1 auto;
+  }
+  .typ-suan {
+    grid-template-columns: 1fr;
+  }
+}

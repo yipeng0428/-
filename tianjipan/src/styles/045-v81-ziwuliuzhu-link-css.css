@@ -1,0 +1,147 @@
+/* ===== v81 · 子午流注取消放大 + 数据联动增强 ===== */
+#pane-jingluo .jl-stage > .zbtn,
+#pane-jingluo .jl-stage .zoom-ui,
+#pane-jingluo .jl-stage .v66-mag,
+#pane-jingluo .jl-stage .v68-mag-svg {
+  display: none !important;
+}
+
+#pane-jingluo .jl-link-card {
+  margin-top: 12px;
+  padding: 14px;
+}
+#pane-jingluo .jl-link-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+#pane-jingluo .jl-link-head h4 {
+  margin: 0;
+  font:
+    20px/1.2 "Ma Shan Zheng",
+    "STKaiti",
+    serif;
+  color: var(--gold2);
+  font-weight: 400;
+}
+#pane-jingluo .jl-link-head small {
+  color: var(--dim);
+  font-size: 11px;
+}
+#pane-jingluo .jl-link-kpis {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 7px;
+}
+#pane-jingluo .jl-link-kpi {
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: var(--panel2);
+  padding: 9px 10px;
+  min-width: 0;
+}
+#pane-jingluo .jl-link-kpi small {
+  display: block;
+  color: var(--dim);
+  font-size: 9.5px;
+}
+#pane-jingluo .jl-link-kpi b {
+  display: block;
+  color: var(--gold2);
+  font-size: 14px;
+  margin-top: 3px;
+  overflow-wrap: anywhere;
+}
+#pane-jingluo .jl-link-kpi span {
+  display: block;
+  color: var(--dim);
+  font-size: 10px;
+  margin-top: 2px;
+  line-height: 1.45;
+}
+#pane-jingluo .jl-link-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 10px;
+  margin-top: 10px;
+}
+#pane-jingluo .jl-link-box {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--panel2);
+  padding: 10px 11px;
+}
+#pane-jingluo .jl-link-box h5 {
+  margin: 0 0 7px;
+  color: var(--gold2);
+  font-size: 13px;
+}
+#pane-jingluo .jl-link-box p {
+  margin: 4px 0;
+  font-size: 12px;
+  line-height: 1.7;
+}
+#pane-jingluo .jl-link-box .muted {
+  color: var(--dim);
+  font-size: 10.5px;
+}
+#pane-jingluo .jl-link-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 7px;
+}
+#pane-jingluo .jl-link-tags span {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 2px 7px;
+  font-size: 10px;
+  color: var(--dim);
+}
+#pane-jingluo .jl-link-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+#pane-jingluo .jl-link-actions .gbtn {
+  flex: 1 1 105px;
+}
+#pane-jingluo .jl-link-rel {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0;
+  font-size: 11px;
+  border-top: 1px solid var(--line);
+}
+#pane-jingluo .jl-link-rel span,
+#pane-jingluo .jl-link-rel b {
+  padding: 5px 4px;
+  border-bottom: 1px dashed var(--line);
+}
+#pane-jingluo .jl-link-rel span {
+  color: var(--dim);
+}
+#pane-jingluo .jl-link-rel b {
+  font-weight: 500;
+}
+#pane-jingluo .jl-observe {
+  outline: 1px solid color-mix(in srgb, var(--gold) 55%, var(--line));
+  outline-offset: -1px;
+}
+@media (max-width: 1000px) {
+  #pane-jingluo .jl-link-kpis {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (max-width: 760px) {
+  #pane-jingluo .jl-link-kpis {
+    grid-template-columns: 1fr 1fr;
+  }
+  #pane-jingluo .jl-link-grid {
+    grid-template-columns: 1fr;
+  }
+}

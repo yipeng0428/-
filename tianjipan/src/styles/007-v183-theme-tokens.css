@@ -1,0 +1,150 @@
+/* ===== v183 · 全站主题 Design Tokens ===== */
+:root {
+  --tj-font-scale: 1;
+  --tj-radius: 4px;
+  --tj-shadow: 0 10px 28px rgba(0, 0, 0, 0.18);
+}
+body {
+  font-size: calc(16px * var(--tj-font-scale));
+}
+button,
+input,
+select,
+textarea {
+  font-size: inherit;
+}
+
+/* 宣纸雅白：基于现有 light，补充主题专属层 */
+html[data-tj-theme="xuanpaper"] {
+  --bg: #eee5d0;
+  --bg2: #e3d8bd;
+  --panel: rgba(255, 250, 236, 0.82);
+  --panel2: rgba(90, 60, 10, 0.05);
+  --line: rgba(120, 78, 20, 0.3);
+  --line2: rgba(120, 78, 20, 0.65);
+  --gold: #8a5a12;
+  --gold2: #6b420a;
+  --ink: #211a10;
+  --dim: #6f634c;
+  --dim2: #b9ab8c;
+  --red: #a3251c;
+  --cyan: #1f7f78;
+  --good: #2f7d54;
+  --bad: #b73a22;
+  --mid: #8a5a12;
+  --wash: rgba(138, 90, 18, 0.12);
+  --wash2: rgba(31, 95, 158, 0.08);
+}
+html[data-tj-theme="xuanpaper"] body {
+  background:
+    radial-gradient(1100px 700px at 18% -8%, rgba(138, 90, 18, 0.1), transparent 62%),
+    radial-gradient(900px 620px at 100% 100%, rgba(31, 95, 158, 0.055), transparent 60%), var(--bg);
+}
+
+/* 玄夜墨青：基于现有 dark */
+html[data-tj-theme="xuanye"] {
+  --bg: #06080c;
+  --bg2: #0e141c;
+  --panel: rgba(15, 21, 29, 0.76);
+  --panel2: rgba(255, 255, 255, 0.035);
+  --line: rgba(217, 178, 95, 0.26);
+  --line2: rgba(217, 178, 95, 0.62);
+  --gold: #d9b25f;
+  --gold2: #f6dc94;
+  --ink: #ebe4d0;
+  --dim: #9a937f;
+  --dim2: #57544c;
+  --red: #d0503b;
+  --cyan: #62cdc3;
+  --good: #7fd6a0;
+  --bad: #e8735f;
+  --mid: #d9b25f;
+  --wash: rgba(217, 178, 95, 0.1);
+  --wash2: rgba(95, 169, 234, 0.08);
+}
+html[data-tj-theme="xuanye"] body {
+  background:
+    radial-gradient(1200px 720px at 18% -8%, rgba(217, 178, 95, 0.09), transparent 62%),
+    radial-gradient(900px 620px at 100% 100%, rgba(95, 169, 234, 0.07), transparent 60%), var(--bg);
+}
+
+/* 宫阙朱砂：暖纸、暗朱、旧金 */
+html[data-tj-theme="cinnabar"] {
+  --bg: #efe4cf;
+  --bg2: #e2d3b8;
+  --panel: rgba(255, 248, 232, 0.84);
+  --panel2: rgba(104, 45, 31, 0.055);
+  --line: rgba(116, 55, 35, 0.28);
+  --line2: rgba(132, 58, 37, 0.62);
+  --gold: #936a28;
+  --gold2: #6f4814;
+  --ink: #2a1b16;
+  --dim: #735e51;
+  --dim2: #b7a08b;
+  --red: #982e25;
+  --cyan: #347873;
+  --good: #426f4c;
+  --bad: #aa3b30;
+  --mid: #936a28;
+  --wood: #3d7753;
+  --fire: #aa3b30;
+  --earth: #926e2d;
+  --metal: #777064;
+  --water: #3a6487;
+  --wash: rgba(152, 46, 37, 0.095);
+  --wash2: rgba(147, 106, 40, 0.075);
+}
+html[data-tj-theme="cinnabar"] body {
+  background:
+    radial-gradient(1000px 640px at 10% 0%, rgba(152, 46, 37, 0.08), transparent 62%),
+    radial-gradient(900px 620px at 100% 100%, rgba(147, 106, 40, 0.08), transparent 58%), var(--bg);
+}
+html[data-tj-theme="cinnabar"] .seal {
+  border-color: var(--red) !important;
+  color: var(--red) !important;
+}
+
+/* 月白青玉：冷白、青玉、青铜 */
+html[data-tj-theme="jade"] {
+  --bg: #e8eeea;
+  --bg2: #dbe5df;
+  --panel: rgba(247, 252, 248, 0.84);
+  --panel2: rgba(34, 91, 74, 0.052);
+  --line: rgba(47, 92, 77, 0.25);
+  --line2: rgba(47, 92, 77, 0.56);
+  --gold: #6c7552;
+  --gold2: #4c5a36;
+  --ink: #18241f;
+  --dim: #607168;
+  --dim2: #a8b7af;
+  --red: #9b4037;
+  --cyan: #28786f;
+  --good: #347356;
+  --bad: #a8483d;
+  --mid: #6c7552;
+  --wood: #347356;
+  --fire: #ae553f;
+  --earth: #817246;
+  --metal: #68716d;
+  --water: #356d86;
+  --wash: rgba(40, 120, 111, 0.095);
+  --wash2: rgba(108, 117, 82, 0.07);
+}
+html[data-tj-theme="jade"] body {
+  background:
+    radial-gradient(1050px 680px at 16% -6%, rgba(40, 120, 111, 0.085), transparent 64%),
+    radial-gradient(920px 620px at 100% 100%, rgba(108, 117, 82, 0.07), transparent 60%), var(--bg);
+}
+
+/* 跟随系统仍使用 legacy light/dark 变量，不另写一套。 */
+html[data-tj-stars="off"] #stars {
+  display: none !important;
+}
+html[data-tj-motion="reduced"] *,
+html[data-tj-motion="reduced"] *::before,
+html[data-tj-motion="reduced"] *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  scroll-behavior: auto !important;
+}

@@ -1,0 +1,221 @@
+/* ===== v59 · 首页人物单行录入 + 观象盘命名 ===== */
+#persona .pr-head {
+  margin-bottom: 10px;
+  align-items: center;
+}
+#persona .pr-head .pr-hint {
+  display: none !important;
+}
+#persona #v58CreateGuide,
+#persona .v58-create-guide,
+#persona .v58-rel-note {
+  display: none !important;
+}
+#persona .v59-person-line {
+  display: grid;
+  grid-template-columns:
+    minmax(92px, 0.8fr) minmax(105px, 0.95fr) minmax(95px, 0.85fr) minmax(195px, 1.65fr)
+    minmax(140px, 1.25fr) minmax(82px, 0.72fr) minmax(86px, 0.75fr) minmax(92px, 0.8fr) minmax(
+      104px,
+      0.9fr
+    )
+    minmax(96px, 0.82fr);
+  align-items: end;
+  gap: 8px;
+  width: 100%;
+  min-width: 0;
+  padding: 10px 0 6px;
+  overflow-x: auto;
+  overflow-y: visible;
+  scrollbar-width: thin;
+  scrollbar-color: var(--line2) transparent;
+}
+#persona .v59-person-line::-webkit-scrollbar {
+  height: 5px;
+}
+#persona .v59-person-line::-webkit-scrollbar-thumb {
+  background: var(--line2);
+  border-radius: 4px;
+}
+#persona .v59-person-line .f-name,
+#persona .v59-person-line .f-tag,
+#persona .v59-person-line .f-gender,
+#persona .v59-person-line .f-dt,
+#persona .v59-person-line .geo-quick,
+#persona .v59-person-line .v59-place-select,
+#persona .v59-person-line .f-fenye,
+#persona .v59-person-line .v59-solar {
+  width: auto !important;
+  min-width: 0 !important;
+}
+#persona .v59-person-line select,
+#persona .v59-person-line input {
+  max-width: 100%;
+  min-width: 0;
+  width: 100%;
+}
+#persona .v59-person-line > label,
+#persona .v59-person-line > .v59-field,
+#persona .v59-person-line > .f-dt {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  width: auto !important;
+  margin: 0;
+  color: var(--dim);
+  font-size: 11.5px;
+  letter-spacing: 0.04em;
+}
+#persona .v59-person-line > .f-dt {
+  grid-column: auto !important;
+}
+#persona .v59-person-line .v59-lbl,
+#persona .v59-person-line > .f-dt > .lbl,
+#persona .v59-person-line > .f-fenye > .lbl {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+  height: 18px;
+  white-space: nowrap;
+  color: var(--dim);
+  font-size: 11.5px;
+  line-height: 18px;
+}
+#persona .v59-person-line input,
+#persona .v59-person-line select {
+  height: 36px;
+  min-height: 36px;
+  margin: 0;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  box-sizing: border-box;
+}
+
+#persona .v59-person-line .f-dt > .lbl {
+  justify-content: space-between;
+}
+#persona .v59-person-line #solarIn {
+  display: block;
+}
+#persona .v59-person-line #solarIn input {
+  width: 100%;
+}
+#persona .v59-person-line #lunarIn {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  white-space: nowrap;
+  height: 36px;
+}
+#persona .v59-person-line #lunarIn[hidden] {
+  display: none !important;
+}
+#persona .v59-person-line #lunarIn input,
+#persona .v59-person-line #lunarIn select {
+  min-width: 0;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+#persona .v59-person-line #lnY {
+  width: 68px;
+}
+#persona .v59-person-line #lnM,
+#persona .v59-person-line #lnD {
+  width: 64px;
+}
+#persona .v59-person-line #lnT {
+  width: 88px;
+}
+#persona .v59-person-line #lnMsg {
+  display: none !important;
+}
+#persona .v59-person-line .geo-quick > input {
+  width: 100%;
+}
+
+#persona .v59-person-line #pfenye {
+  width: 100%;
+}
+#persona .fenye-note {
+  display: none !important;
+}
+
+#persona .v59-person-line .v59-solar .v59-lbl {
+  visibility: hidden;
+  height: 18px;
+}
+#persona .v59-person-line .v59-solar .chk {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  gap: 6px;
+  padding: 0 8px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  color: var(--ink);
+  white-space: nowrap;
+  font-size: 12px;
+}
+#persona .v59-person-line .v59-solar .chk input {
+  width: auto;
+  height: auto;
+  min-height: 0;
+  padding: 0;
+}
+#persona .v59-llbox {
+  display: flex;
+  align-items: end;
+  gap: 8px;
+  margin: 2px 0 6px;
+  padding: 7px 9px;
+  border: 1px dashed var(--line);
+  background: color-mix(in srgb, var(--panel2) 70%, transparent);
+}
+#persona .v59-llbox[hidden] {
+  display: none !important;
+}
+#persona .v59-llbox label {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  color: var(--dim);
+  font-size: 11px;
+}
+#persona .v59-llbox input {
+  width: 118px;
+  height: 34px;
+}
+#persona .pr-grid,
+#persona .birthplace-card,
+#persona .geo-pickrow,
+#persona .birthplace-meta,
+#persona .pr-subrow {
+  display: none !important;
+}
+#persona .pr-act {
+  margin-top: 6px;
+  padding-top: 9px;
+  border-top: 1px solid color-mix(in srgb, var(--line) 78%, transparent);
+}
+#persona #prState.v58-state {
+  max-width: 620px;
+  font-size: 11.5px;
+}
+#persona #saveP.v58-save {
+  min-width: 100px;
+  height: 36px;
+}
+#topnav [data-go="dial"] {
+  font-weight: 600;
+}
+@media (max-width: 900px) {
+  #persona .v59-person-line {
+    padding-bottom: 9px;
+  }
+  #persona .pr-head {
+    margin-bottom: 4px;
+  }
+}

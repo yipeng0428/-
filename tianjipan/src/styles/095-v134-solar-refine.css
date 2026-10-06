@@ -1,0 +1,28 @@
+#orrHelioSvg .oh-p text {
+  paint-order: stroke;
+  stroke: rgba(8, 10, 20, 0.72);
+  stroke-width: 2px;
+  stroke-linejoin: round;
+  font-size: 11px;
+  font-weight: 600;
+}
+#orrHelioSvg .v134-clickable {
+  cursor: pointer;
+  paint-order: stroke;
+  stroke: rgba(8, 10, 20, 0.7);
+  stroke-width: 2.2px;
+  stroke-linejoin: round;
+}
+#orrHelioSvg .v134-clickable:hover {
+  filter: brightness(1.16);
+}
+#orr129Meta .v134-layer-card {
+  grid-column: 1/-1;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(214, 184, 126, 0.3);
+  background: linear-gradient(180deg, rgba(255, 247, 228, 0.08), rgba(84, 58, 22, 0.05));
+}
+#orr129Meta .v134-layer-card b {
+  color: var(--gold2);
+}

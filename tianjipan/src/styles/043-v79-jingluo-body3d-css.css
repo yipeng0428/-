@@ -1,0 +1,384 @@
+/* ===== v79 · 经络页扩展 + 人体图谱 3D ===== */
+#pane-jingluo .jl-zl-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.18fr) minmax(280px, 0.82fr);
+  gap: 14px;
+  align-items: start;
+}
+#pane-jingluo .jl-stage {
+  position: relative;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 16px;
+  background:
+    radial-gradient(
+      circle at 50% 32%,
+      color-mix(in srgb, var(--wash) 92%, transparent),
+      transparent 58%
+    ),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--panel2) 92%, transparent),
+      color-mix(in srgb, var(--panel) 96%, transparent)
+    );
+  overflow: hidden;
+  min-height: 420px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#pane-jingluo .jl-stage::before {
+  content: "";
+  position: absolute;
+  inset: 10px;
+  border: 1px solid color-mix(in srgb, var(--line) 75%, transparent);
+  border-radius: 10px;
+  pointer-events: none;
+  opacity: 0.6;
+}
+#pane-jingluo .jl-stage .jl-ring {
+  width: min(100%, 620px);
+  max-width: 620px;
+  margin: 0 auto;
+}
+#pane-jingluo .jl-sidecol {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+#pane-jingluo .jl-sidebox {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--panel2);
+  padding: 12px;
+}
+#pane-jingluo .jl-sidebox h4 {
+  margin: 0 0 8px;
+  color: var(--gold2);
+  font-size: 15px;
+}
+#pane-jingluo .jl-rail {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 8px;
+  margin-top: 12px;
+}
+#pane-jingluo .jl-mini {
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  color: var(--ink);
+  border-radius: 10px;
+  padding: 8px 10px;
+  text-align: left;
+  cursor: pointer;
+  min-height: 74px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  justify-content: center;
+}
+#pane-jingluo .jl-mini:hover,
+#pane-jingluo .jl-mini.on {
+  border-color: var(--gold);
+  background: var(--wash);
+}
+#pane-jingluo .jl-mini b {
+  font-size: 16px;
+  color: var(--gold2);
+}
+#pane-jingluo .jl-mini span {
+  font-size: 13px;
+}
+#pane-jingluo .jl-mini small {
+  font-size: 11px;
+  color: var(--dim);
+}
+#pane-jingluo .jl-now-b .dim.sm {
+  line-height: 1.7;
+}
+#pane-jingluo .jl-sidebox .tbl td,
+#pane-jingluo .jl-sidebox .tbl th {
+  font-size: 12.5px;
+  vertical-align: top;
+}
+#pane-jingluo .jl-tiplist {
+  margin: 0;
+  padding-left: 18px;
+}
+#pane-jingluo .jl-tiplist li {
+  font-size: 12.5px;
+  line-height: 1.8;
+  margin: 0;
+}
+#pane-jingluo .jl-wide-note {
+  margin-top: 10px;
+}
+@media (max-width: 980px) {
+  #pane-jingluo .jl-zl-grid {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 640px) {
+  #pane-jingluo .jl-stage {
+    padding: 10px;
+    min-height: 340px;
+  }
+  #pane-jingluo .jl-rail {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+#pane-jingluo #bdBlock {
+  display: block;
+}
+#pane-jingluo .bd-flat-wrap {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(260px, 0.85fr);
+  gap: 16px;
+  align-items: start;
+}
+#pane-jingluo .bd-flat-fig {
+  max-width: none;
+}
+#pane-jingluo .bd-flat-fig svg {
+  max-width: 760px;
+}
+#pane-jingluo .bd3d-card-wrap {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(240px, 0.9fr);
+  gap: 14px;
+  align-items: start;
+  margin: 10px 0 12px;
+}
+#pane-jingluo .bd3d-stage {
+  position: relative;
+  min-height: 560px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background:
+    radial-gradient(
+      circle at 50% 26%,
+      color-mix(in srgb, var(--wash) 94%, transparent),
+      transparent 58%
+    ),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--panel2) 94%, transparent),
+      color-mix(in srgb, var(--panel) 98%, transparent)
+    );
+  overflow: hidden;
+  perspective: 1600px;
+  touch-action: none;
+}
+#pane-jingluo .bd3d-stage::before {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  border: 1px solid color-mix(in srgb, var(--line) 76%, transparent);
+  border-radius: 12px;
+  pointer-events: none;
+  opacity: 0.55;
+}
+#pane-jingluo .bd3d-card {
+  position: absolute;
+  inset: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-style: preserve-3d;
+  transform: rotateX(var(--bd3d-rx, -8deg)) rotateY(var(--bd3d-ry, 0deg))
+    scale(var(--bd3d-scale, 1));
+  transition: transform 0.14s ease-out;
+}
+#pane-jingluo .bd3d-face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  pointer-events: none;
+}
+#pane-jingluo .bd3d-face svg {
+  width: min(100%, 390px);
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 12px 26px rgba(0, 0, 0, 0.18));
+}
+#pane-jingluo .bd3d-face.back {
+  transform: rotateY(180deg);
+}
+#pane-jingluo .bd3d-face .bd-body {
+  fill: color-mix(in srgb, var(--ink) 8%, transparent);
+  stroke: color-mix(in srgb, var(--ink) 40%, transparent);
+  stroke-width: 1.2;
+}
+#pane-jingluo .bd3d-floor {
+  position: absolute;
+  left: 50%;
+  bottom: 34px;
+  transform: translateX(-50%);
+  width: min(74%, 360px);
+  height: 34px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.22), rgba(0, 0, 0, 0) 72%);
+  filter: blur(2px);
+  pointer-events: none;
+}
+#pane-jingluo .bd3d-pins {
+  position: absolute;
+  inset: 20px;
+  pointer-events: none;
+}
+#pane-jingluo .bd3d-hit {
+  position: absolute;
+  pointer-events: auto;
+  cursor: pointer;
+  background: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+#pane-jingluo .bd3d-hit i {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--gold2);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.28);
+  transition:
+    transform 0.12s,
+    box-shadow 0.12s;
+}
+#pane-jingluo .bd3d-hit:hover i,
+#pane-jingluo .bd3d-hit.on i {
+  transform: scale(1.15);
+  box-shadow: 0 0 0 4px rgba(217, 178, 95, 0.24);
+}
+#pane-jingluo .bd3d-hit span {
+  position: absolute;
+  left: 50%;
+  top: -8px;
+  transform: translate(-50%, -100%);
+  white-space: nowrap;
+  font-size: 11px;
+  color: var(--gold2);
+  background: color-mix(in srgb, var(--panel) 94%, transparent);
+  padding: 2px 6px;
+  border: 1px solid var(--line2);
+  border-radius: 999px;
+  opacity: 0;
+  transition:
+    opacity 0.14s,
+    transform 0.14s;
+  pointer-events: none;
+}
+#pane-jingluo .bd3d-hit:hover span,
+#pane-jingluo .bd3d-hit.on span {
+  opacity: 1;
+  transform: translate(-50%, -112%);
+}
+#pane-jingluo .bd3d-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+#pane-jingluo .bd3d-bar .gbtn.on {
+  background: var(--wash);
+  border-color: var(--gold);
+  color: var(--gold2);
+}
+#pane-jingluo .bd3d-bar .bd3d-zoom {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+#pane-jingluo .bd3d-read {
+  min-width: 3.6em;
+  text-align: center;
+  color: var(--gold2);
+  font-size: 12px;
+}
+#pane-jingluo .bd3d-side {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+#pane-jingluo .bd3d-cardnote {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--panel2);
+  padding: 12px;
+}
+#pane-jingluo .bd3d-cardnote h4 {
+  margin: 0 0 8px;
+  font-size: 15px;
+  color: var(--gold2);
+}
+#pane-jingluo .bd3d-cardnote p,
+#pane-jingluo .bd3d-cardnote li {
+  font-size: 12.5px;
+  line-height: 1.75;
+}
+#pane-jingluo .bd3d-cardnote ul {
+  margin: 0;
+  padding-left: 18px;
+}
+#pane-jingluo .bd3d-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 10px;
+}
+#pane-jingluo .bd3d-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--dim);
+}
+#pane-jingluo .bd3d-legend i {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+#pane-jingluo .bd3d-stage.grab {
+  cursor: grabbing;
+}
+#pane-jingluo .bd3d-stage.drag,
+#pane-jingluo .bd3d-stage {
+  cursor: grab;
+}
+#pane-jingluo .bd3d-hint {
+  font-size: 12px;
+  color: var(--dim);
+}
+#pane-jingluo .bd3d-fs {
+  white-space: nowrap;
+}
+@media (max-width: 980px) {
+  #pane-jingluo .bd3d-card-wrap,
+  #pane-jingluo .bd-flat-wrap {
+    grid-template-columns: 1fr;
+  }
+  #pane-jingluo .bd3d-stage {
+    min-height: 500px;
+  }
+}
+@media (max-width: 640px) {
+  #pane-jingluo .bd3d-stage {
+    min-height: 420px;
+  }
+  #pane-jingluo .bd3d-bar .bd3d-zoom {
+    margin-left: 0;
+    width: 100%;
+    justify-content: flex-end;
+  }
+}

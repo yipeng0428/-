@@ -1,0 +1,45 @@
+#tjZiweiV6Badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-left: 7px;
+  padding: 1px 7px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--dim);
+  font-size: 10px;
+  line-height: 1.7;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+#tjZiweiV6Badge::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--good);
+  box-shadow: 0 0 6px var(--good);
+}
+#tjZiweiV6Badge.warn {
+  color: var(--bad);
+  border-color: rgba(232, 115, 95, 0.45);
+}
+#tjZiweiV6Badge.warn::before {
+  background: var(--bad);
+  box-shadow: 0 0 6px var(--bad);
+}
+#pane-verify .tjzv5-live {
+  display: none !important;
+}
+.tjzv6-live {
+  margin-bottom: 14px;
+}
+.tjzv6-note {
+  font-size: 11px;
+  color: var(--dim);
+  line-height: 1.7;
+  margin: 8px 0 0;
+}
+.tjzv6-note strong {
+  color: var(--gold);
+}

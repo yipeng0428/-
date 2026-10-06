@@ -1,0 +1,34 @@
+/* v69 · 独立盘拥有自己的 pointer 坐标系，禁止浏览器触摸滚动 / 文本选择介入拖拽 */
+#ljSvg,
+#lrpSvg,
+#qtpSvg,
+#typSvg,
+#xapSvg,
+#htdSvg,
+#msgSvg,
+#zlfSvg,
+#lgbSvg,
+#tspSvg,
+#jc12Svg,
+#hhdSvg,
+#jtsSvg,
+#stuSvg {
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.lj-frame.grab,
+.lrp-frame.grab,
+.qtp-frame.grab,
+.typ-frame.grab,
+.xap-frame.grab,
+.htd-frame.grab,
+.msg-frame.grab,
+.zlf-frame.grab,
+.lgb-frame.grab,
+.tsp-frame.grab,
+.jc12-frame.grab,
+.hhd-frame.grab,
+.jts-frame.grab {
+  cursor: grabbing !important;
+}

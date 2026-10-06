@@ -1,0 +1,117 @@
+#tjZiweiV2Badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-left: 7px;
+  padding: 1px 7px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--good);
+  font-size: 10px;
+  line-height: 1.7;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+#tjZiweiV2Badge::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--good);
+  box-shadow: 0 0 6px var(--good);
+}
+#tjZiweiV2Badge.warn {
+  color: var(--bad);
+}
+#tjZiweiV2Badge.warn::before {
+  background: var(--bad);
+  box-shadow: 0 0 6px var(--bad);
+}
+/* v92 已有新版验证面板；保留 v91 逻辑但隐藏旧面板，避免重复展示静态 GAP */
+#pane-verify .tjzv-live {
+  display: none !important;
+}
+.tjzv2-live {
+  margin-bottom: 14px;
+}
+.tjzv2-head {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.tjzv2-head h4 {
+  margin: 0;
+  color: var(--gold2);
+  font-weight: 600;
+}
+.tjzv2-head small {
+  display: block;
+  color: var(--dim);
+  margin-top: 3px;
+  line-height: 1.55;
+}
+.tjzv2-stat {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.tjzv2-stat span {
+  padding: 2px 7px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 11px;
+}
+.tjzv2-stat .pass {
+  color: var(--good);
+}
+.tjzv2-stat .diff {
+  color: var(--bad);
+}
+.tjzv2-stat .policy,
+.tjzv2-stat .gap {
+  color: var(--gold);
+}
+.tjzv2-stat .na {
+  color: var(--dim);
+}
+.tjzv2-cases {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 7px;
+  margin-top: 10px;
+}
+.tjzv2-case {
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  padding: 7px 9px;
+  border-radius: 4px;
+}
+.tjzv2-case b {
+  display: block;
+  font-size: 12px;
+  color: var(--ink);
+}
+.tjzv2-case small {
+  display: block;
+  color: var(--dim);
+  font-size: 10px;
+  line-height: 1.55;
+  margin-top: 2px;
+}
+.tjzv2-actions {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+.tjzv2-note {
+  font-size: 11px;
+  color: var(--dim);
+  line-height: 1.7;
+  margin: 8px 0 0;
+}
+.tjzv2-note strong {
+  color: var(--gold);
+}

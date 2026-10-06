@@ -1,0 +1,507 @@
+/* ===== v164 · 盘库第16盘：十天干掌 · 游干盘 ===== */
+.tg164-shell {
+  padding: 0 8px 24px;
+}
+.tg164-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 4px 12px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 12px;
+}
+.tg164-title {
+  flex: 1;
+  min-width: 0;
+}
+.tg164-title b {
+  display: block;
+  font:
+    400 24px/1.15 "Ma Shan Zheng",
+    "STKaiti",
+    serif;
+  color: var(--gold2);
+  letter-spacing: 0.08em;
+}
+.tg164-title small {
+  display: block;
+  margin-top: 3px;
+  color: var(--dim);
+  font-size: 10.5px;
+}
+.tg164-grid {
+  display: grid;
+  grid-template-columns: 235px minmax(540px, 1fr) 310px;
+  gap: 12px;
+  align-items: start;
+}
+.tg164-side,
+.tg164-info {
+  padding: 12px;
+  min-width: 0;
+}
+.tg164-side {
+  position: sticky;
+  top: 10px;
+}
+.tg164-info {
+  position: sticky;
+  top: 10px;
+  max-height: calc(100vh - 28px);
+  overflow: auto;
+}
+.tg164-side h4,
+.tg164-info h4 {
+  margin: 0 0 8px;
+  font:
+    400 18px/1.2 "Ma Shan Zheng",
+    "STKaiti",
+    serif;
+  color: var(--gold2);
+}
+.tg164-group {
+  padding: 10px 0;
+  border-top: 1px dashed var(--line);
+}
+.tg164-group:first-of-type {
+  border-top: 0;
+  padding-top: 0;
+}
+.tg164-group label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 7px 0;
+  color: var(--dim);
+  font-size: 10.5px;
+}
+.tg164-group select {
+  width: 100%;
+  min-height: 34px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  color: var(--ink);
+  padding: 5px 7px;
+  border-radius: 4px;
+}
+.tg164-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.tg164-row > * {
+  flex: 1 1 76px;
+}
+.tg164-layer {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: flex-start;
+  gap: 7px !important;
+  color: var(--ink) !important;
+}
+.tg164-layer input {
+  margin-top: 3px;
+}
+.tg164-layer span {
+  display: block;
+  line-height: 1.35;
+}
+.tg164-layer small {
+  display: block;
+  color: var(--dim);
+  font-size: 9px;
+}
+.tg164-main {
+  min-width: 0;
+}
+.tg164-viewbar {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  border-radius: 4px 4px 0 0;
+  flex-wrap: wrap;
+}
+.tg164-viewbar .hint {
+  flex: 1;
+  min-width: 210px;
+  color: var(--dim);
+  font-size: 10px;
+}
+.tg164-frame {
+  position: relative;
+  min-height: 650px;
+  height: min(72vh, 800px);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-top: 0;
+  background:
+    radial-gradient(circle at 50% 42%, rgba(217, 178, 95, 0.075), transparent 50%),
+    rgba(255, 255, 255, 0.012);
+  cursor: default;
+}
+.tg164-frame.pan {
+  cursor: grab;
+}
+.tg164-frame.grab {
+  cursor: grabbing;
+}
+.tg164-frame svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: none;
+  user-select: none;
+}
+.tg164-hand-panel {
+  fill: rgba(217, 178, 95, 0.025);
+  stroke: rgba(217, 178, 95, 0.15);
+  stroke-width: 1;
+}
+.tg164-hand {
+  fill: rgba(217, 178, 95, 0.045);
+  stroke: rgba(217, 178, 95, 0.27);
+  stroke-width: 1.25;
+}
+.tg164-crease {
+  fill: none;
+  stroke: rgba(217, 178, 95, 0.18);
+  stroke-width: 1;
+}
+.tg164-route {
+  fill: none;
+  stroke: rgba(98, 205, 195, 0.3);
+  stroke-width: 2;
+  stroke-dasharray: 5 7;
+}
+.tg164-stem .halo {
+  fill: rgba(217, 178, 95, 0.07);
+  stroke: var(--line2);
+  stroke-width: 1;
+}
+.tg164-stem .core {
+  fill: var(--panel);
+  stroke: var(--gold);
+  stroke-width: 1.4;
+}
+.tg164-stem text {
+  text-anchor: middle;
+  dominant-baseline: central;
+  pointer-events: none;
+}
+.tg164-stem .g {
+  font:
+    24px/1 "Ma Shan Zheng",
+    "STKaiti",
+    serif;
+  fill: var(--gold2);
+}
+.tg164-stem .z {
+  font-size: 9px;
+  fill: var(--dim);
+}
+.tg164-stem .wx {
+  font-size: 8.5px;
+  fill: var(--cyan);
+}
+.tg164-stem {
+  cursor: pointer;
+}
+.tg164-stem:hover .core,
+.tg164-stem.on .core {
+  stroke: #fff0bb;
+  stroke-width: 2;
+  filter: drop-shadow(0 0 5px rgba(217, 178, 95, 0.4));
+}
+.tg164-stem.on .halo {
+  fill: rgba(217, 178, 95, 0.18);
+}
+.tg164-empty {
+  fill: rgba(208, 80, 59, 0.05);
+  stroke: rgba(208, 80, 59, 0.38);
+  stroke-dasharray: 4 4;
+}
+.tg164-empty-t {
+  font-size: 9px;
+  fill: var(--red);
+  text-anchor: middle;
+}
+.tg164-rel {
+  fill: none;
+  stroke-width: 2;
+  opacity: 0.82;
+}
+.tg164-rel.he {
+  stroke: #d9b25f;
+}
+.tg164-rel.chong {
+  stroke: #d0503b;
+  stroke-dasharray: 5 4;
+}
+.tg164-rel-label {
+  font-size: 10px;
+  fill: var(--gold2);
+  text-anchor: middle;
+}
+.tg164-current {
+  fill: var(--cyan);
+  font-size: 10px;
+  text-anchor: middle;
+}
+.tg164-titlebar {
+  fill: rgba(10, 14, 22, 0.84);
+  stroke: rgba(217, 178, 95, 0.2);
+}
+.tg164-titletext {
+  font:
+    16px "Ma Shan Zheng",
+    "STKaiti",
+    serif;
+  fill: var(--gold2);
+}
+.tg164-subtext {
+  font-size: 8.8px;
+  fill: var(--dim);
+}
+.tg164-center {
+  fill: rgba(8, 12, 18, 0.88);
+  stroke: rgba(217, 178, 95, 0.25);
+  stroke-width: 1;
+}
+.tg164-center-big {
+  font:
+    32px "Ma Shan Zheng",
+    "STKaiti",
+    serif;
+  fill: var(--gold2);
+  text-anchor: middle;
+}
+.tg164-center-sm {
+  font-size: 9px;
+  fill: var(--dim);
+  text-anchor: middle;
+}
+.tg164-hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px;
+  margin-bottom: 10px;
+}
+.tg164-kpi {
+  padding: 8px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  border-radius: 4px;
+}
+.tg164-kpi small {
+  display: block;
+  color: var(--dim);
+  font-size: 9px;
+}
+.tg164-kpi b {
+  display: block;
+  margin-top: 2px;
+  color: var(--gold2);
+  font-size: 15px;
+}
+.tg164-facts {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0;
+  font-size: 11px;
+  border-top: 1px solid var(--line);
+}
+.tg164-facts span,
+.tg164-facts b {
+  padding: 6px 4px;
+  border-bottom: 1px dashed var(--line);
+}
+.tg164-facts span {
+  color: var(--dim);
+}
+.tg164-facts b {
+  color: var(--ink);
+  font-weight: 500;
+}
+.tg164-card {
+  margin-top: 10px;
+  padding: 9px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  border-radius: 4px;
+  font-size: 11px;
+  line-height: 1.75;
+  color: var(--dim);
+}
+.tg164-card b {
+  color: var(--gold2);
+}
+.tg164-pills {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+.tg164-pills span {
+  padding: 2px 7px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 9.5px;
+  color: var(--ink);
+}
+.tg164-strip {
+  display: grid;
+  grid-template-columns: repeat(10, minmax(70px, 1fr));
+  gap: 6px;
+  overflow: auto;
+  padding-bottom: 2px;
+}
+.tg164-chip {
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  padding: 7px 6px;
+  border-radius: 4px;
+  text-align: center;
+  color: var(--ink);
+  cursor: pointer;
+  min-width: 70px;
+}
+.tg164-chip:hover,
+.tg164-chip.on {
+  border-color: var(--gold);
+  background: var(--wash);
+}
+.tg164-chip b {
+  display: block;
+  color: var(--gold2);
+  font:
+    20px "Ma Shan Zheng",
+    "STKaiti",
+    serif;
+}
+.tg164-chip span,
+.tg164-chip small {
+  display: block;
+  font-size: 9px;
+  color: var(--dim);
+  margin-top: 2px;
+}
+.tg164-board {
+  margin-top: 12px;
+  padding: 12px;
+}
+.tg164-board-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.tg164-board-head b {
+  color: var(--gold2);
+}
+.tg164-board-head small {
+  color: var(--dim);
+  font-size: 9.5px;
+}
+.tg164-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 8px;
+  align-items: end;
+}
+.tg164-pair label {
+  display: grid;
+  gap: 4px;
+  color: var(--dim);
+  font-size: 10px;
+}
+.tg164-pair select {
+  min-height: 34px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  color: var(--ink);
+  padding: 5px 7px;
+}
+.tg164-pairout {
+  margin-top: 8px;
+  padding: 8px 10px;
+  border: 1px dashed var(--line);
+  color: var(--dim);
+  font-size: 10.5px;
+  line-height: 1.6;
+}
+.tg164-quiz {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: center;
+}
+.tg164-quiz p {
+  margin: 0;
+  color: var(--ink);
+  font-size: 11px;
+  line-height: 1.6;
+}
+.tg164-quiz small {
+  display: block;
+  color: var(--dim);
+  margin-top: 3px;
+}
+.tg164-bottom {
+  margin-top: 12px;
+  padding: 10px 12px;
+  color: var(--dim);
+  font-size: 10.5px;
+  line-height: 1.75;
+}
+.tg164-bottom b {
+  color: var(--gold2);
+}
+@media (max-width: 1080px) {
+  .tg164-grid {
+    grid-template-columns: 220px minmax(0, 1fr);
+  }
+  .tg164-info {
+    grid-column: 1/-1;
+    position: static;
+    max-height: none;
+  }
+  .tg164-frame {
+    height: 700px;
+  }
+  .tg164-strip {
+    grid-template-columns: repeat(10, 72px);
+  }
+}
+@media (max-width: 760px) {
+  .tg164-grid {
+    grid-template-columns: 1fr;
+  }
+  .tg164-side,
+  .tg164-info {
+    position: static;
+    max-height: none;
+  }
+  .tg164-frame {
+    height: 92vw;
+    min-height: 550px;
+  }
+  .tg164-top {
+    flex-wrap: wrap;
+  }
+  .tg164-pair {
+    grid-template-columns: 1fr 1fr;
+  }
+  .tg164-pair button {
+    grid-column: 1/-1;
+  }
+  .tg164-quiz {
+    grid-template-columns: 1fr;
+  }
+  .tg164-hero {
+    grid-template-columns: 1fr 1fr;
+  }
+}

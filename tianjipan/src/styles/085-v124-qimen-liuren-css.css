@@ -1,0 +1,445 @@
+/* ===== v124 · 奇门一键推演 / 新手模式 / 大六壬 Evidence ===== */
+.qm124-hero {
+  border-color: rgba(217, 178, 95, 0.58);
+  background: linear-gradient(
+    145deg,
+    rgba(217, 178, 95, 0.1),
+    rgba(95, 169, 234, 0.035) 58%,
+    var(--panel)
+  );
+  overflow: hidden;
+}
+.qm124-title {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.qm124-title > div:first-child {
+  flex: 1;
+  min-width: 240px;
+}
+.qm124-title h2 {
+  margin: 0;
+  color: var(--gold2);
+  font:
+    400 25px/1.25 "STKaiti",
+    "KaiTi",
+    "Songti SC",
+    "STSong",
+    serif;
+  letter-spacing: 0.08em;
+}
+.qm124-title p {
+  margin: 5px 0 0;
+  color: var(--dim);
+  font-size: 12px;
+  line-height: 1.75;
+}
+.qm124-mode {
+  display: flex;
+  gap: 4px;
+  border: 1px solid var(--line);
+  padding: 3px;
+  border-radius: 4px;
+  background: var(--panel2);
+}
+.qm124-mode button {
+  border: 0;
+  background: transparent;
+  color: var(--dim);
+  padding: 5px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+}
+.qm124-mode button.on {
+  background: var(--wash);
+  color: var(--gold2);
+  box-shadow: 0 0 0 1px var(--line2) inset;
+}
+.qm124-steps {
+  display: grid;
+  grid-template-columns: 1.05fr 1.4fr 0.8fr;
+  gap: 10px;
+  margin-top: 12px;
+}
+.qm124-step {
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  padding: 10px;
+  border-radius: 4px;
+  min-width: 0;
+}
+.qm124-step > small {
+  display: block;
+  color: var(--gold);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  margin-bottom: 6px;
+}
+.qm124-step p {
+  margin: 5px 0 0;
+  color: var(--dim);
+  font-size: 10.5px;
+  line-height: 1.55;
+}
+.qm124-topics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.qm124-topics button {
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  padding: 4px 8px;
+  border-radius: 13px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 11px;
+}
+.qm124-topics button.on {
+  border-color: var(--gold);
+  background: var(--wash);
+  color: var(--gold2);
+}
+.qm124-q {
+  width: 100%;
+  min-height: 70px;
+  resize: vertical;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  color: var(--ink);
+  padding: 8px 9px;
+  font:
+    13px/1.6 "Noto Serif SC",
+    "Songti SC",
+    "STSong",
+    serif;
+}
+.qm124-q:focus {
+  outline: 1px solid var(--gold);
+  border-color: var(--gold);
+}
+.qm124-detect {
+  margin-top: 5px;
+  color: var(--dim);
+  font-size: 10.5px;
+}
+.qm124-detect b {
+  color: var(--gold2);
+}
+.qm124-time label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 5px 0;
+  font-size: 12px;
+}
+.qm124-time input {
+  accent-color: var(--gold);
+}
+.qm124-run {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+.qm124-run .main {
+  flex: 1 1 240px;
+  min-height: 46px;
+  border: 1px solid var(--gold);
+  background: linear-gradient(180deg, rgba(217, 178, 95, 0.24), rgba(217, 178, 95, 0.1));
+  color: var(--gold2);
+  border-radius: 4px;
+  cursor: pointer;
+  font:
+    600 15px "Noto Serif SC",
+    "Songti SC",
+    serif;
+  letter-spacing: 0.08em;
+}
+.qm124-run .main:hover {
+  background: rgba(217, 178, 95, 0.22);
+}
+.qm124-run .main:disabled {
+  opacity: 0.55;
+  cursor: progress;
+}
+.qm124-run .sub {
+  font-size: 10.5px;
+  color: var(--dim);
+}
+.qm124-result {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 10px;
+}
+.qm124-verdict {
+  border: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 12px;
+  border-radius: 4px;
+  background: var(--panel2);
+}
+.qm124-verdict small {
+  color: var(--dim);
+}
+.qm124-verdict b {
+  font:
+    400 27px "STKaiti",
+    "KaiTi",
+    serif;
+  margin: 3px 0;
+}
+.qm124-verdict.good b {
+  color: var(--good);
+}
+.qm124-verdict.bad b {
+  color: var(--bad);
+}
+.qm124-verdict.mid b {
+  color: var(--gold);
+}
+.qm124-verdict span {
+  font-size: 10px;
+  color: var(--dim);
+}
+.qm124-sum {
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--panel2);
+  padding: 10px 12px;
+}
+.qm124-sum p {
+  margin: 3px 0 7px;
+  font-size: 12px;
+  line-height: 1.75;
+}
+.qm124-sum p:last-child {
+  margin-bottom: 0;
+}
+.qm124-sum b {
+  color: var(--gold2);
+}
+.qm124-guide {
+  margin-top: 10px;
+  border-top: 1px dashed var(--line);
+  padding-top: 9px;
+}
+.qm124-guide summary,
+.qm124-advanced > summary,
+.qm124-tech > summary {
+  cursor: pointer;
+  color: var(--gold);
+  font-size: 12px;
+}
+.qm124-guide-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+  margin-top: 8px;
+}
+.qm124-guide-grid div {
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  padding: 7px;
+  border-radius: 3px;
+  font-size: 10.5px;
+  line-height: 1.5;
+  color: var(--dim);
+}
+.qm124-guide-grid b {
+  display: block;
+  color: var(--ink);
+  font-size: 11px;
+  margin-bottom: 2px;
+}
+.qm124-advanced {
+  margin-bottom: 12px;
+}
+.qm124-advanced > summary {
+  padding: 9px 12px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--panel2);
+}
+.qm124-advanced[open] > summary {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.qm124-advanced > .panel {
+  margin: 0;
+  border-top: 0;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+.qm124-tech {
+  margin-top: 8px;
+  padding: 7px 10px;
+  border: 1px dashed var(--line);
+  border-radius: 3px;
+}
+.qm124-tech .note {
+  margin: 7px 0 0;
+}
+#pane-qimen.qm124-easy .tjq112-policy label {
+  opacity: 0.78;
+}
+#pane-qimen.qm124-easy .qm-det {
+  font-size: 12px;
+}
+#pane-qimen.qm124-easy .qgrid {
+  margin-top: 2px;
+}
+.qm124-hero > .dvbox {
+  display: none !important;
+}
+.lr124-ev {
+  margin-top: 14px;
+  border-color: rgba(95, 169, 234, 0.38);
+}
+.lr124-head {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+.lr124-head > div {
+  flex: 1;
+  min-width: 260px;
+}
+.lr124-head h3 {
+  margin: 0;
+  color: var(--gold2);
+  font:
+    400 20px "STKaiti",
+    "KaiTi",
+    "Songti SC",
+    serif;
+}
+.lr124-head p {
+  margin: 4px 0 0;
+  color: var(--dim);
+  font-size: 11px;
+  line-height: 1.65;
+}
+.lr124-badge {
+  font-size: 10px;
+  border: 1px solid var(--line2);
+  padding: 3px 8px;
+  border-radius: 12px;
+  color: var(--cyan);
+}
+.lr124-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 10px;
+}
+.lr124-card {
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  border-radius: 4px;
+  padding: 9px;
+}
+.lr124-card h4 {
+  margin: 0 0 5px;
+  color: var(--ink);
+  font-size: 13px;
+}
+.lr124-card p {
+  margin: 0;
+  color: var(--dim);
+  font-size: 10.5px;
+  line-height: 1.65;
+}
+.lr124-card .state {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: 10px;
+  padding: 1px 6px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+}
+.lr124-card .state.ok {
+  color: var(--good);
+  border-color: rgba(127, 214, 160, 0.5);
+}
+.lr124-card .state.part {
+  color: var(--gold);
+  border-color: rgba(217, 178, 95, 0.55);
+}
+.lr124-src {
+  margin-top: 9px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--line);
+  font-size: 10.5px;
+  color: var(--dim);
+  line-height: 1.7;
+}
+.lr124-src a {
+  color: var(--cyan);
+  text-decoration: none;
+  border-bottom: 1px dotted currentColor;
+}
+.lr124-run {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.lr124-out {
+  margin-top: 8px;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  border-radius: 3px;
+  font-size: 11px;
+  line-height: 1.75;
+  color: var(--dim);
+}
+.lr124-out b {
+  color: var(--ink);
+}
+.lr124-out .ok {
+  color: var(--good);
+}
+.lr124-out .bad {
+  color: var(--bad);
+}
+.lr124-out .mid {
+  color: var(--gold);
+}
+@media (max-width: 860px) {
+  .qm124-steps {
+    grid-template-columns: 1fr;
+  }
+  .qm124-result {
+    grid-template-columns: 1fr;
+  }
+  .qm124-guide-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .lr124-grid {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 480px) {
+  .qm124-guide-grid {
+    grid-template-columns: 1fr;
+  }
+  .qm124-title h2 {
+    font-size: 21px;
+  }
+}

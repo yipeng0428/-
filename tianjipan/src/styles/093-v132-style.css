@@ -1,0 +1,46 @@
+.lr132-card {
+  margin-top: 14px;
+}
+.lr132-head {
+  display: flex;
+  gap: 10px;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+.lr132-head > div {
+  margin-right: auto;
+}
+.lr132-head h3 {
+  margin: 0;
+  color: var(--gold2);
+  font:
+    400 19px/1.2 "STKaiti",
+    "KaiTi",
+    "Songti SC",
+    serif;
+}
+.lr132-head small {
+  display: block;
+  color: var(--dim);
+  font-size: 10px;
+  margin-top: 3px;
+}
+.lr132-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 9px;
+}
+.lr132-note {
+  margin-top: 8px;
+  font-size: 10.5px;
+  color: var(--dim);
+  line-height: 1.7;
+  padding: 9px 10px;
+  border-left: 3px solid var(--gold);
+  background: rgba(255, 255, 255, 0.02);
+}
+.lr132-state {
+  font-size: 10px;
+  color: var(--dim);
+}

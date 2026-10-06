@@ -1,0 +1,78 @@
+/* ===== v68 · 放大镜图标统一 / 巨盘稳定容器与 GPU 缩放 ===== */
+/* 关闭旧版 mask/pseudo 图标；v68 使用真实 inline SVG，避免某些浏览器出现空白方块。 */
+.zoom-ui::before,
+.zbtn::before,
+.dz-btn::before,
+.v66-mag::before {
+  display: none !important;
+  content: none !important;
+}
+.v68-mag-only {
+  font-size: 0 !important;
+  letter-spacing: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0 !important;
+}
+.v68-mag-only .v68-mag-svg {
+  display: block;
+  width: 16px;
+  height: 16px;
+  flex: 0 0 auto;
+  overflow: visible;
+  pointer-events: none;
+}
+.v68-mag-only .v68-mag-svg * {
+  vector-effect: non-scaling-stroke;
+}
+.v68-mag-only.zoom-ui .v68-mag-svg,
+.v68-mag-only.zbtn .v68-mag-svg,
+.v68-mag-only.dz-btn .v68-mag-svg {
+  width: 17px;
+  height: 17px;
+}
+
+/* 巨盘容器：固定观察窗高度，盘体不再通过改 width 参与布局缩放，避免 ResizeObserver / 滚动条反复抖动。 */
+#stuScroll {
+  height: clamp(520px, 68vh, 820px) !important;
+  max-height: none !important;
+  overflow: hidden !important;
+  display: grid !important;
+  place-items: center !important;
+  contain: layout paint;
+  scrollbar-gutter: auto !important;
+}
+#stuStage {
+  width: var(--stu-base-v68, 620px) !important;
+  height: var(--stu-base-v68, 620px) !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  max-height: none !important;
+  flex: none !important;
+  margin: 0 !important;
+  transform-origin: 50% 50% !important;
+  will-change: transform;
+  backface-visibility: hidden;
+  transition: none !important;
+}
+.stu:fullscreen #stuScroll,
+.stu.zmx #stuScroll {
+  height: calc(100vh - 126px) !important;
+  max-height: none !important;
+  overflow: hidden !important;
+}
+.stu:fullscreen #stuStage,
+.stu.zmx #stuStage {
+  width: var(--stu-base-v68, 620px) !important;
+  height: var(--stu-base-v68, 620px) !important;
+}
+/* 旧 v66 自适应状态不再改变滚动条尺寸。 */
+#stuScroll.v66-fit-ready {
+  scrollbar-gutter: auto !important;
+}
+@media (max-width: 760px) {
+  #stuScroll {
+    height: clamp(430px, 66vh, 650px) !important;
+  }
+}

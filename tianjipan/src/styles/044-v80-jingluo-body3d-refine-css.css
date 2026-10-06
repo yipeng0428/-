@@ -1,0 +1,169 @@
+/* ===== v80 · 子午流注全宽 + 人体 3D 精修 ===== */
+#pane-jingluo .jl-zl-grid {
+  display: block !important;
+}
+#pane-jingluo .jl-stage {
+  width: 100%;
+  min-height: 520px !important;
+  padding: 20px !important;
+  box-sizing: border-box;
+}
+#pane-jingluo .jl-stage .jl-ring {
+  width: min(100%, 760px) !important;
+  max-width: 760px !important;
+}
+#pane-jingluo .jl-sidecol {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px !important;
+  margin-top: 12px;
+}
+#pane-jingluo .jl-sidebox {
+  height: 100%;
+  box-sizing: border-box;
+}
+@media (max-width: 900px) {
+  #pane-jingluo .jl-sidecol {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 640px) {
+  #pane-jingluo .jl-stage {
+    min-height: 380px !important;
+    padding: 10px !important;
+  }
+}
+
+#pane-jingluo .bd3d-stage:fullscreen {
+  width: 100vw !important;
+  height: 100vh !important;
+  min-height: 100vh !important;
+  max-width: none !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background:
+    radial-gradient(circle at 50% 30%, rgba(217, 178, 95, 0.13), transparent 55%), var(--bg) !important;
+}
+#pane-jingluo .bd3d-stage:fullscreen .bd3d-card {
+  inset: 36px;
+}
+#pane-jingluo .bd3d-stage:fullscreen .bd3d-face svg {
+  width: min(78vh, 78vw, 620px) !important;
+}
+#pane-jingluo .bd3d-card {
+  transition: transform 0.18s cubic-bezier(0.2, 0.75, 0.25, 1);
+}
+#pane-jingluo .bd3d-card.dragging {
+  transition: none;
+}
+#pane-jingluo .bd3d-face.front {
+  transform: translateZ(16px);
+}
+#pane-jingluo .bd3d-face.back {
+  transform: rotateY(180deg) translateZ(16px);
+}
+#pane-jingluo .bd3d-core {
+  position: absolute;
+  inset: 12%;
+  border-radius: 46% 46% 42% 42%;
+  transform: translateZ(0);
+  background: linear-gradient(
+    90deg,
+    rgba(217, 178, 95, 0.03),
+    rgba(217, 178, 95, 0.12),
+    rgba(217, 178, 95, 0.03)
+  );
+  border: 1px solid rgba(217, 178, 95, 0.16);
+  filter: blur(0.1px);
+  pointer-events: none;
+}
+#pane-jingluo .bd3d-bar {
+  position: relative;
+}
+#pane-jingluo .bd3d-orient {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+#pane-jingluo .bd3d-orient .gbtn.on {
+  background: var(--wash);
+  border-color: var(--gold);
+  color: var(--gold2);
+}
+#pane-jingluo .bd3d-toggles {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+  font-size: 12px;
+  color: var(--dim);
+}
+#pane-jingluo .bd3d-toggles label {
+  display: inline-flex;
+  gap: 5px;
+  align-items: center;
+  cursor: pointer;
+}
+#pane-jingluo .bd3d-toggles input {
+  accent-color: var(--gold);
+}
+#pane-jingluo .bd3d-angle {
+  min-width: 82px;
+  text-align: center;
+  font-size: 11px;
+  color: var(--dim);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 3px 8px;
+  background: var(--panel2);
+}
+#pane-jingluo .bd3d-pins.frontpins,
+#pane-jingluo .bd3d-pins.backpins {
+  transition: opacity 0.15s;
+}
+#pane-jingluo .bd3d-stage.view-front .backpins {
+  opacity: 0;
+  pointer-events: none;
+}
+#pane-jingluo .bd3d-stage.view-back .frontpins {
+  opacity: 0;
+  pointer-events: none;
+}
+#pane-jingluo .bd3d-stage.no-labels .bd3d-pins {
+  display: none;
+}
+#pane-jingluo .bd3d-hit span {
+  font-size: 10px;
+}
+#pane-jingluo .bd3d-selected {
+  border-color: color-mix(in srgb, var(--gold) 70%, var(--line)) !important;
+  background: color-mix(in srgb, var(--wash) 70%, var(--panel2)) !important;
+}
+#pane-jingluo .bd3d-selected h4 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+#pane-jingluo .bd3d-selected h4 small {
+  font-size: 10px;
+  color: var(--dim);
+  font-weight: 400;
+}
+#pane-jingluo .bd3d-miniinfo {
+  font-size: 12px;
+  line-height: 1.75;
+  color: var(--ink);
+}
+#pane-jingluo .bd3d-miniinfo .dim {
+  color: var(--dim);
+}
+@media (max-width: 720px) {
+  #pane-jingluo .bd3d-bar {
+    align-items: flex-start;
+  }
+  #pane-jingluo .bd3d-orient {
+    width: 100%;
+  }
+}

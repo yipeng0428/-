@@ -1,0 +1,537 @@
+/* ===== v51 · 十二生肖流年太岁盘 ===== */
+.tsp-shell {
+  padding: 0 12px 24px;
+}
+.tsp-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 4px 12px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 12px;
+}
+.tsp-title {
+  flex: 1;
+  min-width: 0;
+}
+.tsp-title b {
+  display: block;
+  font-family: "Ma Shan Zheng", "STKaiti", serif;
+  font-size: 24px;
+  font-weight: 400;
+  color: var(--gold2);
+  letter-spacing: 0.08em;
+}
+.tsp-title small {
+  display: block;
+  color: var(--dim);
+  font-size: 11px;
+  margin-top: 2px;
+}
+.tsp-grid {
+  display: grid;
+  grid-template-columns: 250px minmax(520px, 1fr) 300px;
+  gap: 12px;
+  align-items: start;
+}
+.tsp-side,
+.tsp-info {
+  padding: 12px;
+  min-width: 0;
+}
+.tsp-side h4,
+.tsp-info h4 {
+  margin: 0 0 8px;
+  font-family: "Ma Shan Zheng", "STKaiti", serif;
+  font-weight: 400;
+  color: var(--gold2);
+  font-size: 18px;
+}
+.tsp-group {
+  padding: 10px 0;
+  border-top: 1px dashed var(--line);
+}
+.tsp-group:first-of-type {
+  border-top: 0;
+  padding-top: 0;
+}
+.tsp-group label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: var(--dim);
+  font-size: 11px;
+  margin: 7px 0;
+}
+.tsp-group input[type="number"],
+.tsp-group select {
+  width: 100%;
+  min-height: 34px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  color: var(--ink);
+  padding: 5px 7px;
+  border-radius: 3px;
+}
+.tsp-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.tsp-row > * {
+  flex: 1 1 70px;
+}
+.tsp-layer {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: flex-start;
+  gap: 7px !important;
+  margin: 6px 0 !important;
+  color: var(--ink) !important;
+}
+.tsp-layer input {
+  margin-top: 4px;
+}
+.tsp-layer span {
+  display: block;
+  line-height: 1.35;
+}
+.tsp-layer small {
+  display: block;
+  color: var(--dim);
+  font-size: 9px;
+}
+.tsp-main {
+  min-width: 0;
+}
+.tsp-viewbar {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  border-radius: 3px 3px 0 0;
+  flex-wrap: wrap;
+}
+.tsp-viewbar .hint {
+  flex: 1;
+  color: var(--dim);
+  font-size: 10px;
+  min-width: 170px;
+}
+.tsp-viewbar #tspZoom {
+  font-size: 11px;
+  color: var(--dim);
+  min-width: 36px;
+  text-align: center;
+}
+.tsp-frame {
+  position: relative;
+  min-height: 650px;
+  height: min(71vh, 780px);
+  border: 1px solid var(--line);
+  border-top: 0;
+  background:
+    radial-gradient(circle at center, rgba(217, 178, 95, 0.075), transparent 52%),
+    rgba(255, 255, 255, 0.012);
+  overflow: hidden;
+  cursor: default;
+}
+.tsp-frame.pan {
+  cursor: grab;
+}
+.tsp-frame.grab {
+  cursor: grabbing;
+}
+.tsp-frame svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: none;
+  user-select: none;
+}
+.tsp-ring {
+  fill: none;
+  stroke: var(--line2);
+  stroke-width: 1;
+}
+.tsp-ring2 {
+  fill: none;
+  stroke: var(--line);
+  stroke-width: 0.8;
+}
+.tsp-spoke {
+  stroke: var(--line);
+  stroke-width: 0.6;
+}
+.tsp-sec {
+  fill: rgba(217, 178, 95, 0.025);
+  stroke: var(--line);
+  stroke-width: 0.7;
+  transition: 0.18s;
+  cursor: pointer;
+}
+.tsp-hit:hover .tsp-sec,
+.tsp-hit.on .tsp-sec {
+  fill: rgba(217, 178, 95, 0.16);
+  stroke: var(--gold2);
+  stroke-width: 1.5;
+}
+.tsp-hit.year .tsp-sec {
+  fill: rgba(208, 80, 59, 0.12);
+  stroke: var(--red);
+  stroke-width: 1.5;
+}
+.tsp-hit.person .tsp-sec {
+  filter: drop-shadow(0 0 5px rgba(98, 205, 195, 0.45));
+  stroke: var(--cyan);
+  stroke-width: 1.6;
+}
+.tsp-tx {
+  font-family: "Noto Serif SC", "STSong", serif;
+  fill: var(--ink);
+  text-anchor: middle;
+  dominant-baseline: central;
+  pointer-events: none;
+}
+.tsp-zhi {
+  font-family: "Ma Shan Zheng", "STKaiti", serif;
+  font-size: 25px;
+  fill: var(--gold2);
+}
+.tsp-animal {
+  font-size: 11px;
+  fill: var(--dim);
+}
+.tsp-rel {
+  font-size: 9px;
+  fill: var(--dim);
+}
+.tsp-rel.bad {
+  fill: var(--red);
+  font-weight: 700;
+}
+.tsp-rel.good {
+  fill: var(--cyan);
+  font-weight: 700;
+}
+.tsp-dir {
+  font-size: 10px;
+  fill: var(--dim);
+}
+.tsp-sui {
+  font-size: 8px;
+  fill: var(--dim);
+}
+.tsp-sui.ji {
+  fill: var(--good);
+}
+.tsp-sui.xiong {
+  fill: var(--red);
+}
+.tsp-ts-line {
+  stroke: var(--red);
+  stroke-width: 2;
+}
+.tsp-sp-line {
+  stroke: var(--cyan);
+  stroke-width: 1.6;
+  stroke-dasharray: 6 5;
+}
+.tsp-ts-dot {
+  fill: var(--red);
+  stroke: var(--bg);
+  stroke-width: 2;
+}
+.tsp-sp-dot {
+  fill: var(--cyan);
+  stroke: var(--bg);
+  stroke-width: 2;
+}
+.tsp-sansha {
+  fill: rgba(208, 80, 59, 0.09);
+  stroke: var(--red);
+  stroke-width: 1.2;
+  stroke-dasharray: 5 4;
+}
+.tsp-center {
+  fill: var(--panel);
+  stroke: var(--line2);
+  stroke-width: 1.3;
+}
+.tsp-big {
+  font-family: "Ma Shan Zheng", "STKaiti", serif;
+  font-size: 38px;
+  fill: var(--gold2);
+}
+.tsp-med {
+  font-size: 14px;
+  fill: var(--ink);
+}
+.tsp-sm {
+  font-size: 9px;
+  fill: var(--dim);
+}
+.tsp-fly-cell {
+  fill: rgba(255, 255, 255, 0.018);
+  stroke: var(--line);
+  stroke-width: 0.6;
+}
+.tsp-fly-num {
+  font-family: "Ma Shan Zheng", "STKaiti", serif;
+  font-size: 17px;
+  fill: var(--gold2);
+}
+.tsp-fly-hot {
+  fill: rgba(208, 80, 59, 0.13);
+}
+.tsp-info {
+  position: sticky;
+  top: 10px;
+  max-height: calc(100vh - 26px);
+  overflow: auto;
+}
+.tsp-hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px;
+  margin-bottom: 10px;
+}
+.tsp-hero > div {
+  padding: 8px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  border-radius: 3px;
+}
+.tsp-hero small {
+  display: block;
+  color: var(--dim);
+  font-size: 9px;
+}
+.tsp-hero b {
+  display: block;
+  color: var(--gold2);
+  font-size: 17px;
+  margin: 2px 0;
+}
+.tsp-facts {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0;
+  font-size: 11px;
+  border-top: 1px solid var(--line);
+}
+.tsp-facts span,
+.tsp-facts b {
+  padding: 6px 4px;
+  border-bottom: 1px dashed var(--line);
+  font-weight: 400;
+}
+.tsp-facts span {
+  color: var(--dim);
+}
+.tsp-facts b {
+  color: var(--ink);
+}
+.tsp-card {
+  margin-top: 10px;
+  padding: 9px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  border-radius: 3px;
+  font-size: 11px;
+  line-height: 1.75;
+}
+.tsp-card b {
+  color: var(--gold2);
+}
+.tsp-tags {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  margin: 5px 0;
+}
+.tsp-tags span {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 1px 7px;
+  font-size: 10px;
+}
+.tsp-tags .bad {
+  border-color: var(--red);
+  color: var(--red);
+}
+.tsp-tags .good {
+  border-color: var(--cyan);
+  color: var(--cyan);
+}
+.tsp-links {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  margin-top: 7px;
+}
+.tsp-links button {
+  flex: 1 1 90px;
+}
+.tsp-timeline,
+.tsp-guide {
+  margin-top: 12px;
+  padding: 12px;
+}
+.tsp-timeline-head {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  margin-bottom: 9px;
+}
+.tsp-timeline-head b {
+  font-family: "Ma Shan Zheng", "STKaiti", serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--gold2);
+}
+.tsp-timeline-head small {
+  color: var(--dim);
+  font-size: 10px;
+}
+.tsp-years {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 6px;
+}
+.tsp-year {
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  padding: 7px 6px;
+  text-align: center;
+  color: var(--ink);
+  cursor: pointer;
+  border-radius: 3px;
+  min-height: 64px;
+}
+.tsp-year:hover,
+.tsp-year.cur {
+  border-color: var(--gold);
+  background: var(--wash);
+}
+.tsp-year b {
+  display: block;
+  color: var(--gold2);
+  font-size: 12px;
+}
+.tsp-year span {
+  display: block;
+  font-size: 10px;
+  margin-top: 2px;
+}
+.tsp-year small {
+  display: block;
+  color: var(--dim);
+  font-size: 9px;
+  margin-top: 2px;
+}
+.tsp-year.bad span {
+  color: var(--red);
+}
+.tsp-year.good span {
+  color: var(--cyan);
+}
+.tsp-guide summary {
+  cursor: pointer;
+  color: var(--gold2);
+  font-family: "Ma Shan Zheng", "STKaiti", serif;
+  font-size: 18px;
+}
+.tsp-guide-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 7px;
+  margin-top: 10px;
+}
+.tsp-guide-grid button {
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  color: var(--ink);
+  padding: 9px;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 3px;
+}
+.tsp-guide-grid button:hover {
+  border-color: var(--gold);
+}
+.tsp-guide-grid b {
+  display: block;
+  color: var(--gold2);
+  font-size: 12px;
+}
+.tsp-guide-grid span {
+  display: block;
+  color: var(--dim);
+  font-size: 10px;
+  line-height: 1.6;
+  margin-top: 3px;
+}
+.tsp-bottom {
+  margin-top: 12px;
+  padding: 10px 12px;
+  font-size: 11px;
+  color: var(--dim);
+  line-height: 1.8;
+}
+.tsp-bottom b {
+  color: var(--gold2);
+}
+@media (max-width: 1180px) {
+  .tsp-grid {
+    grid-template-columns: 220px minmax(440px, 1fr);
+  }
+  .tsp-info {
+    grid-column: 1/-1;
+    position: static;
+    max-height: none;
+  }
+  .tsp-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .tsp-info > h4 {
+    grid-column: 1/-1;
+  }
+  .tsp-hero {
+    margin: 0;
+  }
+  .tsp-card {
+    margin-top: 0;
+  }
+}
+@media (max-width: 760px) {
+  .tsp-shell {
+    padding: 0 4px 18px;
+  }
+  .tsp-grid {
+    grid-template-columns: 1fr;
+  }
+  .tsp-frame {
+    height: 70vh;
+    min-height: 480px;
+  }
+  .tsp-info {
+    display: block;
+  }
+  .tsp-years {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .tsp-guide-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .tsp-top {
+    align-items: flex-start;
+  }
+  .tsp-title b {
+    font-size: 21px;
+  }
+}

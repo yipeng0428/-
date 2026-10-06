@@ -1,0 +1,42 @@
+/* ===== v87 · lunar-javascript 双引擎验证层 ===== */
+#tjVerifyBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-left: 7px;
+  padding: 1px 7px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  font-size: 10px;
+  color: var(--dim);
+  vertical-align: middle;
+  cursor: help;
+}
+#tjVerifyBadge::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--dim2);
+}
+#tjVerifyBadge.ready {
+  color: var(--good);
+  border-color: rgba(127, 214, 160, 0.45);
+}
+#tjVerifyBadge.ready::before {
+  background: var(--good);
+  box-shadow: 0 0 7px var(--good);
+}
+#tjVerifyBadge.diff {
+  color: var(--gold);
+  border-color: rgba(217, 178, 95, 0.5);
+}
+#tjVerifyBadge.diff::before {
+  background: var(--gold);
+}
+#tjVerifyBadge.offline {
+  color: var(--dim);
+}
+#tjVerifyBadge.offline::before {
+  background: var(--dim2);
+}

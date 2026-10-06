@@ -1,0 +1,19 @@
+/* 人物关系册与关系图进入宽幅工作区，避免被左侧大盘长期占宽。 */
+body.people-focus-mode .layout {
+  grid-template-columns: 1fr !important;
+}
+body.people-focus-mode .dialcol {
+  display: none !important;
+}
+body.people-focus-mode .wrap {
+  max-width: min(1760px, 99vw);
+}
+body.people-focus-mode .datacol {
+  min-width: 0;
+  width: 100%;
+}
+body.people-focus-mode #pane-people,
+body.people-focus-mode #pane-net {
+  min-width: 0;
+  width: 100%;
+}

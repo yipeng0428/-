@@ -1,0 +1,667 @@
+/* ===== v119：日月食 / 流星雨 / 近地天体 / 行星近景卫星 ===== */
+#orrModeEclipse[hidden] {
+  display: none !important;
+}
+.ecl-head,
+.met-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.ecl-head h4,
+.met-head h3 {
+  margin: 0;
+  color: var(--gold2);
+  font-family: "STKaiti", "KaiTi", "Noto Serif SC", serif;
+  font-weight: 500;
+}
+.ecl-head h4 {
+  font-size: 19px;
+}
+.met-head h3 {
+  font-size: 21px;
+}
+.ecl-tools,
+.ecl-subtabs,
+.met-tabs,
+.met-actions {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.ecl-tools label,
+.met-actions label {
+  font-size: 12px;
+  color: var(--dim);
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+.ecl-tools select,
+.ecl-tools input,
+.met-actions select {
+  background: var(--panel2);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  padding: 5px 7px;
+  border-radius: 3px;
+  min-height: 32px;
+}
+.ecl-stage {
+  position: relative;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  overflow: hidden;
+  background: #05080f;
+}
+.ecl-stage canvas {
+  display: block;
+  width: 100%;
+  height: 470px;
+  touch-action: none;
+}
+.ecl-badge {
+  position: absolute;
+  left: 10px;
+  top: 9px;
+  padding: 4px 8px;
+  border: 1px solid rgba(217, 178, 95, 0.42);
+  background: rgba(5, 8, 15, 0.78);
+  border-radius: 3px;
+  font-size: 10.5px;
+  color: #e4d7b7;
+  pointer-events: none;
+}
+.ecl-timeline {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 10px;
+  align-items: center;
+  margin: 9px 0;
+}
+.ecl-timeline input {
+  width: 100%;
+}
+.ecl-off {
+  font-variant-numeric: tabular-nums;
+  color: var(--gold2);
+  min-width: 64px;
+  text-align: right;
+}
+.ecl-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 6px;
+  margin: 8px 0 10px;
+}
+.ecl-kv {
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  border-radius: 3px;
+  padding: 7px 9px;
+}
+.ecl-kv small {
+  display: block;
+  color: var(--dim);
+  font-size: 10px;
+}
+.ecl-kv b {
+  font-weight: 600;
+  color: var(--ink);
+  font-size: 13px;
+}
+.ecl-kv b.gold {
+  color: var(--gold2);
+}
+.ecl-subtabs {
+  border-bottom: 1px solid var(--line);
+  margin: 9px 0 10px;
+}
+.ecl-subtabs button,
+.met-tabs button {
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  color: var(--dim);
+  padding: 7px 11px;
+  cursor: pointer;
+  font: inherit;
+}
+.ecl-subtabs button.on,
+.met-tabs button.on {
+  color: var(--gold2);
+  border-bottom-color: var(--gold);
+}
+.ecl-pane {
+  display: none;
+}
+.ecl-pane.on {
+  display: block;
+}
+.ecl-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 8px;
+}
+.ecl-card {
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  border-radius: 4px;
+  padding: 10px 12px;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.ecl-card h5 {
+  margin: 0 0 5px;
+  color: var(--gold2);
+  font-size: 14px;
+}
+.ecl-card p {
+  margin: 3px 0;
+}
+.ecl-card .big {
+  font-size: 19px;
+  color: var(--gold2);
+  font-family: "STKaiti", "KaiTi", serif;
+}
+.ecl-source,
+.met-source {
+  font-size: 10.5px;
+  color: var(--dim);
+  margin-top: 8px;
+}
+.ecl-source a,
+.met-source a {
+  color: var(--gold);
+}
+.ecl-table,
+.met-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+.ecl-table th,
+.ecl-table td,
+.met-table th,
+.met-table td {
+  padding: 6px 7px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+}
+.ecl-table th,
+.met-table th {
+  color: var(--dim);
+  font-weight: 400;
+  white-space: nowrap;
+}
+.ecl-table tr.sel td,
+.met-table tr.sel td {
+  background: var(--wash);
+}
+.ecl-table button,
+.met-table button {
+  font-size: 11px;
+  white-space: nowrap;
+}
+.ecl-rem-list {
+  display: grid;
+  gap: 6px;
+}
+.ecl-rem {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  border: 1px solid var(--line);
+  padding: 7px 9px;
+  border-radius: 3px;
+  background: var(--panel2);
+  font-size: 12px;
+}
+.met-lab {
+  margin-top: 14px;
+}
+.met-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(330px, 0.95fr);
+  gap: 12px;
+  align-items: start;
+}
+.met-main,
+.met-view {
+  min-width: 0;
+}
+.met-view {
+  position: sticky;
+  top: 54px;
+}
+.met-stage {
+  position: relative;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  overflow: hidden;
+  background: #05080f;
+}
+.met-stage canvas {
+  display: block;
+  width: 100%;
+  height: 410px;
+  touch-action: none;
+}
+.met-stage .tag {
+  position: absolute;
+  left: 9px;
+  top: 8px;
+  font-size: 10px;
+  color: #d9d4c6;
+  border: 1px solid rgba(217, 178, 95, 0.35);
+  background: rgba(5, 8, 15, 0.75);
+  padding: 3px 7px;
+  border-radius: 3px;
+  pointer-events: none;
+}
+.met-hero {
+  border: 1px solid var(--line2);
+  background: linear-gradient(135deg, var(--wash), transparent);
+  padding: 10px 12px;
+  border-radius: 4px;
+  margin-bottom: 9px;
+}
+.met-hero h4 {
+  margin: 0 0 4px;
+  color: var(--gold2);
+  font-size: 17px;
+}
+.met-hero .count {
+  font-size: 24px;
+  font-variant-numeric: tabular-nums;
+  color: var(--gold2);
+}
+.met-hero p {
+  margin: 3px 0;
+  font-size: 12px;
+}
+.met-list {
+  max-height: 430px;
+  overflow: auto;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+}
+.met-list button.row {
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(120px, 1fr) 92px 70px 62px;
+  gap: 5px;
+  align-items: center;
+  text-align: left;
+  background: transparent;
+  color: var(--ink);
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  padding: 7px 8px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+}
+.met-list button.row:last-child {
+  border-bottom: 0;
+}
+.met-list button.row:hover,
+.met-list button.row.on {
+  background: var(--wash);
+}
+.met-list small {
+  color: var(--dim);
+}
+.met-detail {
+  margin-top: 9px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--panel2);
+  padding: 9px 11px;
+  font-size: 12px;
+  line-height: 1.75;
+}
+.met-detail h5 {
+  font-size: 15px;
+  color: var(--gold2);
+  margin: 0 0 4px;
+}
+.met-detail p {
+  margin: 3px 0;
+}
+.met-good {
+  color: var(--good);
+}
+.met-warn {
+  color: var(--gold);
+}
+.met-bad {
+  color: var(--bad);
+}
+.neo-status {
+  font-size: 12px;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: var(--panel2);
+  margin-bottom: 8px;
+}
+.neo-note {
+  font-size: 11px;
+  color: var(--dim);
+  line-height: 1.65;
+}
+.neo-table-wrap {
+  overflow: auto;
+  max-height: 480px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+}
+.v119-sat-label {
+  font-size: 10px;
+  color: #dce7ef;
+}
+.v119-near-note {
+  display: inline-block;
+  margin-left: 5px;
+  color: var(--cyan);
+  font-size: 10px;
+}
+@media (max-width: 860px) {
+  .met-grid {
+    grid-template-columns: 1fr;
+  }
+  .met-view {
+    position: static;
+  }
+  .ecl-stage canvas {
+    height: 390px;
+  }
+  .met-stage canvas {
+    height: 350px;
+  }
+}
+@media (max-width: 560px) {
+  .ecl-stage canvas {
+    height: 330px;
+  }
+  .ecl-tools {
+    align-items: stretch;
+  }
+  .ecl-tools select {
+    max-width: 100%;
+  }
+  .met-list button.row {
+    grid-template-columns: 1fr 74px 52px;
+  }
+  .met-list button.row span:nth-child(4) {
+    display: none;
+  }
+  .met-stage canvas {
+    height: 310px;
+  }
+}
+
+/* ===== v122：近地天体实时 / 流星雨专业3D / 可观测区 / 日月食分表 ===== */
+.ecl-schedule-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  align-items: start;
+}
+.ecl-schedule-card {
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  border-radius: 4px;
+  padding: 9px;
+}
+.ecl-schedule-card h5 {
+  margin: 0 0 7px;
+  color: var(--gold2);
+  font-size: 15px;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  align-items: baseline;
+}
+.ecl-schedule-card h5 small {
+  font-size: 10px;
+  color: var(--dim);
+  font-weight: 400;
+}
+.ecl-schedule-card .tbl-wrap {
+  max-height: 420px;
+  overflow: auto;
+}
+.met-live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 7px;
+  border: 1px solid rgba(127, 214, 160, 0.45);
+  border-radius: 12px;
+  color: var(--good);
+  font-size: 10px;
+}
+.met-live-badge::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--good);
+  box-shadow: 0 0 7px var(--good);
+}
+.met-actions .neo-key {
+  width: 168px;
+  min-height: 32px;
+  background: var(--panel2);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  border-radius: 3px;
+  padding: 4px 7px;
+  font-size: 11px;
+}
+.neo-status.good {
+  border-color: rgba(127, 214, 160, 0.48);
+  color: var(--good);
+}
+.neo-status.warn {
+  border-color: rgba(217, 178, 95, 0.5);
+  color: var(--gold);
+}
+.neo-status.bad {
+  border-color: rgba(232, 115, 95, 0.5);
+  color: var(--bad);
+}
+.met-zone {
+  margin: 8px 0 4px;
+  padding: 8px 9px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.018);
+  border-radius: 4px;
+}
+.met-zone-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  align-items: baseline;
+  font-size: 11px;
+}
+.met-zone-head b {
+  color: var(--gold2);
+}
+.met-zonebar {
+  height: 18px;
+  position: relative;
+  margin: 7px 0 4px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  overflow: visible;
+  background: linear-gradient(
+    90deg,
+    rgba(95, 169, 234, 0.08),
+    rgba(217, 178, 95, 0.05),
+    rgba(95, 169, 234, 0.08)
+  );
+}
+.met-zonebar .rise,
+.met-zonebar .good,
+.met-zonebar .zen,
+.met-zonebar .here {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+}
+.met-zonebar .rise {
+  background: rgba(98, 205, 195, 0.12);
+  border-left: 1px solid rgba(98, 205, 195, 0.35);
+  border-right: 1px solid rgba(98, 205, 195, 0.35);
+}
+.met-zonebar .good {
+  top: 3px;
+  bottom: 3px;
+  background: rgba(127, 214, 160, 0.34);
+  border-radius: 2px;
+}
+.met-zonebar .zen {
+  width: 2px;
+  background: var(--gold2);
+  box-shadow: 0 0 6px var(--gold2);
+}
+.met-zonebar .here {
+  width: 2px;
+  background: var(--red);
+  box-shadow: 0 0 6px var(--red);
+}
+.met-zone-scale {
+  display: flex;
+  justify-content: space-between;
+  color: var(--dim);
+  font-size: 9px;
+}
+.met-zone-note {
+  font-size: 10.5px;
+  color: var(--dim);
+  line-height: 1.55;
+}
+.met-zone-note b {
+  color: var(--ink);
+  font-weight: 500;
+}
+.met-view .met-detail .met-zone {
+  margin-top: 7px;
+}
+.met-stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.025),
+    transparent 23%,
+    transparent 78%,
+    rgba(0, 0, 0, 0.14)
+  );
+  mix-blend-mode: screen;
+}
+.met-stage .tag {
+  backdrop-filter: blur(4px);
+}
+.v122-pha {
+  display: inline-block;
+  padding: 0 5px;
+  border: 1px solid rgba(232, 115, 95, 0.55);
+  border-radius: 8px;
+  color: var(--bad);
+  font-size: 9px;
+  margin-left: 4px;
+}
+.v122-source {
+  display: inline-block;
+  padding: 0 5px;
+  border: 1px solid rgba(127, 214, 160, 0.36);
+  border-radius: 8px;
+  color: var(--good);
+  font-size: 9px;
+  margin-left: 4px;
+}
+@media (max-width: 900px) {
+  .ecl-schedule-grid {
+    grid-template-columns: 1fr;
+  }
+  .met-actions .neo-key {
+    width: 145px;
+  }
+}
+
+/* ===== v120：日月食可视化重做 / 动态DOM按钮生命周期修复 ===== */
+#orrModeEclipse .ecl-stage {
+  min-height: 340px;
+  background: radial-gradient(circle at 50% 45%, #132238 0, #070b13 52%, #020409 100%);
+}
+#orrModeEclipse .ecl-stage canvas {
+  background: transparent !important;
+}
+.ecl-viewlegend {
+  position: absolute;
+  right: 10px;
+  top: 9px;
+  z-index: 3;
+  display: flex;
+  gap: 5px;
+  pointer-events: none;
+}
+.ecl-viewlegend span {
+  padding: 3px 6px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(3, 6, 12, 0.66);
+  border-radius: 3px;
+  color: rgba(238, 235, 224, 0.78);
+  font-size: 9.5px;
+}
+.ecl-statusline {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 7px 0 0;
+  font-size: 10.5px;
+  color: var(--dim);
+}
+.ecl-statusline b {
+  color: var(--gold2);
+  font-weight: 500;
+}
+.ecl-subtabs button,
+.ecl-tools button,
+.met-tabs button,
+.met-actions button {
+  position: relative;
+  z-index: 4;
+  pointer-events: auto !important;
+}
+.ecl-subtabs button:active,
+.ecl-tools button:active,
+.met-tabs button:active,
+.met-actions button:active {
+  transform: translateY(1px);
+}
+.ecl-pane.on {
+  animation: v120PaneIn 0.16s ease-out;
+}
+@keyframes v120PaneIn {
+  from {
+    opacity: 0.25;
+    transform: translateY(3px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}

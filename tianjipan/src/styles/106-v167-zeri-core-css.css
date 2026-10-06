@@ -1,0 +1,236 @@
+.zr167-core {
+  border-color: color-mix(in srgb, var(--gold) 44%, var(--line));
+  background: linear-gradient(
+    135deg,
+    var(--panel),
+    color-mix(in srgb, var(--wash) 38%, var(--panel))
+  );
+}
+.zr167-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+.zr167-head h3 {
+  margin: 0;
+  color: var(--gold2);
+  font-size: 19px;
+}
+.zr167-head p {
+  margin: 4px 0 0;
+  color: var(--dim);
+  font-size: 11.5px;
+  line-height: 1.7;
+}
+.zr167-badge {
+  flex: none;
+  padding: 5px 10px;
+  border: 1px solid var(--line2);
+  border-radius: 16px;
+  color: var(--gold);
+  font-size: 10.5px;
+}
+.zr167-badge.ok {
+  color: var(--good);
+  border-color: color-mix(in srgb, var(--good) 55%, var(--line));
+}
+.zr167-badge.bad {
+  color: var(--bad);
+  border-color: color-mix(in srgb, var(--bad) 55%, var(--line));
+}
+.zr167-layers {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+.zr167-layer {
+  padding: 10px 11px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  min-width: 0;
+}
+.zr167-layer i {
+  display: block;
+  width: 22px;
+  height: 22px;
+  border: 1px solid var(--line2);
+  border-radius: 50%;
+  font-style: normal;
+  text-align: center;
+  line-height: 20px;
+  color: var(--gold);
+  font-size: 10px;
+}
+.zr167-layer b {
+  display: block;
+  margin: 7px 0 3px;
+  color: var(--gold2);
+  font-size: 13px;
+}
+.zr167-layer span {
+  display: block;
+  color: var(--dim);
+  font-size: 10.5px;
+  line-height: 1.55;
+}
+.zr167-audit {
+  margin-top: 10px;
+  padding: 11px 12px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+}
+.zr167-audit-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+.zr167-audit-head b {
+  color: var(--gold2);
+}
+.zr167-audit-head em {
+  font-style: normal;
+  color: var(--gold);
+  font-size: 18px;
+  font-weight: 700;
+}
+.zr167-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+.zr167-facts span {
+  padding: 3px 7px;
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--panel2) 88%, transparent);
+  font-size: 10.5px;
+  color: var(--dim);
+}
+.zr167-facts b {
+  color: var(--ink);
+}
+.zr167-steps {
+  display: grid;
+  gap: 5px;
+  margin-top: 9px;
+}
+.zr167-step {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  padding: 6px 8px;
+  border-left: 3px solid var(--line2);
+  background: color-mix(in srgb, var(--panel2) 84%, transparent);
+  font-size: 11px;
+}
+.zr167-step.pos {
+  border-color: var(--good);
+}
+.zr167-step.neg {
+  border-color: var(--bad);
+}
+.zr167-step.zero {
+  border-color: var(--dim);
+}
+.zr167-step b {
+  font-weight: 500;
+}
+.zr167-step strong {
+  font-variant-numeric: tabular-nums;
+}
+.zr167-step.pos strong {
+  color: var(--good);
+}
+.zr167-step.neg strong {
+  color: var(--bad);
+}
+.zr167-policy {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+.zr167-pol {
+  padding: 9px 10px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+}
+.zr167-pol b {
+  color: var(--gold2);
+  font-size: 12px;
+}
+.zr167-pol p {
+  margin: 4px 0 0;
+  color: var(--dim);
+  font-size: 10.5px;
+  line-height: 1.55;
+}
+.zr167-tools {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 11px;
+}
+.zr167-out {
+  flex: 1 1 360px;
+  padding: 7px 9px;
+  border: 1px dashed var(--line);
+  color: var(--dim);
+  font-size: 10.5px;
+  line-height: 1.55;
+}
+.zr167-self {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 7px;
+  margin-top: 10px;
+}
+.zr167-check {
+  padding: 7px 8px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  font-size: 10.5px;
+}
+.zr167-check.ok {
+  border-left: 3px solid var(--good);
+}
+.zr167-check.bad {
+  border-left: 3px solid var(--bad);
+}
+.zr167-check b {
+  display: block;
+  color: var(--ink);
+}
+.zr167-check span {
+  display: block;
+  margin-top: 2px;
+  color: var(--dim);
+}
+@media (max-width: 900px) {
+  .zr167-layers {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .zr167-self {
+    grid-template-columns: 1fr;
+  }
+  .zr167-policy {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 520px) {
+  .zr167-layers {
+    grid-template-columns: 1fr;
+  }
+  .zr167-head {
+    display: block;
+  }
+  .zr167-badge {
+    display: inline-block;
+    margin-top: 8px;
+  }
+}

@@ -1,0 +1,114 @@
+#tjZiweiV3Badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-left: 8px;
+  padding: 2px 7px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 10px;
+  color: var(--good);
+  vertical-align: middle;
+}
+#tjZiweiV3Badge::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--good);
+  box-shadow: 0 0 6px var(--good);
+}
+#tjZiweiV3Badge.warn {
+  color: var(--bad);
+}
+#tjZiweiV3Badge.warn::before {
+  background: var(--bad);
+  box-shadow: 0 0 6px var(--bad);
+}
+#pane-verify .tjzv2-live {
+  display: none !important;
+}
+.tjzv3-live {
+  margin-bottom: 14px;
+}
+.tjzv3-head {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.tjzv3-head h4 {
+  margin: 0;
+  color: var(--gold2);
+  font-weight: 600;
+}
+.tjzv3-head small {
+  display: block;
+  color: var(--dim);
+  margin-top: 3px;
+  line-height: 1.55;
+}
+.tjzv3-stat {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.tjzv3-stat span {
+  padding: 2px 7px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 11px;
+}
+.tjzv3-stat .pass {
+  color: var(--good);
+}
+.tjzv3-stat .diff {
+  color: var(--bad);
+}
+.tjzv3-stat .policy,
+.tjzv3-stat .gap {
+  color: var(--gold);
+}
+.tjzv3-stat .na {
+  color: var(--dim);
+}
+.tjzv3-cases {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 7px;
+  margin-top: 10px;
+}
+.tjzv3-case {
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  padding: 7px 9px;
+  border-radius: 4px;
+}
+.tjzv3-case b {
+  display: block;
+  font-size: 12px;
+  color: var(--ink);
+}
+.tjzv3-case small {
+  display: block;
+  color: var(--dim);
+  font-size: 10px;
+  line-height: 1.55;
+  margin-top: 2px;
+}
+.tjzv3-actions {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+.tjzv3-note {
+  font-size: 11px;
+  color: var(--dim);
+  line-height: 1.7;
+  margin: 8px 0 0;
+}
+.tjzv3-note strong {
+  color: var(--gold);
+}

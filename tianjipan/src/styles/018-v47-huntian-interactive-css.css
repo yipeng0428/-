@@ -1,0 +1,261 @@
+/* ===== v47 · 浑天仪交互教学 / 古仪模型 / 默认视角 ===== */
+.htd-frame {
+  isolation: isolate;
+}
+#htdSvg [data-htdcomp] {
+  cursor: pointer;
+  pointer-events: stroke;
+  transition:
+    opacity 0.16s,
+    filter 0.16s,
+    stroke-width 0.16s;
+}
+#htdSvg text[data-htdcomp],
+#htdSvg circle[data-htdcomp],
+#htdSvg g[data-htdcomp] {
+  pointer-events: all;
+}
+#htdSvg [data-htdcomp]:hover {
+  filter: drop-shadow(0 0 5px color-mix(in srgb, var(--gold2) 68%, transparent));
+  opacity: 1 !important;
+}
+#htdSvg path[data-htdcomp].htd-selected,
+#htdSvg line[data-htdcomp].htd-selected,
+#htdSvg ellipse[data-htdcomp].htd-selected {
+  stroke: var(--red) !important;
+  stroke-width: 3.4 !important;
+  opacity: 1 !important;
+  filter: drop-shadow(0 0 5px color-mix(in srgb, var(--red) 55%, transparent));
+}
+#htdSvg circle[data-htdcomp].htd-selected {
+  stroke: var(--red) !important;
+  stroke-width: 3 !important;
+  filter: drop-shadow(0 0 6px color-mix(in srgb, var(--red) 55%, transparent));
+}
+#htdSvg text[data-htdcomp].htd-selected {
+  fill: var(--red) !important;
+  font-weight: 700;
+  filter: drop-shadow(0 0 4px color-mix(in srgb, var(--panel) 80%, transparent));
+}
+#htdSvg g[data-htdcomp].htd-selected > * {
+  filter: drop-shadow(0 0 6px color-mix(in srgb, var(--red) 60%, transparent));
+}
+.htd-ancient-frame {
+  fill: none;
+  stroke: var(--gold);
+  stroke-width: 1.25;
+  opacity: 0.26;
+  pointer-events: stroke;
+}
+.htd-ancient-heavy {
+  fill: none;
+  stroke: var(--gold2);
+  stroke-width: 2;
+  opacity: 0.22;
+  pointer-events: stroke;
+}
+.htd-ancient-base {
+  fill: var(--wash);
+  stroke: var(--gold);
+  stroke-width: 1.15;
+  opacity: 0.36;
+}
+.htd-ancient-pin {
+  fill: var(--gold);
+  opacity: 0.42;
+}
+.htd-ancient-label {
+  fill: var(--gold);
+  font:
+    9px "Noto Serif SC",
+    serif;
+  opacity: 0.55;
+  paint-order: stroke;
+  stroke: var(--panel);
+  stroke-width: 2px;
+}
+.htd-comp-tip {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  z-index: 5;
+  width: min(300px, 42%);
+  padding: 10px 12px;
+  border: 1px solid var(--line2);
+  background: color-mix(in srgb, var(--panel) 94%, transparent);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.12);
+  pointer-events: none;
+}
+.htd-comp-tip b {
+  display: block;
+  color: var(--gold2);
+  font-family: "ZCOOL XiaoWei", "Ma Shan Zheng", serif;
+  font-weight: 400;
+  font-size: 16px;
+  letter-spacing: 0.06em;
+}
+.htd-comp-tip span {
+  display: block;
+  margin-top: 3px;
+  color: var(--dim);
+  font-size: 10.5px;
+  line-height: 1.65;
+}
+.htd-selected-card {
+  grid-column: 1/-1;
+  padding: 10px 11px;
+  margin-bottom: 2px;
+  border: 1px solid var(--line2);
+  border-left: 3px solid var(--red);
+  background: linear-gradient(90deg, color-mix(in srgb, var(--red) 7%, transparent), var(--panel2));
+  border-radius: 3px;
+}
+.htd-selected-card .eyebrow {
+  font-size: 9.5px;
+  color: var(--red);
+  letter-spacing: 0.14em;
+}
+.htd-selected-card h5 {
+  margin: 2px 0 5px;
+  color: var(--gold2);
+  font-family: "ZCOOL XiaoWei", "Ma Shan Zheng", serif;
+  font-size: 18px;
+  font-weight: 400;
+}
+.htd-selected-card p {
+  margin: 3px 0;
+  color: var(--dim);
+  font-size: 10.5px;
+  line-height: 1.7;
+}
+.htd-selected-card .rel {
+  padding-top: 6px;
+  margin-top: 6px;
+  border-top: 1px dashed var(--line);
+}
+.htd-tutorial {
+  border: 1px solid var(--line);
+  background: var(--panel);
+  border-radius: 3px;
+  padding: 0 10px;
+}
+.htd-tutorial > summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 9px 2px;
+  color: var(--gold2);
+  font-family: "ZCOOL XiaoWei", "Ma Shan Zheng", serif;
+  font-size: 15px;
+  letter-spacing: 0.07em;
+}
+.htd-tutorial > summary::-webkit-details-marker {
+  display: none;
+}
+.htd-tutorial > summary::before {
+  content: "▸";
+  display: inline-block;
+  margin-right: 7px;
+  color: var(--gold);
+  transition: transform 0.2s;
+}
+.htd-tutorial[open] > summary::before {
+  transform: rotate(90deg);
+}
+.htd-tutorial-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 7px;
+  padding: 0 0 10px;
+}
+.htd-tutorial-step {
+  appearance: none;
+  text-align: left;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  color: var(--ink);
+  padding: 8px 9px;
+  cursor: pointer;
+  border-radius: 3px;
+}
+.htd-tutorial-step:hover {
+  border-color: var(--gold);
+  background: var(--wash);
+}
+.htd-tutorial-step b {
+  display: block;
+  font-size: 11px;
+  color: var(--gold2);
+  font-weight: 600;
+}
+.htd-tutorial-step span {
+  display: block;
+  margin-top: 2px;
+  color: var(--dim);
+  font-size: 9.5px;
+  line-height: 1.55;
+}
+.htd-tutorial-note {
+  margin: 0 0 9px;
+  padding: 7px 9px;
+  border-left: 2px solid var(--gold);
+  background: var(--wash);
+  font-size: 10px;
+  color: var(--dim);
+  line-height: 1.7;
+}
+.htd-related {
+  grid-column: 1/-1;
+}
+.htd-related .links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 6px;
+}
+.htd-related .gbtn {
+  font-size: 10px;
+  min-height: 30px;
+  padding: 0 9px;
+}
+.htd-viewbar #htdDefault {
+  border-color: var(--gold);
+  color: var(--gold2);
+}
+#htdNow {
+  border-color: var(--gold) !important;
+}
+.htd-click-hint {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 10px;
+  border: 1px dashed var(--line2);
+  background: var(--wash);
+  font-size: 10px;
+  color: var(--dim);
+}
+.htd-click-hint b {
+  color: var(--gold2);
+}
+@media (max-width: 900px) {
+  .htd-tutorial-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .htd-comp-tip {
+    width: min(320px, 58%);
+  }
+}
+@media (max-width: 600px) {
+  .htd-tutorial-grid {
+    grid-template-columns: 1fr;
+  }
+  .htd-comp-tip {
+    position: static;
+    width: auto;
+    margin: 8px;
+  }
+  .htd-click-hint {
+    align-items: flex-start;
+  }
+}

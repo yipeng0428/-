@@ -1,0 +1,248 @@
+/* ===== V200 · 全局布局 / 文本 / 容器加固 ===== */
+html,
+body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+body {
+  overflow-wrap: break-word;
+}
+
+/* Grid / Flex 常见撑破根因：子项默认 min-width:auto。 */
+main,
+header,
+footer,
+nav,
+section,
+article,
+aside,
+.wrap,
+.layout,
+.panel,
+.pane,
+.blk,
+.tn-in,
+.tjs-shell,
+.tjs-main,
+.tjs-nav,
+.tj198,
+.q199,
+main > *,
+header > *,
+footer > *,
+nav > *,
+section > *,
+article > *,
+aside > *,
+.wrap > *,
+.layout > *,
+.panel > *,
+.pane > *,
+.blk > *,
+.tn-in > *,
+.tjs-shell > *,
+.tjs-main > *,
+[class*="grid"] > *,
+[class*="row"] > * {
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* 普通文本不再把容器横向撑开。 */
+p,
+li,
+dd,
+dt,
+td,
+th,
+label,
+small,
+.note,
+.dim,
+.sub,
+.kv,
+.cs2,
+.tj198 .section,
+.q199-card,
+.q199-note,
+.q199-case,
+.kg173-card,
+.tj172-card {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* 标题优先自然换行，避免强制 anywhere 破坏观感。 */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.sec {
+  max-width: 100%;
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+
+/* JSON、Evidence、代码、URL：允许滚动/换行，绝不冲破卡片。 */
+pre,
+code,
+kbd,
+samp,
+.q199-schema,
+.q199-diff,
+.q199-json,
+.tj172-token,
+.tj172-console textarea,
+textarea {
+  max-width: 100%;
+}
+pre,
+.q199-schema,
+.q199-diff {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+code,
+kbd,
+samp {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+textarea {
+  box-sizing: border-box;
+  overflow: auto;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* 表格保持可读：优先由外层横向滚动，不让整页横向溢出。 */
+.tbl-wrap {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-inline: contain;
+}
+table,
+.tbl {
+  max-width: none;
+}
+td,
+th {
+  min-width: 0;
+}
+
+/* 横向导航本来就允许滚动，但不能把 body 撑开。 */
+.tabs,
+.tgb,
+.q165-tabs,
+.layersw {
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* 媒体 / SVG / canvas / iframe 全局容器约束。 */
+img,
+video,
+iframe,
+object,
+embed {
+  max-width: 100%;
+  height: auto;
+}
+svg,
+canvas {
+  max-width: 100%;
+}
+
+/* 输入控件在窄容器内不能反向撑宽。 */
+input,
+select,
+button,
+textarea {
+  max-width: 100%;
+}
+select,
+input[type="text"],
+input[type="number"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="time"] {
+  min-width: 0;
+}
+
+/* details / summary 中经常包含长 Evidence 文本。 */
+details,
+summary {
+  max-width: 100%;
+  min-width: 0;
+}
+details > * {
+  max-width: 100%;
+}
+
+/* 弹窗、设置中心：内容超高时由自身滚动，而不是把视口撑穿。 */
+.mbox,
+.tjs-shell,
+[role="dialog"] {
+  max-width: min(100%, calc(100vw - 20px));
+  max-height: calc(100dvh - 20px);
+}
+.mbox,
+.tjs-main {
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+
+/* 运行时检测出的非预期横向溢出元素。仅做温和约束。 */
+.tj200-overflow-guard {
+  min-width: 0 !important;
+  max-width: 100% !important;
+  overflow-wrap: anywhere !important;
+  word-break: break-word !important;
+}
+.tj200-overflow-scroll {
+  max-width: 100% !important;
+  overflow-x: auto !important;
+  overflow-y: hidden;
+  overscroll-behavior-inline: contain;
+}
+
+/* 防止不可见 pane 参与横向尺寸计算。 */
+.pane:not(.on) {
+  max-width: 100% !important;
+}
+
+/* 手机端再收紧一次，避免按钮组 / KPI / 验证面板撑屏。 */
+@media (max-width: 700px) {
+  .wrap,
+  .tn-in {
+    max-width: 100vw !important;
+  }
+  .q199,
+  .tj198,
+  .panel,
+  .pane,
+  .blk {
+    width: 100%;
+    max-width: 100% !important;
+  }
+  .btns,
+  .q199-toolbar,
+  .tj198 .actions {
+    max-width: 100%;
+  }
+  .btns button,
+  .q199-toolbar button {
+    min-width: 0;
+    white-space: normal;
+    overflow-wrap: break-word;
+  }
+}

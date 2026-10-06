@@ -1,0 +1,312 @@
+/* ===== V206 · 玄空宅盘二期：格局审计 / 焦点空间 / Evidence ===== */
+.xk206 {
+  display: grid;
+  gap: 9px;
+  margin-top: 10px;
+}
+.xk206-hero {
+  position: relative;
+  overflow: hidden;
+  padding: 12px 13px;
+  border: 1px solid color-mix(in srgb, var(--gold2) 34%, var(--line));
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--wash) 52%, var(--panel)),
+    var(--panel)
+  );
+}
+.xk206-hero:after {
+  content: "HOUSE";
+  position: absolute;
+  right: 14px;
+  top: -18px;
+  font:
+    800 62px/1 Arial,
+    sans-serif;
+  letter-spacing: 0.04em;
+  color: var(--gold2);
+  opacity: 0.035;
+  pointer-events: none;
+}
+.xk206-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: flex-start;
+  position: relative;
+  z-index: 1;
+}
+.xk206-head h3 {
+  margin: 0;
+  color: var(--gold2);
+  font-size: 17px;
+}
+.xk206-head p {
+  margin: 4px 0 0;
+  color: var(--dim);
+  font-size: 9.8px;
+  line-height: 1.72;
+  max-width: 940px;
+}
+.xk206-schema {
+  flex: none;
+  padding: 3px 7px;
+  border: 1px solid var(--line2);
+  color: var(--cyan);
+  font:
+    8.5px/1.4 ui-monospace,
+    Consolas,
+    monospace;
+}
+.xk206-tools {
+  display: flex;
+  gap: 6px 10px;
+  flex-wrap: wrap;
+  align-items: end;
+  margin-top: 9px;
+  position: relative;
+  z-index: 1;
+}
+.xk206-tools label {
+  display: grid;
+  gap: 3px;
+  color: var(--dim);
+  font-size: 8.5px;
+}
+.xk206-tools select {
+  min-width: 118px;
+}
+.xk206-tools button {
+  border: 1px solid var(--line2);
+  background: transparent;
+  color: var(--ink);
+  padding: 5px 8px;
+  font-size: 9px;
+  cursor: pointer;
+}
+.xk206-tools button:hover {
+  background: var(--wash);
+  color: var(--gold2);
+}
+.xk206-kpis {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 5px;
+}
+.xk206-kpi {
+  padding: 7px 8px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+}
+.xk206-kpi small {
+  display: block;
+  color: var(--dim);
+  font-size: 8px;
+}
+.xk206-kpi b {
+  display: block;
+  margin-top: 2px;
+  color: var(--gold2);
+  font-size: 12px;
+}
+.xk206-kpi.good b {
+  color: var(--good);
+}
+.xk206-kpi.bad b {
+  color: var(--bad);
+}
+.xk206-kpi.cyan b {
+  color: var(--cyan);
+}
+.xk206-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(330px, 0.92fr);
+  gap: 8px;
+}
+.xk206-card {
+  min-width: 0;
+  padding: 10px 11px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+}
+.xk206-card h4 {
+  margin: 0 0 7px;
+  color: var(--gold2);
+  font-size: 11.5px;
+}
+.xk206-list {
+  display: grid;
+  gap: 5px;
+}
+.xk206-item {
+  padding: 7px 8px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+}
+.xk206-item.good {
+  border-left: 3px solid var(--good);
+}
+.xk206-item.bad {
+  border-left: 3px solid var(--bad);
+}
+.xk206-item.cyan {
+  border-left: 3px solid var(--cyan);
+}
+.xk206-item.gold {
+  border-left: 3px solid var(--gold);
+}
+.xk206-item b {
+  display: block;
+  color: var(--ink);
+  font-size: 9.5px;
+}
+.xk206-item small {
+  display: block;
+  color: var(--dim);
+  font-size: 8.6px;
+  line-height: 1.62;
+  margin-top: 2px;
+}
+.xk206-focus {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 4px;
+  margin-top: 7px;
+}
+.xk206-focus > div {
+  padding: 7px 4px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  text-align: center;
+}
+.xk206-focus small {
+  display: block;
+  color: var(--dim);
+  font-size: 7.8px;
+}
+.xk206-focus b {
+  display: block;
+  color: var(--ink);
+  font-size: 14px;
+  margin-top: 2px;
+}
+.xk206-score {
+  padding: 9px 10px;
+  border-left: 3px solid var(--cyan);
+  background: color-mix(in srgb, var(--wash2) 45%, var(--panel2));
+}
+.xk206-score strong {
+  font-size: 20px;
+  color: var(--cyan);
+  margin-right: 8px;
+}
+.xk206-score span {
+  color: var(--dim);
+  font-size: 8.7px;
+}
+.xk206-plain {
+  padding: 9px 10px;
+  border-left: 3px solid var(--gold);
+  background: color-mix(in srgb, var(--wash) 58%, var(--panel2));
+  font-size: 9.8px;
+  line-height: 1.78;
+  color: var(--ink);
+}
+.xk206-note {
+  padding: 7px 8px;
+  border: 1px dashed var(--line);
+  background: var(--panel2);
+  color: var(--dim);
+  font-size: 8.6px;
+  line-height: 1.65;
+}
+.xk206-audit {
+  display: grid;
+  gap: 4px;
+}
+.xk206-ev {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr) 84px;
+  gap: 7px;
+  padding: 6px 7px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  font-size: 8.6px;
+  align-items: start;
+}
+.xk206-ev b {
+  color: var(--ink);
+}
+.xk206-ev small {
+  color: var(--dim);
+  line-height: 1.5;
+}
+.xk206-ev span {
+  text-align: right;
+  color: var(--cyan);
+}
+.xk206-formula {
+  font:
+    8px/1.45 ui-monospace,
+    Consolas,
+    monospace;
+  color: var(--dim);
+  word-break: break-word;
+}
+.xk206-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 8.6px;
+}
+.xk206-table th,
+.xk206-table td {
+  padding: 6px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+  text-align: left;
+}
+.xk206-table th {
+  color: var(--dim);
+  font-weight: 500;
+}
+.xk206-table td b {
+  color: var(--ink);
+}
+.xk206-state {
+  display: inline-flex;
+  padding: 2px 5px;
+  border: 1px solid var(--line);
+  font-size: 8px;
+  color: var(--dim);
+}
+.xk206-state.pending {
+  color: var(--cyan);
+}
+@media (max-width: 940px) {
+  .xk206-grid {
+    grid-template-columns: 1fr;
+  }
+  .xk206-kpis {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 620px) {
+  .xk206-head {
+    flex-direction: column;
+  }
+  .xk206-schema {
+    align-self: flex-start;
+  }
+  .xk206-kpis {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .xk206-focus {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .xk206-ev {
+    grid-template-columns: 1fr;
+  }
+  .xk206-ev span {
+    text-align: left;
+  }
+}

@@ -1,0 +1,174 @@
+/* ===== v189 · 跟随系统 = 真正纯白 / 纯黑 =====
+   auto 不再借用“宣纸雅白 / 玄夜墨青”的视觉语言。
+   它只跟随操作系统 prefers-color-scheme：
+   light -> 白底黑字；dark -> 黑底白字。
+*/
+
+/* 系统浅色：纯白 */
+html[data-tj-theme="auto"][data-theme="light"] {
+  color-scheme: light !important;
+  --bg: #ffffff !important;
+  --bg2: #ffffff !important;
+  --panel: #ffffff !important;
+  --panel2: #f5f5f5 !important;
+  --line: rgba(0, 0, 0, 0.14) !important;
+  --line2: rgba(0, 0, 0, 0.32) !important;
+  --gold: #555555 !important;
+  --gold2: #111111 !important;
+  --ink: #111111 !important;
+  --dim: #666666 !important;
+  --dim2: #b7b7b7 !important;
+  --red: #b33128 !important;
+  --cyan: #267a76 !important;
+  --wood: #3f7757 !important;
+  --fire: #b14c37 !important;
+  --earth: #8a6a32 !important;
+  --metal: #666666 !important;
+  --water: #416f91 !important;
+  --sem-good: #367552 !important;
+  --sem-good-soft: rgba(54, 117, 82, 0.09) !important;
+  --sem-bad: #b33d32 !important;
+  --sem-bad-soft: rgba(179, 61, 50, 0.09) !important;
+  --sem-neutral: #666666 !important;
+  --sem-neutral-soft: rgba(0, 0, 0, 0.055) !important;
+  --good: var(--sem-good) !important;
+  --bad: var(--sem-bad) !important;
+  --mid: var(--sem-neutral) !important;
+  --wash: rgba(0, 0, 0, 0.045) !important;
+  --wash2: rgba(0, 0, 0, 0.025) !important;
+  --tjD: #111111 !important;
+  --tjL: #ffffff !important;
+  --tj-theme-indicator: #111111 !important;
+  --tj-nav-bg: #ffffff !important;
+  --tj-nav-ink: #111111 !important;
+  --tj-nav-border: rgba(0, 0, 0, 0.18) !important;
+  --tj-card-glow: transparent !important;
+  --tj-field-bg: #ffffff !important;
+  --tj-accent-contrast: #ffffff !important;
+}
+
+/* 系统深色：纯黑 */
+html[data-tj-theme="auto"][data-theme="dark"] {
+  color-scheme: dark !important;
+  --bg: #000000 !important;
+  --bg2: #000000 !important;
+  --panel: #050505 !important;
+  --panel2: #111111 !important;
+  --line: rgba(255, 255, 255, 0.16) !important;
+  --line2: rgba(255, 255, 255, 0.34) !important;
+  --gold: #bdbdbd !important;
+  --gold2: #ffffff !important;
+  --ink: #f3f3f3 !important;
+  --dim: #aaaaaa !important;
+  --dim2: #555555 !important;
+  --red: #d35a50 !important;
+  --cyan: #64c9c2 !important;
+  --wood: #76b995 !important;
+  --fire: #dc705c !important;
+  --earth: #c4a36a !important;
+  --metal: #d8d8d8 !important;
+  --water: #75a8d0 !important;
+  --sem-good: #78bf98 !important;
+  --sem-good-soft: rgba(120, 191, 152, 0.12) !important;
+  --sem-bad: #dc7468 !important;
+  --sem-bad-soft: rgba(220, 116, 104, 0.12) !important;
+  --sem-neutral: #b8b8b8 !important;
+  --sem-neutral-soft: rgba(255, 255, 255, 0.07) !important;
+  --good: var(--sem-good) !important;
+  --bad: var(--sem-bad) !important;
+  --mid: var(--sem-neutral) !important;
+  --wash: rgba(255, 255, 255, 0.055) !important;
+  --wash2: rgba(255, 255, 255, 0.025) !important;
+  --tjD: #000000 !important;
+  --tjL: #ffffff !important;
+  --tj-theme-indicator: #ffffff !important;
+  --tj-nav-bg: #000000 !important;
+  --tj-nav-ink: #f5f5f5 !important;
+  --tj-nav-border: rgba(255, 255, 255, 0.18) !important;
+  --tj-card-glow: transparent !important;
+  --tj-field-bg: #090909 !important;
+  --tj-accent-contrast: #ffffff !important;
+}
+
+/* auto 模式整体背景必须干净，不叠宣纸/星云色洗 */
+html[data-tj-theme="auto"] body {
+  background: var(--bg) !important;
+}
+html[data-tj-theme="auto"] #topnav {
+  backdrop-filter: none !important;
+}
+
+/* “跟随系统”卡：一眼看出白 / 黑两种系统模式 */
+.tjs-auto-wrap {
+  display: grid;
+  grid-template-columns: minmax(260px, 420px) minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+  margin: 0 0 12px;
+}
+.tjs-auto-theme {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+  padding: 8px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  color: var(--ink);
+  cursor: pointer;
+  text-align: left;
+}
+.tjs-auto-theme:hover {
+  border-color: var(--gold);
+  background: var(--wash);
+}
+.tjs-auto-theme.on {
+  border-color: var(--gold2);
+  box-shadow: 0 0 0 1px var(--gold2) inset;
+}
+.tjs-auto-theme b {
+  display: block;
+  font-size: 11px;
+}
+.tjs-auto-theme small {
+  display: block;
+  margin-top: 3px;
+  color: var(--dim);
+  font-size: 9px;
+  line-height: 1.45;
+}
+.tjs-auto-swatch {
+  height: 52px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  overflow: hidden;
+  border: 1px solid #8a8a8a;
+}
+.tjs-auto-swatch i:first-child {
+  background: #ffffff !important;
+}
+.tjs-auto-swatch i:last-child {
+  background: #000000 !important;
+}
+.tjs-auto-theme.on .tjs-auto-swatch {
+  box-shadow: 0 0 0 2px var(--tj-theme-indicator);
+}
+
+/* 太极鱼右下角点在 auto 时也真实跟随系统：
+   浅色系统 -> 黑点；深色系统 -> 白点 */
+html[data-tj-theme="auto"][data-theme="light"] #themeBtn::after {
+  background: #111111 !important;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.16) !important;
+}
+html[data-tj-theme="auto"][data-theme="dark"] #themeBtn::after {
+  background: #ffffff !important;
+  border: 1px solid rgba(0, 0, 0, 0.85);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.22) !important;
+}
+
+@media (max-width: 720px) {
+  .tjs-auto-wrap {
+    grid-template-columns: 1fr;
+  }
+}

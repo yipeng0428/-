@@ -1,0 +1,304 @@
+/* ===== V205 · 玄空完整宅盘一期 ===== */
+.xk205 {
+  display: grid;
+  gap: 9px;
+  margin-top: 10px;
+}
+.xk205-hero {
+  position: relative;
+  overflow: hidden;
+  padding: 12px 13px;
+  border: 1px solid color-mix(in srgb, var(--cyan) 34%, var(--line));
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--wash2) 50%, var(--panel)),
+    var(--panel)
+  );
+}
+.xk205-hero:after {
+  content: "九宫";
+  position: absolute;
+  right: 18px;
+  top: -20px;
+  font:
+    700 74px/1 "STKaiti",
+    "KaiTi",
+    serif;
+  color: var(--cyan);
+  opacity: 0.035;
+  pointer-events: none;
+}
+.xk205-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: flex-start;
+  position: relative;
+  z-index: 1;
+}
+.xk205-head h3 {
+  margin: 0;
+  color: var(--gold2);
+  font-size: 17px;
+}
+.xk205-head p {
+  margin: 4px 0 0;
+  color: var(--dim);
+  font-size: 9.8px;
+  line-height: 1.72;
+  max-width: 930px;
+}
+.xk205-schema {
+  flex: none;
+  padding: 3px 7px;
+  border: 1px solid var(--line2);
+  color: var(--cyan);
+  font:
+    8.5px/1.4 ui-monospace,
+    Consolas,
+    monospace;
+}
+.xk205-tools {
+  display: flex;
+  gap: 6px 10px;
+  flex-wrap: wrap;
+  align-items: end;
+  margin-top: 9px;
+  position: relative;
+  z-index: 1;
+}
+.xk205-tools label {
+  display: grid;
+  gap: 3px;
+  color: var(--dim);
+  font-size: 8.5px;
+}
+.xk205-tools input,
+.xk205-tools select {
+  min-width: 100px;
+}
+.xk205-tools button {
+  border: 1px solid var(--line2);
+  background: transparent;
+  color: var(--ink);
+  padding: 5px 8px;
+  cursor: pointer;
+  font-size: 9px;
+}
+.xk205-kpis {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 5px;
+}
+.xk205-kpi {
+  padding: 7px 8px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+}
+.xk205-kpi small {
+  display: block;
+  color: var(--dim);
+  font-size: 8px;
+}
+.xk205-kpi b {
+  display: block;
+  margin-top: 2px;
+  color: var(--gold2);
+  font-size: 12px;
+}
+.xk205-kpi.good b {
+  color: var(--good);
+}
+.xk205-kpi.bad b {
+  color: var(--bad);
+}
+.xk205-kpi.cyan b {
+  color: var(--cyan);
+}
+.xk205-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.12fr) minmax(320px, 0.88fr);
+  gap: 8px;
+}
+.xk205-card {
+  min-width: 0;
+  padding: 10px 11px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+}
+.xk205-card h4 {
+  margin: 0 0 7px;
+  color: var(--gold2);
+  font-size: 11.5px;
+}
+.xk205-nine {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
+  max-width: 670px;
+  margin: 0 auto;
+}
+.xk205-cell {
+  min-width: 0;
+  min-height: 116px;
+  padding: 7px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  display: grid;
+  gap: 5px;
+}
+.xk205-cell.sit {
+  border-color: var(--gold2);
+}
+.xk205-cell.face {
+  border-color: var(--cyan);
+}
+.xk205-cell.hot {
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--bad) 60%, transparent);
+}
+.xk205-cell-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 5px;
+  font-size: 8.5px;
+  color: var(--dim);
+}
+.xk205-stars {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3px;
+  text-align: center;
+}
+.xk205-stars span {
+  padding: 4px 2px;
+  border: 1px solid var(--line);
+  font-size: 10px;
+}
+.xk205-stars b {
+  display: block;
+  color: var(--ink);
+  font-size: 15px;
+}
+.xk205-flow {
+  display: flex;
+  gap: 3px;
+  flex-wrap: wrap;
+}
+.xk205-flow span {
+  padding: 2px 5px;
+  border: 1px solid var(--line);
+  font-size: 8px;
+  color: var(--dim);
+}
+.xk205-flow .bad {
+  color: var(--bad);
+  border-color: color-mix(in srgb, var(--bad) 42%, var(--line));
+}
+.xk205-flow .good {
+  color: var(--good);
+}
+.xk205-list {
+  display: grid;
+  gap: 5px;
+}
+.xk205-item {
+  padding: 7px 8px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+}
+.xk205-item.good {
+  border-left: 3px solid var(--good);
+}
+.xk205-item.bad {
+  border-left: 3px solid var(--bad);
+}
+.xk205-item.cyan {
+  border-left: 3px solid var(--cyan);
+}
+.xk205-item.gold {
+  border-left: 3px solid var(--gold);
+}
+.xk205-item b {
+  display: block;
+  color: var(--ink);
+  font-size: 9.5px;
+}
+.xk205-item small {
+  display: block;
+  color: var(--dim);
+  font-size: 8.6px;
+  line-height: 1.62;
+  margin-top: 2px;
+}
+.xk205-plain {
+  padding: 9px 10px;
+  border-left: 3px solid var(--cyan);
+  background: color-mix(in srgb, var(--wash2) 45%, var(--panel2));
+  font-size: 9.8px;
+  line-height: 1.78;
+  color: var(--ink);
+}
+.xk205-note {
+  padding: 7px 8px;
+  border: 1px dashed var(--line);
+  background: var(--panel2);
+  color: var(--dim);
+  font-size: 8.6px;
+  line-height: 1.65;
+}
+.xk205-evidence {
+  display: grid;
+  gap: 4px;
+}
+.xk205-ev {
+  display: grid;
+  grid-template-columns: 130px minmax(0, 1fr) 82px;
+  gap: 7px;
+  padding: 6px 7px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  font-size: 8.6px;
+}
+.xk205-ev b {
+  color: var(--ink);
+}
+.xk205-ev small {
+  color: var(--dim);
+  line-height: 1.5;
+}
+.xk205-ev span {
+  color: var(--cyan);
+  text-align: right;
+}
+@media (max-width: 940px) {
+  .xk205-grid {
+    grid-template-columns: 1fr;
+  }
+  .xk205-kpis {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 620px) {
+  .xk205-head {
+    flex-direction: column;
+  }
+  .xk205-schema {
+    align-self: flex-start;
+  }
+  .xk205-kpis {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .xk205-nine {
+    gap: 3px;
+  }
+  .xk205-cell {
+    min-height: 105px;
+    padding: 5px;
+  }
+  .xk205-ev {
+    grid-template-columns: 1fr;
+  }
+  .xk205-ev span {
+    text-align: left;
+  }
+}

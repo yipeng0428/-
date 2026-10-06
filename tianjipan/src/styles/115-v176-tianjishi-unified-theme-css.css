@@ -1,0 +1,414 @@
+/* ===== v176 · 天机式主题统一 / 放大全屏容器 / 移除重复操作提示 ===== */
+
+/* 1) 天机式表面不再拥有独立“深色 UI 皮肤”，直接继承全站主题变量。
+   这样在浅色/米色主题时与网站统一，在深色主题时也自动跟随。 */
+#tj152Panel.tj174-mounted {
+  --tj174-bg: var(--bg);
+  --tj174-panel: var(--panel);
+  --tj174-panel2: var(--panel2);
+  --tj174-line: var(--line);
+  --tj174-line2: var(--line2);
+  --tj174-gold: var(--gold);
+  --tj174-gold2: var(--gold2);
+  --tj174-cyan: var(--cyan);
+  --tj174-ink: var(--ink);
+  --tj174-dim: var(--dim);
+  --tj174-shadow: none;
+  color: var(--ink);
+}
+
+/* 标题区：采用全站传统纸本/古典界面的排版语言 */
+#tj152Panel .tj174-hero {
+  padding: 8px 4px 6px !important;
+  border-bottom: 1px solid var(--line);
+}
+#tj152Panel .tj174-eyebrow {
+  color: var(--dim) !important;
+  opacity: 0.82;
+}
+#tj152Panel .tj174-title {
+  color: var(--gold2) !important;
+  font-family: "Ma Shan Zheng", "STKaiti", "KaiTi", "Songti SC", serif !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.12em !important;
+}
+#tj152Panel .tj174-sub,
+#tj152Panel .tj174-now small {
+  color: var(--dim) !important;
+}
+#tj152Panel .tj174-now b {
+  color: var(--ink) !important;
+}
+#tj152Panel .tj174-now span {
+  color: var(--gold) !important;
+  border-color: var(--line) !important;
+  background: var(--wash) !important;
+  border-radius: 3px !important;
+}
+
+/* 所有表面模块统一使用全站 panel / line / wash，不再使用大圆角黑卡片 */
+#tj152Panel .tj174-start,
+#tj152Panel .tj174-display,
+#tj152Panel .tj174-stagecard,
+#tj152Panel .tj174-context,
+#tj152Panel .tj174-fold {
+  background: var(--panel) !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 4px !important;
+  box-shadow: none !important;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+#tj152Panel .tj174-start,
+#tj152Panel .tj174-stagecard {
+  padding: 14px 16px !important;
+}
+
+#tj152Panel .tj174-starthead b,
+#tj152Panel .tj174-stagehead b,
+#tj152Panel .tj174-contexthead b,
+#tj152Panel .tj174-fold > summary b {
+  color: var(--gold2) !important;
+}
+#tj152Panel .tj174-starthead span,
+#tj152Panel .tj174-stagehead span,
+#tj152Panel .tj174-contexthead span,
+#tj152Panel .tj174-fold > summary small {
+  color: var(--dim) !important;
+}
+
+/* 三个默认入口：与全站按钮、卡片风格一致 */
+#tj152Panel .tj174-action {
+  min-height: 66px !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 3px !important;
+  background: var(--panel2) !important;
+  color: var(--ink) !important;
+}
+#tj152Panel .tj174-action:hover {
+  transform: none !important;
+  border-color: var(--line2) !important;
+  background: var(--wash) !important;
+}
+#tj152Panel .tj174-action.on {
+  border-color: var(--gold) !important;
+  background: var(--wash) !important;
+  box-shadow: 0 0 0 1px var(--gold) inset !important;
+}
+#tj152Panel .tj174-action i {
+  border: 1px solid var(--line) !important;
+  border-radius: 3px !important;
+  color: var(--gold) !important;
+  background: transparent !important;
+}
+#tj152Panel .tj174-action b {
+  color: var(--ink) !important;
+}
+#tj152Panel .tj174-action small {
+  color: var(--dim) !important;
+}
+
+/* 显示预设：还原全站小按钮语言 */
+#tj152Panel .tj174-display {
+  padding: 9px 12px !important;
+}
+#tj152Panel .tj174-display > span,
+#tj152Panel .tj174-display .note {
+  color: var(--dim) !important;
+}
+#tj152Panel .tj174-chip {
+  border: 1px solid var(--line) !important;
+  border-radius: 3px !important;
+  background: transparent !important;
+  color: var(--dim) !important;
+}
+#tj152Panel .tj174-chip:hover,
+#tj152Panel .tj174-chip.on {
+  border-color: var(--gold) !important;
+  background: var(--wash) !important;
+  color: var(--gold2) !important;
+}
+
+/* 主盘本体（SVG/绘制）不改；只把它外面的“壳”换成网站统一风格 */
+#tj152Panel .tj174-stagehost #tj152StageShell {
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 3px !important;
+}
+#tj152Panel .tj174-stagehost #tj152Stage {
+  border-radius: 3px !important;
+}
+
+/* 状态条：从黑色药丸卡片改为站内资料格 */
+#tj152Panel .tj174-state > div {
+  background: var(--panel2) !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 3px !important;
+}
+#tj152Panel .tj174-state small {
+  color: var(--dim) !important;
+}
+#tj152Panel .tj174-state b {
+  color: var(--ink) !important;
+}
+
+/* 详情与折叠区 */
+#tj152Panel .tj174-context {
+  padding: 12px 14px !important;
+}
+#tj152Panel .tj174-fold > summary {
+  min-height: 52px !important;
+  padding: 8px 12px !important;
+}
+#tj152Panel .tj174-fold > summary i {
+  border-color: var(--line) !important;
+  border-radius: 3px !important;
+  color: var(--gold) !important;
+  background: var(--panel2) !important;
+}
+#tj152Panel .tj174-fold > summary em {
+  color: var(--dim) !important;
+}
+#tj152Panel .tj174-foldbody {
+  border-top: 1px solid var(--line) !important;
+}
+#tj152Panel .tj174-foldlabel {
+  color: var(--dim) !important;
+}
+#tj152Panel .tj174-prointro {
+  border: 1px solid var(--line) !important;
+  border-radius: 3px !important;
+  background: var(--panel2) !important;
+}
+#tj152Panel .tj174-prointro b {
+  color: var(--gold2) !important;
+}
+#tj152Panel .tj174-prointro small {
+  color: var(--dim) !important;
+}
+#tj152Panel .tj174-prointro button {
+  border: 1px solid var(--line2) !important;
+  border-radius: 3px !important;
+  background: transparent !important;
+  color: var(--gold) !important;
+}
+#tj152Panel .tj174-prointro button:hover {
+  background: var(--wash) !important;
+}
+
+/* 恢复放大入口。v174 暂时隐藏，现在开始重新处理放大态。 */
+#tj152Panel.tj174-mounted #tj152BigBtn {
+  display: inline-grid !important;
+}
+
+/* 2) 观象盘放大：真正以“整个浏览器页面”作为容器。
+   不再使用 1760px 居中卡片式工作台。 */
+#tj152Big {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  align-items: stretch !important;
+  justify-content: stretch !important;
+  background: var(--bg) !important;
+  color: var(--ink) !important;
+  overflow: auto !important;
+}
+#tj152Big.on {
+  display: block !important;
+}
+
+/* 关闭按钮固定在浏览器右上角，而不是某个居中容器右上角 */
+#tj152Big .tj152-big-close {
+  position: fixed !important;
+  right: 18px !important;
+  top: 14px !important;
+  z-index: 50 !important;
+  min-height: 34px !important;
+  padding: 5px 14px !important;
+  border: 1px solid var(--line2) !important;
+  border-radius: 3px !important;
+  background: var(--panel) !important;
+  color: var(--gold2) !important;
+  box-shadow: none !important;
+}
+
+/* 顶部控制区横跨整个视口 */
+#tj152Big .tj157-big-controls {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 14px 70px 0 18px !important;
+  box-sizing: border-box !important;
+}
+#tj152Big .tj157-big-controls .tj156-big-note {
+  display: none !important;
+}
+#tj152Big .tj157-big-controls .tj152-mode-help {
+  display: none !important;
+}
+#tj152Big .tj157-big-controls .tj152-top {
+  width: 100% !important;
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 20 !important;
+  padding: 10px 12px !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 4px !important;
+  background: color-mix(in srgb, var(--panel) 94%, var(--bg)) !important;
+  box-shadow: none !important;
+  backdrop-filter: blur(9px) !important;
+}
+#tj152Big .tj152-seg,
+#tj152Big .tj152-timebar {
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+#tj152Big .tj152-seg::before,
+#tj152Big .tj152-timebar::before {
+  display: none !important;
+}
+#tj152Big .tj152-timebar select {
+  border-color: var(--line) !important;
+  border-radius: 3px !important;
+  background: var(--panel2) !important;
+  color: var(--ink) !important;
+}
+
+/* 整个工作区从左右边缘开始铺开 */
+#tj152Big .tj155-workspace {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 10px 18px 20px !important;
+  box-sizing: border-box !important;
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 12px !important;
+}
+
+/* 放大态不再常驻旧左栏，让主盘真正吃到横向空间 */
+#tj152Big .tj155-control {
+  display: none !important;
+}
+
+/* 普通观象/出生/推演：主盘占满可用宽度 */
+#tj152Big .tj155-main {
+  width: 100% !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) !important;
+  grid-template-areas:
+    "stage"
+    "river"
+    "detail" !important;
+  gap: 12px !important;
+}
+
+/* 只有时空搜索模式真正打开 inverse 时，才分出右侧专业栏 */
+#tj152Big .tj155-main:has(#tj155Inverse.on) {
+  grid-template-columns: minmax(0, 1fr) minmax(360px, 430px) !important;
+  grid-template-areas:
+    "stage inverse"
+    "river inverse"
+    "detail inverse" !important;
+  align-items: start !important;
+}
+
+/* 主盘外壳使用全站主题，但绘制盘本身不变 */
+#tj152Big #tj152StageShell {
+  grid-area: stage !important;
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 8px !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 4px !important;
+  background: var(--panel) !important;
+  box-shadow: none !important;
+}
+#tj152Big .tj155-main .tj152-stage {
+  width: 100% !important;
+  min-height: calc(100vh - 150px) !important;
+  height: calc(100vh - 150px) !important;
+  border-radius: 3px !important;
+}
+
+/* 时间轴 / 详情 / 专业区也不再用黑色工作台皮肤 */
+#tj152Big #tj152River,
+#tj152Big .tj155-main > .tj152-card,
+#tj152Big #tj155Inverse {
+  border: 1px solid var(--line) !important;
+  border-radius: 4px !important;
+  background: var(--panel) !important;
+  color: var(--ink) !important;
+  box-shadow: none !important;
+}
+#tj152Big #tj155Inverse {
+  grid-area: inverse !important;
+  position: sticky !important;
+  top: 76px !important;
+  max-height: calc(100vh - 92px) !important;
+}
+#tj152Big .tj155-inverse-head h4 {
+  color: var(--gold2) !important;
+}
+#tj152Big .tj155-inverse-head p {
+  color: var(--dim) !important;
+}
+#tj152Big .tj155-searchbar,
+#tj152Big .tj155-target,
+#tj152Big .tj157-extra,
+#tj152Big .tj155-status,
+#tj152Big .tj155-result {
+  background: var(--panel2) !important;
+  border-color: var(--line) !important;
+  box-shadow: none !important;
+}
+#tj152Big .tj152-floating {
+  background: color-mix(in srgb, var(--panel) 90%, transparent) !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 3px !important;
+}
+
+/* 3) 太阳系 3D / 日心俯视 / 日地月 3D / 日月食：
+   去掉每次切换都会出现的“小字操作说明”。功能仍保留。 */
+#as-orr3d #orrModeHint,
+#as-orr3d .cam-help,
+#as-orr3d .astro-gesture-hint {
+  display: none !important;
+}
+
+/* 移除提示后，模式栏更紧凑 */
+#as-orr3d .orr-modebar {
+  align-items: center !important;
+  padding-bottom: 8px !important;
+}
+
+/* 小屏仍以单列为主，放大态不制造横向溢出 */
+@media (max-width: 980px) {
+  #tj152Big .tj157-big-controls {
+    padding: 12px 58px 0 10px !important;
+  }
+  #tj152Big .tj155-workspace {
+    padding: 8px 10px 14px !important;
+  }
+  #tj152Big .tj155-main:has(#tj155Inverse.on) {
+    grid-template-columns: 1fr !important;
+    grid-template-areas: "stage" "river" "inverse" "detail" !important;
+  }
+  #tj152Big #tj155Inverse {
+    position: static !important;
+    max-height: none !important;
+  }
+  #tj152Big .tj155-main .tj152-stage {
+    min-height: 70vh !important;
+    height: 70vh !important;
+  }
+}

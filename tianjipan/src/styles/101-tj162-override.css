@@ -1,0 +1,272 @@
+/* v162 · 时空状态搜索引擎 */
+#tj152Panel .tj162-engine-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin: 12px 0;
+  padding: 7px;
+  border: 1px solid rgba(214, 181, 112, 0.15);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.018);
+}
+#tj152Panel .tj162-engine-tabs button {
+  min-height: 38px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: transparent;
+  color: #d9cfbc;
+  cursor: pointer;
+  font-weight: 600;
+}
+#tj152Panel .tj162-engine-tabs button.on {
+  border-color: rgba(214, 181, 112, 0.32);
+  background: rgba(214, 181, 112, 0.1);
+  color: #f3deb4;
+}
+#tj152Panel .tj162-engine-tabs small {
+  display: block;
+  margin-top: 2px;
+  font-size: 9.5px;
+  font-weight: 400;
+  color: rgba(237, 229, 214, 0.48);
+}
+#tj152Panel .tj162-similar {
+  display: none;
+  margin-top: 10px;
+}
+#tj152Panel #tj155Inverse[data-engine="similar"] .tj162-similar {
+  display: block;
+}
+#tj152Panel #tj155Inverse[data-engine="similar"] .tj160-inv-toolbar,
+#tj152Panel #tj155Inverse[data-engine="similar"] .tj161-wizard,
+#tj152Panel #tj155Inverse[data-engine="similar"] .tj155-searchbar,
+#tj152Panel #tj155Inverse[data-engine="similar"] .tj161-step1-tools,
+#tj152Panel #tj155Inverse[data-engine="similar"] #tj155Targets,
+#tj152Panel #tj155Inverse[data-engine="similar"] .tj157-extra,
+#tj152Panel #tj155Inverse[data-engine="similar"] #tj161RunCard,
+#tj152Panel #tj155Inverse[data-engine="similar"] #tj160ResultCard {
+  display: none !important;
+}
+#tj152Panel #tj155Inverse[data-engine="condition"] .tj162-similar {
+  display: none !important;
+}
+#tj152Panel .tj162-grid2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+#tj152Panel .tj162-card {
+  padding: 12px;
+  border: 1px solid rgba(214, 181, 112, 0.13);
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.025), rgba(255, 255, 255, 0.012));
+}
+#tj152Panel .tj162-card h5 {
+  margin: 0 0 8px;
+  color: #f0ddb8;
+  font:
+    600 13px/1.3 "STKaiti",
+    "KaiTi",
+    "Songti SC",
+    serif;
+}
+#tj152Panel .tj162-card p {
+  margin: 0;
+  color: rgba(237, 229, 214, 0.62);
+  font-size: 11.5px;
+  line-height: 1.65;
+}
+#tj152Panel .tj162-ref {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+#tj152Panel .tj162-ref b {
+  display: block;
+  color: #f4deb4;
+  font-size: 13px;
+  margin-top: 3px;
+}
+#tj152Panel .tj162-actions {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+}
+#tj152Panel .tj162-actions button,
+#tj152Panel .tj162-presets button {
+  min-height: 32px;
+  padding: 4px 10px;
+  border: 1px solid rgba(214, 181, 112, 0.18);
+  border-radius: 9px;
+  background: rgba(255, 255, 255, 0.02);
+  color: #e5d8bd;
+  cursor: pointer;
+}
+#tj152Panel .tj162-actions button.on,
+#tj152Panel .tj162-presets button.on {
+  border-color: rgba(214, 181, 112, 0.42);
+  background: rgba(214, 181, 112, 0.11);
+  color: #f3ddb1;
+}
+#tj152Panel .tj162-feature-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px;
+  margin-top: 8px;
+}
+#tj152Panel .tj162-feature {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  padding: 8px;
+  border: 1px solid rgba(214, 181, 112, 0.1);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.018);
+}
+#tj152Panel .tj162-feature input {
+  margin-top: 3px;
+  accent-color: #d6b570;
+}
+#tj152Panel .tj162-feature b {
+  display: block;
+  color: #e9ddc6;
+  font-size: 11.5px;
+}
+#tj152Panel .tj162-feature small {
+  display: block;
+  color: rgba(237, 229, 214, 0.48);
+  font-size: 9.8px;
+  line-height: 1.45;
+  margin-top: 2px;
+}
+#tj152Panel .tj162-range {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 9px;
+}
+#tj152Panel .tj162-range label {
+  display: grid;
+  gap: 4px;
+  color: rgba(237, 229, 214, 0.56);
+  font-size: 10.5px;
+}
+#tj152Panel .tj162-range input {
+  width: 100%;
+  min-height: 34px;
+  padding: 4px 7px;
+  border: 1px solid rgba(214, 181, 112, 0.18);
+  border-radius: 8px;
+  background: #0d1420;
+  color: #f1e7d5;
+}
+#tj152Panel .tj162-presets {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+#tj152Panel #tj162SimilarRun {
+  width: 100%;
+  min-height: 42px;
+  margin-top: 10px;
+  border-radius: 11px;
+  border: 1px solid rgba(116, 216, 204, 0.34);
+  background: linear-gradient(180deg, rgba(116, 216, 204, 0.15), rgba(116, 216, 204, 0.05));
+  color: #c9f3eb;
+  font-weight: 700;
+  cursor: pointer;
+}
+#tj152Panel #tj162SimilarRun:disabled {
+  opacity: 0.55;
+  cursor: wait;
+}
+#tj152Panel .tj162-note {
+  margin-top: 8px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(116, 216, 204, 0.12);
+  background: rgba(116, 216, 204, 0.035);
+  color: rgba(218, 246, 239, 0.72);
+  font-size: 10.8px;
+  line-height: 1.6;
+}
+#tj152Panel .tj162-sim-results {
+  display: grid;
+  gap: 8px;
+  margin-top: 10px;
+}
+#tj152Panel .tj162-sim-result {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  padding: 10px;
+  border: 1px solid rgba(214, 181, 112, 0.12);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.018);
+}
+#tj152Panel .tj162-sim-result h6 {
+  margin: 0;
+  color: #f1ddb4;
+  font-size: 12.5px;
+}
+#tj152Panel .tj162-sim-result .meta {
+  margin-top: 4px;
+  color: rgba(237, 229, 214, 0.57);
+  font-size: 10.5px;
+  line-height: 1.55;
+}
+#tj152Panel .tj162-sim-result .why {
+  margin-top: 5px;
+  color: rgba(220, 239, 234, 0.72);
+  font-size: 10.5px;
+  line-height: 1.55;
+}
+#tj152Panel .tj162-score {
+  text-align: right;
+  white-space: nowrap;
+}
+#tj152Panel .tj162-score b {
+  display: block;
+  color: #9fe7da;
+  font-size: 18px;
+}
+#tj152Panel .tj162-score small {
+  color: rgba(237, 229, 214, 0.45);
+  font-size: 9px;
+}
+#tj152Panel .tj162-score button {
+  display: block;
+  margin-top: 7px;
+  min-height: 30px;
+  padding: 4px 9px;
+  border-radius: 8px;
+  border: 1px solid rgba(214, 181, 112, 0.2);
+  background: rgba(214, 181, 112, 0.06);
+  color: #f0d9a9;
+  cursor: pointer;
+}
+#tj152Big #tj155Inverse[data-engine="similar"] {
+  max-height: calc(100vh - 164px) !important;
+}
+#tj152Big .tj162-grid2 {
+  grid-template-columns: 1fr;
+}
+@media (max-width: 720px) {
+  #tj152Panel .tj162-grid2,
+  #tj152Panel .tj162-feature-list,
+  #tj152Panel .tj162-range {
+    grid-template-columns: 1fr;
+  }
+  #tj152Panel .tj162-sim-result {
+    grid-template-columns: 1fr;
+  }
+  #tj152Panel .tj162-score {
+    text-align: left;
+  }
+  #tj152Panel .tj162-score button {
+    display: inline-block;
+  }
+}

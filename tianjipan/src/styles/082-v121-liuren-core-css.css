@@ -1,0 +1,215 @@
+/* ===== v121 · 大六壬 Core：九宗门规则链 / 自检 / 溯源 ===== */
+.lr-core {
+  margin-top: 14px;
+}
+.lr-core-head {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.lr-core-head > div:first-child {
+  margin-right: auto;
+}
+.lr-core-head h3 {
+  margin: 0;
+  font:
+    400 22px/1.2 "STKaiti",
+    "KaiTi",
+    "Songti SC",
+    "STSong",
+    serif;
+  color: var(--gold2);
+  letter-spacing: 0.08em;
+}
+.lr-core-head small {
+  display: block;
+  color: var(--dim);
+  font-size: 11px;
+  margin-top: 3px;
+}
+.lr-core-badge {
+  padding: 3px 9px;
+  border: 1px solid var(--line2);
+  border-radius: 12px;
+  color: var(--good);
+  font-size: 11px;
+  background: var(--panel2);
+}
+.lr-core-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(270px, 0.85fr);
+  gap: 12px;
+  align-items: start;
+}
+.lr-rule-chain {
+  display: grid;
+  gap: 6px;
+}
+.lr-rule-step {
+  display: grid;
+  grid-template-columns: 28px 116px 1fr;
+  gap: 8px;
+  align-items: start;
+  padding: 8px 9px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  border-radius: 3px;
+  font-size: 12px;
+  line-height: 1.6;
+}
+.lr-rule-step .n {
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid var(--line2);
+  color: var(--gold);
+  font-size: 10px;
+}
+.lr-rule-step b {
+  color: var(--gold2);
+  font-weight: 500;
+}
+.lr-rule-step.ok {
+  border-left: 3px solid var(--good);
+}
+.lr-rule-step.warn {
+  border-left: 3px solid var(--gold);
+}
+.lr-rule-step.bad {
+  border-left: 3px solid var(--bad);
+}
+.lr-audit {
+  display: grid;
+  gap: 5px;
+}
+.lr-audit-row {
+  display: grid;
+  grid-template-columns: 22px 110px 1fr;
+  gap: 7px;
+  padding: 6px 8px;
+  border-bottom: 1px dashed var(--line);
+  font-size: 11.5px;
+  line-height: 1.55;
+}
+.lr-audit-row:last-child {
+  border-bottom: 0;
+}
+.lr-audit-row .ic {
+  font-weight: 700;
+}
+.lr-audit-row.pass .ic {
+  color: var(--good);
+}
+.lr-audit-row.fail .ic {
+  color: var(--bad);
+}
+.lr-audit-row b {
+  font-weight: 500;
+  color: var(--ink);
+}
+.lr-audit-row span:last-child {
+  color: var(--dim);
+}
+.lr-tags121 {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin: 8px 0;
+}
+.lr-tags121 span {
+  padding: 2px 7px;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  font-size: 10.5px;
+  color: var(--dim);
+  background: var(--panel2);
+}
+.lr-tags121 span.hot {
+  border-color: var(--gold);
+  color: var(--gold2);
+}
+.lr-tags121 span.risk {
+  border-color: rgba(232, 115, 95, 0.55);
+  color: var(--bad);
+}
+.lr-tracebox {
+  margin-top: 10px;
+  padding: 9px 10px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  border-radius: 3px;
+}
+.lr-tracebox h4 {
+  margin: 0 0 6px;
+  color: var(--gold2);
+  font:
+    400 17px "STKaiti",
+    "KaiTi",
+    "Songti SC",
+    serif;
+}
+.lr-tracebox p {
+  margin: 3px 0;
+  font-size: 11.5px;
+  color: var(--dim);
+  line-height: 1.65;
+}
+.lr-tracebox b {
+  color: var(--ink);
+  font-weight: 500;
+}
+.lr-clickable {
+  cursor: pointer;
+  transition:
+    box-shadow 0.16s,
+    border-color 0.16s,
+    filter 0.16s;
+}
+.lr-clickable:hover {
+  border-color: var(--gold) !important;
+}
+.lr-focus {
+  box-shadow:
+    0 0 0 2px var(--gold) inset,
+    0 0 18px var(--wash) !important;
+  border-color: var(--gold2) !important;
+  filter: brightness(1.07);
+}
+.lrc.lr-focus .sk,
+.kc.lr-focus .ku,
+.cc.lr-focus .cz {
+  color: var(--gold2) !important;
+  text-shadow: 0 0 10px var(--wash);
+}
+.lr-core-note {
+  margin: 9px 0 0;
+  font-size: 10.5px;
+  color: var(--dim);
+  line-height: 1.65;
+}
+.lr-core-note b {
+  color: var(--gold);
+}
+@media (max-width: 860px) {
+  .lr-core-grid {
+    grid-template-columns: 1fr;
+  }
+  .lr-rule-step {
+    grid-template-columns: 26px 96px 1fr;
+  }
+}
+@media (max-width: 540px) {
+  .lr-rule-step {
+    grid-template-columns: 24px 1fr;
+  }
+  .lr-rule-step > span:last-child {
+    grid-column: 2;
+  }
+  .lr-audit-row {
+    grid-template-columns: 20px 92px 1fr;
+  }
+}

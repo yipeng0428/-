@@ -1,0 +1,37 @@
+#orr3dStageWrap {
+  position: relative;
+}
+.v136-floatbar {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  z-index: 12;
+  padding: 8px 10px;
+  border-radius: 12px;
+  background: rgba(11, 12, 20, 0.48);
+  border: 1px solid rgba(229, 194, 132, 0.22);
+  backdrop-filter: blur(6px);
+}
+.v136-floatbar .gbtn.sm {
+  padding: 5px 10px;
+  min-width: auto;
+}
+.v136-track-tag {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  z-index: 12;
+  padding: 6px 10px;
+  border-radius: 12px;
+  background: rgba(27, 19, 11, 0.58);
+  color: #f3da98;
+  border: 1px solid rgba(243, 218, 152, 0.26);
+  font-size: 12px;
+  backdrop-filter: blur(6px);
+}
+.v136-lock {
+  color: #ffdb8b;
+}

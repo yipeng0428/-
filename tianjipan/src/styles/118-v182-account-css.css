@@ -1,0 +1,326 @@
+/* ===== v182 · 我的档案 / 匿名账号 / 云端同步 ===== */
+#tnAccount {
+  position: relative;
+}
+#tnAccount::after {
+  content: "";
+  position: absolute;
+  right: 5px;
+  top: 7px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--dim);
+  opacity: 0.55;
+}
+#tnAccount.local::after {
+  background: var(--gold);
+  opacity: 0.7;
+}
+#tnAccount.cloud::after {
+  background: var(--good);
+  opacity: 1;
+}
+#tnAccount.warn::after {
+  background: var(--red);
+  opacity: 1;
+}
+
+.tja-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 130;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: rgba(28, 20, 10, 0.34);
+  backdrop-filter: blur(3px);
+}
+.tja-modal[hidden] {
+  display: none !important;
+}
+.tja-card {
+  width: min(1120px, calc(100vw - 24px));
+  max-height: min(880px, calc(100vh - 24px));
+  overflow: auto;
+  background: var(--bg2);
+  border: 1px solid var(--line2);
+  outline: 1px solid var(--line);
+  outline-offset: -5px;
+  box-shadow: 0 24px 70px -22px rgba(0, 0, 0, 0.58);
+  padding: 16px 18px 20px;
+}
+.tja-head {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 11px;
+  margin-bottom: 12px;
+}
+.tja-head-main {
+  flex: 1;
+  min-width: 0;
+}
+.tja-head h2 {
+  margin: 0;
+  font:
+    26px/1.2 "Ma Shan Zheng",
+    "STKaiti",
+    serif;
+  color: var(--gold2);
+  letter-spacing: 0.08em;
+}
+.tja-head p {
+  margin: 4px 0 0;
+  color: var(--dim);
+  font-size: 11px;
+  line-height: 1.65;
+}
+.tja-x {
+  flex: none;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  padding: 6px 10px;
+}
+.tja-status {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  padding: 11px 12px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  margin-bottom: 10px;
+}
+.tja-status strong {
+  display: block;
+  color: var(--gold2);
+  font-size: 14px;
+}
+.tja-status small {
+  display: block;
+  margin-top: 3px;
+  color: var(--dim);
+  font-size: 10.5px;
+  line-height: 1.55;
+}
+.tja-status .pill {
+  justify-self: end;
+}
+.tja-alert {
+  padding: 9px 11px;
+  margin: 8px 0;
+  border-left: 3px solid var(--gold);
+  background: var(--wash);
+  font-size: 11px;
+  line-height: 1.7;
+}
+.tja-alert.warn {
+  border-left-color: var(--red);
+}
+.tja-alert.good {
+  border-left-color: var(--good);
+}
+.tja-grid {
+  display: grid;
+  grid-template-columns: minmax(300px, 0.72fr) minmax(0, 1.28fr);
+  gap: 12px;
+  align-items: start;
+}
+.tja-panel {
+  border: 1px solid var(--line);
+  background: var(--panel);
+  padding: 12px;
+}
+.tja-panel h3 {
+  margin: 0 0 8px;
+  color: var(--gold2);
+  font-size: 14px;
+}
+.tja-panel h3 small {
+  font-weight: 400;
+  color: var(--dim);
+  font-size: 10px;
+  margin-left: 5px;
+}
+.tja-authrow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 7px;
+}
+.tja-authrow input,
+.tja-form input,
+.tja-form select,
+.tja-form textarea {
+  width: 100%;
+  box-sizing: border-box;
+  background: var(--panel2);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  padding: 7px 8px;
+  font: inherit;
+}
+.tja-authrow button,
+.tja-actions button,
+.tja-item button,
+.tja-form button {
+  border: 1px solid var(--line2);
+  background: transparent;
+  color: var(--ink);
+  padding: 6px 9px;
+  cursor: pointer;
+}
+.tja-authrow button:hover,
+.tja-actions button:hover,
+.tja-item button:hover,
+.tja-form button:hover {
+  background: var(--wash);
+  color: var(--gold2);
+}
+.tja-actions {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin: 9px 0;
+}
+.tja-actions .primary,
+.tja-form .primary {
+  background: var(--red);
+  border-color: var(--red);
+  color: #fff;
+}
+.tja-list {
+  display: grid;
+  gap: 6px;
+}
+.tja-empty {
+  padding: 13px;
+  border: 1px dashed var(--line);
+  color: var(--dim);
+  font-size: 11px;
+  text-align: center;
+}
+.tja-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  padding: 9px 10px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+}
+.tja-item b {
+  display: block;
+  color: var(--ink);
+  font-size: 12px;
+}
+.tja-item small {
+  display: block;
+  color: var(--dim);
+  font-size: 10px;
+  margin-top: 2px;
+  line-height: 1.45;
+}
+.tja-item .ops {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.tja-item .danger {
+  color: var(--red);
+}
+.tja-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.tja-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.tja-form label {
+  display: grid;
+  gap: 4px;
+  color: var(--dim);
+  font-size: 10.5px;
+}
+.tja-form label.wide {
+  grid-column: 1/-1;
+}
+.tja-form textarea {
+  min-height: 74px;
+  resize: vertical;
+}
+.tja-check {
+  display: flex !important;
+  align-items: center;
+  gap: 7px !important;
+  grid-column: 1/-1;
+}
+.tja-check input {
+  width: auto !important;
+}
+.tja-foot {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--line);
+  color: var(--dim);
+  font-size: 10px;
+  line-height: 1.7;
+}
+.tja-busy {
+  opacity: 0.62;
+  pointer-events: none;
+}
+@media (max-width: 900px) {
+  .tja-grid {
+    grid-template-columns: 1fr;
+  }
+  .tja-columns {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 640px) {
+  .tja-modal {
+    padding: 0;
+    align-items: stretch;
+  }
+  .tja-card {
+    width: 100vw;
+    max-height: 100vh;
+    height: 100vh;
+    border: 0;
+    outline: 0;
+    padding: 12px 10px 18px;
+  }
+  .tja-status {
+    grid-template-columns: 1fr;
+  }
+  .tja-status .pill {
+    justify-self: start;
+  }
+  .tja-authrow {
+    grid-template-columns: 1fr;
+  }
+  .tja-form {
+    grid-template-columns: 1fr;
+  }
+  .tja-form label.wide,
+  .tja-check {
+    grid-column: 1;
+  }
+  .tja-item {
+    grid-template-columns: 1fr;
+  }
+  .tja-item .ops {
+    justify-content: flex-start;
+  }
+  .tja-head h2 {
+    font-size: 23px;
+  }
+}

@@ -1,0 +1,483 @@
+/* ===== v45 · 盘库 07：浑天仪 · 日晷 ===== */
+.htd-shell {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: calc(100vh - var(--navh) - 24px);
+}
+.htd-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 10px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  border-radius: 3px;
+  position: sticky;
+  top: var(--navh);
+  z-index: 7;
+  backdrop-filter: blur(10px);
+}
+.htd-title {
+  flex: 1;
+  min-width: 0;
+}
+.htd-title b {
+  display: block;
+  font-family: "ZCOOL XiaoWei", "Ma Shan Zheng", serif;
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--gold2);
+  letter-spacing: 0.12em;
+}
+.htd-title small {
+  display: block;
+  color: var(--dim);
+  font-size: 11px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.htd-grid {
+  display: grid;
+  grid-template-columns: 268px minmax(0, 1fr) 292px;
+  gap: 10px;
+  align-items: start;
+}
+.htd-side,
+.htd-info {
+  padding: 11px;
+  min-width: 0;
+}
+.htd-side > h4,
+.htd-info h4 {
+  margin: 0 0 8px;
+  font-family: "ZCOOL XiaoWei", "Ma Shan Zheng", serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--gold2);
+  letter-spacing: 0.08em;
+}
+.htd-group {
+  padding: 9px 0;
+  border-top: 1px dashed var(--line);
+}
+.htd-group:first-of-type {
+  border-top: 0;
+  padding-top: 0;
+}
+.htd-group label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: var(--dim);
+  font-size: 11px;
+  margin: 0 0 7px;
+}
+.htd-group input,
+.htd-group select {
+  min-height: 32px;
+  padding: 4px 7px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  color: var(--ink);
+  font: inherit;
+}
+.htd-btnrow {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+.htd-btnrow .gbtn {
+  flex: 1;
+  min-width: 66px;
+}
+.htd-layer {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: flex-start;
+  gap: 7px !important;
+  margin: 5px 0 !important;
+  color: var(--ink) !important;
+}
+.htd-layer input {
+  min-height: auto;
+  margin-top: 3px;
+}
+.htd-layer span {
+  line-height: 1.4;
+}
+.htd-layer small {
+  display: block;
+  color: var(--dim);
+  font-size: 9.5px;
+}
+.htd-main {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.htd-viewbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  padding: 7px 8px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  border-radius: 3px;
+}
+.htd-viewbar .hint {
+  font-size: 10.5px;
+  color: var(--dim);
+  flex: 1;
+}
+.htd-z {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  color: var(--dim);
+}
+.htd-frame {
+  position: relative;
+  overflow: hidden;
+  min-height: 620px;
+  aspect-ratio: 1/1;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: radial-gradient(
+    circle at 50% 45%,
+    color-mix(in srgb, var(--panel2) 75%, transparent),
+    var(--panel) 73%
+  );
+  cursor: grab;
+}
+.htd-frame.pan {
+  cursor: move;
+}
+.htd-frame.grab {
+  cursor: grabbing;
+}
+.htd-frame svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: none;
+  user-select: none;
+}
+.htd-sphere {
+  fill: none;
+  stroke: var(--line2);
+  stroke-width: 1.2;
+}
+.htd-earth {
+  fill: color-mix(in srgb, var(--water) 22%, var(--panel));
+  stroke: var(--line2);
+  stroke-width: 1;
+}
+.htd-ring {
+  fill: none;
+  stroke-width: 1.7;
+}
+.htd-ring.back {
+  opacity: 0.18;
+  stroke-dasharray: 5 6;
+}
+.htd-eq {
+  stroke: var(--cyan);
+}
+.htd-ecl {
+  stroke: var(--gold2);
+  stroke-width: 2.6;
+}
+.htd-hor {
+  stroke: var(--ink);
+  stroke-width: 2;
+}
+.htd-mer {
+  stroke: var(--red);
+  stroke-width: 1.8;
+}
+.htd-tropic {
+  stroke: var(--gold);
+  stroke-width: 1;
+  stroke-dasharray: 5 5;
+  opacity: 0.65;
+}
+.htd-day-up {
+  fill: none;
+  stroke: #d6a34e;
+  stroke-width: 2.8;
+}
+.htd-day-down {
+  fill: none;
+  stroke: var(--dim);
+  stroke-width: 1.2;
+  stroke-dasharray: 4 5;
+  opacity: 0.42;
+}
+.htd-axis {
+  stroke: var(--red);
+  stroke-width: 2;
+}
+.htd-axis2 {
+  stroke: var(--line2);
+  stroke-width: 1;
+  stroke-dasharray: 4 4;
+}
+.htd-sun {
+  fill: #f1b84b;
+  stroke: #8a5a12;
+  stroke-width: 1.6;
+  filter: drop-shadow(0 0 5px rgba(230, 180, 70, 0.35));
+}
+.htd-zen {
+  fill: var(--cyan);
+  stroke: var(--panel);
+  stroke-width: 1;
+}
+.htd-pole {
+  fill: var(--red);
+  stroke: var(--panel);
+  stroke-width: 1;
+}
+.htd-lab {
+  font:
+    11px "Noto Serif SC",
+    serif;
+  fill: var(--dim);
+  paint-order: stroke;
+  stroke: var(--panel);
+  stroke-width: 3px;
+  stroke-linejoin: round;
+}
+.htd-lab.key {
+  fill: var(--gold2);
+  font-weight: 600;
+}
+.htd-lab.red {
+  fill: var(--red);
+}
+.htd-pt {
+  cursor: pointer;
+}
+.htd-pt:hover .htd-lab {
+  fill: var(--gold2);
+}
+.htd-instruments {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 9px;
+}
+.htd-inst {
+  padding: 10px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  border-radius: 3px;
+  min-width: 0;
+}
+.htd-inst-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  align-items: baseline;
+  margin-bottom: 6px;
+}
+.htd-inst-head b {
+  font-family: "ZCOOL XiaoWei", "Ma Shan Zheng", serif;
+  color: var(--gold2);
+  font-weight: 400;
+  font-size: 16px;
+}
+.htd-inst-head small {
+  color: var(--dim);
+  font-size: 10px;
+}
+.htd-inst svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 360px;
+}
+.sd-ring {
+  fill: var(--panel2);
+  stroke: var(--line2);
+  stroke-width: 1.2;
+}
+.sd-hour {
+  stroke: var(--line2);
+  stroke-width: 1;
+}
+.sd-hour.major {
+  stroke: var(--gold);
+  stroke-width: 1.35;
+}
+.sd-noon {
+  stroke: var(--red);
+  stroke-width: 1.5;
+}
+.sd-shadow {
+  stroke: var(--ink);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+.sd-shadow2 {
+  stroke: var(--dim);
+  stroke-width: 1;
+  stroke-dasharray: 4 4;
+}
+.sd-sun {
+  fill: #f1b84b;
+  stroke: #8a5a12;
+  stroke-width: 1;
+}
+.sd-gnomon {
+  fill: var(--red);
+  stroke: var(--panel);
+  stroke-width: 1;
+}
+.sd-t {
+  fill: var(--dim);
+  font:
+    10px "Noto Serif SC",
+    serif;
+}
+.sd-t.key {
+  fill: var(--gold2);
+  font-weight: 600;
+}
+.sd-eq-pointer {
+  stroke: var(--red);
+  stroke-width: 2.5;
+}
+.sd-eq-day {
+  fill: none;
+  stroke: var(--gold);
+  stroke-width: 1.4;
+  stroke-dasharray: 4 4;
+}
+.htd-info {
+  position: sticky;
+  top: calc(var(--navh) + 62px);
+  max-height: calc(100vh - var(--navh) - 80px);
+  overflow: auto;
+}
+.htd-facts {
+  display: grid;
+  grid-template-columns: 84px 1fr;
+  gap: 0;
+  font-size: 11.5px;
+}
+.htd-facts span,
+.htd-facts b {
+  padding: 5px 0;
+  border-bottom: 1px dashed var(--line);
+}
+.htd-facts span {
+  color: var(--dim);
+}
+.htd-facts b {
+  font-weight: 600;
+  color: var(--ink);
+}
+.htd-card {
+  margin-top: 10px;
+  padding: 9px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  border-radius: 3px;
+}
+.htd-card h5 {
+  margin: 0 0 5px;
+  color: var(--gold2);
+  font-size: 12px;
+}
+.htd-card p {
+  margin: 3px 0;
+  color: var(--dim);
+  font-size: 10.5px;
+  line-height: 1.65;
+}
+.htd-bottom {
+  padding: 10px 12px;
+  font-size: 11px;
+  line-height: 1.8;
+  color: var(--dim);
+}
+.htd-bottom b {
+  color: var(--gold2);
+}
+.htd-shell:fullscreen {
+  padding: 10px;
+  background: var(--bg);
+  overflow: auto;
+}
+.htd-shell:fullscreen .htd-top {
+  top: 0;
+}
+.htd-shell:fullscreen .htd-frame {
+  min-height: min(72vh, 820px);
+}
+@media (max-width: 1320px) {
+  .htd-grid {
+    grid-template-columns: 235px minmax(0, 1fr);
+  }
+  .htd-info {
+    grid-column: 1/-1;
+    position: static;
+    max-height: none;
+  }
+  .htd-info-inner {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 9px;
+  }
+  .htd-info-inner > h4 {
+    grid-column: 1/-1;
+  }
+  .htd-info-inner .htd-card {
+    margin-top: 0;
+  }
+}
+@media (max-width: 900px) {
+  .htd-grid {
+    grid-template-columns: 1fr;
+  }
+  .htd-side {
+    order: 2;
+  }
+  .htd-main {
+    order: 1;
+  }
+  .htd-info {
+    order: 3;
+  }
+  .htd-frame {
+    min-height: 520px;
+  }
+  .htd-instruments {
+    grid-template-columns: 1fr;
+  }
+  .htd-info-inner {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 600px) {
+  .htd-top {
+    position: static;
+    flex-wrap: wrap;
+  }
+  .htd-title {
+    flex-basis: 100%;
+    order: -1;
+  }
+  .htd-frame {
+    min-height: 390px;
+  }
+  .htd-viewbar .hint {
+    flex-basis: 100%;
+    order: 3;
+  }
+}

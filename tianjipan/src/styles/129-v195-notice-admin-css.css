@@ -1,0 +1,190 @@
+/* ===== v195 · 道长通知控制台 ===== */
+.tjn-adminbar {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 0 0 10px;
+}
+.tjn-adminbar .spacer {
+  flex: 1;
+}
+.tjn-adminbar button {
+  border: 1px solid var(--line2);
+  background: transparent;
+  color: var(--ink);
+  padding: 6px 9px;
+  cursor: pointer;
+}
+.tjn-adminbar button:hover {
+  background: var(--wash);
+  color: var(--gold2);
+}
+.tjn-adminbar .primary {
+  background: var(--red);
+  border-color: var(--red);
+  color: #fff;
+}
+.tjn-adminshell {
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr);
+  gap: 10px;
+  align-items: start;
+}
+.tjn-admin-list {
+  border: 1px solid var(--line);
+  background: var(--panel);
+  max-height: 560px;
+  overflow: auto;
+  padding: 7px;
+}
+.tjn-admin-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: center;
+  padding: 8px 9px;
+  margin-bottom: 5px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  cursor: pointer;
+}
+.tjn-admin-row:hover,
+.tjn-admin-row.on {
+  border-color: var(--line2);
+  background: var(--wash);
+}
+.tjn-admin-row b {
+  display: block;
+  color: var(--ink);
+  font-size: 10.5px;
+}
+.tjn-admin-row small {
+  display: block;
+  color: var(--dim);
+  font-size: 8.8px;
+  margin-top: 2px;
+  line-height: 1.4;
+}
+.tjn-admin-row .state {
+  font-size: 8px;
+  padding: 2px 5px;
+  border: 1px solid var(--line);
+  color: var(--dim);
+  white-space: nowrap;
+}
+.tjn-admin-row .state.live {
+  color: var(--good);
+  border-color: color-mix(in srgb, var(--good) 45%, var(--line));
+}
+.tjn-editor {
+  border: 1px solid var(--line);
+  background: var(--panel);
+  padding: 11px 12px;
+}
+.tjn-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.tjn-form label {
+  display: grid;
+  gap: 4px;
+  color: var(--dim);
+  font-size: 9.5px;
+}
+.tjn-form label.wide {
+  grid-column: 1/-1;
+}
+.tjn-form input,
+.tjn-form textarea,
+.tjn-form select {
+  width: 100%;
+  box-sizing: border-box;
+  background: var(--panel2);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  padding: 7px 8px;
+  font: inherit;
+}
+.tjn-form textarea {
+  min-height: 84px;
+  resize: vertical;
+}
+.tjn-form #tjnAdminBody {
+  min-height: 150px;
+}
+.tjn-checks {
+  grid-column: 1/-1;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 7px 0;
+}
+.tjn-checks label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--ink);
+}
+.tjn-checks input {
+  width: auto;
+}
+.tjn-editor-actions {
+  grid-column: 1/-1;
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+.tjn-editor-actions button {
+  border: 1px solid var(--line2);
+  background: transparent;
+  color: var(--ink);
+  padding: 6px 9px;
+  cursor: pointer;
+}
+.tjn-editor-actions .primary {
+  background: var(--red);
+  border-color: var(--red);
+  color: #fff;
+}
+.tjn-editor-actions .danger {
+  color: var(--bad);
+}
+.tjn-preview {
+  grid-column: 1/-1;
+  margin-top: 5px;
+  padding: 10px 11px;
+  border: 1px dashed var(--line);
+  background: var(--panel2);
+  color: var(--ink);
+  font-size: 10px;
+  line-height: 1.7;
+}
+.tjn-admin-note {
+  margin-top: 8px;
+  padding: 8px 10px;
+  border-left: 3px solid var(--gold);
+  background: var(--wash);
+  color: var(--dim);
+  font-size: 9.5px;
+  line-height: 1.65;
+}
+@media (max-width: 840px) {
+  .tjn-adminshell {
+    grid-template-columns: 1fr;
+  }
+  .tjn-admin-list {
+    max-height: 240px;
+  }
+  .tjn-form {
+    grid-template-columns: 1fr;
+  }
+  .tjn-form label.wide,
+  .tjn-checks,
+  .tjn-editor-actions,
+  .tjn-preview {
+    grid-column: 1;
+  }
+}

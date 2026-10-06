@@ -1,0 +1,379 @@
+/* ===== V208 · 三合水法二期：天地人三盘 / 黄泉 / 三吉六秀 / Evidence ===== */
+.sh208 {
+  display: grid;
+  gap: 9px;
+  margin-top: 10px;
+}
+.sh208-hero {
+  position: relative;
+  overflow: hidden;
+  padding: 12px 13px;
+  border: 1px solid color-mix(in srgb, var(--gold2) 35%, var(--line));
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--wash) 55%, var(--panel)),
+    var(--panel)
+  );
+}
+.sh208-hero:after {
+  content: "三合";
+  position: absolute;
+  right: 16px;
+  top: -22px;
+  font:
+    700 72px/1 "STKaiti",
+    "KaiTi",
+    serif;
+  color: var(--gold2);
+  opacity: 0.035;
+  pointer-events: none;
+}
+.sh208-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: flex-start;
+  position: relative;
+  z-index: 1;
+}
+.sh208-head h3 {
+  margin: 0;
+  color: var(--gold2);
+  font-size: 17px;
+}
+.sh208-head p {
+  margin: 4px 0 0;
+  color: var(--dim);
+  font-size: 9.8px;
+  line-height: 1.72;
+  max-width: 950px;
+}
+.sh208-schema {
+  flex: none;
+  padding: 3px 7px;
+  border: 1px solid var(--line2);
+  color: var(--cyan);
+  font:
+    8.5px/1.4 ui-monospace,
+    Consolas,
+    monospace;
+}
+.sh208-tools {
+  display: flex;
+  gap: 6px 10px;
+  flex-wrap: wrap;
+  align-items: end;
+  margin-top: 9px;
+  position: relative;
+  z-index: 1;
+}
+.sh208-tools label {
+  display: grid;
+  gap: 3px;
+  color: var(--dim);
+  font-size: 8.5px;
+}
+.sh208-tools input,
+.sh208-tools select {
+  min-width: 112px;
+}
+.sh208-tools input.wide {
+  min-width: 205px;
+}
+.sh208-tools button {
+  border: 1px solid var(--line2);
+  background: transparent;
+  color: var(--ink);
+  padding: 5px 8px;
+  font-size: 9px;
+  cursor: pointer;
+}
+.sh208-tools button:hover {
+  background: var(--wash);
+  color: var(--gold2);
+}
+.sh208-kpis {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 5px;
+}
+.sh208-kpi {
+  padding: 7px 8px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+}
+.sh208-kpi small {
+  display: block;
+  color: var(--dim);
+  font-size: 8px;
+}
+.sh208-kpi b {
+  display: block;
+  margin-top: 2px;
+  color: var(--gold2);
+  font-size: 12px;
+}
+.sh208-kpi.good b {
+  color: var(--good);
+}
+.sh208-kpi.bad b {
+  color: var(--bad);
+}
+.sh208-kpi.cyan b {
+  color: var(--cyan);
+}
+.sh208-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(330px, 0.92fr);
+  gap: 8px;
+}
+.sh208-card {
+  min-width: 0;
+  padding: 10px 11px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+}
+.sh208-card h4 {
+  margin: 0 0 7px;
+  color: var(--gold2);
+  font-size: 11.5px;
+}
+.sh208-list {
+  display: grid;
+  gap: 5px;
+}
+.sh208-item {
+  padding: 7px 8px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+}
+.sh208-item.good {
+  border-left: 3px solid var(--good);
+}
+.sh208-item.bad {
+  border-left: 3px solid var(--bad);
+}
+.sh208-item.cyan {
+  border-left: 3px solid var(--cyan);
+}
+.sh208-item.gold {
+  border-left: 3px solid var(--gold);
+}
+.sh208-item b {
+  display: block;
+  color: var(--ink);
+  font-size: 9.5px;
+}
+.sh208-item small {
+  display: block;
+  color: var(--dim);
+  font-size: 8.6px;
+  line-height: 1.62;
+  margin-top: 2px;
+}
+.sh208-plate {
+  display: grid;
+  grid-template-columns: 92px repeat(3, minmax(0, 1fr));
+  gap: 4px;
+  align-items: stretch;
+}
+.sh208-plate > div {
+  padding: 6px 7px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  min-width: 0;
+}
+.sh208-plate .hd {
+  color: var(--dim);
+  font-size: 8px;
+}
+.sh208-plate b {
+  display: block;
+  color: var(--ink);
+  font-size: 9px;
+}
+.sh208-plate small {
+  display: block;
+  color: var(--dim);
+  font-size: 7.8px;
+  margin-top: 2px;
+  overflow-wrap: anywhere;
+}
+.sh208-tags {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  margin-top: 5px;
+}
+.sh208-tag {
+  padding: 2px 5px;
+  border: 1px solid var(--line);
+  font-size: 8px;
+  color: var(--dim);
+}
+.sh208-tag.good {
+  color: var(--good);
+  border-color: color-mix(in srgb, var(--good) 45%, var(--line));
+}
+.sh208-tag.bad {
+  color: var(--bad);
+  border-color: color-mix(in srgb, var(--bad) 45%, var(--line));
+}
+.sh208-tag.cyan {
+  color: var(--cyan);
+  border-color: color-mix(in srgb, var(--cyan) 45%, var(--line));
+}
+.sh208-hq {
+  display: grid;
+  gap: 5px;
+}
+.sh208-hqrow {
+  padding: 7px 8px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+}
+.sh208-hqrow.good {
+  border-left: 3px solid var(--good);
+}
+.sh208-hqrow.bad {
+  border-left: 3px solid var(--bad);
+}
+.sh208-hqrow.cyan {
+  border-left: 3px solid var(--cyan);
+}
+.sh208-hqrow b {
+  display: block;
+  color: var(--ink);
+  font-size: 9.5px;
+}
+.sh208-hqrow small {
+  display: block;
+  color: var(--dim);
+  font-size: 8.6px;
+  line-height: 1.62;
+  margin-top: 2px;
+}
+.sh208-peaks {
+  display: grid;
+  gap: 4px;
+}
+.sh208-peak {
+  display: grid;
+  grid-template-columns: 76px 80px minmax(0, 1fr) 64px;
+  gap: 6px;
+  align-items: center;
+  padding: 6px 7px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  font-size: 8.6px;
+}
+.sh208-peak.good {
+  border-color: color-mix(in srgb, var(--good) 45%, var(--line));
+}
+.sh208-peak b {
+  color: var(--gold2);
+}
+.sh208-peak small {
+  color: var(--dim);
+  line-height: 1.45;
+}
+.sh208-peak strong {
+  text-align: right;
+  color: var(--cyan);
+}
+.sh208-plain {
+  padding: 9px 10px;
+  border-left: 3px solid var(--cyan);
+  background: color-mix(in srgb, var(--wash2) 45%, var(--panel2));
+  font-size: 9.8px;
+  line-height: 1.78;
+  color: var(--ink);
+}
+.sh208-note {
+  padding: 7px 8px;
+  border: 1px dashed var(--line);
+  background: var(--panel2);
+  color: var(--dim);
+  font-size: 8.6px;
+  line-height: 1.65;
+}
+.sh208-audit {
+  display: grid;
+  gap: 4px;
+}
+.sh208-ev {
+  display: grid;
+  grid-template-columns: 132px minmax(0, 1fr) 96px;
+  gap: 7px;
+  padding: 6px 7px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  font-size: 8.6px;
+}
+.sh208-ev b {
+  color: var(--ink);
+}
+.sh208-ev small {
+  color: var(--dim);
+  line-height: 1.5;
+}
+.sh208-ev span {
+  text-align: right;
+  color: var(--cyan);
+}
+.sh208-formula {
+  font:
+    8px/1.45 ui-monospace,
+    Consolas,
+    monospace;
+  color: var(--dim);
+  word-break: break-word;
+}
+.sh208-state {
+  display: inline-flex;
+  padding: 2px 5px;
+  border: 1px solid var(--line);
+  font-size: 8px;
+  color: var(--dim);
+}
+.sh208-state.pending {
+  color: var(--cyan);
+}
+@media (max-width: 940px) {
+  .sh208-grid {
+    grid-template-columns: 1fr;
+  }
+  .sh208-kpis {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 680px) {
+  .sh208-head {
+    flex-direction: column;
+  }
+  .sh208-schema {
+    align-self: flex-start;
+  }
+  .sh208-kpis {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .sh208-plate {
+    grid-template-columns: 76px 1fr;
+  }
+  .sh208-plate > div:nth-child(4n + 3),
+  .sh208-plate > div:nth-child(4n + 4) {
+    display: none;
+  }
+  .sh208-peak {
+    grid-template-columns: 68px 68px minmax(0, 1fr);
+  }
+  .sh208-peak strong {
+    grid-column: 3;
+  }
+  .sh208-ev {
+    grid-template-columns: 1fr;
+  }
+  .sh208-ev span {
+    text-align: left;
+  }
+}

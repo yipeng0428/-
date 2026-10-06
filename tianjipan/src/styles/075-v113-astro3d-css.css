@@ -1,0 +1,77 @@
+.orr-scale-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 8px;
+  margin: 7px 0 9px;
+  padding: 7px 9px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--panel2);
+}
+.orr-scale-bar .lab {
+  margin: 0 3px 0 0;
+}
+.orr-scale-bar .chip {
+  flex: 0 0 auto;
+  padding: 4px 11px;
+}
+.orr-scale-bar .chip.on {
+  background: var(--gold);
+  color: var(--bg);
+  border-color: var(--gold);
+}
+.orr-scale-read {
+  font-size: 11px;
+  color: var(--dim);
+  margin-left: auto;
+}
+.orr-real-only[hidden] {
+  display: none !important;
+}
+.orr-real-only {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  color: var(--dim);
+}
+.sem-real-ctl {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-right: 6px;
+}
+.sem-real-ctl select {
+  min-height: 30px;
+  padding: 2px 6px;
+  background: var(--panel);
+  border: 1px solid var(--line2);
+  color: var(--ink);
+  border-radius: 3px;
+}
+.orr-scale-help {
+  margin: 5px 0 0;
+  font-size: 11px;
+  color: var(--dim);
+  line-height: 1.6;
+}
+.orr3d-badge.real,
+.sem3d-badge.real {
+  border-color: rgba(98, 205, 195, 0.55);
+  color: #8fded7;
+}
+.orr3d-badge.compact,
+.sem3d-badge.compact {
+  border-color: rgba(217, 178, 95, 0.46);
+  color: var(--gold2);
+}
+@media (max-width: 640px) {
+  .orr-scale-read {
+    width: 100%;
+    margin-left: 0;
+  }
+  .orr-scale-bar {
+    align-items: flex-start;
+  }
+}

@@ -1,0 +1,443 @@
+/* ===== v183 · 设置中心 ===== */
+.tjs-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 140;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: rgba(24, 18, 10, 0.34);
+  backdrop-filter: blur(4px);
+}
+.tjs-modal[hidden] {
+  display: none !important;
+}
+.tjs-shell {
+  width: min(1180px, calc(100vw - 24px));
+  height: min(840px, calc(100vh - 24px));
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  background: var(--bg2);
+  border: 1px solid var(--line2);
+  outline: 1px solid var(--line);
+  outline-offset: -5px;
+  box-shadow: 0 24px 70px -24px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+}
+.tjs-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px 12px;
+  border-bottom: 1px solid var(--line);
+  background: var(--panel);
+}
+.tjs-head > div {
+  flex: 1;
+}
+.tjs-head h2 {
+  margin: 0;
+  color: var(--gold2);
+  font:
+    27px/1.15 "Ma Shan Zheng",
+    "STKaiti",
+    serif;
+  letter-spacing: 0.08em;
+}
+.tjs-head p {
+  margin: 4px 0 0;
+  color: var(--dim);
+  font-size: 10.5px;
+  line-height: 1.6;
+}
+.tjs-x {
+  flex: none;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  padding: 6px 10px;
+  cursor: pointer;
+}
+.tjs-body {
+  display: grid;
+  grid-template-columns: 210px minmax(0, 1fr);
+  min-height: 0;
+}
+.tjs-nav {
+  padding: 10px;
+  border-right: 1px solid var(--line);
+  background: color-mix(in srgb, var(--panel) 84%, var(--bg2));
+  overflow: auto;
+}
+.tjs-nav button {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr);
+  gap: 8px;
+  align-items: center;
+  text-align: left;
+  padding: 9px 8px;
+  margin: 0 0 4px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--dim);
+  cursor: pointer;
+}
+.tjs-nav button i {
+  font-style: normal;
+  text-align: center;
+  color: var(--gold);
+}
+.tjs-nav button b {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: inherit;
+}
+.tjs-nav button small {
+  display: block;
+  font-size: 8.5px;
+  color: var(--dim);
+  margin-top: 1px;
+}
+.tjs-nav button.on {
+  border-color: var(--line2);
+  background: var(--wash);
+  color: var(--gold2);
+}
+.tjs-main {
+  overflow: auto;
+  padding: 14px 16px 24px;
+}
+.tjs-section {
+  display: none;
+}
+.tjs-section.on {
+  display: block;
+}
+.tjs-title {
+  margin: 0 0 4px;
+  color: var(--gold2);
+  font-size: 18px;
+}
+.tjs-desc {
+  margin: 0 0 12px;
+  color: var(--dim);
+  font-size: 10.5px;
+  line-height: 1.7;
+}
+.tjs-card {
+  margin-bottom: 10px;
+  padding: 11px 12px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+}
+.tjs-card h4 {
+  margin: 0 0 8px;
+  color: var(--gold2);
+  font-size: 12.5px;
+}
+.tjs-card p {
+  margin: 5px 0;
+  color: var(--dim);
+  font-size: 10px;
+  line-height: 1.65;
+}
+.tjs-row {
+  display: grid;
+  grid-template-columns: minmax(180px, 0.7fr) minmax(260px, 1.3fr);
+  gap: 12px;
+  align-items: center;
+  padding: 8px 0;
+  border-top: 1px dashed var(--line);
+}
+.tjs-row:first-of-type {
+  border-top: 0;
+}
+.tjs-row .lab b {
+  display: block;
+  color: var(--ink);
+  font-size: 11px;
+}
+.tjs-row .lab small {
+  display: block;
+  color: var(--dim);
+  font-size: 9px;
+  line-height: 1.5;
+  margin-top: 2px;
+}
+.tjs-control {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.tjs-control select,
+.tjs-control input[type="time"],
+.tjs-control input[type="text"] {
+  background: var(--panel2);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  padding: 6px 8px;
+}
+.tjs-control input[type="range"] {
+  width: min(280px, 100%);
+}
+.tjs-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--ink);
+  font-size: 10.5px;
+}
+.tjs-switch input {
+  accent-color: var(--gold);
+}
+.tjs-themegrid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+}
+.tjs-theme {
+  position: relative;
+  text-align: left;
+  padding: 8px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  cursor: pointer;
+  color: var(--ink);
+}
+.tjs-theme.on {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 1px var(--gold) inset;
+}
+.tjs-theme b {
+  display: block;
+  font-size: 10.5px;
+  margin-top: 6px;
+}
+.tjs-theme small {
+  display: block;
+  color: var(--dim);
+  font-size: 8.5px;
+  margin-top: 2px;
+}
+.tjs-swatch {
+  height: 48px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+}
+.tjs-swatch i {
+  display: block;
+}
+.tjs-theme[data-theme="auto"] .tjs-swatch i:nth-child(1) {
+  background: #111820;
+}
+.tjs-theme[data-theme="auto"] .tjs-swatch i:nth-child(2) {
+  background: #eee5d0;
+}
+.tjs-theme[data-theme="auto"] .tjs-swatch i:nth-child(3) {
+  background: #d9b25f;
+}
+.tjs-theme[data-theme="xuanpaper"] .tjs-swatch i:nth-child(1) {
+  background: #eee5d0;
+}
+.tjs-theme[data-theme="xuanpaper"] .tjs-swatch i:nth-child(2) {
+  background: #8a5a12;
+}
+.tjs-theme[data-theme="xuanpaper"] .tjs-swatch i:nth-child(3) {
+  background: #a3251c;
+}
+.tjs-theme[data-theme="xuanye"] .tjs-swatch i:nth-child(1) {
+  background: #06080c;
+}
+.tjs-theme[data-theme="xuanye"] .tjs-swatch i:nth-child(2) {
+  background: #d9b25f;
+}
+.tjs-theme[data-theme="xuanye"] .tjs-swatch i:nth-child(3) {
+  background: #62cdc3;
+}
+.tjs-theme[data-theme="cinnabar"] .tjs-swatch i:nth-child(1) {
+  background: #efe4cf;
+}
+.tjs-theme[data-theme="cinnabar"] .tjs-swatch i:nth-child(2) {
+  background: #982e25;
+}
+.tjs-theme[data-theme="cinnabar"] .tjs-swatch i:nth-child(3) {
+  background: #936a28;
+}
+.tjs-theme[data-theme="jade"] .tjs-swatch i:nth-child(1) {
+  background: #e8eeea;
+}
+.tjs-theme[data-theme="jade"] .tjs-swatch i:nth-child(2) {
+  background: #28786f;
+}
+.tjs-theme[data-theme="jade"] .tjs-swatch i:nth-child(3) {
+  background: #6c7552;
+}
+.tjs-theme[data-theme="ziwei"] .tjs-swatch i:nth-child(1) {
+  background: #0b0d1d;
+}
+.tjs-theme[data-theme="ziwei"] .tjs-swatch i:nth-child(2) {
+  background: #8d79cc;
+}
+.tjs-theme[data-theme="ziwei"] .tjs-swatch i:nth-child(3) {
+  background: #d7c47a;
+}
+.tjs-actions {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 9px;
+}
+.tjs-actions button,
+.tjs-btn {
+  border: 1px solid var(--line2);
+  background: transparent;
+  color: var(--ink);
+  padding: 6px 9px;
+  cursor: pointer;
+}
+.tjs-actions button:hover,
+.tjs-btn:hover {
+  background: var(--wash);
+  color: var(--gold2);
+}
+.tjs-btn.primary {
+  background: var(--red);
+  border-color: var(--red);
+  color: #fff;
+}
+.tjs-bellgrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px;
+}
+.tjs-bellopt {
+  display: flex;
+  gap: 7px;
+  align-items: flex-start;
+  padding: 8px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  font-size: 10px;
+}
+.tjs-bellopt input {
+  margin-top: 3px;
+  accent-color: var(--gold);
+}
+.tjs-bellopt b {
+  display: block;
+  color: var(--ink);
+  font-size: 10.5px;
+}
+.tjs-bellopt small {
+  display: block;
+  color: var(--dim);
+  font-size: 8.7px;
+  line-height: 1.45;
+  margin-top: 2px;
+}
+.tjs-reminders {
+  display: grid;
+  gap: 5px;
+  margin: 7px 0;
+}
+.tjs-reminder {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 6px;
+  padding: 7px 8px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  font-size: 10px;
+}
+.tjs-reminder small {
+  color: var(--dim);
+}
+.tjs-reminder button {
+  border: 0;
+  background: transparent;
+  color: var(--red);
+  cursor: pointer;
+}
+.tjs-rem-add {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.tjs-rem-add select,
+.tjs-rem-add input {
+  background: var(--panel2);
+  border: 1px solid var(--line);
+  padding: 5px 7px;
+  color: var(--ink);
+}
+.tjs-note {
+  padding: 8px 10px;
+  border-left: 3px solid var(--gold);
+  background: var(--wash);
+  font-size: 10px;
+  line-height: 1.7;
+  color: var(--dim);
+}
+.tjs-preview {
+  padding: 8px 10px;
+  border: 1px dashed var(--line);
+  background: var(--panel2);
+  font-size: 10px;
+  color: var(--dim);
+  line-height: 1.6;
+}
+.tjs-kbd {
+  font-family: ui-monospace, Consolas, monospace;
+  color: var(--cyan);
+}
+@media (max-width: 820px) {
+  .tjs-modal {
+    padding: 0;
+    align-items: stretch;
+  }
+  .tjs-shell {
+    width: 100vw;
+    height: 100vh;
+    max-height: none;
+    border: 0;
+    outline: 0;
+  }
+  .tjs-body {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto minmax(0, 1fr);
+  }
+  .tjs-nav {
+    display: flex;
+    gap: 4px;
+    overflow-x: auto;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+    padding: 6px;
+  }
+  .tjs-nav button {
+    min-width: 116px;
+    margin: 0;
+    grid-template-columns: 20px 1fr;
+    padding: 7px;
+  }
+  .tjs-nav button small {
+    display: none;
+  }
+  .tjs-main {
+    padding: 11px 10px 20px;
+  }
+  .tjs-themegrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .tjs-row {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+  .tjs-bellgrid {
+    grid-template-columns: 1fr;
+  }
+}

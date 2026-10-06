@@ -1,0 +1,78 @@
+#as-orr3d .orr3d-stage {
+  min-height: 560px;
+}
+#as-orr3d .orr-helio-stage {
+  min-height: 560px;
+}
+#orrHelioSvg {
+  min-height: 560px;
+}
+.v135-precision {
+  margin-top: 14px;
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  padding: 12px;
+  border-radius: 6px;
+}
+.v135-precision h3 {
+  margin: 0 0 7px;
+  color: var(--gold2);
+  font:
+    400 18px/1.25 "STKaiti",
+    "KaiTi",
+    "Songti SC",
+    serif;
+}
+.v135-precision-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+.v135-precision-grid > div {
+  padding: 9px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.018);
+  font-size: 10.5px;
+  line-height: 1.65;
+  color: var(--dim);
+}
+.v135-precision-grid b {
+  display: block;
+  color: var(--ink);
+  font-size: 11px;
+  margin-bottom: 2px;
+}
+.v135-precision .good {
+  color: var(--good);
+}
+.v135-precision .part {
+  color: var(--gold);
+}
+.v135-layer-detail {
+  grid-column: 1/-1 !important;
+  border-color: rgba(214, 184, 126, 0.36) !important;
+  background: linear-gradient(180deg, rgba(255, 247, 228, 0.1), rgba(84, 58, 22, 0.05)) !important;
+  line-height: 1.75;
+}
+.v135-layer-detail b {
+  color: var(--gold2);
+}
+.v135-real-note {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  z-index: 4;
+  padding: 5px 8px;
+  border-radius: 10px;
+  background: rgba(7, 9, 16, 0.7);
+  border: 1px solid rgba(239, 211, 151, 0.22);
+  font-size: 10px;
+  color: rgba(238, 226, 200, 0.82);
+  pointer-events: none;
+}
+@media (max-width: 760px) {
+  .v135-precision-grid {
+    grid-template-columns: 1fr;
+  }
+}

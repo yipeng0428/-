@@ -1,0 +1,11 @@
+.orr129-meta.v131-note {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+}
+.orr129-meta.v131-note span {
+  white-space: nowrap;
+}
+.orr3d-tog .v131-added {
+  color: var(--gold2);
+}

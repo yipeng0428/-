@@ -1,0 +1,59 @@
+/* ===== v190 · 宫阙朱砂：顶部导航高对比修复 =====
+   只处理固定顶部导航，不改变下拉面板的浅色正文体系。
+*/
+html[data-tj-theme="cinnabar"] {
+  --tj-nav-bg: #4a211b !important;
+  --tj-nav-ink: #fff3df !important;
+  --tj-nav-border: rgba(229, 191, 118, 0.42) !important;
+}
+
+html[data-tj-theme="cinnabar"] #topnav {
+  background: linear-gradient(180deg, #51251e 0%, #411b17 100%) !important;
+  border-bottom-color: rgba(229, 191, 118, 0.44) !important;
+  box-shadow: 0 7px 20px -12px rgba(55, 15, 10, 0.85) !important;
+}
+
+html[data-tj-theme="cinnabar"] #topnav .tn-brand,
+html[data-tj-theme="cinnabar"] #topnav .tn-brand b,
+html[data-tj-theme="cinnabar"] #topnav .tn-b,
+html[data-tj-theme="cinnabar"] #topnav .tn-b em,
+html[data-tj-theme="cinnabar"] #topnav .tn-cur {
+  color: #fff3df !important;
+  text-shadow: 0 1px 1px rgba(55, 18, 10, 0.36) !important;
+}
+
+/* 品牌名略带旧金色，但保持高亮度 */
+html[data-tj-theme="cinnabar"] #topnav .tn-brand b {
+  color: #ffe2a4 !important;
+}
+
+/* 普通导航保持足够亮，避免暗红背景上发灰 */
+html[data-tj-theme="cinnabar"] #topnav .tn-b {
+  opacity: 1 !important;
+}
+
+/* 当前项 / 悬停：更亮，并用金线而不是暗红线 */
+html[data-tj-theme="cinnabar"] #topnav .tn-b:hover {
+  color: #ffffff !important;
+  background: rgba(255, 235, 194, 0.09) !important;
+}
+html[data-tj-theme="cinnabar"] #topnav .tn-b.on {
+  color: #ffffff !important;
+  background: rgba(255, 235, 194, 0.07) !important;
+  border-bottom-color: #e8bd6d !important;
+  text-shadow: 0 0 10px rgba(255, 224, 164, 0.22) !important;
+}
+html[data-tj-theme="cinnabar"] #topnav .tn-b.on em,
+html[data-tj-theme="cinnabar"] #topnav .tn-b:hover em {
+  color: #ffe5ad !important;
+  opacity: 1 !important;
+}
+
+/* 右侧“设置 / 档案 / 目录 / 当前页”也使用同一高对比口径 */
+html[data-tj-theme="cinnabar"] #topnav .tn-right .tn-b {
+  color: #fff3df !important;
+}
+html[data-tj-theme="cinnabar"] #topnav .tn-cur {
+  color: #e8cfad !important;
+  opacity: 0.96 !important;
+}

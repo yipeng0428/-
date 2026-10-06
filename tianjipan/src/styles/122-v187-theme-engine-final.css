@@ -1,0 +1,360 @@
+/* ===== v187 · 最终主题层 =====
+   放在全文件后部，覆盖所有历史 :root[data-theme=light/dark] 与语义色，
+   解决“点了主题但页面几乎没变化”的问题。
+*/
+html[data-tj-theme] {
+  --tj-theme-indicator: var(--gold);
+  --tj-nav-bg: var(--bg2);
+  --tj-nav-ink: var(--ink);
+  --tj-nav-border: var(--line);
+  --tj-card-glow: transparent;
+  --tj-field-bg: var(--panel2);
+  --tj-accent-contrast: #fff;
+}
+
+/* 1. 宣纸雅白 */
+html[data-tj-theme="xuanpaper"] {
+  color-scheme: light !important;
+  --bg: #f1ead8 !important;
+  --bg2: #e7dcc2 !important;
+  --panel: rgba(255, 252, 243, 0.88) !important;
+  --panel2: rgba(110, 78, 28, 0.055) !important;
+  --line: rgba(121, 85, 31, 0.27) !important;
+  --line2: rgba(121, 85, 31, 0.62) !important;
+  --gold: #9a6821 !important;
+  --gold2: #67420e !important;
+  --ink: #261d13 !important;
+  --dim: #71634c !important;
+  --dim2: #bbaa8b !important;
+  --red: #aa2f25 !important;
+  --cyan: #257872 !important;
+  --wood: #3a7a50 !important;
+  --fire: #b64d34 !important;
+  --earth: #936b23 !important;
+  --metal: #6f6b60 !important;
+  --water: #2f648f !important;
+  --sem-good: #347a53 !important;
+  --sem-good-soft: rgba(52, 122, 83, 0.11) !important;
+  --sem-bad: #b43e31 !important;
+  --sem-bad-soft: rgba(180, 62, 49, 0.1) !important;
+  --sem-neutral: #8a5c24 !important;
+  --sem-neutral-soft: rgba(138, 92, 36, 0.11) !important;
+  --good: var(--sem-good) !important;
+  --bad: var(--sem-bad) !important;
+  --mid: var(--sem-neutral) !important;
+  --tjD: #261d13 !important;
+  --tjL: #f6efdd !important;
+  --wash: rgba(154, 104, 33, 0.1) !important;
+  --wash2: rgba(47, 100, 143, 0.065) !important;
+  --tj-theme-indicator: #b07a27 !important;
+  --tj-nav-bg: rgba(239, 229, 205, 0.96) !important;
+  --tj-nav-ink: #2b2014 !important;
+  --tj-nav-border: rgba(121, 85, 31, 0.34) !important;
+  --tj-card-glow: rgba(154, 104, 33, 0.025) !important;
+  --tj-field-bg: rgba(100, 72, 24, 0.045) !important;
+}
+
+/* 2. 玄夜墨青 */
+html[data-tj-theme="xuanye"] {
+  color-scheme: dark !important;
+  --bg: #06090c !important;
+  --bg2: #0c1418 !important;
+  --panel: rgba(12, 20, 24, 0.84) !important;
+  --panel2: rgba(126, 208, 194, 0.035) !important;
+  --line: rgba(196, 169, 103, 0.24) !important;
+  --line2: rgba(196, 169, 103, 0.58) !important;
+  --gold: #ccb06b !important;
+  --gold2: #f1d999 !important;
+  --ink: #e7e3d7 !important;
+  --dim: #9ca59d !important;
+  --dim2: #56635f !important;
+  --red: #cf5646 !important;
+  --cyan: #65d0c4 !important;
+  --wood: #67bd8f !important;
+  --fire: #e46b53 !important;
+  --earth: #c9a14e !important;
+  --metal: #d7ded9 !important;
+  --water: #64a6d8 !important;
+  --sem-good: #72c995 !important;
+  --sem-good-soft: rgba(114, 201, 149, 0.14) !important;
+  --sem-bad: #e06c58 !important;
+  --sem-bad-soft: rgba(224, 108, 88, 0.14) !important;
+  --sem-neutral: #c4a268 !important;
+  --sem-neutral-soft: rgba(196, 162, 104, 0.13) !important;
+  --good: var(--sem-good) !important;
+  --bad: var(--sem-bad) !important;
+  --mid: var(--sem-neutral) !important;
+  --tjD: #05090b !important;
+  --tjL: #ece2c5 !important;
+  --wash: rgba(204, 176, 107, 0.09) !important;
+  --wash2: rgba(101, 208, 196, 0.07) !important;
+  --tj-theme-indicator: #62d3c7 !important;
+  --tj-nav-bg: rgba(6, 11, 14, 0.96) !important;
+  --tj-nav-ink: #e8e1ce !important;
+  --tj-nav-border: rgba(204, 176, 107, 0.26) !important;
+  --tj-card-glow: rgba(101, 208, 196, 0.025) !important;
+  --tj-field-bg: rgba(255, 255, 255, 0.028) !important;
+}
+
+/* 3. 宫阙朱砂 */
+html[data-tj-theme="cinnabar"] {
+  color-scheme: light !important;
+  --bg: #efe2cd !important;
+  --bg2: #dfcdb2 !important;
+  --panel: rgba(255, 247, 231, 0.89) !important;
+  --panel2: rgba(128, 45, 34, 0.055) !important;
+  --line: rgba(125, 57, 39, 0.28) !important;
+  --line2: rgba(141, 60, 40, 0.64) !important;
+  --gold: #9b702d !important;
+  --gold2: #6f4918 !important;
+  --ink: #2d1d17 !important;
+  --dim: #755e51 !important;
+  --dim2: #b9a18d !important;
+  --red: #9d3127 !important;
+  --cyan: #3d756e !important;
+  --wood: #4e7451 !important;
+  --fire: #a64032 !important;
+  --earth: #997039 !important;
+  --metal: #776c62 !important;
+  --water: #486a88 !important;
+  --sem-good: #4f7756 !important;
+  --sem-good-soft: rgba(79, 119, 86, 0.11) !important;
+  --sem-bad: #a83e32 !important;
+  --sem-bad-soft: rgba(168, 62, 50, 0.11) !important;
+  --sem-neutral: #93672f !important;
+  --sem-neutral-soft: rgba(147, 103, 47, 0.11) !important;
+  --good: var(--sem-good) !important;
+  --bad: var(--sem-bad) !important;
+  --mid: var(--sem-neutral) !important;
+  --tjD: #301d16 !important;
+  --tjL: #f5e7d0 !important;
+  --wash: rgba(157, 49, 39, 0.095) !important;
+  --wash2: rgba(155, 112, 45, 0.07) !important;
+  --tj-theme-indicator: #b43b2d !important;
+  --tj-nav-bg: #4a211b !important;
+  --tj-nav-ink: #f1dfc2 !important;
+  --tj-nav-border: rgba(207, 165, 95, 0.36) !important;
+  --tj-card-glow: rgba(157, 49, 39, 0.032) !important;
+  --tj-field-bg: rgba(128, 45, 34, 0.045) !important;
+  --tj-accent-contrast: #fff5e5 !important;
+}
+
+/* 4. 月白青玉 */
+html[data-tj-theme="jade"] {
+  color-scheme: light !important;
+  --bg: #e9efeb !important;
+  --bg2: #d9e4de !important;
+  --panel: rgba(248, 252, 249, 0.9) !important;
+  --panel2: rgba(35, 103, 82, 0.05) !important;
+  --line: rgba(52, 96, 82, 0.24) !important;
+  --line2: rgba(52, 96, 82, 0.58) !important;
+  --gold: #72785a !important;
+  --gold2: #4b593d !important;
+  --ink: #18251f !important;
+  --dim: #607269 !important;
+  --dim2: #a5b5ad !important;
+  --red: #9b493e !important;
+  --cyan: #287e72 !important;
+  --wood: #39765a !important;
+  --fire: #ad5c46 !important;
+  --earth: #84744a !important;
+  --metal: #68736f !important;
+  --water: #3d7288 !important;
+  --sem-good: #39775a !important;
+  --sem-good-soft: rgba(57, 119, 90, 0.11) !important;
+  --sem-bad: #a85043 !important;
+  --sem-bad-soft: rgba(168, 80, 67, 0.1) !important;
+  --sem-neutral: #747b58 !important;
+  --sem-neutral-soft: rgba(116, 123, 88, 0.1) !important;
+  --good: var(--sem-good) !important;
+  --bad: var(--sem-bad) !important;
+  --mid: var(--sem-neutral) !important;
+  --tjD: #17231f !important;
+  --tjL: #f0f5f1 !important;
+  --wash: rgba(40, 126, 114, 0.085) !important;
+  --wash2: rgba(114, 120, 90, 0.06) !important;
+  --tj-theme-indicator: #338c78 !important;
+  --tj-nav-bg: #173b34 !important;
+  --tj-nav-ink: #e4efe9 !important;
+  --tj-nav-border: rgba(157, 190, 174, 0.3) !important;
+  --tj-card-glow: rgba(40, 126, 114, 0.028) !important;
+  --tj-field-bg: rgba(35, 103, 82, 0.042) !important;
+  --tj-accent-contrast: #f5fffb !important;
+}
+
+/* 5. 紫微星垣：第五套真正主题 */
+html[data-tj-theme="ziwei"] {
+  color-scheme: dark !important;
+  --bg: #090b18 !important;
+  --bg2: #111326 !important;
+  --panel: rgba(17, 19, 38, 0.86) !important;
+  --panel2: rgba(142, 120, 201, 0.06) !important;
+  --line: rgba(180, 164, 221, 0.25) !important;
+  --line2: rgba(190, 170, 226, 0.58) !important;
+  --gold: #d8c47d !important;
+  --gold2: #f1e3ad !important;
+  --ink: #e9e7f0 !important;
+  --dim: #aaa6bb !important;
+  --dim2: #5e5a71 !important;
+  --red: #cf6672 !important;
+  --cyan: #78b7cf !important;
+  --wood: #77b89d !important;
+  --fire: #dc7a68 !important;
+  --earth: #c9a65e !important;
+  --metal: #d5d3df !important;
+  --water: #739ecf !important;
+  --sem-good: #82c3a4 !important;
+  --sem-good-soft: rgba(130, 195, 164, 0.14) !important;
+  --sem-bad: #dc7780 !important;
+  --sem-bad-soft: rgba(220, 119, 128, 0.14) !important;
+  --sem-neutral: #b69bd6 !important;
+  --sem-neutral-soft: rgba(182, 155, 214, 0.13) !important;
+  --good: var(--sem-good) !important;
+  --bad: var(--sem-bad) !important;
+  --mid: var(--sem-neutral) !important;
+  --tjD: #080918 !important;
+  --tjL: #ede7f4 !important;
+  --wash: rgba(142, 120, 201, 0.1) !important;
+  --wash2: rgba(120, 183, 207, 0.075) !important;
+  --tj-theme-indicator: #927bd7 !important;
+  --tj-nav-bg: #111025 !important;
+  --tj-nav-ink: #e7e1f1 !important;
+  --tj-nav-border: rgba(190, 170, 226, 0.28) !important;
+  --tj-card-glow: rgba(142, 120, 201, 0.035) !important;
+  --tj-field-bg: rgba(255, 255, 255, 0.035) !important;
+  --tj-accent-contrast: #fff !important;
+}
+
+/* 自动模式状态点随当前系统明暗变化 */
+html[data-tj-theme="auto"][data-theme="light"] {
+  --tj-theme-indicator: #ad7829 !important;
+}
+html[data-tj-theme="auto"][data-theme="dark"] {
+  --tj-theme-indicator: #62cfc4 !important;
+}
+
+/* ===== 关键界面层强制主题化 ===== */
+html[data-tj-theme] body {
+  color: var(--ink) !important;
+  background:
+    radial-gradient(1100px 700px at 18% -8%, var(--wash), transparent 62%),
+    radial-gradient(900px 620px at 100% 100%, var(--wash2), transparent 60%), var(--bg) !important;
+}
+html[data-tj-theme="cinnabar"] body {
+  background:
+    radial-gradient(1000px 640px at 10% 0%, rgba(157, 49, 39, 0.08), transparent 62%),
+    radial-gradient(900px 620px at 100% 100%, rgba(155, 112, 45, 0.07), transparent 58%), var(--bg) !important;
+}
+html[data-tj-theme="jade"] body {
+  background:
+    radial-gradient(1050px 680px at 16% -6%, rgba(40, 126, 114, 0.08), transparent 64%),
+    radial-gradient(920px 620px at 100% 100%, rgba(114, 120, 90, 0.065), transparent 60%), var(--bg) !important;
+}
+html[data-tj-theme="ziwei"] body {
+  background:
+    radial-gradient(1000px 700px at 15% -8%, rgba(142, 120, 201, 0.13), transparent 60%),
+    radial-gradient(900px 650px at 100% 100%, rgba(76, 116, 173, 0.1), transparent 58%), var(--bg) !important;
+}
+
+html[data-tj-theme] #topnav {
+  background: var(--tj-nav-bg) !important;
+  color: var(--tj-nav-ink) !important;
+  border-bottom-color: var(--tj-nav-border) !important;
+}
+html[data-tj-theme] #topnav .tn-b,
+html[data-tj-theme] #topnav .tn-brand,
+html[data-tj-theme] #topnav .tn-cur {
+  color: var(--tj-nav-ink) !important;
+}
+html[data-tj-theme] #topnav .tn-b:hover,
+html[data-tj-theme] #topnav .tn-b.on {
+  background: color-mix(in srgb, var(--gold) 10%, transparent) !important;
+  color: var(--gold2) !important;
+}
+html[data-tj-theme] .tn-panel,
+html[data-tj-theme] .tjs-shell,
+html[data-tj-theme] .tja-card {
+  background: var(--bg2) !important;
+  border-color: var(--line2) !important;
+  color: var(--ink) !important;
+}
+html[data-tj-theme] .panel,
+html[data-tj-theme] .nw-card,
+html[data-tj-theme] .tjs-card,
+html[data-tj-theme] .tja-panel {
+  background:
+    linear-gradient(180deg, var(--tj-card-glow), transparent 48%), var(--panel) !important;
+  border-color: var(--line) !important;
+  color: var(--ink) !important;
+}
+html[data-tj-theme] input,
+html[data-tj-theme] select,
+html[data-tj-theme] textarea {
+  background: var(--tj-field-bg) !important;
+  color: var(--ink) !important;
+  border-color: var(--line) !important;
+}
+html[data-tj-theme] input::placeholder,
+html[data-tj-theme] textarea::placeholder {
+  color: var(--dim) !important;
+}
+html[data-tj-theme] .gbtn,
+html[data-tj-theme] .ghost,
+html[data-tj-theme] .tjs-btn {
+  border-color: var(--line2) !important;
+  color: var(--gold) !important;
+}
+html[data-tj-theme] .gbtn:hover,
+html[data-tj-theme] .ghost:hover,
+html[data-tj-theme] .tjs-btn:hover {
+  background: var(--wash) !important;
+  color: var(--gold2) !important;
+}
+html[data-tj-theme] .seal,
+html[data-tj-theme] .tn-brand i,
+html[data-tj-theme] .btns button.primary,
+html[data-tj-theme] .tjs-btn.primary {
+  background: var(--red) !important;
+  color: var(--tj-accent-contrast) !important;
+  border-color: var(--red) !important;
+}
+
+/* 主题选择卡自身也真正体现当前主题，而不是所有卡都长一样 */
+.tjs-theme[data-theme="xuanpaper"] {
+  background: #f1ead8 !important;
+  color: #261d13 !important;
+  border-color: #a9782f !important;
+}
+.tjs-theme[data-theme="xuanye"] {
+  background: #0b1115 !important;
+  color: #e7e3d7 !important;
+  border-color: #7e9d92 !important;
+}
+.tjs-theme[data-theme="cinnabar"] {
+  background: #f0e0c9 !important;
+  color: #3d1d17 !important;
+  border-color: #9d3127 !important;
+}
+.tjs-theme[data-theme="jade"] {
+  background: #e4ece7 !important;
+  color: #183029 !important;
+  border-color: #3f8876 !important;
+}
+.tjs-theme[data-theme="ziwei"] {
+  background: #111326 !important;
+  color: #ece8f5 !important;
+  border-color: #8e78c9 !important;
+}
+.tjs-theme.on {
+  box-shadow: 0 0 0 2px var(--tj-theme-indicator) inset !important;
+}
+
+/* 太极鱼右下角状态点 = 当前主题识别色 */
+#themeBtn::after {
+  background: var(--tj-theme-indicator) !important;
+  box-shadow: 0 0 7px color-mix(in srgb, var(--tj-theme-indicator) 75%, transparent) !important;
+  opacity: 1 !important;
+}
+#themeBtn[data-night="1"]::after {
+  background: var(--tj-theme-indicator) !important;
+}
