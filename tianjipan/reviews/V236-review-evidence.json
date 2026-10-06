@@ -1,0 +1,1806 @@
+{
+  "source": {
+    "filename": "天机盘_v236_量天尺图格数字化_11至20岁全映射.html",
+    "bytes": 5959226,
+    "sha256": "3dc3d804f91fa633f461d26b3f5f1501adfa88fc0e364b6ac8485a4182df9e64"
+  },
+  "testEnvironment": {
+    "browser": "Chromium headless / Playwright",
+    "hosting": "loopback HTTP server; no production deployment",
+    "externalDependencies": "one observed cloud-network run; subsequent runs deliberately aborted external requests to measure offline failure path",
+    "measurements": "cloud machine timings; some normal-CPU runs overlapped another browser audit, so not isolated lab benchmarks; CPU 4x is emulation, not a real phone"
+  },
+  "syntax": {
+    "scriptsChecked": 184,
+    "failures": 0
+  },
+  "selfTests": {
+    "TianjiCore": {
+      "ok": true,
+      "checks": 9,
+      "failed": [],
+      "engineCount": 50
+    },
+    "TianjiTime": {
+      "ok": true,
+      "checks": 6,
+      "failed": []
+    },
+    "TianjiBazi": {
+      "ok": true,
+      "checks": 8,
+      "failed": []
+    },
+    "TianjiZiwei": {
+      "ok": true,
+      "checks": 11,
+      "failed": []
+    },
+    "TianjiQimen": {
+      "ok": true,
+      "checks": 9,
+      "failed": []
+    },
+    "TianjiQimenVerifier": {
+      "ok": true,
+      "checks": 10,
+      "failed": []
+    },
+    "TianjiZiweiTimelineUI": {
+      "ok": true,
+      "checks": 3,
+      "failed": []
+    },
+    "TianjiAstro3D": {
+      "ok": true,
+      "checks": 6,
+      "failed": []
+    },
+    "TianjiQimenPeriod": {
+      "ok": true,
+      "checks": 7,
+      "failed": []
+    },
+    "TianjiMeihua": {
+      "ok": true,
+      "checks": 6,
+      "failed": []
+    },
+    "TianjiZeri": {
+      "ok": true,
+      "checks": 5,
+      "failed": []
+    },
+    "TianjiZiweiFlyingDepth": {
+      "ok": true,
+      "checks": 6,
+      "failed": []
+    },
+    "TianjiZiweiFlyingDepthV2": {
+      "ok": false,
+      "checks": 1,
+      "failed": [
+        {
+          "id": "exception",
+          "ok": false,
+          "detail": "zBirth is not defined"
+        }
+      ]
+    },
+    "TianjiXuankongHouse": {
+      "ok": true,
+      "checks": 5,
+      "failed": []
+    },
+    "TianjiXuankongHouseV2": {
+      "ok": true,
+      "checks": 5,
+      "failed": []
+    },
+    "TianjiSanheWaterCore": {
+      "ok": true,
+      "checks": 7,
+      "failed": []
+    },
+    "TianjiSanhePolicy": {
+      "ok": true,
+      "checks": 7,
+      "failed": []
+    },
+    "TianjiHistoricalTime": {
+      "ok": true,
+      "checks": 7,
+      "failed": []
+    },
+    "TianjiHistoricalTimeV2": {
+      "ok": true,
+      "checks": 5,
+      "failed": []
+    },
+    "TianjiHistoricalTimeV3": {
+      "ok": true,
+      "checks": 3,
+      "failed": []
+    },
+    "TianjiRelationTimeline": {
+      "ok": true,
+      "checks": 4,
+      "failed": []
+    },
+    "TianjiRelationTimelineV2": {
+      "ok": true,
+      "checks": 5,
+      "failed": []
+    },
+    "TianjiFormalEvidenceReport": {
+      "ok": true,
+      "checks": 5,
+      "failed": []
+    },
+    "TianjiReleaseQA": {
+      "ok": true,
+      "checks": 5,
+      "failed": []
+    },
+    "TianjiReleaseFreeze": {
+      "ok": true,
+      "checks": 4,
+      "failed": []
+    },
+    "TianjiQimenExternalEvidenceV221": {
+      "ok": true,
+      "checks": 6,
+      "failed": []
+    },
+    "TianjiQimenDoctrineV222": {
+      "ok": true,
+      "checks": 6,
+      "failed": []
+    },
+    "TianjiQimenDayDoctrineV223": {
+      "ok": true,
+      "checks": 6,
+      "failed": []
+    },
+    "TianjiQizhengFoundationV224": {
+      "ok": true,
+      "checks": 8,
+      "failed": []
+    },
+    "TianjiQizhengEphemerisV225": {
+      "ok": true,
+      "checks": 5,
+      "failed": []
+    },
+    "TianjiQizhengAdoptionV226": {
+      "ok": true,
+      "checks": 6,
+      "failed": []
+    },
+    "TianjiQizhengVendorV227": {
+      "ok": true,
+      "checks": 6,
+      "failed": []
+    },
+    "TianjiQizhengResidualV228": {
+      "ok": false,
+      "checks": 6,
+      "failed": [
+        {
+          "id": "anchor.date",
+          "ok": false,
+          "d": "1578-01-18"
+        }
+      ]
+    },
+    "TianjiQizhengXiuFrameV229": {
+      "ok": true,
+      "checks": 6,
+      "failed": []
+    },
+    "TianjiQizhengAbsoluteZeroV230": {
+      "ok": true,
+      "checks": 8,
+      "failed": []
+    },
+    "TianjiQizhengResidualProviderV231": {
+      "ok": true,
+      "checks": 9,
+      "failed": []
+    },
+    "TianjiQizhengLifeRulePackV232": {
+      "ok": true,
+      "checks": 8,
+      "failed": []
+    },
+    "TianjiQizhengStrengthRulePackV233": {
+      "ok": true,
+      "checks": 10,
+      "failed": []
+    },
+    "TianjiQizhengDongweiV234": {
+      "ok": true,
+      "checks": 8,
+      "failed": []
+    },
+    "TianjiQizhengLiangtianchiV235": {
+      "ok": true,
+      "checks": 12,
+      "failed": []
+    },
+    "TianjiQizhengLiangtianchiV236": {
+      "ok": true,
+      "checks": 11,
+      "failed": []
+    }
+  },
+  "observedDependencyRequests": [
+    {
+      "url": "https://cdnjs.cloudflare.com/ajax/libs/lunar-javascript/1.7.7/lunar.min.js",
+      "method": "GET"
+    },
+    {
+      "url": "https://cdn.jsdelivr.net/npm/lunar-javascript@1.7.7/lunar.min.js",
+      "method": "GET"
+    },
+    {
+      "url": "https://cdn.jsdelivr.net/gh/mystilight/mystilight-8char@1ca2923784128fca4d38959e46ae714e4ab6b9cb/index.js",
+      "method": "GET"
+    },
+    {
+      "url": "https://cdn.jsdelivr.net/npm/iztro@2.6.1/dist/iztro-v2.6.1.min.js",
+      "method": "GET"
+    },
+    {
+      "url": "https://cdn.jsdelivr.net/npm/iztro@2.6.1/dist/iztro-v2.6.1.min.js",
+      "method": "GET"
+    },
+    {
+      "url": "https://cdn.jsdelivr.net/npm/iztro@2.6.1/dist/iztro-v2.6.1.min.js",
+      "method": "GET"
+    },
+    {
+      "url": "https://cdn.jsdelivr.net/npm/iztro@2.6.1/dist/iztro-v2.6.1.min.js",
+      "method": "GET"
+    },
+    {
+      "url": "https://unpkg.com/iztro@2.6.1/dist/iztro-v2.6.1.min.js",
+      "method": "GET"
+    },
+    {
+      "url": "https://unpkg.com/iztro@2.6.1/dist/iztro-v2.6.1.min.js",
+      "method": "GET"
+    },
+    {
+      "url": "https://cdn.jsdelivr.net/npm/iztro@2.6.1/dist/iztro-v2.6.1.min.js",
+      "method": "GET"
+    },
+    {
+      "url": "https://cdn.jsdelivr.net/npm/iztro@2.6.1/dist/iztro-v2.6.1.min.js",
+      "method": "GET"
+    },
+    {
+      "url": "https://raw.githack.com/mystilight/mystilight-8char/1ca2923784128fca4d38959e46ae714e4ab6b9cb/index.js",
+      "method": "GET"
+    },
+    {
+      "url": "https://unpkg.com/iztro@2.6.1/dist/iztro-v2.6.1.min.js",
+      "method": "GET"
+    },
+    {
+      "url": "https://cdn.jsdelivr.net/npm/iztro@2.6.1/dist/iztro.min.js",
+      "method": "GET"
+    },
+    {
+      "url": "https://unpkg.com/iztro@2.6.1/dist/iztro-v2.6.1.min.js",
+      "method": "GET"
+    },
+    {
+      "url": "https://cdn.jsdelivr.net/npm/iztro@2.6.1/dist/iztro.min.js",
+      "method": "GET"
+    },
+    {
+      "url": "https://unpkg.com/iztro@2.6.1/dist/iztro-v2.6.1.min.js",
+      "method": "GET"
+    },
+    {
+      "url": "https://cdn.jsdelivr.net/npm/iztro@2.6.1/dist/iztro-v2.6.1.min.js",
+      "method": "GET"
+    },
+    {
+      "url": "https://cdn.jsdelivr.net/npm/iztro@2.6.1/dist/iztro-v2.6.1.min.js",
+      "method": "GET"
+    },
+    {
+      "url": "https://cdn.jsdelivr.net/npm/iztro@2.6.1/dist/iztro.min.js",
+      "method": "GET"
+    },
+    {
+      "url": "https://cdn.jsdelivr.net/npm/iztro@2.6.1/dist/iztro.min.js",
+      "method": "GET"
+    },
+    {
+      "url": "https://unpkg.com/iztro@2.6.1/dist/iztro-v2.6.1.min.js",
+      "method": "GET"
+    },
+    {
+      "url": "https://cdn.jsdelivr.net/npm/iztro@2.6.1/dist/iztro.min.js",
+      "method": "GET"
+    },
+    {
+      "url": "https://unpkg.com/iztro@2.6.1/dist/iztro-v2.6.1.min.js",
+      "method": "GET"
+    },
+    {
+      "url": "https://cdn.jsdelivr.net/npm/iztro@2.6.1/dist/iztro-v2.6.1.min.js",
+      "method": "GET"
+    },
+    {
+      "url": "https://cdn.jsdelivr.net/npm/iztro@2.6.1/dist/iztro-v2.6.1.min.js",
+      "method": "GET"
+    },
+    {
+      "url": "https://cdn.statically.io/gh/mystilight/mystilight-8char/1ca2923784128fca4d38959e46ae714e4ab6b9cb/index.js",
+      "method": "GET"
+    },
+    {
+      "url": "https://cdn.jsdelivr.net/npm/iztro@2.6.1/dist/iztro.min.js",
+      "method": "GET"
+    },
+    {
+      "url": "https://unpkg.com/iztro@2.6.1/dist/iztro-v2.6.1.min.js",
+      "method": "GET"
+    },
+    {
+      "url": "https://cdn.jsdelivr.net/npm/iztro@2.6.1/dist/iztro.min.js",
+      "method": "GET"
+    },
+    {
+      "url": "https://unpkg.com/iztro@2.6.1/dist/iztro-v2.6.1.min.js",
+      "method": "GET"
+    },
+    {
+      "url": "https://cdn.jsdelivr.net/npm/iztro@2.6.1/dist/iztro-v2.6.1.min.js",
+      "method": "GET"
+    },
+    {
+      "url": "https://cdn.jsdelivr.net/npm/iztro@2.6.1/dist/iztro-v2.6.1.min.js",
+      "method": "GET"
+    },
+    {
+      "url": "https://cdn.jsdelivr.net/npm/iztro@2.6.1/dist/iztro.min.js",
+      "method": "GET"
+    },
+    {
+      "url": "https://unpkg.com/iztro@2.6.1/dist/iztro-v2.6.1.min.js",
+      "method": "GET"
+    },
+    {
+      "url": "https://cdn.jsdelivr.net/npm/iztro@2.6.1/dist/iztro.min.js",
+      "method": "GET"
+    },
+    {
+      "url": "https://unpkg.com/iztro@2.6.1/dist/iztro-v2.6.1.min.js",
+      "method": "GET"
+    },
+    {
+      "url": "https://cdn.jsdelivr.net/npm/iztro@2.6.1/dist/iztro-v2.6.1.min.js",
+      "method": "GET"
+    },
+    {
+      "url": "https://cdn.jsdelivr.net/npm/iztro@2.6.1/dist/iztro-v2.6.1.min.js",
+      "method": "GET"
+    },
+    {
+      "url": "https://cdn.jsdelivr.net/npm/iztro@2.6.1/dist/iztro.min.js",
+      "method": "GET"
+    },
+    {
+      "url": "https://unpkg.com/iztro@2.6.1/dist/iztro-v2.6.1.min.js",
+      "method": "GET"
+    },
+    {
+      "url": "https://cdn.jsdelivr.net/npm/iztro@2.6.1/dist/iztro.min.js",
+      "method": "GET"
+    },
+    {
+      "url": "https://unpkg.com/iztro@2.6.1/dist/iztro-v2.6.1.min.js",
+      "method": "GET"
+    },
+    {
+      "url": "https://cdn.jsdelivr.net/npm/iztro@2.6.1/dist/iztro-v2.6.1.min.js",
+      "method": "GET"
+    },
+    {
+      "url": "https://cdn.jsdelivr.net/npm/iztro@2.6.1/dist/iztro-v2.6.1.min.js",
+      "method": "GET"
+    },
+    {
+      "url": "https://unpkg.com/iztro@2.6.1/dist/iztro-v2.6.1.min.js",
+      "method": "GET"
+    },
+    {
+      "url": "https://cdn.jsdelivr.net/npm/iztro@2.6.1/dist/iztro.min.js",
+      "method": "GET"
+    },
+    {
+      "url": "https://cdn.jsdelivr.net/npm/iztro@2.6.1/dist/iztro.min.js",
+      "method": "GET"
+    },
+    {
+      "url": "https://unpkg.com/iztro@2.6.1/dist/iztro-v2.6.1.min.js",
+      "method": "GET"
+    },
+    {
+      "url": "https://unpkg.com/iztro@2.6.1/dist/iztro-v2.6.1.min.js",
+      "method": "GET"
+    },
+    {
+      "url": "https://cdn.jsdelivr.net/npm/iztro@2.6.1/dist/iztro.min.js",
+      "method": "GET"
+    },
+    {
+      "url": "https://cdn.jsdelivr.net/npm/iztro@2.6.1/dist/iztro.min.js",
+      "method": "GET"
+    },
+    {
+      "url": "https://cdn.jsdelivr.net/npm/iztro@2.6.1/dist/iztro.min.js",
+      "method": "GET"
+    }
+  ],
+  "runtimeRegistration": {
+    "modules": [
+      {
+        "name": "fusion-release",
+        "state": "registered"
+      },
+      {
+        "name": "ziwei-render-guard",
+        "state": "registered"
+      }
+    ],
+    "schedulerSize": 1
+  },
+  "security": {
+    "importViaFile": {
+      "executed": 1,
+      "storedId": "x\"><img src=x onerror=\"window.__importAudit=1\">"
+    },
+    "reload": {
+      "executed": 1,
+      "people": 3
+    },
+    "payload": "harmless window marker only; no credential reads or exfiltration"
+  },
+  "account": {
+    "configured": false,
+    "me": null,
+    "cloudCount": 0,
+    "localCount": 0,
+    "error": "",
+    "tokenPresent": false
+  },
+  "calibration": {
+    "A": {
+      "cur": "audit-A",
+      "input": "1990-01-15T12:00",
+      "result": {
+        "y": 1990,
+        "m": 1,
+        "d": 15,
+        "h": 12,
+        "mi": 0,
+        "s": 0
+      },
+      "auto": {
+        "available": true,
+        "mingZhi": "戌",
+        "palaceDegree": 24.739510766348303,
+        "cell": 24,
+        "age": 19,
+        "bin": {
+          "age": 19,
+          "start": 24,
+          "end": 27,
+          "status": "scan-grid-3deg-bin"
+        },
+        "fineAge": 18.246503588782765,
+        "xiu": {
+          "name": "娄",
+          "du": 10.104756536808388
+        },
+        "mingDegreeLon": 24.739510766348303,
+        "edgeDistance": 0.7395107663483032,
+        "boundarySensitive": true,
+        "boundaryPolicy": "[0,3)→11; [3,6)→12; …; [27,30)→20；整3°归入下一段",
+        "caveat": "古表/旁证均提示量天尺格眼存在约1–2°误差；边界附近必须与宿度表、流派与盘例合参。"
+      },
+      "cal": {
+        "startAge": null,
+        "source": "unresolved",
+        "note": ""
+      }
+    },
+    "B": {
+      "cur": "audit-B",
+      "input": "2000-06-10T07:00",
+      "result": {
+        "y": 2000,
+        "m": 6,
+        "d": 10,
+        "h": 7,
+        "mi": 0,
+        "s": 0
+      },
+      "auto": {
+        "available": true,
+        "mingZhi": "未",
+        "palaceDegree": 19.384768593127262,
+        "cell": 19,
+        "age": 17,
+        "bin": {
+          "age": 17,
+          "start": 18,
+          "end": 21,
+          "status": "scan-grid-3deg-bin"
+        },
+        "fineAge": 16.46158953104242,
+        "xiu": {
+          "name": "井",
+          "du": 31.974368161074544
+        },
+        "mingDegreeLon": 109.38476859312726,
+        "edgeDistance": 1.3847685931272622,
+        "boundarySensitive": false,
+        "boundaryPolicy": "[0,3)→11; [3,6)→12; …; [27,30)→20；整3°归入下一段",
+        "caveat": "古表/旁证均提示量天尺格眼存在约1–2°误差；边界附近必须与宿度表、流派与盘例合参。"
+      },
+      "cal": {
+        "startAge": 19,
+        "source": "api-manual",
+        "note": "from A"
+      },
+      "segment": {
+        "available": true,
+        "targetYear": 2026,
+        "sui": 27,
+        "calibration": {
+          "startAge": 19,
+          "source": "api-manual",
+          "note": "from A"
+        },
+        "hint": {
+          "state": "unresolved",
+          "text": "当前命度没有命中V235三组文字金样。需要原图格/量天尺或外部可靠盘例校准。"
+        },
+        "segment": {
+          "name": "命宫",
+          "years": 18,
+          "ageStart": 19,
+          "ageEnd": 37,
+          "degreeRate": null,
+          "status": "source-constrained-interpolation",
+          "zhi": "未",
+          "gongZhu": "月",
+          "degreeAtYearStart": null
+        },
+        "mingDegree": {
+          "xiu": "井",
+          "du": 31.974368161074544,
+          "zhu": "木",
+          "mingZhi": "未"
+        },
+        "caveat": "岁序为传统整数岁近似；命宫逐岁限度未自动化；后续宫度为30°/原典年分的平均进度。"
+      }
+    }
+  },
+  "globalFormDependency": [
+    {
+      "formLon": 117.8,
+      "inputLon": 117.8,
+      "isDay": true,
+      "dayNight": "day"
+    },
+    {
+      "formLon": 0,
+      "inputLon": 117.8,
+      "isDay": true,
+      "dayNight": "day"
+    },
+    {
+      "formLon": -120,
+      "inputLon": 117.8,
+      "isDay": false,
+      "dayNight": "night"
+    }
+  ],
+  "saveFailure": {
+    "people": 1,
+    "storageUnchanged": true,
+    "toast": "已新增：存储失败测试 · pmuwvc31qlpfm",
+    "bodyTail": "。节气时刻、农历、四柱、命宫胎元、奇门拆补、紫微星曜与小限、六壬天地盘、择日与择时历数、行星位置等均已与独立的开源实现或天文历库对拍;评分、喜用、解读、综合方位、个人指南等则是本页按传统章法编写的规则化倾向描述,请勿当作断语。日期范围 1901–2099。\n开发者 · 玄一道长\n天机盘 · 独立开发\n小红书号：nian0596333\n版本 · v173 · 2026-10-05 16:52 +08:00\n友情链接\n天机玄秘\n↗\n到底部\n到顶部\n已新增：存储失败测试 · pmuwvc31qlpfm",
+    "afterReload": 0
+  },
+  "invalidCivilDates": [
+    {
+      "input": {
+        "y": 2023,
+        "m": 2,
+        "d": 29
+      },
+      "accepted": true,
+      "inputClock": {
+        "y": 2023,
+        "m": 2,
+        "d": 29,
+        "h": 0,
+        "mi": 0,
+        "s": 0,
+        "text": "2023-02-29 00:00:00"
+      },
+      "UT": 2460004.1666666665
+    },
+    {
+      "input": {
+        "y": 2024,
+        "m": 2,
+        "d": 30
+      },
+      "accepted": true,
+      "inputClock": {
+        "y": 2024,
+        "m": 2,
+        "d": 30,
+        "h": 0,
+        "mi": 0,
+        "s": 0,
+        "text": "2024-02-30 00:00:00"
+      },
+      "UT": 2460370.1666666665
+    },
+    {
+      "input": {
+        "y": 2024,
+        "m": 4,
+        "d": 31
+      },
+      "accepted": true,
+      "inputClock": {
+        "y": 2024,
+        "m": 4,
+        "d": 31,
+        "h": 0,
+        "mi": 0,
+        "s": 0,
+        "text": "2024-04-31 00:00:00"
+      },
+      "UT": 2460431.1666666665
+    },
+    {
+      "input": {
+        "y": 2024,
+        "m": 1,
+        "d": 1,
+        "h": null
+      },
+      "accepted": true,
+      "inputClock": {
+        "y": 2024,
+        "m": 1,
+        "d": 1,
+        "h": 0,
+        "mi": 0,
+        "s": 0,
+        "text": "2024-01-01 00:00:00"
+      },
+      "UT": 2460310.1666666665
+    }
+  ],
+  "invalidDegreeInputs": [
+    {
+      "input": "null",
+      "age": 11,
+      "fine": 10
+    },
+    {
+      "input": "undefined",
+      "age": null,
+      "fine": null
+    },
+    {
+      "input": "",
+      "age": 11,
+      "fine": 10
+    },
+    {
+      "input": "false",
+      "age": 11,
+      "fine": 10
+    },
+    {
+      "input": "true",
+      "age": 11,
+      "fine": 10.333333333333334
+    },
+    {
+      "input": "abc",
+      "age": null,
+      "fine": null
+    },
+    {
+      "input": "-1",
+      "age": 20,
+      "fine": 19.666666666666664
+    },
+    {
+      "input": "30",
+      "age": 11,
+      "fine": 10
+    },
+    {
+      "input": "360",
+      "age": 11,
+      "fine": 10
+    },
+    {
+      "input": "2.99999999999",
+      "age": 12,
+      "fine": 10.999999999996668
+    },
+    {
+      "input": "3",
+      "age": 12,
+      "fine": 11
+    }
+  ],
+  "q236BeforeManualCalibration": {
+    "autoAge": 19,
+    "v235Calibration": {
+      "startAge": null,
+      "source": "unresolved",
+      "note": ""
+    },
+    "v235Segment": null
+  },
+  "qa": {
+    "summary": {
+      "total": 51,
+      "pass": 38,
+      "warn": 6,
+      "fail": 6,
+      "gate": {
+        "state": "blocked",
+        "label": "RC 门禁阻塞",
+        "tone": "fail",
+        "reason": "6 个关键失败"
+      }
+    },
+    "failedChecks": [
+      {
+        "id": "runtime.version",
+        "name": "版本一致性",
+        "state": "fail",
+        "detail": "title=子时 · 秋分后 · 天机盘；build=版本 · V219 · 融合工程版",
+        "group": "runtime",
+        "severity": "critical"
+      },
+      {
+        "id": "api.TianjiEvidence",
+        "name": "TianjiEvidence",
+        "state": "fail",
+        "detail": "缺少 <object>",
+        "group": "api",
+        "severity": "critical"
+      },
+      {
+        "id": "api.TianjiConsumerReport",
+        "name": "TianjiConsumerReport",
+        "state": "fail",
+        "detail": "缺少 report, textReport",
+        "group": "api",
+        "severity": "critical"
+      },
+      {
+        "id": "api.TianjiLiuyaoDepth",
+        "name": "TianjiLiuyaoDepth",
+        "state": "fail",
+        "detail": "缺少 selfTest",
+        "group": "api",
+        "severity": "critical"
+      },
+      {
+        "id": "selftest.TianjiZiweiFlyingDepthV2",
+        "name": "紫微飞星 V2",
+        "state": "fail",
+        "detail": "selfTest FAIL · [{\"id\":\"exception\",\"ok\":false,\"detail\":\"zBirth is not defined\"}]",
+        "group": "regression",
+        "severity": "critical",
+        "raw": {
+          "ok": false,
+          "checks": [
+            {
+              "id": "exception",
+              "ok": false,
+              "detail": "zBirth is not defined"
+            }
+          ]
+        }
+      },
+      {
+        "id": "layout.runtime-overflow",
+        "name": "当前视口未保护横向溢出",
+        "state": "fail",
+        "detail": "5 个；div:40, span:23, span:23, span:37, span:37",
+        "group": "layout",
+        "severity": "critical",
+        "offenders": [
+          {
+            "id": "",
+            "tag": "div",
+            "cls": "panel dialbox tj200-overflow-guard",
+            "type": "internal",
+            "overflow": 40
+          },
+          {
+            "id": "",
+            "tag": "span",
+            "cls": "fab-icon",
+            "type": "viewport-right",
+            "overflow": 23
+          },
+          {
+            "id": "",
+            "tag": "span",
+            "cls": "fab-label",
+            "type": "viewport-right",
+            "overflow": 23
+          },
+          {
+            "id": "",
+            "tag": "span",
+            "cls": "fab-icon",
+            "type": "viewport-right",
+            "overflow": 37
+          },
+          {
+            "id": "",
+            "tag": "span",
+            "cls": "fab-label",
+            "type": "viewport-right",
+            "overflow": 37
+          }
+        ]
+      }
+    ],
+    "interpretation": "some failures are QA contract drift or checking lazy APIs before loading; overflow scan does not exclude horizontally scrollable ancestors"
+  },
+  "mobile": {
+    "viewport": 390,
+    "documentWidth": 390,
+    "formScrollAncestor": {
+      "tag": "DIV",
+      "id": "v59PersonLine",
+      "cls": "v59-person-line",
+      "width": 348,
+      "left": 21,
+      "right": 369,
+      "scrollWidth": 1231,
+      "clientWidth": 348,
+      "overflowX": "auto",
+      "grid": "64px 92px 105px 95px 195px 140px 82px 86px 92px 104px 96px"
+    },
+    "qaFalsePositiveExample": "gender input inside an overflow-x:auto ancestor"
+  },
+  "performance": [
+    {
+      "rate": 1,
+      "interactive": 5919.199999999953,
+      "dcl": 5955.5,
+      "paint": [
+        {
+          "name": "first-paint",
+          "time": 656
+        },
+        {
+          "name": "first-contentful-paint",
+          "time": 656
+        }
+      ],
+      "longTasks": [
+        {
+          "start": 423.5,
+          "duration": 653
+        },
+        {
+          "start": 1078.9000000000233,
+          "duration": 225
+        },
+        {
+          "start": 1531.0999999999767,
+          "duration": 163
+        },
+        {
+          "start": 1694.9000000000233,
+          "duration": 89
+        },
+        {
+          "start": 1815.2999999999302,
+          "duration": 51
+        },
+        {
+          "start": 2215.0999999999767,
+          "duration": 61
+        },
+        {
+          "start": 2299.5,
+          "duration": 74
+        },
+        {
+          "start": 2401,
+          "duration": 100
+        },
+        {
+          "start": 2556.79999999993,
+          "duration": 106
+        },
+        {
+          "start": 2689.6999999999534,
+          "duration": 118
+        },
+        {
+          "start": 2869.1999999999534,
+          "duration": 120
+        },
+        {
+          "start": 3022.9000000000233,
+          "duration": 210
+        },
+        {
+          "start": 3268.0999999999767,
+          "duration": 84
+        },
+        {
+          "start": 3419,
+          "duration": 219
+        },
+        {
+          "start": 3717.79999999993,
+          "duration": 86
+        },
+        {
+          "start": 3832.5999999999767,
+          "duration": 57
+        },
+        {
+          "start": 4194.400000000023,
+          "duration": 85
+        },
+        {
+          "start": 4353.29999999993,
+          "duration": 209
+        },
+        {
+          "start": 4600.79999999993,
+          "duration": 174
+        },
+        {
+          "start": 4856.900000000023,
+          "duration": 235
+        },
+        {
+          "start": 5105.900000000023,
+          "duration": 166
+        },
+        {
+          "start": 5376.400000000023,
+          "duration": 134
+        },
+        {
+          "start": 5528.29999999993,
+          "duration": 51
+        },
+        {
+          "start": 5910.199999999953,
+          "duration": 53
+        }
+      ],
+      "dom": 4017,
+      "externalRequests": 53,
+      "metrics": {
+        "Documents": 12,
+        "JSEventListeners": 417,
+        "Nodes": 7828,
+        "LayoutDuration": 1.213797,
+        "RecalcStyleDuration": 1.27324,
+        "ScriptDuration": 2.136412,
+        "TaskDuration": 6.484496,
+        "JSHeapUsedSize": 10054856
+      }
+    },
+    {
+      "rate": 1,
+      "interactive": 5157.699999999953,
+      "dcl": 5170.29999999993,
+      "paint": [
+        {
+          "name": "first-paint",
+          "time": 432
+        },
+        {
+          "name": "first-contentful-paint",
+          "time": 432
+        }
+      ],
+      "longTasks": [
+        {
+          "start": 219.09999999997672,
+          "duration": 531
+        },
+        {
+          "start": 753.8999999999069,
+          "duration": 322
+        },
+        {
+          "start": 1121.7999999999302,
+          "duration": 72
+        },
+        {
+          "start": 1204.3999999999069,
+          "duration": 77
+        },
+        {
+          "start": 1295.6999999999534,
+          "duration": 53
+        },
+        {
+          "start": 1377.8999999999069,
+          "duration": 52
+        },
+        {
+          "start": 1477.5,
+          "duration": 50
+        },
+        {
+          "start": 1564.5999999999767,
+          "duration": 89
+        },
+        {
+          "start": 1727.1999999999534,
+          "duration": 51
+        },
+        {
+          "start": 1778.7999999999302,
+          "duration": 87
+        },
+        {
+          "start": 2205.399999999907,
+          "duration": 52
+        },
+        {
+          "start": 2280.6999999999534,
+          "duration": 68
+        },
+        {
+          "start": 2379.6999999999534,
+          "duration": 84
+        },
+        {
+          "start": 2492.399999999907,
+          "duration": 96
+        },
+        {
+          "start": 2614.5999999999767,
+          "duration": 135
+        },
+        {
+          "start": 2777.6999999999534,
+          "duration": 116
+        },
+        {
+          "start": 2918.5,
+          "duration": 191
+        },
+        {
+          "start": 3156.0999999999767,
+          "duration": 94
+        },
+        {
+          "start": 3301.29999999993,
+          "duration": 140
+        },
+        {
+          "start": 3605.79999999993,
+          "duration": 53
+        },
+        {
+          "start": 3789.79999999993,
+          "duration": 129
+        },
+        {
+          "start": 3948.29999999993,
+          "duration": 110
+        },
+        {
+          "start": 4058.399999999907,
+          "duration": 103
+        },
+        {
+          "start": 4180.599999999977,
+          "duration": 140
+        },
+        {
+          "start": 4342.399999999907,
+          "duration": 151
+        },
+        {
+          "start": 4613.29999999993,
+          "duration": 126
+        },
+        {
+          "start": 4786.399999999907,
+          "duration": 107
+        }
+      ],
+      "dom": 4017,
+      "externalRequests": 53,
+      "metrics": {
+        "Documents": 12,
+        "JSEventListeners": 417,
+        "Nodes": 7918,
+        "LayoutDuration": 1.111599,
+        "RecalcStyleDuration": 1.01775,
+        "ScriptDuration": 1.9198,
+        "TaskDuration": 5.759714,
+        "JSHeapUsedSize": 10277400
+      }
+    },
+    {
+      "rate": 1,
+      "interactive": 4950.300000000047,
+      "dcl": 4989.20000000007,
+      "paint": [
+        {
+          "name": "first-paint",
+          "time": 220
+        },
+        {
+          "name": "first-contentful-paint",
+          "time": 220
+        }
+      ],
+      "longTasks": [
+        {
+          "start": 59,
+          "duration": 53
+        },
+        {
+          "start": 236.5,
+          "duration": 453
+        },
+        {
+          "start": 692.6000000000931,
+          "duration": 214
+        },
+        {
+          "start": 937.1000000000931,
+          "duration": 69
+        },
+        {
+          "start": 1011.9000000000233,
+          "duration": 75
+        },
+        {
+          "start": 1159.7000000000698,
+          "duration": 50
+        },
+        {
+          "start": 1243,
+          "duration": 77
+        },
+        {
+          "start": 1347.1000000000931,
+          "duration": 84
+        },
+        {
+          "start": 1432.1000000000931,
+          "duration": 94
+        },
+        {
+          "start": 1526.7000000000698,
+          "duration": 55
+        },
+        {
+          "start": 1844.5,
+          "duration": 57
+        },
+        {
+          "start": 1967.5,
+          "duration": 69
+        },
+        {
+          "start": 2083.8000000000466,
+          "duration": 80
+        },
+        {
+          "start": 2191.4000000000233,
+          "duration": 115
+        },
+        {
+          "start": 2348.20000000007,
+          "duration": 143
+        },
+        {
+          "start": 2524.5,
+          "duration": 184
+        },
+        {
+          "start": 2735.20000000007,
+          "duration": 192
+        },
+        {
+          "start": 2960.4000000000233,
+          "duration": 90
+        },
+        {
+          "start": 3162.70000000007,
+          "duration": 192
+        },
+        {
+          "start": 3401.70000000007,
+          "duration": 55
+        },
+        {
+          "start": 3524.8000000000466,
+          "duration": 70
+        },
+        {
+          "start": 3630.8000000000466,
+          "duration": 71
+        },
+        {
+          "start": 3861.20000000007,
+          "duration": 104
+        },
+        {
+          "start": 4016.100000000093,
+          "duration": 129
+        },
+        {
+          "start": 4145.600000000093,
+          "duration": 102
+        },
+        {
+          "start": 4262.600000000093,
+          "duration": 87
+        },
+        {
+          "start": 4463.900000000023,
+          "duration": 127
+        },
+        {
+          "start": 4612.70000000007,
+          "duration": 121
+        },
+        {
+          "start": 4786.400000000023,
+          "duration": 54
+        },
+        {
+          "start": 4938.100000000093,
+          "duration": 64
+        }
+      ],
+      "dom": 4017,
+      "externalRequests": 53,
+      "metrics": {
+        "Documents": 12,
+        "JSEventListeners": 441,
+        "Nodes": 8097,
+        "LayoutDuration": 0.936953,
+        "RecalcStyleDuration": 0.888107,
+        "ScriptDuration": 2.019703,
+        "TaskDuration": 5.516818,
+        "JSHeapUsedSize": 11991080
+      }
+    },
+    {
+      "rate": 4,
+      "interactive": 19266.900000000023,
+      "dcl": 19354.5,
+      "paint": [
+        {
+          "name": "first-paint",
+          "time": 384
+        },
+        {
+          "name": "first-contentful-paint",
+          "time": 384
+        }
+      ],
+      "longTasks": [
+        {
+          "start": 142.10000000009313,
+          "duration": 106
+        },
+        {
+          "start": 531.7000000000698,
+          "duration": 1123
+        },
+        {
+          "start": 1659.7000000000698,
+          "duration": 633
+        },
+        {
+          "start": 2349.4000000000233,
+          "duration": 104
+        },
+        {
+          "start": 2506.100000000093,
+          "duration": 120
+        },
+        {
+          "start": 2627.8000000000466,
+          "duration": 99
+        },
+        {
+          "start": 2760.70000000007,
+          "duration": 86
+        },
+        {
+          "start": 2865.3000000000466,
+          "duration": 61
+        },
+        {
+          "start": 2958.3000000000466,
+          "duration": 68
+        },
+        {
+          "start": 3053,
+          "duration": 67
+        },
+        {
+          "start": 3137,
+          "duration": 72
+        },
+        {
+          "start": 3227.100000000093,
+          "duration": 77
+        },
+        {
+          "start": 3323.5,
+          "duration": 81
+        },
+        {
+          "start": 3425,
+          "duration": 116
+        },
+        {
+          "start": 3590.70000000007,
+          "duration": 282
+        },
+        {
+          "start": 3913.9000000000233,
+          "duration": 109
+        },
+        {
+          "start": 4027.600000000093,
+          "duration": 120
+        },
+        {
+          "start": 4148.900000000023,
+          "duration": 90
+        },
+        {
+          "start": 4240,
+          "duration": 142
+        },
+        {
+          "start": 4383.400000000023,
+          "duration": 78
+        },
+        {
+          "start": 4526.400000000023,
+          "duration": 78
+        },
+        {
+          "start": 4623.300000000047,
+          "duration": 93
+        },
+        {
+          "start": 4736.600000000093,
+          "duration": 60
+        },
+        {
+          "start": 4819.100000000093,
+          "duration": 75
+        },
+        {
+          "start": 4919.70000000007,
+          "duration": 89
+        },
+        {
+          "start": 5068.900000000023,
+          "duration": 71
+        },
+        {
+          "start": 5141.300000000047,
+          "duration": 59
+        },
+        {
+          "start": 5208.400000000023,
+          "duration": 81
+        },
+        {
+          "start": 5341.900000000023,
+          "duration": 87
+        },
+        {
+          "start": 5429.70000000007,
+          "duration": 94
+        },
+        {
+          "start": 5529.300000000047,
+          "duration": 82
+        },
+        {
+          "start": 5619,
+          "duration": 138
+        },
+        {
+          "start": 5758,
+          "duration": 91
+        },
+        {
+          "start": 5859.800000000047,
+          "duration": 114
+        },
+        {
+          "start": 5974.70000000007,
+          "duration": 83
+        },
+        {
+          "start": 6092,
+          "duration": 198
+        },
+        {
+          "start": 6290.100000000093,
+          "duration": 89
+        },
+        {
+          "start": 6387.100000000093,
+          "duration": 358
+        },
+        {
+          "start": 6746.100000000093,
+          "duration": 96
+        },
+        {
+          "start": 6867.800000000047,
+          "duration": 466
+        },
+        {
+          "start": 7334.300000000047,
+          "duration": 115
+        },
+        {
+          "start": 7494.70000000007,
+          "duration": 420
+        },
+        {
+          "start": 7915.600000000093,
+          "duration": 86
+        },
+        {
+          "start": 8028.100000000093,
+          "duration": 757
+        },
+        {
+          "start": 8786.300000000047,
+          "duration": 82
+        },
+        {
+          "start": 8905.900000000023,
+          "duration": 70
+        },
+        {
+          "start": 8977.20000000007,
+          "duration": 83
+        },
+        {
+          "start": 9077.100000000093,
+          "duration": 257
+        },
+        {
+          "start": 9334.300000000047,
+          "duration": 80
+        },
+        {
+          "start": 9427.5,
+          "duration": 87
+        },
+        {
+          "start": 9516.300000000047,
+          "duration": 487
+        },
+        {
+          "start": 10016.20000000007,
+          "duration": 61
+        },
+        {
+          "start": 10082.400000000023,
+          "duration": 124
+        },
+        {
+          "start": 10254.900000000023,
+          "duration": 110
+        },
+        {
+          "start": 10413.800000000047,
+          "duration": 86
+        },
+        {
+          "start": 10545,
+          "duration": 106
+        },
+        {
+          "start": 10724.20000000007,
+          "duration": 69
+        },
+        {
+          "start": 10832.900000000023,
+          "duration": 80
+        },
+        {
+          "start": 10945.400000000023,
+          "duration": 203
+        },
+        {
+          "start": 11185,
+          "duration": 85
+        },
+        {
+          "start": 11272.100000000093,
+          "duration": 56
+        },
+        {
+          "start": 11328.400000000023,
+          "duration": 121
+        },
+        {
+          "start": 11470.300000000047,
+          "duration": 64
+        },
+        {
+          "start": 11539.20000000007,
+          "duration": 126
+        },
+        {
+          "start": 11665.900000000023,
+          "duration": 60
+        },
+        {
+          "start": 11732.600000000093,
+          "duration": 110
+        },
+        {
+          "start": 11866.100000000093,
+          "duration": 91
+        },
+        {
+          "start": 11985.600000000093,
+          "duration": 108
+        },
+        {
+          "start": 12130,
+          "duration": 374
+        },
+        {
+          "start": 12504.600000000093,
+          "duration": 105
+        },
+        {
+          "start": 12676.900000000023,
+          "duration": 184
+        },
+        {
+          "start": 12906.20000000007,
+          "duration": 148
+        },
+        {
+          "start": 13123.5,
+          "duration": 483
+        },
+        {
+          "start": 13606.900000000023,
+          "duration": 308
+        },
+        {
+          "start": 13927.5,
+          "duration": 168
+        },
+        {
+          "start": 14096.5,
+          "duration": 160
+        },
+        {
+          "start": 14309.5,
+          "duration": 403
+        },
+        {
+          "start": 14713.600000000093,
+          "duration": 69
+        },
+        {
+          "start": 14830.70000000007,
+          "duration": 549
+        },
+        {
+          "start": 15445.600000000093,
+          "duration": 123
+        },
+        {
+          "start": 15678.70000000007,
+          "duration": 112
+        },
+        {
+          "start": 15837.400000000023,
+          "duration": 574
+        },
+        {
+          "start": 16412.300000000047,
+          "duration": 51
+        },
+        {
+          "start": 16466.20000000007,
+          "duration": 362
+        },
+        {
+          "start": 16889.600000000093,
+          "duration": 96
+        },
+        {
+          "start": 17023.900000000023,
+          "duration": 82
+        },
+        {
+          "start": 17107.70000000007,
+          "duration": 66
+        },
+        {
+          "start": 17174.900000000023,
+          "duration": 91
+        },
+        {
+          "start": 17307.900000000023,
+          "duration": 82
+        },
+        {
+          "start": 17444.600000000093,
+          "duration": 81
+        },
+        {
+          "start": 17558.5,
+          "duration": 86
+        },
+        {
+          "start": 17672.20000000007,
+          "duration": 81
+        },
+        {
+          "start": 17797.400000000023,
+          "duration": 96
+        },
+        {
+          "start": 17915.400000000023,
+          "duration": 86
+        },
+        {
+          "start": 18059.100000000093,
+          "duration": 83
+        },
+        {
+          "start": 18168.100000000093,
+          "duration": 90
+        },
+        {
+          "start": 18287.300000000047,
+          "duration": 82
+        },
+        {
+          "start": 18393.800000000047,
+          "duration": 81
+        },
+        {
+          "start": 18502.100000000093,
+          "duration": 91
+        },
+        {
+          "start": 18615.20000000007,
+          "duration": 82
+        },
+        {
+          "start": 18735.300000000047,
+          "duration": 84
+        },
+        {
+          "start": 18849.900000000023,
+          "duration": 91
+        },
+        {
+          "start": 18990.20000000007,
+          "duration": 107
+        },
+        {
+          "start": 19134.600000000093,
+          "duration": 126
+        },
+        {
+          "start": 19263.800000000047,
+          "duration": 141
+        },
+        {
+          "start": 19405.800000000047,
+          "duration": 128
+        },
+        {
+          "start": 19559,
+          "duration": 84
+        },
+        {
+          "start": 19703.600000000093,
+          "duration": 84
+        },
+        {
+          "start": 19799.900000000023,
+          "duration": 77
+        },
+        {
+          "start": 19889.70000000007,
+          "duration": 82
+        },
+        {
+          "start": 19992.600000000093,
+          "duration": 70
+        },
+        {
+          "start": 20079.600000000093,
+          "duration": 102
+        },
+        {
+          "start": 20200.400000000023,
+          "duration": 85
+        }
+      ],
+      "dom": 4017,
+      "externalRequests": 53,
+      "metrics": {
+        "Documents": 12,
+        "JSEventListeners": 420,
+        "Nodes": 13923,
+        "LayoutDuration": 3.526884,
+        "RecalcStyleDuration": 4.06929,
+        "ScriptDuration": 6.001545,
+        "TaskDuration": 20.098029,
+        "JSHeapUsedSize": 9784780
+      }
+    }
+  ],
+  "registryWarnings": [
+    "[V223 core registry] TypeError: TianjiCore.registerRule is not a function",
+    "[V226 registry] TypeError: TianjiCore.registerRule is not a function",
+    "[V228 registry] TypeError: TianjiCore.registerRule is not a function",
+    "[V232 registry] TypeError: TianjiCore.registerRule is not a function",
+    "[V233 registry] TypeError: TianjiCore.registerRule is not a function",
+    "[V234 registry] TypeError: TianjiCore.registerRule is not a function",
+    "[V235 registry] TypeError: TianjiCore.registerRule is not a function",
+    "[V236 registry] TypeError: TianjiCore.registerRule is not a function"
+  ],
+  "limits": {
+    "sharedChat": "cloud proxy CONNECT returned 403; shared conversation was not read",
+    "fileProtocol": {
+      "error": "page.goto: net::ERR_BLOCKED_BY_ADMINISTRATOR at file:///workspace/attachments/0f7f4e7e-2d2e-4146-976d-2a36b6b6aa9e/%E5%A4%A9%E6%9C%BA%E7%9B%98_v236_%E9%87%8F%E5%A4%A9%E5%B0%BA%E5%9B%BE%E6%A0%BC%E6%95%B0%E5%AD%97%E5%8C%96_11%E8%87%B320%E5%B2%81%E5%85%A8%E6%98%A0%E5%B0%84.html\nCall log:\n\u001b[2m  - navigating to \"file:///workspace/attachments/0f7f4e7e-2d2e-4146-976d-2a36b6b6aa9e/%E5%A4%A9%E6%9C%BA%E7%9B%98_v236_%E9%87%8F%E5%A4%A9%E5%B0%BA%E5%9B%BE%E6%A0%BC%E6%95%B0%E5%AD%97%E5%8C%96_11%E8%87%B320%E5%B2%81%E5%85%A8%E6%98%A0%E5%B0%84.html\", waiting until \"load\"\u001b[22m\n"
+    },
+    "backend": "API_BASE placeholder; backend authorization, email and cloud sync not tested",
+    "astronomicalCorrectness": "independent historical anchor/complete external reference not validated in this review"
+  }
+}
