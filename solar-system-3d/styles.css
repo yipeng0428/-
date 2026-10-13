@@ -1,0 +1,233 @@
+/* 太阳系实时 3D 模拟 —— 界面样式
+   设计取向：暗色、低饱和、信息密度优先；数字一律等宽，便于逐帧阅读变化。 */
+
+:root {
+  --bg: #04060d;
+  --panel: rgba(10, 14, 24, 0.72);
+  --panel-solid: #0a0e18;
+  --line: rgba(150, 175, 215, 0.16);
+  --line-strong: rgba(150, 175, 215, 0.32);
+  --text: #e6ecf6;
+  --text-dim: #9aa6bd;
+  --text-faint: #6b7689;
+  --accent: #7fc4ff;
+  --accent-dim: rgba(127, 196, 255, 0.14);
+  --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+          "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+/* hidden 属性必须压过下面组件自带的 display，否则 #fatal 这类 flex 容器
+   即使带 hidden 也会铺满屏幕并吞掉所有指针事件。 */
+[hidden] { display: none !important; }
+
+html, body {
+  margin: 0; padding: 0; height: 100%;
+  background: var(--bg); color: var(--text);
+  font-family: var(--sans); font-size: 14px; line-height: 1.55;
+  overflow: hidden; -webkit-font-smoothing: antialiased;
+}
+
+#scene { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
+
+/* ---------- 标签层 ---------- */
+#labels { position: fixed; inset: 0; pointer-events: none; z-index: 2; }
+.label {
+  position: absolute; transform: translate(-50%, -50%);
+  padding: 2px 7px; border-radius: 999px;
+  font-size: 12px; letter-spacing: 0.04em; white-space: nowrap;
+  color: var(--text); background: rgba(6, 10, 18, 0.5);
+  border: 1px solid var(--line); backdrop-filter: blur(3px);
+  pointer-events: auto; cursor: pointer; user-select: none;
+  transition: border-color 0.18s, color 0.18s, background 0.18s;
+}
+.label:hover { border-color: var(--line-strong); background: rgba(10, 18, 32, 0.78); }
+.label.is-selected { color: #04060d; background: var(--accent); border-color: var(--accent); font-weight: 600; }
+.label .en { color: var(--text-faint); font-size: 10px; margin-left: 4px; }
+.label.is-selected .en { color: rgba(4, 6, 13, 0.6); }
+
+/* ---------- 顶部标题 ---------- */
+#brand {
+  position: fixed; top: 18px; left: 20px; z-index: 3; max-width: 46vw;
+  pointer-events: none;
+}
+#brand h1 { margin: 0; font-size: 17px; font-weight: 600; letter-spacing: 0.02em; }
+#brand p { margin: 4px 0 0; font-size: 12px; color: var(--text-dim); }
+
+/* ---------- 时钟 ---------- */
+#clock {
+  position: fixed; top: 16px; right: 20px; z-index: 3;
+  padding: 10px 12px; min-width: 232px;
+  background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
+  backdrop-filter: blur(10px);
+}
+.clock-row { display: flex; justify-content: space-between; gap: 12px; font-size: 12px; }
+.clock-row + .clock-row { margin-top: 2px; }
+.clock-row .k { color: var(--text-faint); }
+.clock-row .v { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+
+/* ---------- 右侧信息面板 ---------- */
+#panel {
+  position: fixed; top: 108px; right: 20px; z-index: 3;
+  width: 352px; max-height: calc(100vh - 150px);
+  display: flex; flex-direction: column; gap: 10px;
+  overflow-y: auto; overscroll-behavior: contain;
+  padding: 14px; border-radius: 12px;
+  background: var(--panel); border: 1px solid var(--line);
+  backdrop-filter: blur(12px);
+  scrollbar-width: thin; scrollbar-color: var(--line-strong) transparent;
+}
+#panel::-webkit-scrollbar { width: 8px; }
+#panel::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 4px; }
+
+#panel h2 { margin: 0; font-size: 20px; font-weight: 600; letter-spacing: 0.01em; }
+#panel h2 em { font-style: normal; font-size: 12px; color: var(--text-faint); margin-left: 8px; letter-spacing: 0.08em; }
+#panel h3 {
+  margin: 16px 0 6px; font-size: 11px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.14em; color: var(--text-dim);
+  display: flex; align-items: baseline; justify-content: space-between; gap: 8px;
+  padding-bottom: 5px; border-bottom: 1px solid var(--line);
+}
+#panel h3 .stamp { font-family: var(--mono); font-size: 10px; letter-spacing: 0; color: var(--text-faint); text-transform: none; font-weight: 400; }
+.detail-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+#d-close {
+  background: none; border: 1px solid var(--line); color: var(--text-dim);
+  width: 24px; height: 24px; border-radius: 6px; cursor: pointer; font-size: 15px; line-height: 1;
+  flex: 0 0 auto;
+}
+#d-close:hover { color: var(--text); border-color: var(--line-strong); }
+
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.chip {
+  font-size: 11px; padding: 2px 8px; border-radius: 999px;
+  background: var(--accent-dim); border: 1px solid rgba(127, 196, 255, 0.28); color: var(--accent);
+}
+.blurb { margin: 10px 0 0; font-size: 12.5px; color: var(--text-dim); }
+.tips { margin: 12px 0 0; padding-left: 18px; font-size: 12px; color: var(--text-dim); }
+.tips li { margin: 3px 0; }
+.tips b { color: var(--text); font-weight: 600; }
+
+.actions { display: flex; gap: 8px; margin-top: 12px; }
+.actions button, .pill {
+  font-family: var(--sans); font-size: 12px; color: var(--text);
+  background: rgba(255, 255, 255, 0.04); border: 1px solid var(--line);
+  padding: 5px 11px; border-radius: 7px; cursor: pointer;
+  transition: background 0.16s, border-color 0.16s, color 0.16s;
+}
+.actions button:hover, .pill:hover { background: rgba(127, 196, 255, 0.12); border-color: var(--line-strong); }
+.pill.is-on { background: var(--accent); border-color: var(--accent); color: #04060d; font-weight: 600; }
+
+table.kv { width: 100%; border-collapse: collapse; }
+table.kv th, table.kv td { text-align: left; padding: 3px 0; vertical-align: top; font-size: 12px; }
+table.kv th { color: var(--text-faint); font-weight: 400; white-space: nowrap; width: 38%; padding-right: 10px; }
+table.kv td { font-family: var(--mono); font-variant-numeric: tabular-nums; color: var(--text); }
+table.kv td.prose { font-family: var(--sans); color: var(--text-dim); }
+table.kv tr.hi td { color: var(--accent); }
+
+table.rank { width: 100%; border-collapse: collapse; font-size: 12px; }
+table.rank th { color: var(--text-faint); font-weight: 400; text-align: right; padding: 2px 0 4px; font-size: 10.5px; letter-spacing: 0.06em; }
+table.rank th:first-child { text-align: left; }
+table.rank td { padding: 3px 0; font-family: var(--mono); font-variant-numeric: tabular-nums; text-align: right; }
+table.rank td:first-child { text-align: left; font-family: var(--sans); }
+table.rank tr { cursor: pointer; }
+table.rank tbody tr:hover td { color: var(--accent); }
+table.rank tr.is-selected td { color: var(--accent); }
+table.rank .dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
+
+.note { margin: 10px 0 0; font-size: 11px; color: var(--text-faint); line-height: 1.5; }
+
+/* ---------- 底部控制台 ---------- */
+#dock {
+  position: fixed; left: 20px; bottom: 20px; z-index: 3;
+  display: flex; gap: 10px; flex-wrap: wrap; max-width: calc(100vw - 420px);
+}
+.dock-group {
+  padding: 10px 12px 11px; border-radius: 11px;
+  background: var(--panel); border: 1px solid var(--line); backdrop-filter: blur(12px);
+  min-width: 232px;
+}
+.dock-title {
+  display: block; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--text-faint); margin-bottom: 7px;
+}
+.dock-row { display: flex; align-items: center; gap: 6px; }
+.dock-row + .dock-row { margin-top: 7px; }
+.dock-row.wrap { flex-wrap: wrap; }
+.pill.step { padding: 4px 8px; font-family: var(--mono); font-size: 11px; }
+
+.field { display: flex; align-items: center; gap: 8px; width: 100%; font-size: 11.5px; color: var(--text-faint); }
+.field > span { white-space: nowrap; }
+.field select, .field input[type="datetime-local"] {
+  flex: 1; min-width: 0; font-family: var(--mono); font-size: 11.5px;
+  color: var(--text); background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--line); border-radius: 6px; padding: 4px 6px;
+}
+.field.slider { display: block; }
+.field.slider > span { display: block; margin-bottom: 4px; }
+.field.slider b { color: var(--accent); font-family: var(--mono); font-weight: 500; }
+input[type="range"] { width: 100%; accent-color: var(--accent); }
+input[type="range"]:disabled { opacity: 0.35; }
+
+.check { display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px; color: var(--text-dim); cursor: pointer; }
+.check input { accent-color: var(--accent); }
+.dock-note { margin: 9px 0 0; font-size: 10.5px; color: var(--text-faint); line-height: 1.45; max-width: 232px; }
+
+/* ---------- 加载 / 错误 ---------- */
+#loading, #fatal {
+  position: fixed; inset: 0; z-index: 20;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;
+  background: radial-gradient(circle at 50% 45%, #0b1222 0%, #04060d 70%);
+  color: var(--text-dim); font-size: 13px; letter-spacing: 0.04em;
+  transition: opacity 0.5s ease;
+}
+#loading.is-hidden { opacity: 0; pointer-events: none; }
+.spinner {
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 1.5px solid rgba(127, 196, 255, 0.2); border-top-color: var(--accent);
+  animation: spin 0.9s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.fatal-box { max-width: 420px; text-align: center; }
+.fatal-box h2 { font-size: 16px; margin: 0 0 8px; color: var(--text); }
+
+/* 窄屏上的控制面板开关（宽屏不显示） */
+#ui-toggle {
+  display: none; position: fixed; z-index: 5; left: 10px; top: 46px;
+  font-family: var(--sans); font-size: 12px; color: var(--text);
+  background: var(--panel); border: 1px solid var(--line);
+  padding: 5px 11px; border-radius: 999px; backdrop-filter: blur(10px); cursor: pointer;
+}
+#ui-toggle::after { content: ' ▾'; color: var(--text-faint); }
+body.dock-open #ui-toggle::after { content: ' ▴'; }
+
+/* ---------- 窄屏 ----------
+   屏幕高度有限时，3D 画面本身才是主角：控制面板默认收起，
+   信息面板退化为底部抽屉，只保留时钟与标题常驻。 */
+@media (max-width: 920px) {
+  #brand { top: 14px; left: 14px; max-width: 58vw; }
+  #brand h1 { font-size: 15px; }
+  #brand p { display: none; }
+  #clock { min-width: 0; top: 12px; right: 12px; padding: 6px 9px; }
+  .clock-row .k { display: none; }
+  .clock-row:nth-child(3) { display: none; }
+
+  #ui-toggle { display: block; }
+  #panel {
+    top: auto; left: 8px; right: 8px; bottom: 8px; width: auto;
+    max-height: 44vh; padding: 12px;
+  }
+  #dock {
+    left: 8px; right: 8px; bottom: auto; top: 80px; max-width: none;
+    max-height: calc(100vh - 100px); overflow-y: auto; z-index: 4;
+    display: none;
+  }
+  body.dock-open #dock { display: flex; }
+  .dock-group { flex: 1 1 210px; min-width: 190px; }
+}
+@media (max-width: 560px) {
+  #dock { gap: 8px; }
+  .dock-group { padding: 8px 10px 9px; }
+  .dock-note { font-size: 10px; }
+}
