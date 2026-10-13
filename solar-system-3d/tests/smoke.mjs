@@ -3,7 +3,8 @@
  *
  * 前置：npm i -D playwright && npx playwright install chromium
  *       （若环境已全局安装 playwright，脚本会自动按常见路径解析）
- * 运行：node tests/smoke.mjs
+ * 运行：node tests/smoke.mjs                       # 测多文件版 index.html
+ *       node tests/smoke.mjs dist/solar-system.html # 测单文件打包版
  * 退出码：0 全部通过；1 有断言失败。
  */
 import { createRequire } from 'node:module';
@@ -21,7 +22,10 @@ function loadPlaywright() {
 
 const { chromium } = loadPlaywright();
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const url = 'file://' + path.join(root, 'index.html');
+// 默认测多文件版；传入路径可改测单文件打包版（两者行为应完全一致）
+const target = path.resolve(root, process.argv[2] || 'index.html');
+const url = 'file://' + target;
+console.log('目标页面：' + target + '\n');
 
 let failed = 0;
 function check(name, ok, detail) {

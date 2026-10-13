@@ -10,13 +10,23 @@
 ## 1. 运行
 
 ```bash
-# 方式一：直接双击（推荐，无需任何工具链）
+# 方式一：单文件版（最省事，整个项目打包成一个 HTML，双击即可）
+open solar-system-3d/dist/solar-system.html
+
+# 方式二：多文件版（源码结构，便于修改）
 open solar-system-3d/index.html        # macOS
 start solar-system-3d\index.html       # Windows
 
-# 方式二：本地服务器（若浏览器对 file:// 有额外限制）
+# 方式三：本地服务器（若浏览器对 file:// 有额外限制）
 cd solar-system-3d && python3 -m http.server 8080
 # 浏览器打开 http://localhost:8080
+```
+
+`dist/solar-system.html`（约 765 KB）是把 `styles.css` 与全部脚本按原加载顺序内联后的产物，**零外部引用**（0 个 `<link href>`、0 个 `<script src>`、0 个 `url()`），可随意拷贝、离线打开或发给别人。它由 `tools/build-single-file.mjs` 生成，不要直接编辑——改源文件后重新生成：
+
+```bash
+node tools/build-single-file.mjs            # → dist/solar-system.html
+node tests/smoke.mjs dist/solar-system.html # 用同一套断言验证打包版
 ```
 
 无需 npm install、无构建步骤、无外部网络请求（three.js 已内置，纹理全部运行时程序化生成）。
@@ -53,7 +63,11 @@ solar-system-3d/
 │   ├── app.js              场景搭建、比例映射、拾取、主循环
 │   └── ui.js               标签、信息面板、时间与显示控制
 ├── vendor/three.bundle.js  three.js r169（MIT），由下方脚本生成
-└── tools/make-three-bundle.mjs  把官方 ESM 构建改写成全局脚本
+├── dist/solar-system.html  单文件打包产物（生成物，勿直接编辑）
+├── tests/smoke.mjs         Playwright 冒烟测试（22 项断言）
+└── tools/
+    ├── make-three-bundle.mjs   把官方 ESM 构建改写成全局脚本
+    └── build-single-file.mjs   把全部样式与脚本内联成单文件
 ```
 
 分层原则：`app.js` 只管场景与状态，`ui.js` 只读状态写 DOM，两者通过 `SolarSystem.App.state` 单向耦合。
@@ -140,7 +154,7 @@ npm i -D playwright && npx playwright install chromium   # 仅测试需要
 node tests/smoke.mjs
 ```
 
-`tests/smoke.mjs` 以 `file://` 打开页面并断言 22 项：WebGL 是否出图、各行星日心距是否落在自身近/远日距之间、地球公转速度是否 ≈29.8 km/s、实时模式与系统时钟的偏差是否 <1 s、画布点击能否选中、拖拽是否被误判为点击、流速与暂停是否生效、两种距离映射下海王星/地球的距离比是否分别 ≈30 与 ≈√30、运行期间有无 JS 异常。本仓库当前提交下 22 项全部通过（Chromium + SwiftShader 软件渲染）。
+`tests/smoke.mjs` 以 `file://` 打开页面并断言 22 项（可传入路径改测单文件版：`node tests/smoke.mjs dist/solar-system.html`）：WebGL 是否出图、各行星日心距是否落在自身近/远日距之间、地球公转速度是否 ≈29.8 km/s、实时模式与系统时钟的偏差是否 <1 s、画布点击能否选中、拖拽是否被误判为点击、流速与暂停是否生效、两种距离映射下海王星/地球的距离比是否分别 ≈30 与 ≈√30、运行期间有无 JS 异常。本仓库当前提交下，多文件版与单文件打包版的 22 项断言均全部通过（Chromium + SwiftShader 软件渲染）。
 
 ## 9. 数据来源
 
