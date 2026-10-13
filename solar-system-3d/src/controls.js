@@ -13,6 +13,9 @@
   const SS = (global.SolarSystem = global.SolarSystem || {});
   const THREE = global.THREE;
 
+  const _v3a = new THREE.Vector3();
+  const _v3b = new THREE.Vector3();
+
   const CLICK_PX = 6;      // 位移阈值：小于此值才算点击
   const CLICK_MS = 450;    // 时长阈值
 
@@ -22,6 +25,9 @@
       this.camera = camera;
       this.dom = domElement;
       this.target = new THREE.Vector3();
+      // 相机注视点 = 基准点（场景给的，可能每帧跟随天体）+ 平移偏移（用户拖出来的）
+      // 两者分开是必须的：否则跟随逻辑每帧重设注视点，右键平移会在同一帧被抹掉。
+      this.panOffset = new THREE.Vector3();
       this.azimuth = opts.azimuth !== undefined ? opts.azimuth : Math.PI * 0.25;
       this.polar = opts.polar !== undefined ? opts.polar : Math.PI * 0.32;
       this.distance = opts.distance || 60;
@@ -33,6 +39,7 @@
       this.onClick = null;
 
       this._desired = { azimuth: this.azimuth, polar: this.polar, distance: this.distance };
+      this._base = this.target.clone();
       this._targetDesired = this.target.clone();
       this._pointers = new Map();
       this._mode = null;
@@ -75,7 +82,8 @@
       this.dom.setPointerCapture?.(e.pointerId);
       this._pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
       if (this._pointers.size === 1) {
-        this._mode = (e.button === 2 || e.button === 1) ? 'pan' : 'rotate';
+        // 右键 / 中键 / Shift+左键 都是平移（触控板用户常没有右键）
+        this._mode = (e.button === 2 || e.button === 1 || (e.button === 0 && e.shiftKey)) ? 'pan' : 'rotate';
         this._downAt = performance.now();
         this._downPos = { x: e.clientX, y: e.clientY };
         this._moved = 0;
@@ -114,12 +122,13 @@
         this._desired.azimuth -= dx * scale;
         this._desired.polar = Math.min(this.maxPolar, Math.max(this.minPolar, this._desired.polar - dy * scale));
       } else if (this._mode === 'pan') {
-        // 平移速度随距离缩放，远处拖动不至于过于迟缓
-        const k = this._desired.distance * 0.0016;
-        const right = new THREE.Vector3().setFromMatrixColumn(this.camera.matrix, 0);
-        const up = new THREE.Vector3().setFromMatrixColumn(this.camera.matrix, 1);
-        this._targetDesired.addScaledVector(right, -dx * k);
-        this._targetDesired.addScaledVector(up, dy * k);
+        // 按"目标平面上 1 像素等于多少世界单位"换算，画面才会 1:1 跟着光标走
+        const height = this.dom.clientHeight || window.innerHeight;
+        const k = (2 * Math.tan((this.camera.fov * Math.PI / 180) / 2) * this._desired.distance) / height;
+        const right = _v3a.setFromMatrixColumn(this.camera.matrix, 0);
+        const up = _v3b.setFromMatrixColumn(this.camera.matrix, 1);
+        this.panOffset.addScaledVector(right, -dx * k);
+        this.panOffset.addScaledVector(up, dy * k);
       }
     }
 
@@ -156,9 +165,18 @@
       this._desired.polar = Math.min(this.maxPolar, Math.max(this.minPolar, this._desired.polar + dPolar));
     }
 
+    /** 设置基准注视点（通常每帧由场景调用）；用户的平移偏移会叠加在它之上 */
     setTarget(vec, immediate) {
-      this._targetDesired.copy(vec);
-      if (immediate) this.target.copy(vec);
+      this._base.copy(vec);
+      this._targetDesired.copy(this._base).add(this.panOffset);
+      if (immediate) this.target.copy(this._targetDesired);
+    }
+
+    /** 清掉平移偏移：切换聚焦目标或回到总览时调用，否则画面会"歪着"跟随 */
+    resetPan(immediate) {
+      this.panOffset.set(0, 0, 0);
+      this._targetDesired.copy(this._base);
+      if (immediate) this.target.copy(this._targetDesired);
     }
 
     setDistance(d, immediate) {
@@ -175,6 +193,7 @@
       this.azimuth += (this._desired.azimuth - this.azimuth) * k;
       this.polar += (this._desired.polar - this.polar) * k;
       this.distance += (this._desired.distance - this.distance) * k;
+      this._targetDesired.copy(this._base).add(this.panOffset);
       this.target.lerp(this._targetDesired, immediate ? 1 : k);
 
       const sp = Math.sin(this.polar), cp = Math.cos(this.polar);

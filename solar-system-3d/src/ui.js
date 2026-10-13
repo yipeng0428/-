@@ -22,6 +22,7 @@
   let hovered = null;
   let lastSelectedRendered = undefined;
   let lastSunCapped = false;
+  let lastFocus = null;
 
   /* ------------------------- 格式化 ------------------------- */
 
@@ -138,7 +139,7 @@
       'd-live', 'd-facts', 'd-note', 'd-stamp', 'd-close', 'd-focus', 'd-unfocus',
       'ov-table', 'clock-utc', 'clock-local', 'clock-jd', 'clock-rate',
       't-live', 't-pause', 't-now', 't-speed', 't-date',
-      'v-orbits', 'v-labels', 'v-markers', 'v-realdist', 'v-realsize', 'v-boost', 'v-boost-val',
+      'v-orbits', 'v-labels', 'v-markers', 'hint-tip',
       'scale-note', 'loading', 'fatal', 'fatal-msg', 'ui-toggle',
       'catalog', 'catalog-list', 'ruler', 'ruler-text', 'range-warning', 'sr-status',
       'd-sources', 'd-moon', 'd-moon-stamp', 'd-moon-name', 'd-moon-lit', 'd-moon-age', 'd-moon-hemi', 'moon-phase',
@@ -148,9 +149,6 @@
     buildCatalog();
     buildSources();
     bindControls();
-    const state = SS.App.state;
-    state.sizeBoost = boostFromSlider(Number(el['v-boost'].value));
-    el['v-boost-val'].textContent = '×' + state.sizeBoost;
     syncControls();
   }
 
@@ -205,11 +203,6 @@
     ).join('');
   }
 
-  function boostFromSlider(v) {
-    // 对数映射：0 → ×1，100 → ×3000
-    return Math.max(1, Math.round(Math.pow(10, (v / 100) * 3.4772)));
-  }
-
   function bindControls() {
     const App = SS.App;
     const state = App.state;
@@ -220,8 +213,8 @@
     });
 
     el['d-close'].addEventListener('click', () => App.selectBody(null));
-    el['d-focus'].addEventListener('click', () => { if (selected) App.focusBody(selected); });
-    el['d-unfocus'].addEventListener('click', () => App.focusBody(null));
+    el['d-focus'].addEventListener('click', () => { if (selected) App.toggleLock(selected); });
+    el['d-unfocus'].addEventListener('click', () => App.goHome());
 
     el['t-live'].addEventListener('click', () => {
       state.live = true; state.paused = false; state.speed = 1;
@@ -265,13 +258,8 @@
     el['v-markers'].addEventListener('change', (ev) => App.setShowMarkers(ev.target.checked));
     el['v-orbits'].addEventListener('change', (ev) => { state.showOrbits = ev.target.checked; });
     el['v-labels'].addEventListener('change', (ev) => { state.showLabels = ev.target.checked; });
-    el['v-realdist'].addEventListener('change', (ev) => { App.setRealDistance(ev.target.checked); syncControls(); });
-    el['v-realsize'].addEventListener('change', (ev) => { App.setRealSize(ev.target.checked); syncControls(); });
-    el['v-boost'].addEventListener('input', (ev) => {
-      const boost = boostFromSlider(Number(ev.target.value));
-      App.setSizeBoost(boost);
-      el['v-boost-val'].textContent = '×' + boost;
-      syncControls();
+    document.querySelectorAll('.seg-btn[data-mode]').forEach((btn) => {
+      btn.addEventListener('click', () => { App.setScaleMode(btn.dataset.mode); syncControls(); });
     });
 
     window.addEventListener('keydown', (ev) => {
@@ -306,20 +294,33 @@
     el['t-live'].classList.toggle('is-on', state.live && !state.paused);
     el['t-pause'].classList.toggle('is-on', state.paused);
     el['t-pause'].textContent = state.paused ? '继续' : '暂停';
-    el['v-boost'].disabled = !state.realSize;
+    document.querySelectorAll('.seg-btn[data-mode]').forEach((btn) => {
+      const on = btn.dataset.mode === state.scaleMode;
+      btn.classList.toggle('is-on', on);
+      btn.setAttribute('aria-checked', String(on));
+    });
+    syncLockButton();
   }
 
-  /** 比例说明：把当前用的是哪一套映射、有没有触发限幅，都写清楚 */
+  function syncLockButton() {
+    const locked = SS.App.state.focus;
+    const isLocked = !!selected && locked === selected;
+    el['d-focus'].textContent = isLocked ? '已锁定 · 解除' : '锁定跟随';
+    el['d-focus'].setAttribute('aria-pressed', String(isLocked));
+  }
+
+  /** 比例说明：当前用的是哪一套映射、代价是什么，都写明白 */
   function scaleNote(state) {
-    if (!state.realDistance && !state.realSize) {
-      el['scale-note'].innerHTML = '当前为示意比例：距离按 √r 压缩，半径按 (R/R⊕)<sup>0.4</sup> 压缩。';
-      return;
-    }
-    let text = (state.realDistance ? '距离：真实线性（1 AU = 10 场景单位）' : '距离：√r 压缩')
-      + '；' + (state.realSize ? '半径：真实值 ×' + state.sizeBoost : '半径：(R/R⊕)<sup>0.4</sup> 压缩')
-      + '。';
-    if (state.realSize) text += '把放大倍数拉到 ×1 即为严格真实比例——行星会小到几乎看不见，这正是太阳系的实况。';
-    if (state.sunCapped) text += '<br><b>注意：</b>当前比例下太阳已被限幅在水星轨道半径的 35%，实际显示半径小于上述规则的换算值。';
+    const notes = {
+      schematic: '距离按 √r 压缩，半径按 (R/R⊕)<sup>0.4</sup> 压缩。'
+        + '保持次序与相对疏密，让所有天体同屏可见——不代表真实比例。',
+      realDistance: '轨道距离为真实线性比例（1 AU = 10 场景单位），半径仍为示意值。'
+        + '适合直观感受"太阳系有多空"，同时还看得见行星。',
+      real: '距离与半径使用<b>同一公里换算系数</b>，1:1 真实比例，无任何放大。'
+        + '行星会小到接近不可见——这正是太阳系的实况，靠定位标记找到它们。',
+    };
+    let text = notes[state.scaleMode] || notes.schematic;
+    if (state.sunCapped) text += '<br><b>注意：</b>太阳已被限幅在水星轨道半径的 42%，显示半径小于上述规则的换算值——否则它会盖住水星轨道。';
     el['scale-note'].innerHTML = text;
   }
 
@@ -329,6 +330,7 @@
     selected = key;
     catalogItems.forEach((btn, k) => btn.setAttribute('aria-current', String(k === key)));
     renderDetail(key);
+    syncLockButton();
     announce(key);
   }
 
@@ -607,14 +609,40 @@
       node.style.left = sx.toFixed(1) + 'px';
       node.style.top = top.toFixed(1) + 'px';
       node.classList.toggle('is-selected', key === selected);
+      node.classList.toggle('is-locked', key === SS.App.state.focus);
       node.classList.toggle('is-crowded', crowded && key !== selected);
       node.style.opacity = key === selected || key === hovered ? '1' : '0.82';
       if (!crowded || key === selected) placed.push({ x: sx, y: top });
     });
   }
 
+  /**
+   * 悬浮提示：把"再点一次会发生什么"直接说出来。
+   * 交互含义随状态变化（未选 → 已选 → 已锁定），不写出来没人猜得到。
+   */
+  function updateTooltip(ctx, state) {
+    const tip = el['hint-tip'];
+    const key = ctx.hovered;
+    if (!key) { if (!tip.hidden) tip.hidden = true; return; }
+    const name = SS.BODY_BY_KEY[key].name;
+    let html;
+    if (state.focus === key) html = name + ' · 已锁定跟随，<b>单击</b>解除';
+    else if (selected === key) html = name + ' · <b>再次单击</b>或<b>双击</b>锁定跟随';
+    else html = name + ' · <b>单击</b>查看数据，<b>双击</b>锁定跟随';
+    if (tip.innerHTML !== html) tip.innerHTML = html;
+    if (tip.hidden) tip.hidden = false;
+    // 贴近右/下边缘时翻转到另一侧，避免提示被窗口裁掉
+    const w = tip.offsetWidth || 190, h = tip.offsetHeight || 26;
+    const flipX = ctx.pointer.x + 14 + w > window.innerWidth - 8;
+    const flipY = ctx.pointer.y + 16 + h > window.innerHeight - 8;
+    tip.style.left = ctx.pointer.x + 'px';
+    tip.style.top = ctx.pointer.y + 'px';
+    tip.style.transform = 'translate(' + (flipX ? -(w + 14) + 'px' : '14px') + ',' + (flipY ? -(h + 12) + 'px' : '16px') + ')';
+  }
+
   function frame(ctx, state) {
     updateLabels(ctx, state);
+    updateTooltip(ctx, state);
     const now = performance.now();
     if (now - lastText < TEXT_INTERVAL_MS) return;
     lastText = now;
@@ -633,6 +661,7 @@
 
     updateRuler(state);
     updateRangeWarning(state);
+    if (state.focus !== lastFocus) { lastFocus = state.focus; syncLockButton(); }
 
     if (selected !== lastSelectedRendered) renderDetail(selected);
     if (selected) {

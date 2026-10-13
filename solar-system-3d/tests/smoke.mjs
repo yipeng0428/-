@@ -124,33 +124,79 @@ await page.waitForTimeout(500);
 check('暂停后时间不再推进', (await page.evaluate(() => window.SolarSystem.App.state.jd)) === p1);
 await page.click('#t-live');
 
-// 比例切换
-await page.check('#v-realdist');
-await page.waitForTimeout(600);
-const span = await page.evaluate(() => {
-  const A = window.SolarSystem.App;
-  return A.ctx.bodies.get('neptune').scenePos.length() / A.ctx.bodies.get('earth').scenePos.length();
-});
-check('真实距离下海王星/地球 ≈ 30', Math.abs(span - 30) < 2, span.toFixed(2));
-await page.uncheck('#v-realdist');
-await page.waitForTimeout(600);
-const span2 = await page.evaluate(() => {
-  const A = window.SolarSystem.App;
-  return A.ctx.bodies.get('neptune').scenePos.length() / A.ctx.bodies.get('earth').scenePos.length();
-});
-check('压缩距离下该比值 ≈ √30', Math.abs(span2 - Math.sqrt(30)) < 0.4, span2.toFixed(2));
+// ---------- 比例模型：三挡，并逐项验证"完全真实"确实是 1:1 ----------
+async function setMode(mode) {
+  await page.click(`.seg-btn[data-mode="${mode}"]`);
+  await page.waitForTimeout(700);
+}
 
-// 天体目录：点击可选中
-check('目录含 11 个天体', (await page.locator('#catalog-list .cat-item').count()) === 11);
-await page.click('#catalog-list .cat-item[data-key="moon"]');
-await page.waitForTimeout(300);
-check('点击目录可选中月球', (await page.evaluate(() => window.SolarSystem.App.state.selected)) === 'moon');
-check('月相图已绘制', await page.evaluate(() => {
-  const c = document.getElementById('moon-phase');
-  const d = c.getContext('2d').getImageData(0, 0, c.width, c.height).data;
-  let n = 0; for (let i = 3; i < d.length; i += 4) if (d[i] > 0) n += 1;
-  return n > 1000;
-}));
+await setMode('realDistance');
+const spanReal = await page.evaluate(() => {
+  const A = window.SolarSystem.App;
+  return A.ctx.bodies.get('neptune').scenePos.length() / A.ctx.bodies.get('earth').scenePos.length();
+});
+check('真实距离下海王星/地球 ≈ 30', Math.abs(spanReal - 30) < 2, spanReal.toFixed(2));
+
+await setMode('schematic');
+const spanSchematic = await page.evaluate(() => {
+  const A = window.SolarSystem.App;
+  return A.ctx.bodies.get('neptune').scenePos.length() / A.ctx.bodies.get('earth').scenePos.length();
+});
+check('简化示意下该比值 ≈ √30', Math.abs(spanSchematic - Math.sqrt(30)) < 0.4, spanSchematic.toFixed(2));
+
+// 完全真实：直接量场景里的几何，与真实公里数逐项对账
+await setMode('real');
+const truth = await page.evaluate(() => {
+  const A = window.SolarSystem.App, E = window.SolarSystem.Ephemeris;
+  const out = { bodies: [], sunCapped: A.state.sunCapped };
+  ['mercury', 'venus', 'earth', 'mars', 'jupiter', 'saturn', 'uranus', 'neptune'].forEach((k) => {
+    const e = A.ctx.bodies.get(k);
+    out.bodies.push({
+      k,
+      sceneRatio: e.radius / e.scenePos.length(),              // 场景里：半径 / 日心距
+      realRatio: e.def.radiusKm / (e.state.r * E.AU_KM),       // 真实：半径 / 日心距
+    });
+  });
+  const sun = A.ctx.bodies.get('sun'), earth = A.ctx.bodies.get('earth');
+  out.sunOverEarthOrbit = { scene: sun.radius / earth.scenePos.length(), real: 696340 / (earth.state.r * E.AU_KM) };
+  const moon = A.ctx.bodies.get('moon');
+  out.moonOverEarthRadius = {
+    scene: moon.scenePos.distanceTo(earth.scenePos) / earth.radius,
+    real: moon.state.geocentricDistanceKm / 6371,
+  };
+  return out;
+});
+truth.bodies.forEach((b) => {
+  const rel = Math.abs(b.sceneRatio - b.realRatio) / b.realRatio;
+  check(`完全真实：${b.k} 半径/日心距 与真实一致`, rel < 1e-9,
+    b.sceneRatio.toExponential(6) + ' vs ' + b.realRatio.toExponential(6));
+});
+{
+  const t = truth.sunOverEarthOrbit;
+  const rel = Math.abs(t.scene - t.real) / t.real;
+  check('完全真实：太阳半径/地球轨道半径 与真实一致', rel < 1e-9,
+    t.scene.toFixed(8) + ' vs ' + t.real.toFixed(8) + '（≈1/107）');
+}
+{
+  const t = truth.moonOverEarthRadius;
+  const rel = Math.abs(t.scene - t.real) / t.real;
+  check('完全真实：地月距离/地球半径 与真实一致', rel < 1e-6,
+    t.scene.toFixed(4) + ' vs ' + t.real.toFixed(4) + '（≈60 倍）');
+}
+check('完全真实：太阳未触发限幅', truth.sunCapped === false);
+const rulerReal = await page.textContent('#ruler-text');
+check('完全真实下比例尺标为线性', /真实线性比例|线性/.test(rulerReal), rulerReal);
+
+// 简化示意模式下，半径明确不是真实值（模式语义自洽）
+await setMode('schematic');
+const schematicRatio = await page.evaluate(() => {
+  const A = window.SolarSystem.App, E = window.SolarSystem.Ephemeris;
+  const e = A.ctx.bodies.get('earth');
+  return { scene: e.radius / e.scenePos.length(), real: e.def.radiusKm / (e.state.r * E.AU_KM) };
+});
+check('简化示意：半径被明显放大（不是真实比例）',
+  schematicRatio.scene > schematicRatio.real * 100,
+  '放大约 ' + Math.round(schematicRatio.scene / schematicRatio.real) + ' 倍');
 
 // 月相绘制方向：渐盈亮面在右、渐亏在左（北半球视角），满月对称、新月全暗
 const phases = await page.evaluate(() => {
@@ -210,6 +256,99 @@ await page.keyboard.press('ArrowLeft');
 await page.waitForTimeout(150);
 check('方向键可旋转视角', (await page.evaluate(() => window.SolarSystem.App.ctx.controls._desired.azimuth)) !== az0);
 check('读屏状态区有播报', (await page.textContent('#sr-status')).length > 0, await page.textContent('#sr-status'));
+
+// ---------- 右键平移 ----------
+await page.keyboard.press('Escape');
+await page.waitForTimeout(400);
+const panBefore = await page.evaluate(() => window.SolarSystem.App.ctx.controls.panOffset.toArray());
+await page.mouse.move(700, 450);
+await page.mouse.down({ button: 'right' });
+await page.mouse.move(560, 520, { steps: 10 });
+await page.mouse.up({ button: 'right' });
+await page.waitForTimeout(600);
+const panAfter = await page.evaluate(() => window.SolarSystem.App.ctx.controls.panOffset.toArray());
+check('右键拖拽产生平移偏移', panAfter.some((v, i) => Math.abs(v - panBefore[i]) > 1e-6),
+  panAfter.map((v) => v.toFixed(2)).join(', '));
+const panHeld = await page.evaluate(async () => {
+  const c = window.SolarSystem.App.ctx.controls;
+  const before = c.panOffset.toArray();
+  await new Promise((r) => setTimeout(r, 500));
+  const after = c.panOffset.toArray();
+  return before.every((v, i) => Math.abs(v - after[i]) < 1e-9);
+});
+check('平移偏移不会被每帧的注视点覆盖', panHeld);
+
+// Shift+左键也平移
+const panB2 = await page.evaluate(() => window.SolarSystem.App.ctx.controls.panOffset.toArray());
+await page.keyboard.down('Shift');
+await page.mouse.move(700, 450); await page.mouse.down(); await page.mouse.move(760, 430, { steps: 6 }); await page.mouse.up();
+await page.keyboard.up('Shift');
+await page.waitForTimeout(400);
+const panA2 = await page.evaluate(() => window.SolarSystem.App.ctx.controls.panOffset.toArray());
+check('Shift+左键拖拽也能平移', panA2.some((v, i) => Math.abs(v - panB2[i]) > 1e-6));
+
+// ---------- 单击选中 → 再次单击锁定 ----------
+await page.evaluate(() => window.SolarSystem.App.goHome());
+await page.waitForTimeout(900);
+const mp = await page.evaluate(() => {
+  const A = window.SolarSystem.App;
+  const v = A.ctx.bodies.get('mars').scenePos.clone().project(A.ctx.camera);
+  return { x: (v.x * 0.5 + 0.5) * window.innerWidth, y: (-v.y * 0.5 + 0.5) * window.innerHeight };
+});
+await page.mouse.click(mp.x, mp.y);
+await page.waitForTimeout(400);
+check('第一次单击只选中、不锁定', await page.evaluate(() => {
+  const s = window.SolarSystem.App.state; return s.selected === 'mars' && s.focus === null;
+}));
+await page.mouse.move(mp.x, mp.y);
+await page.waitForTimeout(250);
+const tipText = await page.textContent('#hint-tip');
+check('悬浮提示指出"再次单击锁定"', /再次单击|锁定/.test(tipText), tipText);
+await page.mouse.click(mp.x, mp.y);
+await page.waitForTimeout(900);
+check('第二次单击锁定跟随', (await page.evaluate(() => window.SolarSystem.App.state.focus)) === 'mars');
+check('锁定按钮显示为已锁定', /已锁定/.test(await page.textContent('#d-focus')));
+
+// 锁定后：相机注视点随天体移动（快进时间，天体会跑）
+const follow = await page.evaluate(async () => {
+  const A = window.SolarSystem.App;
+  A.state.live = false; A.state.paused = false; A.state.speed = 2592000; // 30 天/秒
+  const p0 = A.ctx.bodies.get('mars').scenePos.clone();
+  await new Promise((r) => setTimeout(r, 1800));
+  const p1 = A.ctx.bodies.get('mars').scenePos.clone();
+  const t1 = A.ctx.controls.target.clone();
+  A.state.speed = 1; A.state.live = true;
+  return { moved: p0.distanceTo(p1), gap: t1.distanceTo(p1) };
+});
+check('锁定后天体确实在移动', follow.moved > 0.2, follow.moved.toFixed(3) + ' 场景单位');
+check('锁定后注视点跟住了天体', follow.gap < Math.max(0.35, follow.moved * 0.5),
+  '滞后 ' + follow.gap.toFixed(3));
+
+// 锁定状态下仍可旋转与平移
+const lockedInteract = await page.evaluate(() => {
+  const c = window.SolarSystem.App.ctx.controls;
+  return { az: c._desired.azimuth, pan: c.panOffset.toArray() };
+});
+await page.mouse.move(700, 450); await page.mouse.down(); await page.mouse.move(790, 470, { steps: 8 }); await page.mouse.up();
+await page.mouse.move(700, 450); await page.mouse.down({ button: 'right' }); await page.mouse.move(650, 480, { steps: 8 }); await page.mouse.up({ button: 'right' });
+await page.waitForTimeout(500);
+const afterInteract = await page.evaluate(() => {
+  const A = window.SolarSystem.App, c = A.ctx.controls;
+  return { az: c._desired.azimuth, pan: c.panOffset.toArray(), focus: A.state.focus };
+});
+check('锁定状态下仍可旋转', Math.abs(afterInteract.az - lockedInteract.az) > 1e-6);
+check('锁定状态下仍可平移', afterInteract.pan.some((v, i) => Math.abs(v - lockedInteract.pan[i]) > 1e-6));
+check('旋转平移不会解除锁定', afterInteract.focus === 'mars');
+
+// 第三次单击解除锁定
+const mp2 = await page.evaluate(() => {
+  const A = window.SolarSystem.App;
+  const v = A.ctx.bodies.get('mars').scenePos.clone().project(A.ctx.camera);
+  return { x: (v.x * 0.5 + 0.5) * window.innerWidth, y: (-v.y * 0.5 + 0.5) * window.innerHeight };
+});
+await page.mouse.click(mp2.x, mp2.y);
+await page.waitForTimeout(500);
+check('再次单击解除锁定', (await page.evaluate(() => window.SolarSystem.App.state.focus)) === null);
 
 check('运行期间无 JS 异常', pageErrors.length === 0, pageErrors.slice(0, 3).join(' | ') || '无');
 

@@ -2,7 +2,7 @@
 <!--
   太阳系 · 实时 3D 模拟 —— 单文件版（由 tools/build-single-file.mjs 自动生成，请勿手工编辑）
   源码仓库结构见 solar-system-3d/；要修改请改源文件后重新生成。
-  生成时间：2026-10-13T13:54:26.990Z
+  生成时间：2026-10-13T16:49:38.563Z
   内含：three.js r169 (MIT, Copyright Three.js Authors) + 本项目源码
   直接双击本文件即可运行，无需联网、无需本地服务器。
 -->
@@ -79,6 +79,7 @@ html, body {
 }
 .label:hover { border-color: var(--line-strong); background: rgba(10, 18, 32, 0.78); }
 .label.is-selected { color: #04060d; background: var(--accent); border-color: var(--accent); font-weight: 600; }
+.label.is-locked::before { content: '◉'; margin-right: 4px; font-size: 10px; }
 .label .en { color: var(--text-faint); font-size: 10px; margin-left: 4px; }
 /* 拥挤时只留一个圆点，避免互相盖住；选中项永远保持完整名称 */
 .label.is-crowded { padding: 3px; }
@@ -187,6 +188,9 @@ html, body {
 }
 .actions button:hover, .pill:hover { background: rgba(127, 196, 255, 0.12); border-color: var(--line-strong); }
 .pill.is-on { background: var(--accent); border-color: var(--accent); color: #04060d; font-weight: 600; }
+.actions button[aria-pressed="true"] {
+  background: var(--accent); border-color: var(--accent); color: #04060d; font-weight: 600;
+}
 
 table.kv { width: 100%; border-collapse: collapse; }
 table.kv th, table.kv td { text-align: left; padding: 3px 0; vertical-align: top; font-size: 12px; }
@@ -242,6 +246,29 @@ input[type="range"]:disabled { opacity: 0.35; }
 .check { display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px; color: var(--text-dim); cursor: pointer; }
 .check input { accent-color: var(--accent); }
 .dock-note { margin: 9px 0 0; font-size: 10.5px; color: var(--text-faint); line-height: 1.45; max-width: 232px; }
+
+/* ---------- 分段选择器（比例模型） ---------- */
+.seg {
+  display: flex; width: 100%; gap: 2px; padding: 2px;
+  background: rgba(255, 255, 255, 0.04); border: 1px solid var(--line); border-radius: 8px;
+}
+.seg-btn {
+  flex: 1 1 0; min-width: 0; padding: 5px 4px; border: 0; border-radius: 6px; cursor: pointer;
+  font-family: var(--sans); font-size: 11.5px; color: var(--text-dim); background: none;
+  transition: background 0.14s, color 0.14s;
+}
+.seg-btn:hover { color: var(--text); background: rgba(255, 255, 255, 0.05); }
+.seg-btn.is-on { background: var(--accent); color: #04060d; font-weight: 600; }
+
+/* ---------- 悬浮提示 ---------- */
+#hint-tip {
+  position: fixed; z-index: 7; pointer-events: none;
+  padding: 4px 9px; border-radius: 7px; white-space: nowrap;
+  font-size: 11.5px; color: var(--text);
+  background: rgba(10, 16, 28, 0.9); border: 1px solid var(--line-strong);
+  backdrop-filter: blur(6px); transform: translate(14px, 16px);
+}
+#hint-tip b { color: var(--accent); font-weight: 600; }
 
 /* ---------- 屏幕比例尺 ---------- */
 #ruler {
@@ -364,6 +391,7 @@ body.dock-open #ui-toggle::after { content: ' ▴'; }
           aria-label="太阳系三维场景。方向键旋转视角，加减号缩放，数字键 0–9 选择天体，Esc 取消选择。详细数据见右侧信息面板。"></canvas>
   <div id="labels"></div>
   <div id="sr-status" class="sr-only" role="status" aria-live="polite"></div>
+  <div id="hint-tip" aria-hidden="true" hidden></div>
 
   <nav id="catalog" aria-label="天体目录">
     <h2 class="rail-title">天体目录</h2>
@@ -390,8 +418,9 @@ body.dock-open #ui-toggle::after { content: ' ▴'; }
         <ul class="tips">
           <li><b>左键拖拽</b> 旋转视角</li>
           <li><b>滚轮 / 双指</b> 缩放</li>
-          <li><b>右键拖拽</b> 平移</li>
-          <li><b>双击</b> 聚焦天体，<b>Esc</b> 取消</li>
+          <li><b>右键 / 中键 / Shift+左键拖拽</b> 平移画面</li>
+          <li><b>单击</b> 选中，<b>再次单击或双击</b> 锁定跟随</li>
+          <li>锁定后仍可自由旋转与平移，<b>Esc</b> 解除</li>
         </ul>
       </div>
       <div id="detail-body" hidden>
@@ -402,7 +431,7 @@ body.dock-open #ui-toggle::after { content: ' ▴'; }
         <div class="chips" id="d-chips"></div>
         <p class="blurb" id="d-blurb"></p>
         <div class="actions">
-          <button type="button" id="d-focus">聚焦镜头</button>
+          <button type="button" id="d-focus" aria-pressed="false">锁定跟随</button>
           <button type="button" id="d-unfocus">回到太阳</button>
         </div>
         <div id="d-moon" hidden>
@@ -479,17 +508,14 @@ body.dock-open #ui-toggle::after { content: ' ▴'; }
         <label class="check"><input type="checkbox" id="v-labels" role="switch" checked /><span>名称标签</span></label>
         <label class="check"><input type="checkbox" id="v-markers" role="switch" checked /><span>定位标记</span></label>
       </div>
-      <div class="dock-row wrap">
-        <label class="check"><input type="checkbox" id="v-realdist" role="switch" /><span>真实距离</span></label>
-        <label class="check"><input type="checkbox" id="v-realsize" role="switch" /><span>真实尺寸</span></label>
-      </div>
       <div class="dock-row">
-        <label class="field slider">
-          <span>尺寸放大 <b id="v-boost-val">×300</b></span>
-          <input type="range" id="v-boost" min="0" max="100" value="71" disabled />
-        </label>
+        <div class="seg" role="radiogroup" aria-label="比例模型">
+          <button type="button" class="seg-btn is-on" data-mode="schematic" role="radio" aria-checked="true">简化示意</button>
+          <button type="button" class="seg-btn" data-mode="realDistance" role="radio" aria-checked="false">真实距离</button>
+          <button type="button" class="seg-btn" data-mode="real" role="radio" aria-checked="false">完全真实</button>
+        </div>
       </div>
-      <p class="dock-note" id="scale-note">当前为示意比例：距离按 √r 压缩，半径按 (R/R⊕)<sup>0.4</sup> 压缩。</p>
+      <p class="dock-note" id="scale-note"></p>
     </div>
   </footer>
 
@@ -1642,6 +1668,9 @@ else if (typeof globalThis !== "undefined") { globalThis.THREE = __THREE_EXPORTS
   const SS = (global.SolarSystem = global.SolarSystem || {});
   const THREE = global.THREE;
 
+  const _v3a = new THREE.Vector3();
+  const _v3b = new THREE.Vector3();
+
   const CLICK_PX = 6;      // 位移阈值：小于此值才算点击
   const CLICK_MS = 450;    // 时长阈值
 
@@ -1651,6 +1680,9 @@ else if (typeof globalThis !== "undefined") { globalThis.THREE = __THREE_EXPORTS
       this.camera = camera;
       this.dom = domElement;
       this.target = new THREE.Vector3();
+      // 相机注视点 = 基准点（场景给的，可能每帧跟随天体）+ 平移偏移（用户拖出来的）
+      // 两者分开是必须的：否则跟随逻辑每帧重设注视点，右键平移会在同一帧被抹掉。
+      this.panOffset = new THREE.Vector3();
       this.azimuth = opts.azimuth !== undefined ? opts.azimuth : Math.PI * 0.25;
       this.polar = opts.polar !== undefined ? opts.polar : Math.PI * 0.32;
       this.distance = opts.distance || 60;
@@ -1662,6 +1694,7 @@ else if (typeof globalThis !== "undefined") { globalThis.THREE = __THREE_EXPORTS
       this.onClick = null;
 
       this._desired = { azimuth: this.azimuth, polar: this.polar, distance: this.distance };
+      this._base = this.target.clone();
       this._targetDesired = this.target.clone();
       this._pointers = new Map();
       this._mode = null;
@@ -1704,7 +1737,8 @@ else if (typeof globalThis !== "undefined") { globalThis.THREE = __THREE_EXPORTS
       this.dom.setPointerCapture?.(e.pointerId);
       this._pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
       if (this._pointers.size === 1) {
-        this._mode = (e.button === 2 || e.button === 1) ? 'pan' : 'rotate';
+        // 右键 / 中键 / Shift+左键 都是平移（触控板用户常没有右键）
+        this._mode = (e.button === 2 || e.button === 1 || (e.button === 0 && e.shiftKey)) ? 'pan' : 'rotate';
         this._downAt = performance.now();
         this._downPos = { x: e.clientX, y: e.clientY };
         this._moved = 0;
@@ -1743,12 +1777,13 @@ else if (typeof globalThis !== "undefined") { globalThis.THREE = __THREE_EXPORTS
         this._desired.azimuth -= dx * scale;
         this._desired.polar = Math.min(this.maxPolar, Math.max(this.minPolar, this._desired.polar - dy * scale));
       } else if (this._mode === 'pan') {
-        // 平移速度随距离缩放，远处拖动不至于过于迟缓
-        const k = this._desired.distance * 0.0016;
-        const right = new THREE.Vector3().setFromMatrixColumn(this.camera.matrix, 0);
-        const up = new THREE.Vector3().setFromMatrixColumn(this.camera.matrix, 1);
-        this._targetDesired.addScaledVector(right, -dx * k);
-        this._targetDesired.addScaledVector(up, dy * k);
+        // 按"目标平面上 1 像素等于多少世界单位"换算，画面才会 1:1 跟着光标走
+        const height = this.dom.clientHeight || window.innerHeight;
+        const k = (2 * Math.tan((this.camera.fov * Math.PI / 180) / 2) * this._desired.distance) / height;
+        const right = _v3a.setFromMatrixColumn(this.camera.matrix, 0);
+        const up = _v3b.setFromMatrixColumn(this.camera.matrix, 1);
+        this.panOffset.addScaledVector(right, -dx * k);
+        this.panOffset.addScaledVector(up, dy * k);
       }
     }
 
@@ -1785,9 +1820,18 @@ else if (typeof globalThis !== "undefined") { globalThis.THREE = __THREE_EXPORTS
       this._desired.polar = Math.min(this.maxPolar, Math.max(this.minPolar, this._desired.polar + dPolar));
     }
 
+    /** 设置基准注视点（通常每帧由场景调用）；用户的平移偏移会叠加在它之上 */
     setTarget(vec, immediate) {
-      this._targetDesired.copy(vec);
-      if (immediate) this.target.copy(vec);
+      this._base.copy(vec);
+      this._targetDesired.copy(this._base).add(this.panOffset);
+      if (immediate) this.target.copy(this._targetDesired);
+    }
+
+    /** 清掉平移偏移：切换聚焦目标或回到总览时调用，否则画面会"歪着"跟随 */
+    resetPan(immediate) {
+      this.panOffset.set(0, 0, 0);
+      this._targetDesired.copy(this._base);
+      if (immediate) this.target.copy(this._targetDesired);
     }
 
     setDistance(d, immediate) {
@@ -1804,6 +1848,7 @@ else if (typeof globalThis !== "undefined") { globalThis.THREE = __THREE_EXPORTS
       this.azimuth += (this._desired.azimuth - this.azimuth) * k;
       this.polar += (this._desired.polar - this.polar) * k;
       this.distance += (this._desired.distance - this.distance) * k;
+      this._targetDesired.copy(this._base).add(this.panOffset);
       this.target.lerp(this._targetDesired, immediate ? 1 : k);
 
       const sp = Math.sin(this.polar), cp = Math.cos(this.polar);
@@ -1846,6 +1891,7 @@ else if (typeof globalThis !== "undefined") { globalThis.THREE = __THREE_EXPORTS
   let hovered = null;
   let lastSelectedRendered = undefined;
   let lastSunCapped = false;
+  let lastFocus = null;
 
   /* ------------------------- 格式化 ------------------------- */
 
@@ -1962,7 +2008,7 @@ else if (typeof globalThis !== "undefined") { globalThis.THREE = __THREE_EXPORTS
       'd-live', 'd-facts', 'd-note', 'd-stamp', 'd-close', 'd-focus', 'd-unfocus',
       'ov-table', 'clock-utc', 'clock-local', 'clock-jd', 'clock-rate',
       't-live', 't-pause', 't-now', 't-speed', 't-date',
-      'v-orbits', 'v-labels', 'v-markers', 'v-realdist', 'v-realsize', 'v-boost', 'v-boost-val',
+      'v-orbits', 'v-labels', 'v-markers', 'hint-tip',
       'scale-note', 'loading', 'fatal', 'fatal-msg', 'ui-toggle',
       'catalog', 'catalog-list', 'ruler', 'ruler-text', 'range-warning', 'sr-status',
       'd-sources', 'd-moon', 'd-moon-stamp', 'd-moon-name', 'd-moon-lit', 'd-moon-age', 'd-moon-hemi', 'moon-phase',
@@ -1972,9 +2018,6 @@ else if (typeof globalThis !== "undefined") { globalThis.THREE = __THREE_EXPORTS
     buildCatalog();
     buildSources();
     bindControls();
-    const state = SS.App.state;
-    state.sizeBoost = boostFromSlider(Number(el['v-boost'].value));
-    el['v-boost-val'].textContent = '×' + state.sizeBoost;
     syncControls();
   }
 
@@ -2029,11 +2072,6 @@ else if (typeof globalThis !== "undefined") { globalThis.THREE = __THREE_EXPORTS
     ).join('');
   }
 
-  function boostFromSlider(v) {
-    // 对数映射：0 → ×1，100 → ×3000
-    return Math.max(1, Math.round(Math.pow(10, (v / 100) * 3.4772)));
-  }
-
   function bindControls() {
     const App = SS.App;
     const state = App.state;
@@ -2044,8 +2082,8 @@ else if (typeof globalThis !== "undefined") { globalThis.THREE = __THREE_EXPORTS
     });
 
     el['d-close'].addEventListener('click', () => App.selectBody(null));
-    el['d-focus'].addEventListener('click', () => { if (selected) App.focusBody(selected); });
-    el['d-unfocus'].addEventListener('click', () => App.focusBody(null));
+    el['d-focus'].addEventListener('click', () => { if (selected) App.toggleLock(selected); });
+    el['d-unfocus'].addEventListener('click', () => App.goHome());
 
     el['t-live'].addEventListener('click', () => {
       state.live = true; state.paused = false; state.speed = 1;
@@ -2089,13 +2127,8 @@ else if (typeof globalThis !== "undefined") { globalThis.THREE = __THREE_EXPORTS
     el['v-markers'].addEventListener('change', (ev) => App.setShowMarkers(ev.target.checked));
     el['v-orbits'].addEventListener('change', (ev) => { state.showOrbits = ev.target.checked; });
     el['v-labels'].addEventListener('change', (ev) => { state.showLabels = ev.target.checked; });
-    el['v-realdist'].addEventListener('change', (ev) => { App.setRealDistance(ev.target.checked); syncControls(); });
-    el['v-realsize'].addEventListener('change', (ev) => { App.setRealSize(ev.target.checked); syncControls(); });
-    el['v-boost'].addEventListener('input', (ev) => {
-      const boost = boostFromSlider(Number(ev.target.value));
-      App.setSizeBoost(boost);
-      el['v-boost-val'].textContent = '×' + boost;
-      syncControls();
+    document.querySelectorAll('.seg-btn[data-mode]').forEach((btn) => {
+      btn.addEventListener('click', () => { App.setScaleMode(btn.dataset.mode); syncControls(); });
     });
 
     window.addEventListener('keydown', (ev) => {
@@ -2130,20 +2163,33 @@ else if (typeof globalThis !== "undefined") { globalThis.THREE = __THREE_EXPORTS
     el['t-live'].classList.toggle('is-on', state.live && !state.paused);
     el['t-pause'].classList.toggle('is-on', state.paused);
     el['t-pause'].textContent = state.paused ? '继续' : '暂停';
-    el['v-boost'].disabled = !state.realSize;
+    document.querySelectorAll('.seg-btn[data-mode]').forEach((btn) => {
+      const on = btn.dataset.mode === state.scaleMode;
+      btn.classList.toggle('is-on', on);
+      btn.setAttribute('aria-checked', String(on));
+    });
+    syncLockButton();
   }
 
-  /** 比例说明：把当前用的是哪一套映射、有没有触发限幅，都写清楚 */
+  function syncLockButton() {
+    const locked = SS.App.state.focus;
+    const isLocked = !!selected && locked === selected;
+    el['d-focus'].textContent = isLocked ? '已锁定 · 解除' : '锁定跟随';
+    el['d-focus'].setAttribute('aria-pressed', String(isLocked));
+  }
+
+  /** 比例说明：当前用的是哪一套映射、代价是什么，都写明白 */
   function scaleNote(state) {
-    if (!state.realDistance && !state.realSize) {
-      el['scale-note'].innerHTML = '当前为示意比例：距离按 √r 压缩，半径按 (R/R⊕)<sup>0.4</sup> 压缩。';
-      return;
-    }
-    let text = (state.realDistance ? '距离：真实线性（1 AU = 10 场景单位）' : '距离：√r 压缩')
-      + '；' + (state.realSize ? '半径：真实值 ×' + state.sizeBoost : '半径：(R/R⊕)<sup>0.4</sup> 压缩')
-      + '。';
-    if (state.realSize) text += '把放大倍数拉到 ×1 即为严格真实比例——行星会小到几乎看不见，这正是太阳系的实况。';
-    if (state.sunCapped) text += '<br><b>注意：</b>当前比例下太阳已被限幅在水星轨道半径的 35%，实际显示半径小于上述规则的换算值。';
+    const notes = {
+      schematic: '距离按 √r 压缩，半径按 (R/R⊕)<sup>0.4</sup> 压缩。'
+        + '保持次序与相对疏密，让所有天体同屏可见——不代表真实比例。',
+      realDistance: '轨道距离为真实线性比例（1 AU = 10 场景单位），半径仍为示意值。'
+        + '适合直观感受"太阳系有多空"，同时还看得见行星。',
+      real: '距离与半径使用<b>同一公里换算系数</b>，1:1 真实比例，无任何放大。'
+        + '行星会小到接近不可见——这正是太阳系的实况，靠定位标记找到它们。',
+    };
+    let text = notes[state.scaleMode] || notes.schematic;
+    if (state.sunCapped) text += '<br><b>注意：</b>太阳已被限幅在水星轨道半径的 42%，显示半径小于上述规则的换算值——否则它会盖住水星轨道。';
     el['scale-note'].innerHTML = text;
   }
 
@@ -2153,6 +2199,7 @@ else if (typeof globalThis !== "undefined") { globalThis.THREE = __THREE_EXPORTS
     selected = key;
     catalogItems.forEach((btn, k) => btn.setAttribute('aria-current', String(k === key)));
     renderDetail(key);
+    syncLockButton();
     announce(key);
   }
 
@@ -2431,14 +2478,40 @@ else if (typeof globalThis !== "undefined") { globalThis.THREE = __THREE_EXPORTS
       node.style.left = sx.toFixed(1) + 'px';
       node.style.top = top.toFixed(1) + 'px';
       node.classList.toggle('is-selected', key === selected);
+      node.classList.toggle('is-locked', key === SS.App.state.focus);
       node.classList.toggle('is-crowded', crowded && key !== selected);
       node.style.opacity = key === selected || key === hovered ? '1' : '0.82';
       if (!crowded || key === selected) placed.push({ x: sx, y: top });
     });
   }
 
+  /**
+   * 悬浮提示：把"再点一次会发生什么"直接说出来。
+   * 交互含义随状态变化（未选 → 已选 → 已锁定），不写出来没人猜得到。
+   */
+  function updateTooltip(ctx, state) {
+    const tip = el['hint-tip'];
+    const key = ctx.hovered;
+    if (!key) { if (!tip.hidden) tip.hidden = true; return; }
+    const name = SS.BODY_BY_KEY[key].name;
+    let html;
+    if (state.focus === key) html = name + ' · 已锁定跟随，<b>单击</b>解除';
+    else if (selected === key) html = name + ' · <b>再次单击</b>或<b>双击</b>锁定跟随';
+    else html = name + ' · <b>单击</b>查看数据，<b>双击</b>锁定跟随';
+    if (tip.innerHTML !== html) tip.innerHTML = html;
+    if (tip.hidden) tip.hidden = false;
+    // 贴近右/下边缘时翻转到另一侧，避免提示被窗口裁掉
+    const w = tip.offsetWidth || 190, h = tip.offsetHeight || 26;
+    const flipX = ctx.pointer.x + 14 + w > window.innerWidth - 8;
+    const flipY = ctx.pointer.y + 16 + h > window.innerHeight - 8;
+    tip.style.left = ctx.pointer.x + 'px';
+    tip.style.top = ctx.pointer.y + 'px';
+    tip.style.transform = 'translate(' + (flipX ? -(w + 14) + 'px' : '14px') + ',' + (flipY ? -(h + 12) + 'px' : '16px') + ')';
+  }
+
   function frame(ctx, state) {
     updateLabels(ctx, state);
+    updateTooltip(ctx, state);
     const now = performance.now();
     if (now - lastText < TEXT_INTERVAL_MS) return;
     lastText = now;
@@ -2457,6 +2530,7 @@ else if (typeof globalThis !== "undefined") { globalThis.THREE = __THREE_EXPORTS
 
     updateRuler(state);
     updateRangeWarning(state);
+    if (state.focus !== lastFocus) { lastFocus = state.focus; syncLockButton(); }
 
     if (selected !== lastSelectedRendered) renderDetail(selected);
     if (selected) {
@@ -2562,9 +2636,13 @@ else if (typeof globalThis !== "undefined") { globalThis.THREE = __THREE_EXPORTS
     live: true,               // 跟随真实时间（"实时"模式）
     speed: 1,                 // 模拟秒 / 真实秒
     paused: false,
-    realDistance: false,
+    // 比例模型三选一（取代原来的两个复选框 + 尺寸放大滑杆）：
+    //   schematic    距离 √r 压缩 + 半径 (R/R⊕)^0.4 压缩
+    //   realDistance 距离线性真实 + 半径仍为示意值
+    //   real         距离与半径都按同一公里换算，1:1 真实比例，无任何放大
+    scaleMode: 'schematic',
+    realDistance: false,   // 由 scaleMode 派生，供下面的映射函数直接使用
     realSize: false,
-    sizeBoost: 300,
     showOrbits: true,
     showLabels: true,
     showMarkers: true,        // 定位标记：固定像素大小，真实比例下靠它找到行星
@@ -2581,6 +2659,7 @@ else if (typeof globalThis !== "undefined") { globalThis.THREE = __THREE_EXPORTS
     bodies: new Map(),        // key -> { def, group, spin, mesh, ring, halo, orbit, state, scenePos, radius }
     sunLight: null,
     hovered: null,
+    pointer: { x: 0, y: 0 },
     clock: null,
   };
 
@@ -2605,12 +2684,14 @@ else if (typeof globalThis !== "undefined") { globalThis.THREE = __THREE_EXPORTS
   }
 
   function displayRadius(body) {
-    const raw = state.realSize ? trueRadius(body) * state.sizeBoost : schematicRadius(body);
+    const raw = state.realSize ? trueRadius(body) : schematicRadius(body);
     // 防御性上限：任何天体都不得大于自身轨道半径的 0.45（太阳以水星轨道为参照），
     // 否则"真实尺寸 + 大放大倍数"会让太阳吞掉内行星、场景直接失去可读性。
     // 限幅一旦生效就在界面上标注出来，避免把"被截断的尺寸"误读成真实比例。
     const refAU = body.isSun ? 0.387 : (body.key && ctx.bodies.get(body.key)?.state?.r) || 1;
-    const cap = distanceScale(refAU) * (body.isSun ? 0.35 : 0.45);
+    // 0.42：刚好让默认的示意比例不触发限幅（示意太阳半径 ≈ 水星轨道的 0.397），
+    // 同时仍能挡住"真实距离 + 示意半径"这类会让太阳盖住水星轨道的组合
+    const cap = distanceScale(refAU) * (body.isSun ? 0.42 : 0.45);
     if (body.isSun) state.sunCapped = raw > cap;
     return Math.min(raw, cap);
   }
@@ -2818,12 +2899,18 @@ else if (typeof globalThis !== "undefined") { globalThis.THREE = __THREE_EXPORTS
 
     const controls = new SS.OrbitCamera(camera, renderer.domElement, {
       distance: 105, polar: Math.PI * 0.30, azimuth: Math.PI * 0.18,
-      minDistance: 0.01, maxDistance: 2200,
+      // 完全真实比例下地球半径仅 4.3e-4 场景单位，最小距离必须足够小才能贴近观察
+      minDistance: 0.0003, maxDistance: 2200,
     });
     controls.onClick = (ev) => {
       const hit = pickAt(ev.clientX, ev.clientY);
-      if (hit) selectBody(hit, { focus: state.focus === hit });
-      else selectBody(null);
+      if (!hit) { selectBody(null); return; }
+      if (state.selected === hit) {
+        // 点已选中的天体 = 切换锁定跟随（第一次点选中，再点一次锁定）
+        toggleLock(hit);
+      } else {
+        selectBody(hit);
+      }
     };
 
     ctx.renderer = renderer;
@@ -2887,6 +2974,8 @@ else if (typeof globalThis !== "undefined") { globalThis.THREE = __THREE_EXPORTS
   }
 
   function onHover(ev) {
+    ctx.pointer.x = ev.clientX;
+    ctx.pointer.y = ev.clientY;
     const hit = pickAt(ev.clientX, ev.clientY);
     if (hit !== ctx.hovered) {
       ctx.hovered = hit;
@@ -2917,25 +3006,64 @@ else if (typeof globalThis !== "undefined") { globalThis.THREE = __THREE_EXPORTS
 
   function selectBody(key, opts) {
     const options = opts || {};
-    state.selected = key;
-    if (options.focus && key) state.focus = key;
-    if (!key) state.focus = null;
-    SS.UI.setSelected(key);
-    if (state.focus && ctx.bodies.has(state.focus)) {
-      ctx.controls.setDistance(focusDistance(ctx.bodies.get(state.focus)));
+    if (key && state.focus && state.focus !== key) {
+      // 选中了别的天体：解除旧锁定，但不要把镜头拉回太阳（用户只是想看另一个的数据）
+      releaseLock(true);
     }
+    state.selected = key;
+    if (options.focus && key) focusBody(key);
+    else if (!key) releaseLock(true);
+    SS.UI.setSelected(key);
+  }
+
+  /** 锁定 / 解除锁定：锁定后相机注视点每帧跟随该天体，旋转与平移照常可用 */
+  function toggleLock(key) {
+    if (state.focus === key) releaseLock(true);
+    else focusBody(key);
+    SS.UI.setSelected(state.selected);
+  }
+
+  /**
+   * 解除锁定。keepView=true 时画面原地不动：把当前注视点转存进平移偏移，
+   * 基准点回到原点后两者相加仍是同一个点，因此不会出现"镜头被吸回太阳"的突兀滑动。
+   */
+  function releaseLock(keepView) {
+    if (!state.focus && !keepView) return;
+    state.focus = null;
+    if (keepView) ctx.controls.panOffset.copy(ctx.controls.target);
+    else { ctx.controls.resetPan(false); frameAll(false); }
+  }
+
+  /** 回到太阳总览：清平移、重新取景 */
+  function goHome() {
+    state.focus = null;
+    ctx.controls.resetPan(false);
+    ctx.controls.setTarget(_tmpVec.set(0, 0, 0));
+    frameAll(false);
   }
 
   function focusBody(key) {
-    if (!key) {
-      state.focus = null;
-      ctx.controls.setTarget(new THREE.Vector3());
-      frameAll(false);
-      return;
-    }
+    if (!key) { goHome(); return; }
     state.focus = key;
     const entry = ctx.bodies.get(key);
-    if (entry) ctx.controls.setDistance(focusDistance(entry));
+    if (entry) {
+      ctx.controls.resetPan(false);          // 换目标时复位平移，避免叠加上一个目标的偏移
+      ctx.controls.setDistance(focusDistance(entry));
+    }
+  }
+
+  /**
+   * 切换比例模型。realDistance / realSize 只是派生标志，
+   * 单一事实来源是 scaleMode，避免出现"真实尺寸但压缩距离"这类自相矛盾的组合。
+   */
+  function setScaleMode(mode) {
+    if (mode !== 'schematic' && mode !== 'realDistance' && mode !== 'real') return;
+    state.scaleMode = mode;
+    state.realDistance = mode !== 'schematic';
+    state.realSize = mode === 'real';
+    refreshOrbits();
+    updateBodies();
+    rescaleView();
   }
 
   /** 比例模式切换后，机位要跟着重新换算，否则视野会突然失真 */
@@ -3127,12 +3255,10 @@ else if (typeof globalThis !== "undefined") { globalThis.THREE = __THREE_EXPORTS
   }
 
   SS.App = {
-    state, ctx, init, selectBody, focusBody, refreshOrbits,
+    state, ctx, init, selectBody, focusBody, toggleLock, releaseLock, goHome, refreshOrbits,
     distanceScale, displayRadius, screenRadius,
     setShowMarkers(v) { state.showMarkers = v; },
-    setRealDistance(v) { state.realDistance = v; refreshOrbits(); updateBodies(); rescaleView(); },
-    setRealSize(v) { state.realSize = v; updateBodies(); rescaleView(); },
-    setSizeBoost(v) { state.sizeBoost = v; updateBodies(); rescaleView(); },
+    setScaleMode,
     frameAll,
   };
 })(typeof window !== 'undefined' ? window : globalThis);

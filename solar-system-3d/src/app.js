@@ -27,9 +27,13 @@
     live: true,               // 跟随真实时间（"实时"模式）
     speed: 1,                 // 模拟秒 / 真实秒
     paused: false,
-    realDistance: false,
+    // 比例模型三选一（取代原来的两个复选框 + 尺寸放大滑杆）：
+    //   schematic    距离 √r 压缩 + 半径 (R/R⊕)^0.4 压缩
+    //   realDistance 距离线性真实 + 半径仍为示意值
+    //   real         距离与半径都按同一公里换算，1:1 真实比例，无任何放大
+    scaleMode: 'schematic',
+    realDistance: false,   // 由 scaleMode 派生，供下面的映射函数直接使用
     realSize: false,
-    sizeBoost: 300,
     showOrbits: true,
     showLabels: true,
     showMarkers: true,        // 定位标记：固定像素大小，真实比例下靠它找到行星
@@ -46,6 +50,7 @@
     bodies: new Map(),        // key -> { def, group, spin, mesh, ring, halo, orbit, state, scenePos, radius }
     sunLight: null,
     hovered: null,
+    pointer: { x: 0, y: 0 },
     clock: null,
   };
 
@@ -70,12 +75,14 @@
   }
 
   function displayRadius(body) {
-    const raw = state.realSize ? trueRadius(body) * state.sizeBoost : schematicRadius(body);
+    const raw = state.realSize ? trueRadius(body) : schematicRadius(body);
     // 防御性上限：任何天体都不得大于自身轨道半径的 0.45（太阳以水星轨道为参照），
     // 否则"真实尺寸 + 大放大倍数"会让太阳吞掉内行星、场景直接失去可读性。
     // 限幅一旦生效就在界面上标注出来，避免把"被截断的尺寸"误读成真实比例。
     const refAU = body.isSun ? 0.387 : (body.key && ctx.bodies.get(body.key)?.state?.r) || 1;
-    const cap = distanceScale(refAU) * (body.isSun ? 0.35 : 0.45);
+    // 0.42：刚好让默认的示意比例不触发限幅（示意太阳半径 ≈ 水星轨道的 0.397），
+    // 同时仍能挡住"真实距离 + 示意半径"这类会让太阳盖住水星轨道的组合
+    const cap = distanceScale(refAU) * (body.isSun ? 0.42 : 0.45);
     if (body.isSun) state.sunCapped = raw > cap;
     return Math.min(raw, cap);
   }
@@ -283,12 +290,18 @@
 
     const controls = new SS.OrbitCamera(camera, renderer.domElement, {
       distance: 105, polar: Math.PI * 0.30, azimuth: Math.PI * 0.18,
-      minDistance: 0.01, maxDistance: 2200,
+      // 完全真实比例下地球半径仅 4.3e-4 场景单位，最小距离必须足够小才能贴近观察
+      minDistance: 0.0003, maxDistance: 2200,
     });
     controls.onClick = (ev) => {
       const hit = pickAt(ev.clientX, ev.clientY);
-      if (hit) selectBody(hit, { focus: state.focus === hit });
-      else selectBody(null);
+      if (!hit) { selectBody(null); return; }
+      if (state.selected === hit) {
+        // 点已选中的天体 = 切换锁定跟随（第一次点选中，再点一次锁定）
+        toggleLock(hit);
+      } else {
+        selectBody(hit);
+      }
     };
 
     ctx.renderer = renderer;
@@ -352,6 +365,8 @@
   }
 
   function onHover(ev) {
+    ctx.pointer.x = ev.clientX;
+    ctx.pointer.y = ev.clientY;
     const hit = pickAt(ev.clientX, ev.clientY);
     if (hit !== ctx.hovered) {
       ctx.hovered = hit;
@@ -382,25 +397,64 @@
 
   function selectBody(key, opts) {
     const options = opts || {};
-    state.selected = key;
-    if (options.focus && key) state.focus = key;
-    if (!key) state.focus = null;
-    SS.UI.setSelected(key);
-    if (state.focus && ctx.bodies.has(state.focus)) {
-      ctx.controls.setDistance(focusDistance(ctx.bodies.get(state.focus)));
+    if (key && state.focus && state.focus !== key) {
+      // 选中了别的天体：解除旧锁定，但不要把镜头拉回太阳（用户只是想看另一个的数据）
+      releaseLock(true);
     }
+    state.selected = key;
+    if (options.focus && key) focusBody(key);
+    else if (!key) releaseLock(true);
+    SS.UI.setSelected(key);
+  }
+
+  /** 锁定 / 解除锁定：锁定后相机注视点每帧跟随该天体，旋转与平移照常可用 */
+  function toggleLock(key) {
+    if (state.focus === key) releaseLock(true);
+    else focusBody(key);
+    SS.UI.setSelected(state.selected);
+  }
+
+  /**
+   * 解除锁定。keepView=true 时画面原地不动：把当前注视点转存进平移偏移，
+   * 基准点回到原点后两者相加仍是同一个点，因此不会出现"镜头被吸回太阳"的突兀滑动。
+   */
+  function releaseLock(keepView) {
+    if (!state.focus && !keepView) return;
+    state.focus = null;
+    if (keepView) ctx.controls.panOffset.copy(ctx.controls.target);
+    else { ctx.controls.resetPan(false); frameAll(false); }
+  }
+
+  /** 回到太阳总览：清平移、重新取景 */
+  function goHome() {
+    state.focus = null;
+    ctx.controls.resetPan(false);
+    ctx.controls.setTarget(_tmpVec.set(0, 0, 0));
+    frameAll(false);
   }
 
   function focusBody(key) {
-    if (!key) {
-      state.focus = null;
-      ctx.controls.setTarget(new THREE.Vector3());
-      frameAll(false);
-      return;
-    }
+    if (!key) { goHome(); return; }
     state.focus = key;
     const entry = ctx.bodies.get(key);
-    if (entry) ctx.controls.setDistance(focusDistance(entry));
+    if (entry) {
+      ctx.controls.resetPan(false);          // 换目标时复位平移，避免叠加上一个目标的偏移
+      ctx.controls.setDistance(focusDistance(entry));
+    }
+  }
+
+  /**
+   * 切换比例模型。realDistance / realSize 只是派生标志，
+   * 单一事实来源是 scaleMode，避免出现"真实尺寸但压缩距离"这类自相矛盾的组合。
+   */
+  function setScaleMode(mode) {
+    if (mode !== 'schematic' && mode !== 'realDistance' && mode !== 'real') return;
+    state.scaleMode = mode;
+    state.realDistance = mode !== 'schematic';
+    state.realSize = mode === 'real';
+    refreshOrbits();
+    updateBodies();
+    rescaleView();
   }
 
   /** 比例模式切换后，机位要跟着重新换算，否则视野会突然失真 */
@@ -592,12 +646,10 @@
   }
 
   SS.App = {
-    state, ctx, init, selectBody, focusBody, refreshOrbits,
+    state, ctx, init, selectBody, focusBody, toggleLock, releaseLock, goHome, refreshOrbits,
     distanceScale, displayRadius, screenRadius,
     setShowMarkers(v) { state.showMarkers = v; },
-    setRealDistance(v) { state.realDistance = v; refreshOrbits(); updateBodies(); rescaleView(); },
-    setRealSize(v) { state.realSize = v; updateBodies(); rescaleView(); },
-    setSizeBoost(v) { state.sizeBoost = v; updateBodies(); rescaleView(); },
+    setScaleMode,
     frameAll,
   };
 })(typeof window !== 'undefined' ? window : globalThis);
