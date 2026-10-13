@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>太阳系实时 3D 模拟 · Solar System Live</title>
+<meta name="description" content="基于 JPL 近似轨道根数的太阳系实时三维模拟：可点选天体，查看实时日心距、轨道速度、与地球距离与光行时。">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div id="canvas-wrap"></div>
+<div id="labels"></div>
+
+<!-- 时间与状态 -->
+<section class="panel" id="hud">
+  <p class="panel-title">模拟时刻 · UTC</p>
+  <div class="clock">
+    <span class="date" id="hud-date">-------/--</span>
+    <span class="time" id="hud-time">--:--:--</span>
+  </div>
+  <div class="sub">
+    <span id="hud-jd">JD —</span>
+    <span id="hud-offset">—</span>
+  </div>
+
+  <div class="row">
+    <button id="btn-play" class="icon" title="播放 / 暂停（空格）">❚❚</button>
+    <button id="btn-dir" class="icon" title="时间方向：正向 / 倒放（R）">→</button>
+    <input type="range" id="speed" min="0" max="8" step="1" value="4">
+    <span class="speed-label" id="speed-label">1 天/秒</span>
+  </div>
+  <div class="row">
+    <input type="date" id="jump-date" min="1800-01-01" max="2050-12-31">
+    <button id="btn-now" class="primary" title="回到当前真实时刻">现在</button>
+    <button id="btn-opts" title="显示选项">显示</button>
+  </div>
+</section>
+
+<!-- 显示选项 -->
+<section class="panel" id="options">
+  <p class="panel-title">显示</p>
+  <label class="opt"><span>真实距离比例</span><input type="checkbox" id="opt-truescale"><i class="switch"></i></label>
+  <label class="opt"><span>轨道线</span><input type="checkbox" id="opt-orbits" checked><i class="switch"></i></label>
+  <label class="opt"><span>名称标签</span><input type="checkbox" id="opt-labels" checked><i class="switch"></i></label>
+  <label class="opt"><span>冥王星（矮行星）</span><input type="checkbox" id="opt-pluto"><i class="switch"></i></label>
+  <label class="opt"><span>镜头跟随选中天体</span><input type="checkbox" id="opt-follow" checked><i class="switch"></i></label>
+</section>
+
+<!-- 信息面板 -->
+<section class="panel" id="info">
+  <div id="info-head">
+    <div class="body-name">
+      <i class="body-dot" id="info-dot" style="background:#9fd0ff"></i>
+      <h2 id="info-name">太阳系</h2>
+      <span class="en" id="info-en">SOLAR SYSTEM</span>
+    </div>
+    <p class="body-type" id="info-type">点选天体查看实时数据</p>
+  </div>
+  <div id="info-body"></div>
+</section>
+
+<!-- 天体快捷选择 -->
+<nav class="panel" id="chips"></nav>
+
+<!-- 启动 / 失败提示 -->
+<div id="boot">
+  <div>
+    正在载入 three.js 与星历…<br>
+    <span id="boot-hint" style="font-size:12px;color:#5d6679">若长时间停留在此，请检查网络（three.js 由 CDN 载入）</span>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
+<script>
+  // CDN 不可达时的兜底：换用 unpkg，同步加载以保持脚本顺序
+  if (typeof THREE === 'undefined') {
+    document.write('<script src="https://unpkg.com/three@0.152.2/build/three.min.js"><\/script>');
+  }
+</script>
+<script src="src/data.js"></script>
+<script src="src/orbital.js"></script>
+<script src="src/scene.js"></script>
+<script src="src/app.js"></script>
+</body>
+</html>
