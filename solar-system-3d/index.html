@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>太阳系实时 3D 模拟</title>
+<meta name="description" content="基于 three.js 与 JPL 解析星历的太阳系实时三维模拟：行星位置按当前时刻计算，可点选查看实时与物理数据。" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <canvas id="scene" tabindex="0" role="application"
+          aria-label="太阳系三维场景。方向键旋转视角，加减号缩放，数字键 0–9 选择天体，Esc 取消选择。详细数据见右侧信息面板。"></canvas>
+  <div id="labels"></div>
+  <div id="sr-status" class="sr-only" role="status" aria-live="polite"></div>
+  <div id="hint-tip" aria-hidden="true" hidden></div>
+
+  <nav id="catalog" aria-label="天体目录">
+    <h2 class="rail-title">天体目录</h2>
+    <ul id="catalog-list"></ul>
+  </nav>
+
+  <header id="brand">
+    <h1>太阳系 · 实时 3D 模拟</h1>
+    <p>行星位置由 JPL 解析星历按当前时刻计算 · 点击任意天体查看数据</p>
+  </header>
+
+  <div id="clock" role="status" aria-live="off">
+    <div class="clock-row"><span class="k">模拟时刻 UTC</span><span class="v" id="clock-utc">—</span></div>
+    <div class="clock-row"><span class="k">本地时间</span><span class="v" id="clock-local">—</span></div>
+    <div class="clock-row"><span class="k">儒略日 JD</span><span class="v" id="clock-jd">—</span></div>
+    <div class="clock-row"><span class="k">时间流速</span><span class="v" id="clock-rate">—</span></div>
+  </div>
+
+  <section id="panel" aria-label="天体信息">
+    <div id="detail">
+      <div id="detail-empty">
+        <h2>尚未选择天体</h2>
+        <p class="blurb">在场景中点击行星、轨道标签，或下方「此刻一览」中的任意一行，即可查看它的实时位置与物理数据。双击天体可将镜头锁定到它身上。</p>
+        <ul class="tips">
+          <li><b>左键拖拽</b> 旋转视角</li>
+          <li><b>滚轮 / 双指</b> 缩放</li>
+          <li><b>右键 / 中键 / Shift+左键拖拽</b> 平移画面</li>
+          <li><b>单击</b> 选中，<b>再次单击或双击</b> 锁定跟随</li>
+          <li>锁定后仍可自由旋转与平移，<b>Esc</b> 解除</li>
+        </ul>
+      </div>
+      <div id="detail-body" hidden>
+        <div class="detail-head">
+          <h2><span id="d-name">—</span><em id="d-en"></em></h2>
+          <button type="button" id="d-close" title="取消选择（Esc）" aria-label="取消选择">×</button>
+        </div>
+        <div class="chips" id="d-chips"></div>
+        <p class="blurb" id="d-blurb"></p>
+        <div class="actions">
+          <button type="button" id="d-focus" aria-pressed="false">锁定跟随</button>
+          <button type="button" id="d-unfocus">回到太阳</button>
+        </div>
+        <div id="d-moon" hidden>
+          <h3>当前月相<span class="stamp" id="d-moon-stamp"></span></h3>
+          <div class="moonbox">
+            <canvas id="moon-phase" width="128" height="128" role="img" aria-label="当前月相示意图"></canvas>
+            <div class="moonmeta">
+              <div class="moonname" id="d-moon-name">—</div>
+              <div class="moonlit"><b id="d-moon-lit">—</b> 被照亮</div>
+              <div class="moonage" id="d-moon-age">—</div>
+              <div class="moonhemi" id="d-moon-hemi">—</div>
+            </div>
+          </div>
+        </div>
+        <h3>实时状态<span class="stamp" id="d-stamp"></span></h3>
+        <table class="kv" id="d-live"></table>
+        <h3>物理与轨道参数</h3>
+        <table class="kv" id="d-facts"></table>
+        <p class="note" id="d-note" hidden></p>
+        <h3>数据来源</h3>
+        <ul class="sources" id="d-sources"></ul>
+      </div>
+    </div>
+
+    <div id="overview">
+      <h3>此刻一览<span class="stamp">按与地球距离排序</span></h3>
+      <table class="rank" id="ov-table"></table>
+      <p class="note">光行时 = 光从该天体到地球所需时间，也就是你"看到"的其实是多久以前的它。</p>
+    </div>
+  </section>
+
+  <button type="button" id="ui-toggle" aria-expanded="false" aria-controls="dock">控制面板</button>
+
+  <footer id="dock">
+    <div class="dock-group">
+      <span class="dock-title">时间</span>
+      <div class="dock-row">
+        <button type="button" id="t-live" class="pill">实时</button>
+        <button type="button" id="t-pause" class="pill">暂停</button>
+        <button type="button" id="t-now" class="pill">回到现在</button>
+      </div>
+      <div class="dock-row">
+        <label class="field">
+          <span>流速</span>
+          <select id="t-speed">
+            <option value="1">实时（1 秒 / 秒）</option>
+            <option value="60">1 分钟 / 秒</option>
+            <option value="3600">1 小时 / 秒</option>
+            <option value="86400">1 天 / 秒</option>
+            <option value="864000">10 天 / 秒</option>
+            <option value="2592000">30 天 / 秒</option>
+            <option value="31557600">1 年 / 秒</option>
+          </select>
+        </label>
+      </div>
+      <div class="dock-row">
+        <label class="field">
+          <span>跳转</span>
+          <input type="datetime-local" id="t-date" step="60" min="1800-01-01T00:00" max="2050-12-31T23:59" />
+        </label>
+      </div>
+      <div class="dock-row">
+        <button type="button" class="pill step" data-step="-365.25">−1 年</button>
+        <button type="button" class="pill step" data-step="-1">−1 天</button>
+        <button type="button" class="pill step" data-step="1">+1 天</button>
+        <button type="button" class="pill step" data-step="365.25">+1 年</button>
+      </div>
+    </div>
+
+    <div class="dock-group">
+      <span class="dock-title">显示</span>
+      <div class="dock-row wrap">
+        <label class="check"><input type="checkbox" id="v-orbits" role="switch" checked /><span>轨道线</span></label>
+        <label class="check"><input type="checkbox" id="v-labels" role="switch" checked /><span>名称标签</span></label>
+        <label class="check"><input type="checkbox" id="v-markers" role="switch" checked /><span>定位标记</span></label>
+      </div>
+      <div class="dock-row">
+        <div class="seg" role="radiogroup" aria-label="比例模型">
+          <button type="button" class="seg-btn is-on" data-mode="schematic" role="radio" aria-checked="true">简化示意</button>
+          <button type="button" class="seg-btn" data-mode="realDistance" role="radio" aria-checked="false">真实距离</button>
+          <button type="button" class="seg-btn" data-mode="real" role="radio" aria-checked="false">完全真实</button>
+        </div>
+      </div>
+      <p class="dock-note" id="scale-note"></p>
+    </div>
+  </footer>
+
+  <div id="ruler" aria-hidden="true">
+    <div class="ruler-bar"></div>
+    <div class="ruler-text" id="ruler-text">—</div>
+  </div>
+
+  <div id="range-warning" role="alert" hidden></div>
+
+  <div id="loading">
+    <div class="spinner" aria-hidden="true"></div>
+    <p>正在生成程序化纹理与星历…</p>
+  </div>
+
+  <div id="fatal" hidden><div class="fatal-box"><h2>无法启动</h2><p id="fatal-msg"></p></div></div>
+
+  <script src="vendor/three.bundle.js"></script>
+  <script src="src/ephemeris.js"></script>
+  <script src="src/data.js"></script>
+  <script src="src/textures.js"></script>
+  <script src="src/controls.js"></script>
+  <script src="src/ui.js"></script>
+  <script src="src/app.js"></script>
+  <script>
+    // 纹理生成是同步的（约 0.3–1 秒），先让浏览器把 loading 画出来再开始阻塞
+    window.addEventListener('DOMContentLoaded', function () {
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          try {
+            window.SolarSystem.UI.init();
+            window.SolarSystem.App.init();
+            window.SolarSystem.UI.hideLoading();
+          } catch (err) {
+            window.SolarSystem.UI.fatal((err && err.message) || String(err));
+            throw err;
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
