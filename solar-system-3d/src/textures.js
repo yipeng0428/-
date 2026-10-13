@@ -230,6 +230,35 @@
     });
   }
 
+  /**
+   * 月球：高反照率高地 + 低反照率月海 + 撞击坑。
+   * 月海集中在"近地面"（纹理 u≈0.5 一侧），因为潮汐锁定后我们只看得到那一面，
+   * 而真实月海确实几乎全部分布在近地面——这个不对称是月球外观最醒目的特征。
+   */
+  function moonTexture(body, size) {
+    const seed = 911;
+    const pal = body.palette;
+    return renderEquirect(size, size / 2, (u, v, nx, ny, nz, lat) => {
+      const base = fbm(nx * 5.0, ny * 5.0, nz * 5.0, seed, 5, 2.1, 0.55);
+      const fine = fbm(nx * 18, ny * 18, nz * 18, seed + 29, 3, 2.3, 0.5);
+      let t = 0.46 + base * 0.34 + fine * 0.20;
+
+      // 月海：低频噪声取阈值，并按"离近地面中心的远近"加权
+      const toNear = Math.cos((u - 0.5) * TAU) * Math.cos(lat); // 近地面 ≈ +1
+      const maria = fbm(nx * 2.0, ny * 2.0, nz * 2.0, seed + 71, 3, 2.0, 0.5);
+      const mariaMask = (maria - 0.46) * 3.2 + (toNear - 0.35) * 1.1;
+      if (mariaMask > 0) t -= Math.min(0.34, mariaMask * 0.42);
+
+      // 撞击坑：高频脊线，高地一侧更密
+      const crater = Math.abs(valueNoise3(nx * 26, ny * 26, nz * 26, seed + 13) - 0.5) * 2;
+      if (crater > 0.90) t += 0.10;
+      if (crater < 0.045) t -= 0.06;
+
+      const c = ramp(pal, Math.max(0, Math.min(1, t)));
+      return c;
+    });
+  }
+
   /** 太阳：米粒组织 + 亮斑 */
   function sunTexture(size) {
     const seed = SEEDS.sun;
@@ -303,6 +332,32 @@
     return canvas;
   }
 
+  /**
+   * 空心圆环精灵：真实尺寸下行星会缩成亚像素点，用固定像素大小的
+   * "定位标记"把它们重新变得可见、可点。标记不是天体本身的大小。
+   */
+  function ringSpriteTexture(size, thickness) {
+    const canvas = makeCanvas(size, size);
+    const ctx = canvas.getContext('2d');
+    const img = ctx.createImageData(size, size);
+    const data = img.data;
+    const c = (size - 1) / 2;
+    const th = thickness || 0.14;
+    for (let y = 0; y < size; y += 1) {
+      for (let x = 0; x < size; x += 1) {
+        const d = Math.sqrt((x - c) * (x - c) + (y - c) * (y - c)) / c;
+        // 以 r≈0.78 为中心的环带，内外侧各留一段柔化
+        const band = 1 - Math.min(1, Math.abs(d - 0.78) / th);
+        const a = Math.pow(Math.max(0, band), 1.4) * (d <= 1 ? 1 : 0);
+        const i = (y * size + x) * 4;
+        data[i] = 255; data[i + 1] = 255; data[i + 2] = 255;
+        data[i + 3] = Math.round(a * 255);
+      }
+    }
+    ctx.putImageData(img, 0, 0);
+    return canvas;
+  }
+
   /** 恒星点精灵（圆形、边缘柔化） */
   function starSpriteTexture(size) {
     return glowTexture(size || 32, [255, 255, 255], [255, 255, 255], 2.2);
@@ -311,6 +366,7 @@
   function surfaceCanvasFor(body, size) {
     switch (body.texture) {
       case 'sun': return sunTexture(size);
+      case 'moon': return moonTexture(body, size);
       case 'earth': return earthTexture(size);
       case 'mars': return marsTexture(body, size);
       case 'venus': return venusTexture(body, size);
@@ -321,7 +377,7 @@
   }
 
   SS.Textures = {
-    valueNoise3, fbm, renderEquirect, surfaceCanvasFor,
-    ringTexture, glowTexture, starSpriteTexture,
+    valueNoise3, fbm, renderEquirect, surfaceCanvasFor, moonTexture,
+    ringTexture, glowTexture, starSpriteTexture, ringSpriteTexture,
   };
 })(typeof window !== 'undefined' ? window : globalThis);

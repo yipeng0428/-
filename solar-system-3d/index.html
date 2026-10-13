@@ -8,8 +8,15 @@
 <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <canvas id="scene"></canvas>
-  <div id="labels" aria-hidden="true"></div>
+  <canvas id="scene" tabindex="0" role="application"
+          aria-label="太阳系三维场景。方向键旋转视角，加减号缩放，数字键 0–9 选择天体，Esc 取消选择。详细数据见右侧信息面板。"></canvas>
+  <div id="labels"></div>
+  <div id="sr-status" class="sr-only" role="status" aria-live="polite"></div>
+
+  <nav id="catalog" aria-label="天体目录">
+    <h2 class="rail-title">天体目录</h2>
+    <ul id="catalog-list"></ul>
+  </nav>
 
   <header id="brand">
     <h1>太阳系 · 实时 3D 模拟</h1>
@@ -46,11 +53,25 @@
           <button type="button" id="d-focus">聚焦镜头</button>
           <button type="button" id="d-unfocus">回到太阳</button>
         </div>
+        <div id="d-moon" hidden>
+          <h3>当前月相<span class="stamp" id="d-moon-stamp"></span></h3>
+          <div class="moonbox">
+            <canvas id="moon-phase" width="128" height="128" role="img" aria-label="当前月相示意图"></canvas>
+            <div class="moonmeta">
+              <div class="moonname" id="d-moon-name">—</div>
+              <div class="moonlit"><b id="d-moon-lit">—</b> 被照亮</div>
+              <div class="moonage" id="d-moon-age">—</div>
+              <div class="moonhemi" id="d-moon-hemi">—</div>
+            </div>
+          </div>
+        </div>
         <h3>实时状态<span class="stamp" id="d-stamp"></span></h3>
         <table class="kv" id="d-live"></table>
         <h3>物理与轨道参数</h3>
         <table class="kv" id="d-facts"></table>
         <p class="note" id="d-note" hidden></p>
+        <h3>数据来源</h3>
+        <ul class="sources" id="d-sources"></ul>
       </div>
     </div>
 
@@ -88,7 +109,7 @@
       <div class="dock-row">
         <label class="field">
           <span>跳转</span>
-          <input type="datetime-local" id="t-date" step="60" />
+          <input type="datetime-local" id="t-date" step="60" min="1800-01-01T00:00" max="2050-12-31T23:59" />
         </label>
       </div>
       <div class="dock-row">
@@ -102,12 +123,13 @@
     <div class="dock-group">
       <span class="dock-title">显示</span>
       <div class="dock-row wrap">
-        <label class="check"><input type="checkbox" id="v-orbits" checked /><span>轨道线</span></label>
-        <label class="check"><input type="checkbox" id="v-labels" checked /><span>名称标签</span></label>
+        <label class="check"><input type="checkbox" id="v-orbits" role="switch" checked /><span>轨道线</span></label>
+        <label class="check"><input type="checkbox" id="v-labels" role="switch" checked /><span>名称标签</span></label>
+        <label class="check"><input type="checkbox" id="v-markers" role="switch" checked /><span>定位标记</span></label>
       </div>
       <div class="dock-row wrap">
-        <label class="check"><input type="checkbox" id="v-realdist" /><span>真实距离</span></label>
-        <label class="check"><input type="checkbox" id="v-realsize" /><span>真实尺寸</span></label>
+        <label class="check"><input type="checkbox" id="v-realdist" role="switch" /><span>真实距离</span></label>
+        <label class="check"><input type="checkbox" id="v-realsize" role="switch" /><span>真实尺寸</span></label>
       </div>
       <div class="dock-row">
         <label class="field slider">
@@ -118,6 +140,13 @@
       <p class="dock-note" id="scale-note">当前为示意比例：距离按 √r 压缩，半径按 (R/R⊕)<sup>0.4</sup> 压缩。</p>
     </div>
   </footer>
+
+  <div id="ruler" aria-hidden="true">
+    <div class="ruler-bar"></div>
+    <div class="ruler-text" id="ruler-text">—</div>
+  </div>
+
+  <div id="range-warning" role="alert" hidden></div>
 
   <div id="loading">
     <div class="spinner" aria-hidden="true"></div>

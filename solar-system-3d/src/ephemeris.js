@@ -214,11 +214,239 @@
     return Math.acos(Math.min(1, Math.max(-1, c))) / DEG;
   }
 
+  /* ===================== 月球 ===================== */
+
+  /**
+   * 截断版 ELP2000-82B（Meeus《Astronomical Algorithms》第 47 章）。
+   * 只保留振幅最大的若干项：黄经 ~19 项、黄纬 ~13 项、距离 ~13 项。
+   *
+   * 精度：黄经/黄纬约 0.05°–0.1°，地心距约数百 km。完整理论有上千项，
+   * 但对"月亮此刻在天上哪个方向、是什么相"这个量级，截断版绰绰有余。
+   *
+   * 坐标说明：ELP 给出的是"当日平分点"的黄道坐标，而行星用的是 J2000。
+   * 这里对黄经做一阶总岁差改正（约 1.3972°/世纪）归算到 J2000，
+   * 2026 年量级约 −0.37°，不改正会在跨年尺度上肉眼可见。
+   */
+  const MOON_LON = [ // [D, M, M', F, 系数(1e-6 度)]
+    [0, 0, 1, 0, 6288774], [2, 0, -1, 0, 1274027], [2, 0, 0, 0, 658314],
+    [0, 0, 2, 0, 213618], [0, 1, 0, 0, -185116], [0, 0, 0, 2, -114332],
+    [2, 0, -2, 0, 58793], [2, -1, -1, 0, 57066], [2, 0, 1, 0, 53322],
+    [2, -1, 0, 0, 45758], [0, 1, -1, 0, -40923], [1, 0, 0, 0, -34720],
+    [0, 1, 1, 0, -30383], [2, 0, 0, -2, 15327], [0, 0, 1, 2, -12528],
+    [0, 0, 1, -2, 10980], [4, 0, -1, 0, 10675], [0, 0, 3, 0, 10034],
+    [4, 0, -2, 0, 8548],
+  ];
+  const MOON_LAT = [ // [D, M, M', F, 系数(1e-6 度)]
+    [0, 0, 0, 1, 5128122], [0, 0, 1, 1, 280602], [0, 0, 1, -1, 277693],
+    [2, 0, 0, -1, 173237], [2, 0, -1, 1, 55413], [2, 0, -1, -1, 46271],
+    [2, 0, 0, 1, 32573], [0, 0, 2, 1, 17198], [2, 0, 1, -1, 9266],
+    [0, 0, 2, -1, 8822], [2, -1, 0, -1, 8216], [2, 0, -2, -1, 4324],
+    [2, 0, 1, 1, 4200],
+  ];
+  const MOON_DIST = [ // [D, M, M', F, 系数(0.001 km)]
+    [0, 0, 1, 0, -20905355], [2, 0, -1, 0, -3699111], [2, 0, 0, 0, -2955968],
+    [0, 0, 2, 0, -569925], [0, 1, 0, 0, 48888], [0, 0, 0, 2, -3149],
+    [2, 0, -2, 0, 246158], [2, -1, -1, 0, -152138], [2, 0, 1, 0, -170733],
+    [2, -1, 0, 0, -204586], [0, 1, -1, 0, -129620], [1, 0, 0, 0, 108743],
+    [0, 1, 1, 0, 104755],
+  ];
+
+  const MOON_MEAN_RADIUS_KM = 1737.4;
+  const SYNODIC_MONTH = 29.530588853;
+
+  /** 月球基本幅角（度） */
+  function moonArguments(T) {
+    return {
+      Lp: 218.3164477 + 481267.88123421 * T - 0.0015786 * T * T
+        + (T * T * T) / 538841 - (T * T * T * T) / 65194000,
+      D: 297.8501921 + 445267.1114034 * T - 0.0018819 * T * T
+        + (T * T * T) / 545868 - (T * T * T * T) / 113065000,
+      M: 357.5291092 + 35999.0502909 * T - 0.0001536 * T * T + (T * T * T) / 24490000,
+      Mp: 134.9633964 + 477198.8675055 * T + 0.0087414 * T * T
+        + (T * T * T) / 69699 - (T * T * T * T) / 14712000,
+      F: 93.2720950 + 483202.0175233 * T - 0.0036539 * T * T
+        - (T * T * T) / 3526000 + (T * T * T * T) / 863310000,
+      // 地球轨道偏心率随时间的修正，作用于含太阳平近点角 M 的项
+      E: 1 - 0.002516 * T - 0.0000074 * T * T,
+    };
+  }
+
+  /**
+   * 月球地心黄道坐标。
+   * @param {number} jd 儒略日
+   * @param {boolean} toJ2000 是否把黄经归算到 J2000（与行星同框架），默认 true
+   * @returns {{longitude:number, latitude:number, distanceKm:number}}
+   */
+  function moonGeocentric(jd, toJ2000) {
+    const T = centuriesSinceJ2000(jd);
+    const a = moonArguments(T);
+    let sumL = 0, sumB = 0, sumR = 0;
+
+    const evaluate = (table, trig, out) => {
+      for (let i = 0; i < table.length; i += 1) {
+        const [cd, cm, cmp, cf, coeff] = table[i];
+        const arg = (cd * a.D + cm * a.M + cmp * a.Mp + cf * a.F) * DEG;
+        // 含 M 的项要乘偏心率修正 E（|cm| 次幂）
+        const ecc = cm === 0 ? 1 : Math.pow(a.E, Math.abs(cm));
+        out(coeff * ecc * trig(arg));
+      }
+    };
+    evaluate(MOON_LON, Math.sin, (v) => { sumL += v; });
+    evaluate(MOON_LAT, Math.sin, (v) => { sumB += v; });
+    evaluate(MOON_DIST, Math.cos, (v) => { sumR += v; });
+
+    let longitude = a.Lp + sumL / 1e6;
+    if (toJ2000 !== false) longitude -= 1.397159 * T; // 一阶总岁差：当日平分点 → J2000
+    return {
+      longitude: wrapDeg(longitude),
+      latitude: sumB / 1e6,
+      distanceKm: 385000.56 + sumR / 1000,
+    };
+  }
+
+  /** 把 (黄经, 黄纬, 距离) 转为直角坐标 (AU) */
+  function sphericalToCartesian(lonDeg, latDeg, distAU) {
+    const lon = lonDeg * DEG, lat = latDeg * DEG;
+    const c = Math.cos(lat);
+    return { x: distAU * c * Math.cos(lon), y: distAU * c * Math.sin(lon), z: distAU * Math.sin(lat) };
+  }
+
+  /**
+   * 月球完整状态：地心向量、日心位置、月相。
+   * 月相由"月球与太阳的地心黄经差"定义：0°=朔，90°=上弦，180°=望，270°=下弦。
+   */
+  function moonState(jd, earthState) {
+    const geo = moonGeocentric(jd, true);
+    const distAU = geo.distanceKm / AU_KM;
+    const geocentric = sphericalToCartesian(geo.longitude, geo.latitude, distAU);
+    const earth = earthState || stateAt('earth', jd);
+    const position = {
+      x: earth.position.x + geocentric.x,
+      y: earth.position.y + geocentric.y,
+      z: earth.position.z + geocentric.z,
+    };
+    // 太阳的地心视黄经 = 地球日心黄经 + 180°
+    const sunLongitude = wrapDeg(earth.eclipticLongitude + 180);
+    const elongation = wrapDeg(geo.longitude - sunLongitude);
+    const phaseAngleDeg = phaseAngle(earth.position, position);
+    const illuminated = (1 + Math.cos(phaseAngleDeg * DEG)) / 2;
+    return {
+      key: 'moon', jd,
+      geocentric, position,
+      geocentricDistanceKm: geo.distanceKm,
+      geocentricDistance: distAU,
+      r: Math.sqrt(position.x * position.x + position.y * position.y + position.z * position.z),
+      eclipticLongitude: geo.longitude,
+      eclipticLatitude: geo.latitude,
+      sunLongitude,
+      elongationFromSun: elongation,   // 相位角位置（0=朔，180=望）
+      phaseAngle: phaseAngleDeg,
+      illuminated,
+      waxing: elongation < 180,        // 渐盈 / 渐亏
+      age: (elongation / 360) * SYNODIC_MONTH,
+      phaseName: moonPhaseName(elongation),
+    };
+  }
+
+  /**
+   * 相位命名。不按 45° 均分八等份——那样 110° 会被叫成"上弦"，
+   * 而此时月亮已明显是凸月（照亮 68%）。朔、望、上下弦是四个"瞬时事件"，
+   * 这里给它们各 ±7.5°（约 ±0.6 天）的窄窗口，其余归入蛾眉/凸/残。
+   */
+  function moonPhaseName(elongationDeg) {
+    const e = wrapDeg(elongationDeg);
+    if (e < 7.5 || e >= 352.5) return '新月（朔）';
+    if (e < 82.5) return '蛾眉月（娥眉月）';
+    if (e < 97.5) return '上弦月';
+    if (e < 172.5) return '盈凸月';
+    if (e < 187.5) return '满月（望）';
+    if (e < 262.5) return '亏凸月';
+    if (e < 277.5) return '下弦月';
+    return '残月（下蛾眉月）';
+  }
+
+  /**
+   * 下一次指定相位（0=朔，180=望）的时刻，二分法求解。
+   * 先按 6 小时步长找符号变化区间，再二分 30 次（精度优于 1 秒）。
+   */
+  function nextMoonPhase(jd, targetElongationDeg) {
+    const f = (t) => {
+      const e = moonState(t).elongationFromSun - targetElongationDeg;
+      return wrapDegSigned(e); // 映射到 [-180,180)，过零即为目标相位
+    };
+    const step = 0.25;
+    let t0 = jd + 0.01, v0 = f(t0);
+    for (let i = 0; i < 160; i += 1) {   // 最多向前搜 40 天，覆盖一个朔望月
+      const t1 = t0 + step, v1 = f(t1);
+      if (v0 < 0 && v1 >= 0) {           // 只接受由负变正的穿越，避免抓到反向跳变
+        let lo = t0, hi = t1;
+        for (let k = 0; k < 40; k += 1) {
+          const mid = (lo + hi) / 2;
+          if (f(mid) < 0) lo = mid; else hi = mid;
+        }
+        return (lo + hi) / 2;
+      }
+      t0 = t1; v0 = v1;
+    }
+    return NaN;
+  }
+
+  /* ===================== 视星等 ===================== */
+
+  /**
+   * 行星视星等：V = V(1,0) + 5·log₁₀(r·Δ) + 相位改正。
+   * V(1,0) 与相位多项式取自《Astronomical Almanac》经典式（Harris 体系）。
+   *
+   * 已知偏差（诚实声明）：
+   *   - 土星只算球体，不含环的贡献；环面张角最大时实际可亮 0.3–1.0 等。
+   *   - 金星在 α>163.6° 的极细月牙区间不适用（此时它贴近太阳不可观测）。
+   *   - 不含大气消光，给出的是大气外的视星等。
+   */
+  const MAGNITUDE = {
+    mercury: { v0: -0.42, phase: (a) => 0.0380 * a - 0.000273 * a * a + 2.0e-6 * a * a * a },
+    venus: { v0: -4.40, phase: (a) => (a < 163.6 ? 0.0009 * a + 0.000239 * a * a - 6.5e-7 * a * a * a : 1.0) },
+    mars: { v0: -1.52, phase: (a) => 0.016 * a },
+    jupiter: { v0: -9.40, phase: (a) => 0.005 * a },
+    saturn: { v0: -8.88, phase: (a) => 0.044 * Math.abs(a) },
+    uranus: { v0: -7.19, phase: (a) => 0.0028 * a },
+    neptune: { v0: -6.87, phase: () => 0 },
+    pluto: { v0: -1.01, phase: () => 0 },
+    moon: { v0: 0.21, phase: (a) => 0.026 * a + 4.0e-9 * Math.pow(a, 4) },
+  };
+
+  /**
+   * @param {string} key 天体
+   * @param {number} r 日心距 (AU)
+   * @param {number} delta 地心距 (AU)
+   * @param {number} alpha 相位角 (度)
+   */
+  function apparentMagnitude(key, r, delta, alpha) {
+    const m = MAGNITUDE[key];
+    if (!m || !(r > 0) || !(delta > 0)) return NaN;
+    return m.v0 + 5 * Math.log10(r * delta) + m.phase(alpha);
+  }
+
+  /* ===================== 模型有效区间 ===================== */
+
+  // Standish 线性要素表的标称适用区间
+  const VALID_FROM_JD = julianDay(new Date(Date.UTC(1800, 0, 1)));
+  const VALID_TO_JD = julianDay(new Date(Date.UTC(2050, 11, 31)));
+
+  function validity(jd) {
+    if (jd < VALID_FROM_JD) return { ok: false, side: 'before' };
+    if (jd > VALID_TO_JD) return { ok: false, side: 'after' };
+    return { ok: true, side: null };
+  }
+
   SS.Ephemeris = {
     ELEMENTS, AU_KM, LIGHT_SECONDS_PER_AU, GM_SUN, JD_J2000,
     julianDay, dateFromJulianDay, centuriesSinceJ2000,
     elementsAt, stateAt, orbitSamples, solveKepler,
-    distance, elongation, phaseAngle, angleBetween, wrapDeg,
+    distance, elongation, phaseAngle, angleBetween, wrapDeg, wrapDegSigned,
+    moonGeocentric, moonState, nextMoonPhase, sphericalToCartesian,
+    MOON_MEAN_RADIUS_KM, SYNODIC_MONTH,
+    apparentMagnitude, MAGNITUDE,
+    validity, VALID_FROM_JD, VALID_TO_JD,
     keys: Object.keys(ELEMENTS),
   };
 })(typeof window !== 'undefined' ? window : globalThis);

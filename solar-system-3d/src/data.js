@@ -88,6 +88,28 @@
       blurb: '目前已知唯一存在液态水海洋与生物圈的行星。23.44° 的转轴倾角造成四季，巨大卫星稳定了自转轴的长期摆动。',
     },
     {
+      key: 'moon', name: '月球', en: 'Moon', type: 'moon', parent: 'earth',
+      radiusKm: 1737.4, tiltDeg: 6.68, rotationHours: 655.72, tidallyLocked: true,
+      color: 0xb9b2a6, texture: 'moon',
+      palette: ['#3a3730', '#6d6962', '#9c968c', '#cfc8bb', '#eae3d6'],
+      facts: {
+        '分类': '地球的天然卫星',
+        '直径': '3,474.8 km（0.273 地球）',
+        '质量': '7.342×10²² kg（0.0123 地球）',
+        '表面重力': '1.62 m/s²（地球的 1/6）',
+        '轨道半长轴': '384,400 km',
+        '轨道偏心率': '0.0549',
+        '轨道倾角': '对黄道 5.145°',
+        '自转周期': '27.32 天（与公转同步，潮汐锁定）',
+        '朔望月': '29.53 天',
+        '表面温度': '-173 ~ 127 °C',
+        '大气': '几乎没有（极稀薄外逸层）',
+        '远离速率': '约 3.8 cm / 年',
+      },
+      blurb: '唯一与我们潮汐锁定的邻居：永远以同一面朝向地球。它稳定了地球自转轴的长期摆动，也以每年 3.8 cm 的速度缓慢远离。',
+      note: '场景中月球与地球的间距被压缩显示（真实比例下它会远在地球直径的 30 倍之外）；方向与相位是真实计算的。',
+    },
+    {
       key: 'mars', name: '火星', en: 'Mars', type: 'planet',
       radiusKm: 3389.5, tiltDeg: 25.19, rotationHours: 24.6229,
       color: 0xc1552f, texture: 'mars',
@@ -209,10 +231,20 @@
     },
   ];
 
+  // 数据来源（界面上直接给出，而不是只写在 README 里）
+  const SOURCES = [
+    { label: '行星位置：JPL / Standish 近似根数表（1800–2050）', url: 'https://ssd.jpl.nasa.gov/planets/approx_pos.html' },
+    { label: '物理参数：NASA Planetary Fact Sheet', url: 'https://nssdc.gsfc.nasa.gov/planetary/factsheet/' },
+    { label: '月球位置：ELP2000-82B 截断式（Meeus《Astronomical Algorithms》第 47 章）', url: 'https://ssd.jpl.nasa.gov/horizons/' },
+  ];
+
   const BY_KEY = {};
   BODIES.forEach((b) => { BY_KEY[b.key] = b; });
 
   SS.BODIES = BODIES;
   SS.BODY_BY_KEY = BY_KEY;
-  SS.ORBITING = BODIES.filter((b) => !b.isSun);
+  SS.SOURCES = SOURCES;
+  // 绕日公转的天体（不含太阳与卫星）——星历按日心开普勒要素计算的那一批
+  SS.ORBITING = BODIES.filter((b) => !b.isSun && !b.parent);
+  SS.SATELLITES = BODIES.filter((b) => !!b.parent);
 })(typeof window !== 'undefined' ? window : globalThis);

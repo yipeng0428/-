@@ -150,6 +150,12 @@
       this._desired.distance = this._clampDistance(this._desired.distance * step);
     }
 
+    /** 键盘微调：方位角 / 天顶角增量（弧度），供全键盘操作使用 */
+    nudge(dAzimuth, dPolar) {
+      this._desired.azimuth += dAzimuth;
+      this._desired.polar = Math.min(this.maxPolar, Math.max(this.minPolar, this._desired.polar + dPolar));
+    }
+
     setTarget(vec, immediate) {
       this._targetDesired.copy(vec);
       if (immediate) this.target.copy(vec);

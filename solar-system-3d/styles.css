@@ -9,7 +9,7 @@
   --line-strong: rgba(150, 175, 215, 0.32);
   --text: #e6ecf6;
   --text-dim: #9aa6bd;
-  --text-faint: #6b7689;
+  --text-faint: #7d8a9e;   /* 对面板底色 ≈5.4:1，满足 WCAG AA 4.5:1 */
   --accent: #7fc4ff;
   --accent-dim: rgba(127, 196, 255, 0.14);
   --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
@@ -31,6 +31,25 @@ html, body {
 }
 
 #scene { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
+#scene:focus-visible { outline: 2px solid var(--accent); outline-offset: -4px; }
+
+/* 统一的键盘焦点样式：鼠标点击不出现，键盘 Tab 才出现 */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* 仅供读屏器 */
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+/* 尊重"减少动态效果"偏好：关掉加载动画与过渡（3D 场景本身是内容，保留） */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}
 
 /* ---------- 标签层 ---------- */
 #labels { position: fixed; inset: 0; pointer-events: none; z-index: 2; }
@@ -46,7 +65,42 @@ html, body {
 .label:hover { border-color: var(--line-strong); background: rgba(10, 18, 32, 0.78); }
 .label.is-selected { color: #04060d; background: var(--accent); border-color: var(--accent); font-weight: 600; }
 .label .en { color: var(--text-faint); font-size: 10px; margin-left: 4px; }
+/* 拥挤时只留一个圆点，避免互相盖住；选中项永远保持完整名称 */
+.label.is-crowded { padding: 3px; }
+.label.is-crowded span { display: none; }
 .label.is-selected .en { color: rgba(4, 6, 13, 0.6); }
+
+/* ---------- 左侧天体目录 ---------- */
+#catalog {
+  position: fixed; left: 20px; top: 92px; z-index: 3; width: 168px;
+  max-height: 46vh; overflow-y: auto;
+  padding: 10px 8px 9px; border-radius: 11px;
+  background: var(--panel); border: 1px solid var(--line); backdrop-filter: blur(12px);
+}
+.rail-title {
+  margin: 0 0 7px 4px; font-size: 10px; font-weight: 500; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--text-faint);
+}
+#catalog ul { list-style: none; margin: 0; padding: 0; }
+#catalog li + li { margin-top: 1px; }
+.cat-item {
+  display: flex; align-items: center; gap: 7px; width: 100%;
+  padding: 5px 7px; border-radius: 7px; cursor: pointer;
+  background: none; border: 1px solid transparent; color: var(--text-dim);
+  font-family: var(--sans); font-size: 12.5px; text-align: left;
+  transition: background 0.14s, color 0.14s, border-color 0.14s;
+}
+.cat-item:hover { background: rgba(255, 255, 255, 0.05); color: var(--text); }
+.cat-item[aria-current="true"] {
+  background: var(--accent-dim); border-color: rgba(127, 196, 255, 0.3); color: var(--accent);
+}
+.cat-dot { width: 8px; height: 8px; border-radius: 50%; flex: 0 0 auto; }
+.cat-name { flex: 1 1 auto; }
+.cat-idx { font-family: var(--mono); font-size: 10px; color: var(--text-faint); }
+.cat-item.is-satellite .cat-name { padding-left: 10px; position: relative; }
+.cat-item.is-satellite .cat-name::before {
+  content: '└'; position: absolute; left: 0; color: var(--text-faint); font-size: 10px;
+}
 
 /* ---------- 顶部标题 ---------- */
 #brand {
@@ -174,6 +228,41 @@ input[type="range"]:disabled { opacity: 0.35; }
 .check input { accent-color: var(--accent); }
 .dock-note { margin: 9px 0 0; font-size: 10.5px; color: var(--text-faint); line-height: 1.45; max-width: 232px; }
 
+/* ---------- 屏幕比例尺 ---------- */
+#ruler {
+  position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%); z-index: 3;
+  text-align: center; pointer-events: none; user-select: none;
+}
+.ruler-bar {
+  width: 100px; height: 6px; margin: 0 auto 4px;
+  border: 1px solid var(--line-strong); border-top: 0;
+}
+.ruler-text { font-family: var(--mono); font-size: 10.5px; color: var(--text-faint); letter-spacing: 0.02em; }
+
+/* ---------- 星历越界警告 ---------- */
+#range-warning {
+  position: fixed; top: 92px; left: 50%; transform: translateX(-50%); z-index: 6;
+  max-width: 440px; padding: 8px 14px; border-radius: 9px;
+  background: rgba(60, 32, 10, 0.86); border: 1px solid rgba(255, 170, 70, 0.45);
+  color: #ffd9a3; font-size: 12px; backdrop-filter: blur(10px); text-align: center;
+}
+
+/* ---------- 月相 ---------- */
+.moonbox { display: flex; align-items: center; gap: 14px; margin-top: 4px; }
+#moon-phase { width: 86px; height: 86px; flex: 0 0 auto; }
+.moonmeta { min-width: 0; }
+.moonname { font-size: 15px; font-weight: 600; margin-bottom: 3px; }
+.moonlit { font-size: 12px; color: var(--text-dim); }
+.moonlit b { font-family: var(--mono); color: var(--accent); font-size: 14px; font-weight: 500; }
+.moonage { font-family: var(--mono); font-size: 11px; color: var(--text-faint); margin-top: 3px; }
+.moonhemi { font-size: 10.5px; color: var(--text-faint); margin-top: 4px; line-height: 1.4; }
+
+/* ---------- 数据来源 ---------- */
+.sources { list-style: none; margin: 0; padding: 0; }
+.sources li { font-size: 11px; color: var(--text-faint); line-height: 1.5; margin-bottom: 3px; }
+.sources a { color: var(--text-dim); text-decoration: underline; text-underline-offset: 2px; }
+.sources a:hover { color: var(--accent); }
+
 /* ---------- 加载 / 错误 ---------- */
 #loading, #fatal {
   position: fixed; inset: 0; z-index: 20;
@@ -214,6 +303,27 @@ body.dock-open #ui-toggle::after { content: ' ▴'; }
   .clock-row:nth-child(3) { display: none; }
 
   #ui-toggle { display: block; }
+
+  /* 窄屏上目录改为顶部横向滑动条：底部留给信息抽屉，中间整条留给 3D 画面 */
+  #catalog {
+    top: 80px; bottom: auto; left: 8px; right: 8px; width: auto;
+    max-height: 62px; display: flex; align-items: center; gap: 8px;
+    overflow-x: auto; overflow-y: hidden; padding: 4px 8px;
+  }
+  #catalog .rail-title { display: none; }
+  #catalog ul { display: flex; gap: 6px; }
+  #catalog li + li { margin-top: 0; }
+  .cat-item { white-space: nowrap; min-height: 44px; }  /* 触控目标 ≥44px */
+  .cat-idx { display: none; }
+
+  #ruler { top: 152px; bottom: auto; }
+  #panel { bottom: 8px; max-height: 44vh; }
+  #dock { top: 80px; }
+  /* 控制面板展开时盖住目录与比例尺，避免三层浮层互相叠字 */
+  body.dock-open #catalog, body.dock-open #ruler { display: none; }
+
+  .pill, .actions button { min-height: 32px; }
+  .check { min-height: 32px; }
   #panel {
     top: auto; left: 8px; right: 8px; bottom: 8px; width: auto;
     max-height: 44vh; padding: 12px;

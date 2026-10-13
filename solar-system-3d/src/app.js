@@ -32,9 +32,13 @@
     sizeBoost: 300,
     showOrbits: true,
     showLabels: true,
+    showMarkers: true,        // 定位标记：固定像素大小，真实比例下靠它找到行星
     selected: null,
     focus: null,
     sunCapped: false,
+    moonCompressed: false,    // 地月间距是否被压缩显示
+    scale: { auPer100px: NaN, local: true },  // 屏幕比例尺（UI 读取）
+    outOfRange: null,         // 超出星历有效区间时的提示
   };
 
   const ctx = {
@@ -53,6 +57,11 @@
 
   function schematicRadius(body) {
     // 以地球为 1 做 0.4 次幂压缩：109 倍的太阳只被放大到 6.5 倍
+    if (body.parent) {
+      // 卫星改为相对母星压缩，否则 0.4 次幂会把月球画成地球的 6 成大（真实只有 27%）
+      const parent = SS.BODY_BY_KEY[body.parent];
+      return 0.38 * Math.pow(parent.radiusKm / 6371, 0.4) * Math.pow(body.radiusKm / parent.radiusKm, 0.75);
+    }
     return 0.38 * Math.pow(body.radiusKm / 6371, 0.4);
   }
 
@@ -183,6 +192,15 @@
       group.userData.glow = [inner, outer];
     }
 
+    // 定位标记：恒定屏幕尺寸的空心圆环
+    const markerTex = makeTexture(SS.Textures.ringSpriteTexture(96, 0.16));
+    const marker = new THREE.Sprite(new THREE.SpriteMaterial({
+      map: markerTex, color: new THREE.Color(def.color).lerp(new THREE.Color(0xffffff), 0.45),
+      transparent: true, depthWrite: false, depthTest: false, opacity: 0.32,
+    }));
+    marker.renderOrder = 5;
+    group.add(marker);
+
     // 选中指示环（始终面向相机）
     const haloTex = makeTexture(SS.Textures.glowTexture(128, [255, 255, 255], [120, 200, 255], 1.1));
     const halo = new THREE.Sprite(new THREE.SpriteMaterial({
@@ -190,7 +208,7 @@
     }));
     group.add(halo);
 
-    return { def, group, spin, mesh, ring, halo, scenePos: new THREE.Vector3(), state: null, radius: 1 };
+    return { def, group, spin, mesh, ring, halo, marker, scenePos: new THREE.Vector3(), state: null, radius: 1 };
   }
 
   function buildOrbit(def) {
@@ -256,7 +274,7 @@
     SS.BODIES.forEach((def) => {
       const entry = buildBody(def);
       scene.add(entry.group);
-      if (!def.isSun) {
+      if (!def.isSun && !def.parent) {
         entry.orbit = buildOrbit(def);
         scene.add(entry.orbit);
       }
@@ -397,6 +415,7 @@
   /* ------------------------- 主循环 ------------------------- */
 
   const _tmpVec = new THREE.Vector3();
+  const _dir = new THREE.Vector3();
 
   function advanceTime(dtSeconds) {
     if (state.live) {
@@ -404,6 +423,9 @@
     } else if (!state.paused) {
       state.jd += (dtSeconds * state.speed) / 86400;
     }
+    // 越界不阻止推进（看"几千年后行星在哪"本身是有趣的），但必须明确标注结果不可信
+    const v = E.validity(state.jd);
+    state.outOfRange = v.ok ? null : v.side;
   }
 
   function updateBodies() {
@@ -416,6 +438,16 @@
       entry.state = E.stateAt(def.key, state.jd);
       auToScene(entry.state.position, entry.scenePos);
       entry.group.position.copy(entry.scenePos);
+    });
+
+    // 卫星：方向用真实星历，间距按"显示放大倍数"反向压缩
+    state.moonCompressed = false;
+    SS.SATELLITES.forEach((def) => {
+      const entry = ctx.bodies.get(def.key);
+      const parent = ctx.bodies.get(def.parent);
+      if (!parent || !parent.state) return;
+      entry.state = E.moonState(state.jd, parent.state);
+      entry.parentEntry = parent;
     });
 
     // 半径依赖 state.r（上限保护），因此放在位置更新之后
@@ -444,12 +476,91 @@
         entry.orbit.material.opacity = selected ? 0.8 : 0.34;
       }
     });
+
+    // 卫星定位：必须等母星与自身的显示半径算完
+    SS.SATELLITES.forEach((def) => {
+      const entry = ctx.bodies.get(def.key);
+      const parent = entry.parentEntry;
+      if (!parent || !entry.state) return;
+      placeSatellite(entry, parent);
+    });
+
+    updateMarkers();
+  }
+
+  /**
+   * 卫星定位：方向取真实地心向量，距离按"母星被放大了多少倍"反向压缩。
+   *   显示间距 = clamp(真实间距, 2.6·R母, 真实比值·R母)
+   * 当没有任何尺寸夸张（真实尺寸 ×1）时，上限不生效，呈现真实的 60 倍地球半径间距；
+   * 一旦把母星画大，间距就会被压到 2.6 倍半径，否则卫星会被母星吞掉。
+   */
+  function placeSatellite(entry, parent) {
+    const geo = entry.state.geocentric;                    // AU，真实地心向量
+    const trueSep = Math.sqrt(geo.x * geo.x + geo.y * geo.y + geo.z * geo.z) * AU_UNITS;
+    const trueParentR = trueRadius(parent.def);
+    const trueRatio = trueSep / trueParentR;               // 真实的"多少倍母星半径"≈60
+    const minSep = parent.radius * 2.6;
+    const maxSep = parent.radius * trueRatio;
+    const sep = Math.max(minSep, Math.min(maxSep, trueSep));
+    if (sep > trueSep * 1.0001 || sep < trueSep * 0.9999) state.moonCompressed = true;
+
+    _dir.set(geo.x, geo.z, -geo.y);                        // 黄道 → 场景
+    if (_dir.lengthSq() > 0) _dir.normalize();
+    entry.scenePos.copy(parent.scenePos).addScaledVector(_dir, sep);
+    entry.group.position.copy(entry.scenePos);
+
+    if (entry.def.tidallyLocked) {
+      // 潮汐锁定：纹理中心（u=0.5，即 +X 面）始终朝向母星
+      const dx = parent.scenePos.x - entry.scenePos.x;
+      const dz = parent.scenePos.z - entry.scenePos.z;
+      entry.spin.rotation.y = -Math.atan2(dz, dx);
+    }
+  }
+
+  /** 定位标记：恒定屏幕尺寸的空心环，天体本身够大时自动淡出 */
+  function updateMarkers() {
+    ctx.bodies.forEach((entry) => {
+      const marker = entry.marker;
+      if (!marker) return;
+      if (!state.showMarkers) { marker.visible = false; return; }
+      const screenR = screenRadius(entry, window.innerHeight);
+      // 天体在屏幕上小于 9 px 才需要标记；大于 16 px 完全隐藏
+      const fade = 1 - Math.min(1, Math.max(0, (screenR - 9) / 7));
+      marker.visible = fade > 0.02;
+      if (!marker.visible) return;
+      marker.material.opacity = 0.32 * fade + (state.selected === entry.def.key ? 0.35 : 0);
+      marker.scale.setScalar(cameraRelativeSize(entry, 26));
+    });
   }
 
   function cameraRelativeSize(entry, pixels) {
     const dist = ctx.camera.position.distanceTo(entry.scenePos);
     const worldPerPixel = (2 * Math.tan((ctx.camera.fov * DEG) / 2) * dist) / window.innerHeight;
     return worldPerPixel * pixels;
+  }
+
+  /**
+   * 屏幕比例尺：相机目标平面上横跨 100 px 相当于多少 AU。
+   *
+   * 压缩模式下映射是非线性的（d = 10√r），因此不能取导数——在太阳处
+   * dr/dd → 0，会给出"100 px ≈ 33 km"这种荒谬读数。正确做法是取**割线**：
+   * 把屏幕上相距 100 px 的两点各自逆映射回 AU 再求差。
+   * 这个式子对线性模式同样成立（割线=切线），所以两种模式共用。
+   *
+   * 另需注意：压缩映射只作用于径向，切向比例并不相同，所以界面上标明"径向"。
+   */
+  function sceneToAU(sceneR) {
+    const u = sceneR / AU_UNITS;
+    return state.realDistance ? u : u * u;
+  }
+
+  function updateScaleBar() {
+    const dist = ctx.controls.distance;
+    const worldPerPixel = (2 * Math.tan((ctx.camera.fov * DEG) / 2) * dist) / window.innerHeight;
+    const centerR = ctx.controls.target.length();
+    const au = sceneToAU(centerR + worldPerPixel * 100) - sceneToAU(centerR);
+    state.scale.auPer100px = au;
+    state.scale.local = !state.realDistance;
   }
 
   function tick() {
@@ -474,6 +585,7 @@
       ctx.camera.updateProjectionMatrix();
     }
 
+    updateScaleBar();
     ctx.renderer.render(ctx.scene, ctx.camera);
     SS.UI.frame(ctx, state);
     requestAnimationFrame(tick);
@@ -482,6 +594,7 @@
   SS.App = {
     state, ctx, init, selectBody, focusBody, refreshOrbits,
     distanceScale, displayRadius, screenRadius,
+    setShowMarkers(v) { state.showMarkers = v; },
     setRealDistance(v) { state.realDistance = v; refreshOrbits(); updateBodies(); rescaleView(); },
     setRealSize(v) { state.realSize = v; updateBodies(); rescaleView(); },
     setSizeBoost(v) { state.sizeBoost = v; updateBodies(); rescaleView(); },

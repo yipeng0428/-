@@ -2,7 +2,7 @@
 <!--
   太阳系 · 实时 3D 模拟 —— 单文件版（由 tools/build-single-file.mjs 自动生成，请勿手工编辑）
   源码仓库结构见 solar-system-3d/；要修改请改源文件后重新生成。
-  生成时间：2026-10-13T12:59:49.790Z
+  生成时间：2026-10-13T13:54:26.990Z
   内含：three.js r169 (MIT, Copyright Three.js Authors) + 本项目源码
   直接双击本文件即可运行，无需联网、无需本地服务器。
 -->
@@ -24,7 +24,7 @@
   --line-strong: rgba(150, 175, 215, 0.32);
   --text: #e6ecf6;
   --text-dim: #9aa6bd;
-  --text-faint: #6b7689;
+  --text-faint: #7d8a9e;   /* 对面板底色 ≈5.4:1，满足 WCAG AA 4.5:1 */
   --accent: #7fc4ff;
   --accent-dim: rgba(127, 196, 255, 0.14);
   --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
@@ -46,6 +46,25 @@ html, body {
 }
 
 #scene { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
+#scene:focus-visible { outline: 2px solid var(--accent); outline-offset: -4px; }
+
+/* 统一的键盘焦点样式：鼠标点击不出现，键盘 Tab 才出现 */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* 仅供读屏器 */
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+/* 尊重"减少动态效果"偏好：关掉加载动画与过渡（3D 场景本身是内容，保留） */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}
 
 /* ---------- 标签层 ---------- */
 #labels { position: fixed; inset: 0; pointer-events: none; z-index: 2; }
@@ -61,7 +80,42 @@ html, body {
 .label:hover { border-color: var(--line-strong); background: rgba(10, 18, 32, 0.78); }
 .label.is-selected { color: #04060d; background: var(--accent); border-color: var(--accent); font-weight: 600; }
 .label .en { color: var(--text-faint); font-size: 10px; margin-left: 4px; }
+/* 拥挤时只留一个圆点，避免互相盖住；选中项永远保持完整名称 */
+.label.is-crowded { padding: 3px; }
+.label.is-crowded span { display: none; }
 .label.is-selected .en { color: rgba(4, 6, 13, 0.6); }
+
+/* ---------- 左侧天体目录 ---------- */
+#catalog {
+  position: fixed; left: 20px; top: 92px; z-index: 3; width: 168px;
+  max-height: 46vh; overflow-y: auto;
+  padding: 10px 8px 9px; border-radius: 11px;
+  background: var(--panel); border: 1px solid var(--line); backdrop-filter: blur(12px);
+}
+.rail-title {
+  margin: 0 0 7px 4px; font-size: 10px; font-weight: 500; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--text-faint);
+}
+#catalog ul { list-style: none; margin: 0; padding: 0; }
+#catalog li + li { margin-top: 1px; }
+.cat-item {
+  display: flex; align-items: center; gap: 7px; width: 100%;
+  padding: 5px 7px; border-radius: 7px; cursor: pointer;
+  background: none; border: 1px solid transparent; color: var(--text-dim);
+  font-family: var(--sans); font-size: 12.5px; text-align: left;
+  transition: background 0.14s, color 0.14s, border-color 0.14s;
+}
+.cat-item:hover { background: rgba(255, 255, 255, 0.05); color: var(--text); }
+.cat-item[aria-current="true"] {
+  background: var(--accent-dim); border-color: rgba(127, 196, 255, 0.3); color: var(--accent);
+}
+.cat-dot { width: 8px; height: 8px; border-radius: 50%; flex: 0 0 auto; }
+.cat-name { flex: 1 1 auto; }
+.cat-idx { font-family: var(--mono); font-size: 10px; color: var(--text-faint); }
+.cat-item.is-satellite .cat-name { padding-left: 10px; position: relative; }
+.cat-item.is-satellite .cat-name::before {
+  content: '└'; position: absolute; left: 0; color: var(--text-faint); font-size: 10px;
+}
 
 /* ---------- 顶部标题 ---------- */
 #brand {
@@ -189,6 +243,41 @@ input[type="range"]:disabled { opacity: 0.35; }
 .check input { accent-color: var(--accent); }
 .dock-note { margin: 9px 0 0; font-size: 10.5px; color: var(--text-faint); line-height: 1.45; max-width: 232px; }
 
+/* ---------- 屏幕比例尺 ---------- */
+#ruler {
+  position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%); z-index: 3;
+  text-align: center; pointer-events: none; user-select: none;
+}
+.ruler-bar {
+  width: 100px; height: 6px; margin: 0 auto 4px;
+  border: 1px solid var(--line-strong); border-top: 0;
+}
+.ruler-text { font-family: var(--mono); font-size: 10.5px; color: var(--text-faint); letter-spacing: 0.02em; }
+
+/* ---------- 星历越界警告 ---------- */
+#range-warning {
+  position: fixed; top: 92px; left: 50%; transform: translateX(-50%); z-index: 6;
+  max-width: 440px; padding: 8px 14px; border-radius: 9px;
+  background: rgba(60, 32, 10, 0.86); border: 1px solid rgba(255, 170, 70, 0.45);
+  color: #ffd9a3; font-size: 12px; backdrop-filter: blur(10px); text-align: center;
+}
+
+/* ---------- 月相 ---------- */
+.moonbox { display: flex; align-items: center; gap: 14px; margin-top: 4px; }
+#moon-phase { width: 86px; height: 86px; flex: 0 0 auto; }
+.moonmeta { min-width: 0; }
+.moonname { font-size: 15px; font-weight: 600; margin-bottom: 3px; }
+.moonlit { font-size: 12px; color: var(--text-dim); }
+.moonlit b { font-family: var(--mono); color: var(--accent); font-size: 14px; font-weight: 500; }
+.moonage { font-family: var(--mono); font-size: 11px; color: var(--text-faint); margin-top: 3px; }
+.moonhemi { font-size: 10.5px; color: var(--text-faint); margin-top: 4px; line-height: 1.4; }
+
+/* ---------- 数据来源 ---------- */
+.sources { list-style: none; margin: 0; padding: 0; }
+.sources li { font-size: 11px; color: var(--text-faint); line-height: 1.5; margin-bottom: 3px; }
+.sources a { color: var(--text-dim); text-decoration: underline; text-underline-offset: 2px; }
+.sources a:hover { color: var(--accent); }
+
 /* ---------- 加载 / 错误 ---------- */
 #loading, #fatal {
   position: fixed; inset: 0; z-index: 20;
@@ -229,6 +318,27 @@ body.dock-open #ui-toggle::after { content: ' ▴'; }
   .clock-row:nth-child(3) { display: none; }
 
   #ui-toggle { display: block; }
+
+  /* 窄屏上目录改为顶部横向滑动条：底部留给信息抽屉，中间整条留给 3D 画面 */
+  #catalog {
+    top: 80px; bottom: auto; left: 8px; right: 8px; width: auto;
+    max-height: 62px; display: flex; align-items: center; gap: 8px;
+    overflow-x: auto; overflow-y: hidden; padding: 4px 8px;
+  }
+  #catalog .rail-title { display: none; }
+  #catalog ul { display: flex; gap: 6px; }
+  #catalog li + li { margin-top: 0; }
+  .cat-item { white-space: nowrap; min-height: 44px; }  /* 触控目标 ≥44px */
+  .cat-idx { display: none; }
+
+  #ruler { top: 152px; bottom: auto; }
+  #panel { bottom: 8px; max-height: 44vh; }
+  #dock { top: 80px; }
+  /* 控制面板展开时盖住目录与比例尺，避免三层浮层互相叠字 */
+  body.dock-open #catalog, body.dock-open #ruler { display: none; }
+
+  .pill, .actions button { min-height: 32px; }
+  .check { min-height: 32px; }
   #panel {
     top: auto; left: 8px; right: 8px; bottom: 8px; width: auto;
     max-height: 44vh; padding: 12px;
@@ -250,8 +360,15 @@ body.dock-open #ui-toggle::after { content: ' ▴'; }
 </style>
 </head>
 <body>
-  <canvas id="scene"></canvas>
-  <div id="labels" aria-hidden="true"></div>
+  <canvas id="scene" tabindex="0" role="application"
+          aria-label="太阳系三维场景。方向键旋转视角，加减号缩放，数字键 0–9 选择天体，Esc 取消选择。详细数据见右侧信息面板。"></canvas>
+  <div id="labels"></div>
+  <div id="sr-status" class="sr-only" role="status" aria-live="polite"></div>
+
+  <nav id="catalog" aria-label="天体目录">
+    <h2 class="rail-title">天体目录</h2>
+    <ul id="catalog-list"></ul>
+  </nav>
 
   <header id="brand">
     <h1>太阳系 · 实时 3D 模拟</h1>
@@ -288,11 +405,25 @@ body.dock-open #ui-toggle::after { content: ' ▴'; }
           <button type="button" id="d-focus">聚焦镜头</button>
           <button type="button" id="d-unfocus">回到太阳</button>
         </div>
+        <div id="d-moon" hidden>
+          <h3>当前月相<span class="stamp" id="d-moon-stamp"></span></h3>
+          <div class="moonbox">
+            <canvas id="moon-phase" width="128" height="128" role="img" aria-label="当前月相示意图"></canvas>
+            <div class="moonmeta">
+              <div class="moonname" id="d-moon-name">—</div>
+              <div class="moonlit"><b id="d-moon-lit">—</b> 被照亮</div>
+              <div class="moonage" id="d-moon-age">—</div>
+              <div class="moonhemi" id="d-moon-hemi">—</div>
+            </div>
+          </div>
+        </div>
         <h3>实时状态<span class="stamp" id="d-stamp"></span></h3>
         <table class="kv" id="d-live"></table>
         <h3>物理与轨道参数</h3>
         <table class="kv" id="d-facts"></table>
         <p class="note" id="d-note" hidden></p>
+        <h3>数据来源</h3>
+        <ul class="sources" id="d-sources"></ul>
       </div>
     </div>
 
@@ -330,7 +461,7 @@ body.dock-open #ui-toggle::after { content: ' ▴'; }
       <div class="dock-row">
         <label class="field">
           <span>跳转</span>
-          <input type="datetime-local" id="t-date" step="60" />
+          <input type="datetime-local" id="t-date" step="60" min="1800-01-01T00:00" max="2050-12-31T23:59" />
         </label>
       </div>
       <div class="dock-row">
@@ -344,12 +475,13 @@ body.dock-open #ui-toggle::after { content: ' ▴'; }
     <div class="dock-group">
       <span class="dock-title">显示</span>
       <div class="dock-row wrap">
-        <label class="check"><input type="checkbox" id="v-orbits" checked /><span>轨道线</span></label>
-        <label class="check"><input type="checkbox" id="v-labels" checked /><span>名称标签</span></label>
+        <label class="check"><input type="checkbox" id="v-orbits" role="switch" checked /><span>轨道线</span></label>
+        <label class="check"><input type="checkbox" id="v-labels" role="switch" checked /><span>名称标签</span></label>
+        <label class="check"><input type="checkbox" id="v-markers" role="switch" checked /><span>定位标记</span></label>
       </div>
       <div class="dock-row wrap">
-        <label class="check"><input type="checkbox" id="v-realdist" /><span>真实距离</span></label>
-        <label class="check"><input type="checkbox" id="v-realsize" /><span>真实尺寸</span></label>
+        <label class="check"><input type="checkbox" id="v-realdist" role="switch" /><span>真实距离</span></label>
+        <label class="check"><input type="checkbox" id="v-realsize" role="switch" /><span>真实尺寸</span></label>
       </div>
       <div class="dock-row">
         <label class="field slider">
@@ -360,6 +492,13 @@ body.dock-open #ui-toggle::after { content: ' ▴'; }
       <p class="dock-note" id="scale-note">当前为示意比例：距离按 √r 压缩，半径按 (R/R⊕)<sup>0.4</sup> 压缩。</p>
     </div>
   </footer>
+
+  <div id="ruler" aria-hidden="true">
+    <div class="ruler-bar"></div>
+    <div class="ruler-text" id="ruler-text">—</div>
+  </div>
+
+  <div id="range-warning" role="alert" hidden></div>
 
   <div id="loading">
     <div class="spinner" aria-hidden="true"></div>
@@ -607,11 +746,239 @@ else if (typeof globalThis !== "undefined") { globalThis.THREE = __THREE_EXPORTS
     return Math.acos(Math.min(1, Math.max(-1, c))) / DEG;
   }
 
+  /* ===================== 月球 ===================== */
+
+  /**
+   * 截断版 ELP2000-82B（Meeus《Astronomical Algorithms》第 47 章）。
+   * 只保留振幅最大的若干项：黄经 ~19 项、黄纬 ~13 项、距离 ~13 项。
+   *
+   * 精度：黄经/黄纬约 0.05°–0.1°，地心距约数百 km。完整理论有上千项，
+   * 但对"月亮此刻在天上哪个方向、是什么相"这个量级，截断版绰绰有余。
+   *
+   * 坐标说明：ELP 给出的是"当日平分点"的黄道坐标，而行星用的是 J2000。
+   * 这里对黄经做一阶总岁差改正（约 1.3972°/世纪）归算到 J2000，
+   * 2026 年量级约 −0.37°，不改正会在跨年尺度上肉眼可见。
+   */
+  const MOON_LON = [ // [D, M, M', F, 系数(1e-6 度)]
+    [0, 0, 1, 0, 6288774], [2, 0, -1, 0, 1274027], [2, 0, 0, 0, 658314],
+    [0, 0, 2, 0, 213618], [0, 1, 0, 0, -185116], [0, 0, 0, 2, -114332],
+    [2, 0, -2, 0, 58793], [2, -1, -1, 0, 57066], [2, 0, 1, 0, 53322],
+    [2, -1, 0, 0, 45758], [0, 1, -1, 0, -40923], [1, 0, 0, 0, -34720],
+    [0, 1, 1, 0, -30383], [2, 0, 0, -2, 15327], [0, 0, 1, 2, -12528],
+    [0, 0, 1, -2, 10980], [4, 0, -1, 0, 10675], [0, 0, 3, 0, 10034],
+    [4, 0, -2, 0, 8548],
+  ];
+  const MOON_LAT = [ // [D, M, M', F, 系数(1e-6 度)]
+    [0, 0, 0, 1, 5128122], [0, 0, 1, 1, 280602], [0, 0, 1, -1, 277693],
+    [2, 0, 0, -1, 173237], [2, 0, -1, 1, 55413], [2, 0, -1, -1, 46271],
+    [2, 0, 0, 1, 32573], [0, 0, 2, 1, 17198], [2, 0, 1, -1, 9266],
+    [0, 0, 2, -1, 8822], [2, -1, 0, -1, 8216], [2, 0, -2, -1, 4324],
+    [2, 0, 1, 1, 4200],
+  ];
+  const MOON_DIST = [ // [D, M, M', F, 系数(0.001 km)]
+    [0, 0, 1, 0, -20905355], [2, 0, -1, 0, -3699111], [2, 0, 0, 0, -2955968],
+    [0, 0, 2, 0, -569925], [0, 1, 0, 0, 48888], [0, 0, 0, 2, -3149],
+    [2, 0, -2, 0, 246158], [2, -1, -1, 0, -152138], [2, 0, 1, 0, -170733],
+    [2, -1, 0, 0, -204586], [0, 1, -1, 0, -129620], [1, 0, 0, 0, 108743],
+    [0, 1, 1, 0, 104755],
+  ];
+
+  const MOON_MEAN_RADIUS_KM = 1737.4;
+  const SYNODIC_MONTH = 29.530588853;
+
+  /** 月球基本幅角（度） */
+  function moonArguments(T) {
+    return {
+      Lp: 218.3164477 + 481267.88123421 * T - 0.0015786 * T * T
+        + (T * T * T) / 538841 - (T * T * T * T) / 65194000,
+      D: 297.8501921 + 445267.1114034 * T - 0.0018819 * T * T
+        + (T * T * T) / 545868 - (T * T * T * T) / 113065000,
+      M: 357.5291092 + 35999.0502909 * T - 0.0001536 * T * T + (T * T * T) / 24490000,
+      Mp: 134.9633964 + 477198.8675055 * T + 0.0087414 * T * T
+        + (T * T * T) / 69699 - (T * T * T * T) / 14712000,
+      F: 93.2720950 + 483202.0175233 * T - 0.0036539 * T * T
+        - (T * T * T) / 3526000 + (T * T * T * T) / 863310000,
+      // 地球轨道偏心率随时间的修正，作用于含太阳平近点角 M 的项
+      E: 1 - 0.002516 * T - 0.0000074 * T * T,
+    };
+  }
+
+  /**
+   * 月球地心黄道坐标。
+   * @param {number} jd 儒略日
+   * @param {boolean} toJ2000 是否把黄经归算到 J2000（与行星同框架），默认 true
+   * @returns {{longitude:number, latitude:number, distanceKm:number}}
+   */
+  function moonGeocentric(jd, toJ2000) {
+    const T = centuriesSinceJ2000(jd);
+    const a = moonArguments(T);
+    let sumL = 0, sumB = 0, sumR = 0;
+
+    const evaluate = (table, trig, out) => {
+      for (let i = 0; i < table.length; i += 1) {
+        const [cd, cm, cmp, cf, coeff] = table[i];
+        const arg = (cd * a.D + cm * a.M + cmp * a.Mp + cf * a.F) * DEG;
+        // 含 M 的项要乘偏心率修正 E（|cm| 次幂）
+        const ecc = cm === 0 ? 1 : Math.pow(a.E, Math.abs(cm));
+        out(coeff * ecc * trig(arg));
+      }
+    };
+    evaluate(MOON_LON, Math.sin, (v) => { sumL += v; });
+    evaluate(MOON_LAT, Math.sin, (v) => { sumB += v; });
+    evaluate(MOON_DIST, Math.cos, (v) => { sumR += v; });
+
+    let longitude = a.Lp + sumL / 1e6;
+    if (toJ2000 !== false) longitude -= 1.397159 * T; // 一阶总岁差：当日平分点 → J2000
+    return {
+      longitude: wrapDeg(longitude),
+      latitude: sumB / 1e6,
+      distanceKm: 385000.56 + sumR / 1000,
+    };
+  }
+
+  /** 把 (黄经, 黄纬, 距离) 转为直角坐标 (AU) */
+  function sphericalToCartesian(lonDeg, latDeg, distAU) {
+    const lon = lonDeg * DEG, lat = latDeg * DEG;
+    const c = Math.cos(lat);
+    return { x: distAU * c * Math.cos(lon), y: distAU * c * Math.sin(lon), z: distAU * Math.sin(lat) };
+  }
+
+  /**
+   * 月球完整状态：地心向量、日心位置、月相。
+   * 月相由"月球与太阳的地心黄经差"定义：0°=朔，90°=上弦，180°=望，270°=下弦。
+   */
+  function moonState(jd, earthState) {
+    const geo = moonGeocentric(jd, true);
+    const distAU = geo.distanceKm / AU_KM;
+    const geocentric = sphericalToCartesian(geo.longitude, geo.latitude, distAU);
+    const earth = earthState || stateAt('earth', jd);
+    const position = {
+      x: earth.position.x + geocentric.x,
+      y: earth.position.y + geocentric.y,
+      z: earth.position.z + geocentric.z,
+    };
+    // 太阳的地心视黄经 = 地球日心黄经 + 180°
+    const sunLongitude = wrapDeg(earth.eclipticLongitude + 180);
+    const elongation = wrapDeg(geo.longitude - sunLongitude);
+    const phaseAngleDeg = phaseAngle(earth.position, position);
+    const illuminated = (1 + Math.cos(phaseAngleDeg * DEG)) / 2;
+    return {
+      key: 'moon', jd,
+      geocentric, position,
+      geocentricDistanceKm: geo.distanceKm,
+      geocentricDistance: distAU,
+      r: Math.sqrt(position.x * position.x + position.y * position.y + position.z * position.z),
+      eclipticLongitude: geo.longitude,
+      eclipticLatitude: geo.latitude,
+      sunLongitude,
+      elongationFromSun: elongation,   // 相位角位置（0=朔，180=望）
+      phaseAngle: phaseAngleDeg,
+      illuminated,
+      waxing: elongation < 180,        // 渐盈 / 渐亏
+      age: (elongation / 360) * SYNODIC_MONTH,
+      phaseName: moonPhaseName(elongation),
+    };
+  }
+
+  /**
+   * 相位命名。不按 45° 均分八等份——那样 110° 会被叫成"上弦"，
+   * 而此时月亮已明显是凸月（照亮 68%）。朔、望、上下弦是四个"瞬时事件"，
+   * 这里给它们各 ±7.5°（约 ±0.6 天）的窄窗口，其余归入蛾眉/凸/残。
+   */
+  function moonPhaseName(elongationDeg) {
+    const e = wrapDeg(elongationDeg);
+    if (e < 7.5 || e >= 352.5) return '新月（朔）';
+    if (e < 82.5) return '蛾眉月（娥眉月）';
+    if (e < 97.5) return '上弦月';
+    if (e < 172.5) return '盈凸月';
+    if (e < 187.5) return '满月（望）';
+    if (e < 262.5) return '亏凸月';
+    if (e < 277.5) return '下弦月';
+    return '残月（下蛾眉月）';
+  }
+
+  /**
+   * 下一次指定相位（0=朔，180=望）的时刻，二分法求解。
+   * 先按 6 小时步长找符号变化区间，再二分 30 次（精度优于 1 秒）。
+   */
+  function nextMoonPhase(jd, targetElongationDeg) {
+    const f = (t) => {
+      const e = moonState(t).elongationFromSun - targetElongationDeg;
+      return wrapDegSigned(e); // 映射到 [-180,180)，过零即为目标相位
+    };
+    const step = 0.25;
+    let t0 = jd + 0.01, v0 = f(t0);
+    for (let i = 0; i < 160; i += 1) {   // 最多向前搜 40 天，覆盖一个朔望月
+      const t1 = t0 + step, v1 = f(t1);
+      if (v0 < 0 && v1 >= 0) {           // 只接受由负变正的穿越，避免抓到反向跳变
+        let lo = t0, hi = t1;
+        for (let k = 0; k < 40; k += 1) {
+          const mid = (lo + hi) / 2;
+          if (f(mid) < 0) lo = mid; else hi = mid;
+        }
+        return (lo + hi) / 2;
+      }
+      t0 = t1; v0 = v1;
+    }
+    return NaN;
+  }
+
+  /* ===================== 视星等 ===================== */
+
+  /**
+   * 行星视星等：V = V(1,0) + 5·log₁₀(r·Δ) + 相位改正。
+   * V(1,0) 与相位多项式取自《Astronomical Almanac》经典式（Harris 体系）。
+   *
+   * 已知偏差（诚实声明）：
+   *   - 土星只算球体，不含环的贡献；环面张角最大时实际可亮 0.3–1.0 等。
+   *   - 金星在 α>163.6° 的极细月牙区间不适用（此时它贴近太阳不可观测）。
+   *   - 不含大气消光，给出的是大气外的视星等。
+   */
+  const MAGNITUDE = {
+    mercury: { v0: -0.42, phase: (a) => 0.0380 * a - 0.000273 * a * a + 2.0e-6 * a * a * a },
+    venus: { v0: -4.40, phase: (a) => (a < 163.6 ? 0.0009 * a + 0.000239 * a * a - 6.5e-7 * a * a * a : 1.0) },
+    mars: { v0: -1.52, phase: (a) => 0.016 * a },
+    jupiter: { v0: -9.40, phase: (a) => 0.005 * a },
+    saturn: { v0: -8.88, phase: (a) => 0.044 * Math.abs(a) },
+    uranus: { v0: -7.19, phase: (a) => 0.0028 * a },
+    neptune: { v0: -6.87, phase: () => 0 },
+    pluto: { v0: -1.01, phase: () => 0 },
+    moon: { v0: 0.21, phase: (a) => 0.026 * a + 4.0e-9 * Math.pow(a, 4) },
+  };
+
+  /**
+   * @param {string} key 天体
+   * @param {number} r 日心距 (AU)
+   * @param {number} delta 地心距 (AU)
+   * @param {number} alpha 相位角 (度)
+   */
+  function apparentMagnitude(key, r, delta, alpha) {
+    const m = MAGNITUDE[key];
+    if (!m || !(r > 0) || !(delta > 0)) return NaN;
+    return m.v0 + 5 * Math.log10(r * delta) + m.phase(alpha);
+  }
+
+  /* ===================== 模型有效区间 ===================== */
+
+  // Standish 线性要素表的标称适用区间
+  const VALID_FROM_JD = julianDay(new Date(Date.UTC(1800, 0, 1)));
+  const VALID_TO_JD = julianDay(new Date(Date.UTC(2050, 11, 31)));
+
+  function validity(jd) {
+    if (jd < VALID_FROM_JD) return { ok: false, side: 'before' };
+    if (jd > VALID_TO_JD) return { ok: false, side: 'after' };
+    return { ok: true, side: null };
+  }
+
   SS.Ephemeris = {
     ELEMENTS, AU_KM, LIGHT_SECONDS_PER_AU, GM_SUN, JD_J2000,
     julianDay, dateFromJulianDay, centuriesSinceJ2000,
     elementsAt, stateAt, orbitSamples, solveKepler,
-    distance, elongation, phaseAngle, angleBetween, wrapDeg,
+    distance, elongation, phaseAngle, angleBetween, wrapDeg, wrapDegSigned,
+    moonGeocentric, moonState, nextMoonPhase, sphericalToCartesian,
+    MOON_MEAN_RADIUS_KM, SYNODIC_MONTH,
+    apparentMagnitude, MAGNITUDE,
+    validity, VALID_FROM_JD, VALID_TO_JD,
     keys: Object.keys(ELEMENTS),
   };
 })(typeof window !== 'undefined' ? window : globalThis);
@@ -707,6 +1074,28 @@ else if (typeof globalThis !== "undefined") { globalThis.THREE = __THREE_EXPORTS
         '大气': 'N₂ 78%、O₂ 21%',
       },
       blurb: '目前已知唯一存在液态水海洋与生物圈的行星。23.44° 的转轴倾角造成四季，巨大卫星稳定了自转轴的长期摆动。',
+    },
+    {
+      key: 'moon', name: '月球', en: 'Moon', type: 'moon', parent: 'earth',
+      radiusKm: 1737.4, tiltDeg: 6.68, rotationHours: 655.72, tidallyLocked: true,
+      color: 0xb9b2a6, texture: 'moon',
+      palette: ['#3a3730', '#6d6962', '#9c968c', '#cfc8bb', '#eae3d6'],
+      facts: {
+        '分类': '地球的天然卫星',
+        '直径': '3,474.8 km（0.273 地球）',
+        '质量': '7.342×10²² kg（0.0123 地球）',
+        '表面重力': '1.62 m/s²（地球的 1/6）',
+        '轨道半长轴': '384,400 km',
+        '轨道偏心率': '0.0549',
+        '轨道倾角': '对黄道 5.145°',
+        '自转周期': '27.32 天（与公转同步，潮汐锁定）',
+        '朔望月': '29.53 天',
+        '表面温度': '-173 ~ 127 °C',
+        '大气': '几乎没有（极稀薄外逸层）',
+        '远离速率': '约 3.8 cm / 年',
+      },
+      blurb: '唯一与我们潮汐锁定的邻居：永远以同一面朝向地球。它稳定了地球自转轴的长期摆动，也以每年 3.8 cm 的速度缓慢远离。',
+      note: '场景中月球与地球的间距被压缩显示（真实比例下它会远在地球直径的 30 倍之外）；方向与相位是真实计算的。',
     },
     {
       key: 'mars', name: '火星', en: 'Mars', type: 'planet',
@@ -830,12 +1219,22 @@ else if (typeof globalThis !== "undefined") { globalThis.THREE = __THREE_EXPORTS
     },
   ];
 
+  // 数据来源（界面上直接给出，而不是只写在 README 里）
+  const SOURCES = [
+    { label: '行星位置：JPL / Standish 近似根数表（1800–2050）', url: 'https://ssd.jpl.nasa.gov/planets/approx_pos.html' },
+    { label: '物理参数：NASA Planetary Fact Sheet', url: 'https://nssdc.gsfc.nasa.gov/planetary/factsheet/' },
+    { label: '月球位置：ELP2000-82B 截断式（Meeus《Astronomical Algorithms》第 47 章）', url: 'https://ssd.jpl.nasa.gov/horizons/' },
+  ];
+
   const BY_KEY = {};
   BODIES.forEach((b) => { BY_KEY[b.key] = b; });
 
   SS.BODIES = BODIES;
   SS.BODY_BY_KEY = BY_KEY;
-  SS.ORBITING = BODIES.filter((b) => !b.isSun);
+  SS.SOURCES = SOURCES;
+  // 绕日公转的天体（不含太阳与卫星）——星历按日心开普勒要素计算的那一批
+  SS.ORBITING = BODIES.filter((b) => !b.isSun && !b.parent);
+  SS.SATELLITES = BODIES.filter((b) => !!b.parent);
 })(typeof window !== 'undefined' ? window : globalThis);
 
 </script>
@@ -1073,6 +1472,35 @@ else if (typeof globalThis !== "undefined") { globalThis.THREE = __THREE_EXPORTS
     });
   }
 
+  /**
+   * 月球：高反照率高地 + 低反照率月海 + 撞击坑。
+   * 月海集中在"近地面"（纹理 u≈0.5 一侧），因为潮汐锁定后我们只看得到那一面，
+   * 而真实月海确实几乎全部分布在近地面——这个不对称是月球外观最醒目的特征。
+   */
+  function moonTexture(body, size) {
+    const seed = 911;
+    const pal = body.palette;
+    return renderEquirect(size, size / 2, (u, v, nx, ny, nz, lat) => {
+      const base = fbm(nx * 5.0, ny * 5.0, nz * 5.0, seed, 5, 2.1, 0.55);
+      const fine = fbm(nx * 18, ny * 18, nz * 18, seed + 29, 3, 2.3, 0.5);
+      let t = 0.46 + base * 0.34 + fine * 0.20;
+
+      // 月海：低频噪声取阈值，并按"离近地面中心的远近"加权
+      const toNear = Math.cos((u - 0.5) * TAU) * Math.cos(lat); // 近地面 ≈ +1
+      const maria = fbm(nx * 2.0, ny * 2.0, nz * 2.0, seed + 71, 3, 2.0, 0.5);
+      const mariaMask = (maria - 0.46) * 3.2 + (toNear - 0.35) * 1.1;
+      if (mariaMask > 0) t -= Math.min(0.34, mariaMask * 0.42);
+
+      // 撞击坑：高频脊线，高地一侧更密
+      const crater = Math.abs(valueNoise3(nx * 26, ny * 26, nz * 26, seed + 13) - 0.5) * 2;
+      if (crater > 0.90) t += 0.10;
+      if (crater < 0.045) t -= 0.06;
+
+      const c = ramp(pal, Math.max(0, Math.min(1, t)));
+      return c;
+    });
+  }
+
   /** 太阳：米粒组织 + 亮斑 */
   function sunTexture(size) {
     const seed = SEEDS.sun;
@@ -1146,6 +1574,32 @@ else if (typeof globalThis !== "undefined") { globalThis.THREE = __THREE_EXPORTS
     return canvas;
   }
 
+  /**
+   * 空心圆环精灵：真实尺寸下行星会缩成亚像素点，用固定像素大小的
+   * "定位标记"把它们重新变得可见、可点。标记不是天体本身的大小。
+   */
+  function ringSpriteTexture(size, thickness) {
+    const canvas = makeCanvas(size, size);
+    const ctx = canvas.getContext('2d');
+    const img = ctx.createImageData(size, size);
+    const data = img.data;
+    const c = (size - 1) / 2;
+    const th = thickness || 0.14;
+    for (let y = 0; y < size; y += 1) {
+      for (let x = 0; x < size; x += 1) {
+        const d = Math.sqrt((x - c) * (x - c) + (y - c) * (y - c)) / c;
+        // 以 r≈0.78 为中心的环带，内外侧各留一段柔化
+        const band = 1 - Math.min(1, Math.abs(d - 0.78) / th);
+        const a = Math.pow(Math.max(0, band), 1.4) * (d <= 1 ? 1 : 0);
+        const i = (y * size + x) * 4;
+        data[i] = 255; data[i + 1] = 255; data[i + 2] = 255;
+        data[i + 3] = Math.round(a * 255);
+      }
+    }
+    ctx.putImageData(img, 0, 0);
+    return canvas;
+  }
+
   /** 恒星点精灵（圆形、边缘柔化） */
   function starSpriteTexture(size) {
     return glowTexture(size || 32, [255, 255, 255], [255, 255, 255], 2.2);
@@ -1154,6 +1608,7 @@ else if (typeof globalThis !== "undefined") { globalThis.THREE = __THREE_EXPORTS
   function surfaceCanvasFor(body, size) {
     switch (body.texture) {
       case 'sun': return sunTexture(size);
+      case 'moon': return moonTexture(body, size);
       case 'earth': return earthTexture(size);
       case 'mars': return marsTexture(body, size);
       case 'venus': return venusTexture(body, size);
@@ -1164,8 +1619,8 @@ else if (typeof globalThis !== "undefined") { globalThis.THREE = __THREE_EXPORTS
   }
 
   SS.Textures = {
-    valueNoise3, fbm, renderEquirect, surfaceCanvasFor,
-    ringTexture, glowTexture, starSpriteTexture,
+    valueNoise3, fbm, renderEquirect, surfaceCanvasFor, moonTexture,
+    ringTexture, glowTexture, starSpriteTexture, ringSpriteTexture,
   };
 })(typeof window !== 'undefined' ? window : globalThis);
 
@@ -1324,6 +1779,12 @@ else if (typeof globalThis !== "undefined") { globalThis.THREE = __THREE_EXPORTS
       this._desired.distance = this._clampDistance(this._desired.distance * step);
     }
 
+    /** 键盘微调：方位角 / 天顶角增量（弧度），供全键盘操作使用 */
+    nudge(dAzimuth, dPolar) {
+      this._desired.azimuth += dAzimuth;
+      this._desired.polar = Math.min(this.maxPolar, Math.max(this.minPolar, this._desired.polar + dPolar));
+    }
+
     setTarget(vec, immediate) {
       this._targetDesired.copy(vec);
       if (immediate) this.target.copy(vec);
@@ -1377,6 +1838,9 @@ else if (typeof globalThis !== "undefined") { globalThis.THREE = __THREE_EXPORTS
   const TEXT_INTERVAL_MS = 110;
   const el = {};
   const labels = new Map();
+  const catalogItems = new Map();
+  // 数字键 0–9 的绑定顺序（月球另用 M 键）——目录编号也从这里取，二者不会再对不上
+  const KEY_ORDER = ['sun', 'mercury', 'venus', 'earth', 'mars', 'jupiter', 'saturn', 'uranus', 'neptune', 'pluto'];
   let lastText = 0;
   let selected = null;
   let hovered = null;
@@ -1436,6 +1900,18 @@ else if (typeof globalThis !== "undefined") { globalThis.THREE = __THREE_EXPORTS
     return arcsec.toFixed(1) + ' 角秒';
   }
 
+  function fmtMagnitude(v) {
+    if (Number.isNaN(v)) return '—';
+    return (v >= 0 ? '+' : '−') + Math.abs(v).toFixed(2) + ' 等';
+  }
+
+  function fmtInstant(jd) {
+    if (Number.isNaN(jd)) return '—';
+    const d = E.dateFromJulianDay(jd);
+    return d.getUTCFullYear() + '-' + pad(d.getUTCMonth() + 1) + '-' + pad(d.getUTCDate())
+      + ' ' + pad(d.getUTCHours()) + ':' + pad(d.getUTCMinutes()) + ' UTC';
+  }
+
   function fmtPeriod(days) {
     if (days < 400) return days.toFixed(2) + ' 天';
     return Math.round(days).toLocaleString('en-US') + ' 天（' + (days / 365.25).toFixed(2) + ' 年）';
@@ -1486,11 +1962,15 @@ else if (typeof globalThis !== "undefined") { globalThis.THREE = __THREE_EXPORTS
       'd-live', 'd-facts', 'd-note', 'd-stamp', 'd-close', 'd-focus', 'd-unfocus',
       'ov-table', 'clock-utc', 'clock-local', 'clock-jd', 'clock-rate',
       't-live', 't-pause', 't-now', 't-speed', 't-date',
-      'v-orbits', 'v-labels', 'v-realdist', 'v-realsize', 'v-boost', 'v-boost-val',
+      'v-orbits', 'v-labels', 'v-markers', 'v-realdist', 'v-realsize', 'v-boost', 'v-boost-val',
       'scale-note', 'loading', 'fatal', 'fatal-msg', 'ui-toggle',
+      'catalog', 'catalog-list', 'ruler', 'ruler-text', 'range-warning', 'sr-status',
+      'd-sources', 'd-moon', 'd-moon-stamp', 'd-moon-name', 'd-moon-lit', 'd-moon-age', 'd-moon-hemi', 'moon-phase',
     ].forEach((id) => { el[id] = document.getElementById(id); });
 
     buildLabels();
+    buildCatalog();
+    buildSources();
     bindControls();
     const state = SS.App.state;
     state.sizeBoost = boostFromSlider(Number(el['v-boost'].value));
@@ -1515,6 +1995,38 @@ else if (typeof globalThis !== "undefined") { globalThis.THREE = __THREE_EXPORTS
       el.labels.appendChild(node);
       labels.set(def.key, node);
     });
+  }
+
+  /** 左侧天体目录：固定顺序的导航锚点（右侧那张表是按实时距离排序的，会跳动） */
+  function buildCatalog() {
+    const frag = document.createDocumentFragment();
+    SS.BODIES.forEach((def) => {
+      const li = document.createElement('li');
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'cat-item' + (def.parent ? ' is-satellite' : '');
+      btn.dataset.key = def.key;
+      btn.setAttribute('aria-current', 'false');
+      const hex = '#' + new THREE.Color(def.color).getHexString();
+      const slot = KEY_ORDER.indexOf(def.key);
+      const badge = def.key === 'moon' ? 'M' : (slot >= 0 ? String(slot) : '·');
+      btn.title = '快捷键 ' + badge;
+      btn.innerHTML = '<span class="cat-dot" style="background:' + hex + '"></span>'
+        + '<span class="cat-name">' + def.name + '</span>'
+        + '<span class="cat-idx" aria-hidden="true">' + badge + '</span>';
+      btn.addEventListener('click', () => SS.App.selectBody(def.key));
+      btn.addEventListener('dblclick', () => SS.App.selectBody(def.key, { focus: true }));
+      li.appendChild(btn);
+      frag.appendChild(li);
+      catalogItems.set(def.key, btn);
+    });
+    el['catalog-list'].appendChild(frag);
+  }
+
+  function buildSources() {
+    el['d-sources'].innerHTML = (SS.SOURCES || []).map((src) =>
+      '<li><a href="' + src.url + '" target="_blank" rel="noopener noreferrer">' + src.label + '</a></li>'
+    ).join('');
   }
 
   function boostFromSlider(v) {
@@ -1574,6 +2086,7 @@ else if (typeof globalThis !== "undefined") { globalThis.THREE = __THREE_EXPORTS
       });
     });
 
+    el['v-markers'].addEventListener('change', (ev) => App.setShowMarkers(ev.target.checked));
     el['v-orbits'].addEventListener('change', (ev) => { state.showOrbits = ev.target.checked; });
     el['v-labels'].addEventListener('change', (ev) => { state.showLabels = ev.target.checked; });
     el['v-realdist'].addEventListener('change', (ev) => { App.setRealDistance(ev.target.checked); syncControls(); });
@@ -1588,14 +2101,26 @@ else if (typeof globalThis !== "undefined") { globalThis.THREE = __THREE_EXPORTS
     window.addEventListener('keydown', (ev) => {
       const tag = (document.activeElement && document.activeElement.tagName) || '';
       if (tag === 'INPUT' || tag === 'SELECT' || tag === 'TEXTAREA') return;
-      const keys = ['sun', 'mercury', 'venus', 'earth', 'mars', 'jupiter', 'saturn', 'uranus', 'neptune', 'pluto'];
+      const keys = KEY_ORDER;
       if (ev.key === ' ') { ev.preventDefault(); el['t-pause'].click(); return; }
       if (ev.key === 'Escape') { App.selectBody(null); return; }
       if (ev.key === 'o' || ev.key === 'O') { el['v-orbits'].checked = !el['v-orbits'].checked; state.showOrbits = el['v-orbits'].checked; return; }
       if (ev.key === 'l' || ev.key === 'L') { el['v-labels'].checked = !el['v-labels'].checked; state.showLabels = el['v-labels'].checked; return; }
       if (ev.key === 'f' || ev.key === 'F') { if (selected) App.focusBody(selected); return; }
       if (ev.key === 'r' || ev.key === 'R') { el['t-now'].click(); return; }
-      if (/^[0-9]$/.test(ev.key)) { App.selectBody(keys[Number(ev.key)], { focus: false }); }
+      if (/^[0-9]$/.test(ev.key)) { App.selectBody(keys[Number(ev.key)], { focus: false }); return; }
+      if (ev.key === 'm' || ev.key === 'M') { App.selectBody('moon'); return; }
+
+      // 键盘镜头控制：不用鼠标也能转动与缩放（WCAG 2.1.1 全键盘可操作）
+      const c = App.ctx.controls;
+      if (!c) return;
+      const step = ev.shiftKey ? 0.22 : 0.07;
+      if (ev.key === 'ArrowLeft') { c.nudge(-step, 0); ev.preventDefault(); }
+      else if (ev.key === 'ArrowRight') { c.nudge(step, 0); ev.preventDefault(); }
+      else if (ev.key === 'ArrowUp') { c.nudge(0, -step); ev.preventDefault(); }
+      else if (ev.key === 'ArrowDown') { c.nudge(0, step); ev.preventDefault(); }
+      else if (ev.key === '+' || ev.key === '=') { c.setDistance(c.distance / 1.25); ev.preventDefault(); }
+      else if (ev.key === '-' || ev.key === '_') { c.setDistance(c.distance * 1.25); ev.preventDefault(); }
     });
   }
 
@@ -1626,7 +2151,27 @@ else if (typeof globalThis !== "undefined") { globalThis.THREE = __THREE_EXPORTS
 
   function setSelected(key) {
     selected = key;
+    catalogItems.forEach((btn, k) => btn.setAttribute('aria-current', String(k === key)));
     renderDetail(key);
+    announce(key);
+  }
+
+  /** 只在"选中项变化"时播报一次；若给整个面板加 aria-live，读屏器会以 9 Hz 念数字 */
+  function announce(key) {
+    if (!el['sr-status']) return;
+    if (!key) { el['sr-status'].textContent = '已取消选择'; return; }
+    const def = SS.BODY_BY_KEY[key];
+    const entry = SS.App.ctx.bodies.get(key);
+    const s2 = entry && entry.state;
+    let text = '已选中 ' + def.name;
+    if (s2 && key !== 'earth' && key !== 'sun') {
+      const earth = SS.App.ctx.bodies.get('earth');
+      if (earth && earth.state) {
+        const d = key === 'moon' ? s2.geocentricDistance : E.distance(s2.position, earth.state.position);
+        text += '，与地球相距 ' + d.toFixed(3) + ' 天文单位，光行时 ' + fmtLightTime(d);
+      }
+    }
+    el['sr-status'].textContent = text;
   }
 
   function setHovered(key) { hovered = key; }
@@ -1660,6 +2205,41 @@ else if (typeof globalThis !== "undefined") { globalThis.THREE = __THREE_EXPORTS
 
     if (def.note) { el['d-note'].hidden = false; el['d-note'].textContent = '注：' + def.note; }
     else el['d-note'].hidden = true;
+    el['d-moon'].hidden = key !== 'moon';
+  }
+
+  /** 月相示意图：亮面 = 半圆 + 一段椭圆，椭圆横半轴 a = R·(2k−1) */
+  function drawMoonPhase(canvas, moon) {
+    const ctx2d = canvas.getContext('2d');
+    const w = canvas.width, h = canvas.height;
+    const cx = w / 2, cy = h / 2, R = Math.min(w, h) * 0.42;
+    ctx2d.clearRect(0, 0, w, h);
+
+    // 暗面（地照）
+    ctx2d.beginPath();
+    ctx2d.arc(cx, cy, R, 0, Math.PI * 2);
+    ctx2d.fillStyle = '#171c26';
+    ctx2d.fill();
+    ctx2d.strokeStyle = 'rgba(150,175,215,0.22)';
+    ctx2d.lineWidth = 1;
+    ctx2d.stroke();
+
+    const k = Math.max(0, Math.min(1, moon.illuminated));
+    const a = R * (2 * k - 1);
+
+    ctx2d.save();
+    if (!moon.waxing) { ctx2d.translate(cx, cy); ctx2d.scale(-1, 1); ctx2d.translate(-cx, -cy); }
+    ctx2d.beginPath();
+    ctx2d.arc(cx, cy, R, -Math.PI / 2, Math.PI / 2, false);          // 亮面所在的半圆
+    ctx2d.ellipse(cx, cy, Math.abs(a), R, 0, Math.PI / 2, Math.PI * 1.5, a < 0); // 明暗界线
+    ctx2d.closePath();
+    const grad = ctx2d.createRadialGradient(cx - R * 0.25, cy - R * 0.3, R * 0.1, cx, cy, R * 1.15);
+    grad.addColorStop(0, '#fdfaf2');
+    grad.addColorStop(0.65, '#ded7c6');
+    grad.addColorStop(1, '#a89f8e');
+    ctx2d.fillStyle = grad;
+    ctx2d.fill();
+    ctx2d.restore();
   }
 
   /** 选中天体的实时数据行 */
@@ -1669,6 +2249,25 @@ else if (typeof globalThis !== "undefined") { globalThis.THREE = __THREE_EXPORTS
     const rows = [];
     const sunRadius = SS.BODY_BY_KEY.sun.radiusKm;
 
+    if (key === 'moon') {
+      const m = states.moon;
+      rows.push(['与地球距离', fmtKm(m.geocentricDistanceKm) + ' km', true]);
+      rows.push(['折合', fmtAU(m.geocentricDistance, 5) + ' AU · ' + (m.geocentricDistanceKm / 6371).toFixed(1) + ' 倍地球半径']);
+      rows.push(['光行时（到地球）', (m.geocentricDistance * E.LIGHT_SECONDS_PER_AU).toFixed(2) + ' 秒', true]);
+      rows.push(['视直径（地球所见）', fmtApparentSize(E.MOON_MEAN_RADIUS_KM, m.geocentricDistance)]);
+      rows.push(['视星等', fmtMagnitude(E.apparentMagnitude('moon', m.r, m.geocentricDistance, m.phaseAngle))]);
+      rows.push(['日月地相位角', fmtDeg(m.phaseAngle)]);
+      rows.push(['与太阳的黄经差', fmtDeg(m.elongationFromSun) + '（0°朔 · 180°望）']);
+      rows.push(['地心黄经 / 黄纬', fmtDeg(m.eclipticLongitude) + ' / ' + fmtSignedDeg(m.eclipticLatitude)]);
+      rows.push(['日心距离', fmtAU(m.r) + ' AU']);
+      const nextNew = E.nextMoonPhase(jd, 0);
+      const nextFull = E.nextMoonPhase(jd, 180);
+      rows.push(['下次朔（新月）', fmtInstant(nextNew) + '（' + fmtDays(nextNew - jd) + '后）']);
+      rows.push(['下次望（满月）', fmtInstant(nextFull) + '（' + fmtDays(nextFull - jd) + '后）']);
+      rows.push(['朔望月 / 恒星月', '29.531 天 / 27.322 天']);
+      return rows;
+    }
+
     if (key === 'sun') {
       rows.push(['与地球距离', fmtAU(earth.r) + ' AU', true]);
       rows.push(['换算公里数', fmtKmCN(earth.r * E.AU_KM) + '（' + fmtKm(earth.r * E.AU_KM) + ' km）']);
@@ -1677,6 +2276,7 @@ else if (typeof globalThis !== "undefined") { globalThis.THREE = __THREE_EXPORTS
       rows.push(['地球日心黄经', fmtDeg(earth.eclipticLongitude)]);
       rows.push(['太阳视黄经（地心）', fmtDeg(earth.eclipticLongitude + 180)]);
       rows.push(['地球公转速度', earth.speedKmS.toFixed(2) + ' km/s']);
+      rows.push(['视星等（地球所见）', fmtMagnitude(-26.74 + 5 * Math.log10(earth.r))]);
       rows.push(['下次地球近日点', dateOnly(E.dateFromJulianDay(jd + earth.daysToPerihelion))
         + '（' + fmtDays(earth.daysToPerihelion) + '后）']);
       return rows;
@@ -1695,6 +2295,10 @@ else if (typeof globalThis !== "undefined") { globalThis.THREE = __THREE_EXPORTS
       rows.push(['太阳距角（地心）', fmtDeg(E.elongation(earth.position, s.position))]);
       rows.push(['相位角 / 照亮比例', fmtDeg(phase) + ' / ' + (lit * 100).toFixed(1) + '%']);
       rows.push(['视直径（地球所见）', fmtApparentSize(def.radiusKm, delta)]);
+      const mag = E.apparentMagnitude(key, s.r, delta, phase);
+      if (!Number.isNaN(mag)) {
+        rows.push(['视星等', fmtMagnitude(mag) + (key === 'saturn' ? '（球体，未计环）' : ''), true]);
+      }
     } else {
       rows.push(['太阳视黄经（地心）', fmtDeg(s.eclipticLongitude + 180)]);
       rows.push(['太阳视直径', fmtApparentSize(sunRadius, s.r)]);
@@ -1739,7 +2343,7 @@ else if (typeof globalThis !== "undefined") { globalThis.THREE = __THREE_EXPORTS
   const ovCache = { built: false, rows: new Map() };
 
   function buildOverview() {
-    const head = '<thead><tr><th>天体</th><th>日心距</th><th>距地球</th><th>光行时</th></tr></thead>';
+    const head = '<thead><tr><th>天体</th><th>距地球 AU</th><th>光行时</th><th>视星等</th></tr></thead>';
     const body = SS.BODIES.map((def) => {
       const color = '#' + new THREE.Color(def.color).getHexString();
       return '<tr data-key="' + def.key + '">'
@@ -1758,13 +2362,23 @@ else if (typeof globalThis !== "undefined") { globalThis.THREE = __THREE_EXPORTS
     if (!ovCache.built) buildOverview();
     const earth = states.earth;
     const list = SS.BODIES.map((def) => {
-      const s = def.isSun ? null : states[def.key];
-      const pos = def.isSun ? { x: 0, y: 0, z: 0 } : s.position;
-      const delta = def.key === 'earth' ? NaN : E.distance(pos, earth.position);
-      return { def, r: def.isSun ? NaN : s.r, delta };
+      const s2 = states[def.key];
+      let delta, mag;
+      if (def.isSun) {
+        delta = earth.r;
+        mag = -26.74 + 5 * Math.log10(earth.r);
+      } else if (def.key === 'earth') {
+        delta = NaN; mag = NaN;
+      } else if (def.parent) {
+        delta = s2 ? s2.geocentricDistance : NaN;
+        mag = s2 ? E.apparentMagnitude(def.key, s2.r, delta, s2.phaseAngle) : NaN;
+      } else {
+        delta = s2 ? E.distance(s2.position, earth.position) : NaN;
+        mag = s2 ? E.apparentMagnitude(def.key, s2.r, delta, E.phaseAngle(earth.position, s2.position)) : NaN;
+      }
+      return { def, delta, mag };
     }).sort((a, b) => {
-      // 地球自身距离为 0，固定排在最前
-      if (Number.isNaN(a.delta)) return -1;
+      if (Number.isNaN(a.delta)) return -1;   // 地球自身固定排最前
       if (Number.isNaN(b.delta)) return 1;
       return a.delta - b.delta;
     });
@@ -1774,9 +2388,9 @@ else if (typeof globalThis !== "undefined") { globalThis.THREE = __THREE_EXPORTS
       const tr = ovCache.rows.get(row.def.key);
       if (!tr) return;
       const cells = tr.children;
-      const c1 = Number.isNaN(row.r) ? '—' : fmtAU(row.r, 3);
-      const c2 = Number.isNaN(row.delta) ? '—' : fmtAU(row.delta, 3);
-      const c3 = Number.isNaN(row.delta) ? '—' : fmtLightTimeShort(row.delta);
+      const c1 = Number.isNaN(row.delta) ? '—' : fmtAU(row.delta, row.delta < 0.01 ? 5 : 3);
+      const c2 = Number.isNaN(row.delta) ? '—' : fmtLightTimeShort(row.delta);
+      const c3 = Number.isNaN(row.mag) ? '—' : (row.mag >= 0 ? '+' : '−') + Math.abs(row.mag).toFixed(1);
       if (cells[1].textContent !== c1) cells[1].textContent = c1;
       if (cells[2].textContent !== c2) cells[2].textContent = c2;
       if (cells[3].textContent !== c3) cells[3].textContent = c3;
@@ -1791,7 +2405,16 @@ else if (typeof globalThis !== "undefined") { globalThis.THREE = __THREE_EXPORTS
 
   function updateLabels(ctx, state) {
     const rect = ctx.renderer.domElement.getBoundingClientRect();
-    ctx.bodies.forEach((entry, key) => {
+    // 按"选中项 → 离相机近 → 远"的优先级摆放；后来者若与已摆放者重叠就只留圆点。
+    // 这是从参考页学来的做法：内太阳系缩略时四五个标签会叠成一团糊。
+    const order = [...ctx.bodies.values()].sort((a, b) => {
+      if (a.def.key === selected) return -1;
+      if (b.def.key === selected) return 1;
+      return ctx.camera.position.distanceTo(a.scenePos) - ctx.camera.position.distanceTo(b.scenePos);
+    });
+    const placed = [];
+    order.forEach((entry) => {
+      const key = entry.def.key;
       const node = labels.get(key);
       if (!node) return;
       if (!state.showLabels) { node.style.display = 'none'; return; }
@@ -1802,11 +2425,15 @@ else if (typeof globalThis !== "undefined") { globalThis.THREE = __THREE_EXPORTS
       const sx = (_v.x * 0.5 + 0.5) * rect.width;
       const sy = (-_v.y * 0.5 + 0.5) * rect.height;
       const r = SS.App.screenRadius(entry, rect.height);
+      const top = sy + Math.max(14, Math.min(r + 14, rect.height * 0.25));
+      const crowded = placed.some((p) => Math.abs(p.x - sx) < 68 && Math.abs(p.y - top) < 22);
       node.style.display = 'block';
       node.style.left = sx.toFixed(1) + 'px';
-      node.style.top = (sy + Math.max(14, Math.min(r + 14, rect.height * 0.25))).toFixed(1) + 'px';
+      node.style.top = top.toFixed(1) + 'px';
       node.classList.toggle('is-selected', key === selected);
+      node.classList.toggle('is-crowded', crowded && key !== selected);
       node.style.opacity = key === selected || key === hovered ? '1' : '0.82';
+      if (!crowded || key === selected) placed.push({ x: sx, y: top });
     });
   }
 
@@ -1828,12 +2455,60 @@ else if (typeof globalThis !== "undefined") { globalThis.THREE = __THREE_EXPORTS
     ctx.bodies.forEach((entry, key) => { if (entry.state) states[key] = entry.state; });
     if (!states.earth) return;
 
+    updateRuler(state);
+    updateRangeWarning(state);
+
     if (selected !== lastSelectedRendered) renderDetail(selected);
     if (selected) {
       el['d-stamp'].textContent = 'UTC ' + utcString(date);
       renderLive(selected, states, state.jd);
+      if (selected === 'moon' && states.moon) renderMoonBox(states.moon, date);
     }
     renderOverview(states, selected);
+  }
+
+  /** 屏幕比例尺：100 px 对应多少 AU（压缩模式下标明是"局部"比例） */
+  function updateRuler(state) {
+    const au = state.scale.auPer100px;
+    if (!(au > 0) || !Number.isFinite(au)) { el['ruler-text'].textContent = '—'; return; }
+    const km = au * E.AU_KM;
+    const auText = au >= 0.01 ? au.toFixed(2) + ' AU' : (km >= 1e4 ? (km / 1e4).toFixed(1) + ' 万 km' : Math.round(km).toLocaleString('en-US') + ' km');
+    const narrow = window.innerWidth < 600;
+    const suffix = state.scale.local
+      ? (narrow ? ' · 径向' : ' · 日心径向（距离按 √r 压缩）')
+      : (narrow ? ' · 线性' : ' · 真实线性比例');
+    const text = '100 px ≈ ' + auText + suffix;
+    if (el['ruler-text'].textContent !== text) el['ruler-text'].textContent = text;
+  }
+
+  /** 超出 Standish 根数表的标称区间时，必须明说结果不可信 */
+  function updateRangeWarning(state) {
+    const side = state.outOfRange;
+    const node = el['range-warning'];
+    if (!side) { if (!node.hidden) node.hidden = true; return; }
+    const text = side === 'before'
+      ? '当前时刻早于 1800 年：已超出所用解析星历的标称适用区间，行星位置仅供示意，误差会随时间迅速增大。'
+      : '当前时刻晚于 2050 年：已超出所用解析星历的标称适用区间，行星位置仅供示意，误差会随时间迅速增大。';
+    if (node.textContent !== text) node.textContent = text;
+    if (node.hidden) node.hidden = false;
+  }
+
+  let lastMoonPhaseKey = '';
+  function renderMoonBox(moon, date) {
+    el['d-moon-stamp'].textContent = 'UTC ' + utcString(date);
+    el['d-moon-name'].textContent = moon.phaseName;
+    el['d-moon-lit'].textContent = (moon.illuminated * 100).toFixed(1) + '%';
+    el['d-moon-age'].textContent = '月龄 ' + moon.age.toFixed(2) + ' 天 · '
+      + (moon.waxing ? '渐盈' : '渐亏') + ' · 黄经差 ' + moon.elongationFromSun.toFixed(1) + '°';
+    el['d-moon-hemi'].textContent = moon.waxing
+      ? '北半球视角：渐盈，亮面在右（南半球所见左右相反）'
+      : '北半球视角：渐亏，亮面在左（南半球所见左右相反）';
+    // 只有画面真的变了才重绘（照亮比例精确到 0.1% 即可）
+    const key = (moon.waxing ? 'w' : 'n') + (moon.illuminated * 1000).toFixed(0);
+    if (key !== lastMoonPhaseKey) {
+      lastMoonPhaseKey = key;
+      drawMoonPhase(el['moon-phase'], moon);
+    }
   }
 
   function hideLoading() {
@@ -1851,7 +2526,8 @@ else if (typeof globalThis !== "undefined") { globalThis.THREE = __THREE_EXPORTS
     if (loading) loading.style.display = 'none';
   }
 
-  SS.UI = { init, frame, setSelected, setHovered, hideLoading, fatal };
+  // drawMoonPhase 一并导出：自动化测试直接用它逐相位验证亮面方向
+  SS.UI = { init, frame, setSelected, setHovered, hideLoading, fatal, drawMoonPhase };
 })(typeof window !== 'undefined' ? window : globalThis);
 
 </script>
@@ -1891,9 +2567,13 @@ else if (typeof globalThis !== "undefined") { globalThis.THREE = __THREE_EXPORTS
     sizeBoost: 300,
     showOrbits: true,
     showLabels: true,
+    showMarkers: true,        // 定位标记：固定像素大小，真实比例下靠它找到行星
     selected: null,
     focus: null,
     sunCapped: false,
+    moonCompressed: false,    // 地月间距是否被压缩显示
+    scale: { auPer100px: NaN, local: true },  // 屏幕比例尺（UI 读取）
+    outOfRange: null,         // 超出星历有效区间时的提示
   };
 
   const ctx = {
@@ -1912,6 +2592,11 @@ else if (typeof globalThis !== "undefined") { globalThis.THREE = __THREE_EXPORTS
 
   function schematicRadius(body) {
     // 以地球为 1 做 0.4 次幂压缩：109 倍的太阳只被放大到 6.5 倍
+    if (body.parent) {
+      // 卫星改为相对母星压缩，否则 0.4 次幂会把月球画成地球的 6 成大（真实只有 27%）
+      const parent = SS.BODY_BY_KEY[body.parent];
+      return 0.38 * Math.pow(parent.radiusKm / 6371, 0.4) * Math.pow(body.radiusKm / parent.radiusKm, 0.75);
+    }
     return 0.38 * Math.pow(body.radiusKm / 6371, 0.4);
   }
 
@@ -2042,6 +2727,15 @@ else if (typeof globalThis !== "undefined") { globalThis.THREE = __THREE_EXPORTS
       group.userData.glow = [inner, outer];
     }
 
+    // 定位标记：恒定屏幕尺寸的空心圆环
+    const markerTex = makeTexture(SS.Textures.ringSpriteTexture(96, 0.16));
+    const marker = new THREE.Sprite(new THREE.SpriteMaterial({
+      map: markerTex, color: new THREE.Color(def.color).lerp(new THREE.Color(0xffffff), 0.45),
+      transparent: true, depthWrite: false, depthTest: false, opacity: 0.32,
+    }));
+    marker.renderOrder = 5;
+    group.add(marker);
+
     // 选中指示环（始终面向相机）
     const haloTex = makeTexture(SS.Textures.glowTexture(128, [255, 255, 255], [120, 200, 255], 1.1));
     const halo = new THREE.Sprite(new THREE.SpriteMaterial({
@@ -2049,7 +2743,7 @@ else if (typeof globalThis !== "undefined") { globalThis.THREE = __THREE_EXPORTS
     }));
     group.add(halo);
 
-    return { def, group, spin, mesh, ring, halo, scenePos: new THREE.Vector3(), state: null, radius: 1 };
+    return { def, group, spin, mesh, ring, halo, marker, scenePos: new THREE.Vector3(), state: null, radius: 1 };
   }
 
   function buildOrbit(def) {
@@ -2115,7 +2809,7 @@ else if (typeof globalThis !== "undefined") { globalThis.THREE = __THREE_EXPORTS
     SS.BODIES.forEach((def) => {
       const entry = buildBody(def);
       scene.add(entry.group);
-      if (!def.isSun) {
+      if (!def.isSun && !def.parent) {
         entry.orbit = buildOrbit(def);
         scene.add(entry.orbit);
       }
@@ -2256,6 +2950,7 @@ else if (typeof globalThis !== "undefined") { globalThis.THREE = __THREE_EXPORTS
   /* ------------------------- 主循环 ------------------------- */
 
   const _tmpVec = new THREE.Vector3();
+  const _dir = new THREE.Vector3();
 
   function advanceTime(dtSeconds) {
     if (state.live) {
@@ -2263,6 +2958,9 @@ else if (typeof globalThis !== "undefined") { globalThis.THREE = __THREE_EXPORTS
     } else if (!state.paused) {
       state.jd += (dtSeconds * state.speed) / 86400;
     }
+    // 越界不阻止推进（看"几千年后行星在哪"本身是有趣的），但必须明确标注结果不可信
+    const v = E.validity(state.jd);
+    state.outOfRange = v.ok ? null : v.side;
   }
 
   function updateBodies() {
@@ -2275,6 +2973,16 @@ else if (typeof globalThis !== "undefined") { globalThis.THREE = __THREE_EXPORTS
       entry.state = E.stateAt(def.key, state.jd);
       auToScene(entry.state.position, entry.scenePos);
       entry.group.position.copy(entry.scenePos);
+    });
+
+    // 卫星：方向用真实星历，间距按"显示放大倍数"反向压缩
+    state.moonCompressed = false;
+    SS.SATELLITES.forEach((def) => {
+      const entry = ctx.bodies.get(def.key);
+      const parent = ctx.bodies.get(def.parent);
+      if (!parent || !parent.state) return;
+      entry.state = E.moonState(state.jd, parent.state);
+      entry.parentEntry = parent;
     });
 
     // 半径依赖 state.r（上限保护），因此放在位置更新之后
@@ -2303,12 +3011,91 @@ else if (typeof globalThis !== "undefined") { globalThis.THREE = __THREE_EXPORTS
         entry.orbit.material.opacity = selected ? 0.8 : 0.34;
       }
     });
+
+    // 卫星定位：必须等母星与自身的显示半径算完
+    SS.SATELLITES.forEach((def) => {
+      const entry = ctx.bodies.get(def.key);
+      const parent = entry.parentEntry;
+      if (!parent || !entry.state) return;
+      placeSatellite(entry, parent);
+    });
+
+    updateMarkers();
+  }
+
+  /**
+   * 卫星定位：方向取真实地心向量，距离按"母星被放大了多少倍"反向压缩。
+   *   显示间距 = clamp(真实间距, 2.6·R母, 真实比值·R母)
+   * 当没有任何尺寸夸张（真实尺寸 ×1）时，上限不生效，呈现真实的 60 倍地球半径间距；
+   * 一旦把母星画大，间距就会被压到 2.6 倍半径，否则卫星会被母星吞掉。
+   */
+  function placeSatellite(entry, parent) {
+    const geo = entry.state.geocentric;                    // AU，真实地心向量
+    const trueSep = Math.sqrt(geo.x * geo.x + geo.y * geo.y + geo.z * geo.z) * AU_UNITS;
+    const trueParentR = trueRadius(parent.def);
+    const trueRatio = trueSep / trueParentR;               // 真实的"多少倍母星半径"≈60
+    const minSep = parent.radius * 2.6;
+    const maxSep = parent.radius * trueRatio;
+    const sep = Math.max(minSep, Math.min(maxSep, trueSep));
+    if (sep > trueSep * 1.0001 || sep < trueSep * 0.9999) state.moonCompressed = true;
+
+    _dir.set(geo.x, geo.z, -geo.y);                        // 黄道 → 场景
+    if (_dir.lengthSq() > 0) _dir.normalize();
+    entry.scenePos.copy(parent.scenePos).addScaledVector(_dir, sep);
+    entry.group.position.copy(entry.scenePos);
+
+    if (entry.def.tidallyLocked) {
+      // 潮汐锁定：纹理中心（u=0.5，即 +X 面）始终朝向母星
+      const dx = parent.scenePos.x - entry.scenePos.x;
+      const dz = parent.scenePos.z - entry.scenePos.z;
+      entry.spin.rotation.y = -Math.atan2(dz, dx);
+    }
+  }
+
+  /** 定位标记：恒定屏幕尺寸的空心环，天体本身够大时自动淡出 */
+  function updateMarkers() {
+    ctx.bodies.forEach((entry) => {
+      const marker = entry.marker;
+      if (!marker) return;
+      if (!state.showMarkers) { marker.visible = false; return; }
+      const screenR = screenRadius(entry, window.innerHeight);
+      // 天体在屏幕上小于 9 px 才需要标记；大于 16 px 完全隐藏
+      const fade = 1 - Math.min(1, Math.max(0, (screenR - 9) / 7));
+      marker.visible = fade > 0.02;
+      if (!marker.visible) return;
+      marker.material.opacity = 0.32 * fade + (state.selected === entry.def.key ? 0.35 : 0);
+      marker.scale.setScalar(cameraRelativeSize(entry, 26));
+    });
   }
 
   function cameraRelativeSize(entry, pixels) {
     const dist = ctx.camera.position.distanceTo(entry.scenePos);
     const worldPerPixel = (2 * Math.tan((ctx.camera.fov * DEG) / 2) * dist) / window.innerHeight;
     return worldPerPixel * pixels;
+  }
+
+  /**
+   * 屏幕比例尺：相机目标平面上横跨 100 px 相当于多少 AU。
+   *
+   * 压缩模式下映射是非线性的（d = 10√r），因此不能取导数——在太阳处
+   * dr/dd → 0，会给出"100 px ≈ 33 km"这种荒谬读数。正确做法是取**割线**：
+   * 把屏幕上相距 100 px 的两点各自逆映射回 AU 再求差。
+   * 这个式子对线性模式同样成立（割线=切线），所以两种模式共用。
+   *
+   * 另需注意：压缩映射只作用于径向，切向比例并不相同，所以界面上标明"径向"。
+   */
+  function sceneToAU(sceneR) {
+    const u = sceneR / AU_UNITS;
+    return state.realDistance ? u : u * u;
+  }
+
+  function updateScaleBar() {
+    const dist = ctx.controls.distance;
+    const worldPerPixel = (2 * Math.tan((ctx.camera.fov * DEG) / 2) * dist) / window.innerHeight;
+    const centerR = ctx.controls.target.length();
+    const au = sceneToAU(centerR + worldPerPixel * 100) - sceneToAU(centerR);
+    state.scale.auPer100px = au;
+    state.scale.local = !state.realDistance;
   }
 
   function tick() {
@@ -2333,6 +3120,7 @@ else if (typeof globalThis !== "undefined") { globalThis.THREE = __THREE_EXPORTS
       ctx.camera.updateProjectionMatrix();
     }
 
+    updateScaleBar();
     ctx.renderer.render(ctx.scene, ctx.camera);
     SS.UI.frame(ctx, state);
     requestAnimationFrame(tick);
@@ -2341,6 +3129,7 @@ else if (typeof globalThis !== "undefined") { globalThis.THREE = __THREE_EXPORTS
   SS.App = {
     state, ctx, init, selectBody, focusBody, refreshOrbits,
     distanceScale, displayRadius, screenRadius,
+    setShowMarkers(v) { state.showMarkers = v; },
     setRealDistance(v) { state.realDistance = v; refreshOrbits(); updateBodies(); rescaleView(); },
     setRealSize(v) { state.realSize = v; updateBodies(); rescaleView(); },
     setSizeBoost(v) { state.sizeBoost = v; updateBodies(); rescaleView(); },
