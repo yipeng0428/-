@@ -1,0 +1,27 @@
+{
+  "name": "memos-app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.118.0",
+    "expo": "~58.0.19",
+    "expo-quick-actions": "^6.0.2",
+    "expo-sqlite": "^58.0.14",
+    "expo-status-bar": "~58.0.4",
+    "lucide-react-native": "^1.61.0",
+    "nativewind": "^4.2.7",
+    "react": "19.3.0",
+    "react-native": "0.88.0",
+    "react-native-reanimated": "^4.7.1",
+    "react-native-safe-area-context": "^5.10.1",
+    "react-native-url-polyfill": "^4.0.0",
+    "tailwindcss": "^3.4.19"
+  },
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web"
+  },
+  "private": true
+}
