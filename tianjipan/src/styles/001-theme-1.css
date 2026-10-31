@@ -2417,6 +2417,11 @@ svg.trend .tk.g {
 .layersw button:hover {
   color: var(--gold);
 }
+.layersw button:focus-visible,
+.zm-lay button:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
 .layersw button.on {
   color: var(--gold2);
   border-color: var(--gold);
