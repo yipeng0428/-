@@ -4464,7 +4464,11 @@ function setDialLayer(name) {
   });
   if (dial.x.aspG)
     dial.x.aspG.style.display = name === "astro" && dial.x.showAsp !== false ? "" : "none";
-  $$("#layerSw button").forEach((b) => b.classList.toggle("on", b.dataset.layer === name));
+  $$("#layerSw button").forEach((b) => {
+    const isAct = b.dataset.layer === name;
+    b.classList.toggle("on", isAct);
+    b.setAttribute("aria-pressed", isAct ? "true" : "false");
+  });
   try {
     senseLayerChanged(name);
   } catch (e) {

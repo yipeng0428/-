@@ -2686,9 +2686,11 @@ function closeZoom() {
 }
 function syncZmLayer() {
   const cur = (document.querySelector("#layerSw button.on") || {}).dataset;
-  $$("#zmLayers button").forEach((b) =>
-    b.classList.toggle("on", cur && b.dataset.layer === cur.layer),
-  );
+  $$("#zmLayers button").forEach((b) => {
+    const isAct = !!(cur && b.dataset.layer === cur.layer);
+    b.classList.toggle("on", isAct);
+    b.setAttribute("aria-pressed", isAct ? "true" : "false");
+  });
 }
 function bindZoom() {
   $("#dialZoom").onclick = openZoom;
