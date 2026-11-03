@@ -1,0 +1,1 @@
+## 2024-05-24 - Add aria-label to close buttons\n**Learning:** Found several close buttons (e.g. "关闭 ✕") without an `aria-label`. These elements can be ambiguous to screen readers if the text content alone does not convey the button's action clearly.\n**Action:** Add `aria-label="关闭"` to these elements.

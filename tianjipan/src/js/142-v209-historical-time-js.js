@@ -516,7 +516,7 @@
   }
   function modalHTML() {
     const A = analyzeCurrent();
-    return `<div class="tz209-shell"><header class="tz209-head"><div><h2>历史时区 · DST · 太阳时校正</h2><p>原始记录 → IANA 法定时区 → UTC 瞬间 → 地方平太阳时 → 真太阳时。先确定“当时钟表到底代表哪个瞬间”，再谈经度和均时差。</p></div><button class="tz209-close" id="tz209Close">关闭 ✕</button></header><div class="tz209-body">${formHTML(A)}<div id="tz209Result">${resultPanel(A)}</div></div></div>`;
+    return `<div class="tz209-shell"><header class="tz209-head"><div><h2>历史时区 · DST · 太阳时校正</h2><p>原始记录 → IANA 法定时区 → UTC 瞬间 → 地方平太阳时 → 真太阳时。先确定“当时钟表到底代表哪个瞬间”，再谈经度和均时差。</p></div><button class="tz209-close" id="tz209Close" aria-label="关闭">关闭 ✕</button></header><div class="tz209-body">${formHTML(A)}<div id="tz209Result">${resultPanel(A)}</div></div></div>`;
   }
   function ensureModal() {
     let m = document.getElementById("tz209Modal");
