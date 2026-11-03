@@ -351,7 +351,7 @@
     if (!body) return;
     const localN = localPeople().length,
       cloudN = A.cloud.length;
-    body.innerHTML = `<div class="tja-head"><div class="tja-head-main"><h2>我的档案</h2><p>打开即用 · 匿名先行 · Bearer Token · 邮箱魔法链接 · 云端人物档案</p></div><button class="tja-x" id="tjaClose">关闭 ✕</button></div>
+    body.innerHTML = `<div class="tja-head"><div class="tja-head-main"><h2>我的档案</h2><p>打开即用 · 匿名先行 · Bearer Token · 邮箱魔法链接 · 云端人物档案</p></div><button class="tja-x" id="tjaClose" aria-label="关闭">关闭 ✕</button></div>
   ${statusHTML()}
   ${A.lastMessage ? `<div class="tja-alert good">${E(A.lastMessage)}</div>` : ""}
   <div class="tja-grid">

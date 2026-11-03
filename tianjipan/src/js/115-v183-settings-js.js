@@ -298,7 +298,7 @@
     const m = ensure(),
       b = m.querySelector("#tjsBody");
     if (!b) return;
-    b.innerHTML = `<div class="tjs-head"><div><h2>设置</h2><p>全站外观 · 报时提醒 · 时间显示 · 账号与数据</p></div><button class="tjs-x" id="tjsClose">关闭 ✕</button></div><div class="tjs-body"><nav class="tjs-nav">${navs.map(([id, ic, n, d]) => `<button type="button" data-tjs-tab="${id}" class="${tab === id ? "on" : ""}"><i>${ic}</i><span><b>${n}</b><small>${d}</small></span></button>`).join("")}</nav><main class="tjs-main">${sectionHTML()}</main></div>`;
+    b.innerHTML = `<div class="tjs-head"><div><h2>设置</h2><p>全站外观 · 报时提醒 · 时间显示 · 账号与数据</p></div><button class="tjs-x" id="tjsClose" aria-label="关闭">关闭 ✕</button></div><div class="tjs-body"><nav class="tjs-nav">${navs.map(([id, ic, n, d]) => `<button type="button" data-tjs-tab="${id}" class="${tab === id ? "on" : ""}"><i>${ic}</i><span><b>${n}</b><small>${d}</small></span></button>`).join("")}</nav><main class="tjs-main">${sectionHTML()}</main></div>`;
     bind(b);
   }
   function open(which = "appearance") {

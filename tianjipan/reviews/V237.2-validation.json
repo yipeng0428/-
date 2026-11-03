@@ -4,7 +4,7 @@
       "name": "V237.1 stability regressions retained",
       "ok": true,
       "detail": {
-        "groups": 25
+        "groups": 23
       }
     },
     {
@@ -145,71 +145,10 @@
             "note": "",
             "fenye": "",
             "place": "",
-            "createdAt": 1791306914871,
-            "updatedAt": 1791306914871,
+            "createdAt": 1793684744535,
+            "updatedAt": 1793684744535,
             "source": "legacy"
           }
-        ]
-      }
-    },
-    {
-      "name": "modified astronomy sources rejected without unverified script fallback",
-      "ok": true,
-      "detail": {
-        "rejected": true,
-        "message": "固定来源均不可用或完整性不匹配：完整性验证失败：expected 116485/fc5ab5c406c6fd64bdd537772e4cc7c8d438275b, got 23/b5b32ab8c025d4363cd6d10b8c4c7087f79e14f9",
-        "probe": 0,
-        "loaded": false,
-        "externalScripts": 0
-      }
-    },
-    {
-      "name": "concurrent cache and engine load executes verified ephemeris",
-      "ok": true,
-      "detail": {
-        "requests": 3,
-        "cache": {
-          "action": "verify",
-          "ok": true,
-          "verify": {
-            "ok": true,
-            "reason": "verified",
-            "bytes": 116485,
-            "sha1": "fc5ab5c406c6fd64bdd537772e4cc7c8d438275b"
-          },
-          "meta": {
-            "schema": "tianji.qizheng.vendor-cache.v1",
-            "version": "2.1.19",
-            "commit": "865d3da7d8112bbc7911238052c6af4aaf877181",
-            "blobSha1": "fc5ab5c406c6fd64bdd537772e4cc7c8d438275b",
-            "bytes": 116485,
-            "verifiedAt": "2026-10-06T17:15:21.694Z",
-            "sourceUrl": "https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.browser.min.js"
-          }
-        }
-      }
-    },
-    {
-      "name": "Mystilight checksum rejection and concurrent verified module loading",
-      "ok": true,
-      "detail": {
-        "ok": true,
-        "rejected": {
-          "status": "unavailable",
-          "error": "八字校验器完整性校验失败",
-          "probe": 0
-        },
-        "accepted": {
-          "status": "ready",
-          "api": "function"
-        },
-        "requests": 4,
-        "sourceSHA256": "75893e7a97aaae4029137077ee0e06f4ecb5b10ea9e47191b4480b0056ffc9a1",
-        "checks": [
-          "same-length altered code is rejected before module execution",
-          "fixed snapshot loads after validation",
-          "parallel force loads share one fetch",
-          "in-memory module URL is revoked in finally"
         ]
       }
     },
@@ -218,18 +157,18 @@
       "ok": true,
       "detail": {
         "V237.1": {
-          "dclMedianMs": 3351.4000000003725,
+          "dclMedianMs": 6358.59999999986,
           "startupRequests": 7,
-          "startupDOMMutations": 64,
+          "startupDOMMutations": 57,
           "qizhengPublicCalls": 1,
-          "qizhengDOMMutations": 51
+          "qizhengDOMMutations": 33
         },
         "V237.2": {
-          "dclMedianMs": 2978.399999999441,
+          "dclMedianMs": 5906.899999999907,
           "startupRequests": 0,
-          "startupDOMMutations": 33,
+          "startupDOMMutations": 29,
           "qizhengPublicCalls": 1,
-          "qizhengDOMMutations": 42
+          "qizhengDOMMutations": 32
         }
       }
     }
@@ -265,7 +204,7 @@
             "architecture": "runtime-lite"
           },
           "footer": "版本 · V237.2 · 代码整理与性能优化版",
-          "nav": 3328.100000000559,
+          "nav": 7462.200000000186,
           "engines": [
             "time.legacy",
             "bazi.legacy",
@@ -569,12 +508,12 @@
             {
               "id": "overlap.shape",
               "ok": true,
-              "detail": "5"
+              "detail": "8"
             },
             {
               "id": "evidence.shape",
               "ok": true,
-              "detail": "25"
+              "detail": "28"
             }
           ]
         }
@@ -609,14 +548,14 @@
         "detail": {
           "summary": {
             "total": 55,
-            "pass": 49,
-            "warn": 5,
+            "pass": 48,
+            "warn": 6,
             "fail": 0,
             "gate": {
               "state": "conditional",
               "label": "RC1 条件通过",
               "tone": "warn",
-              "reason": "运行结构通过；5 个警告/已知限制"
+              "reason": "运行结构通过；6 个警告/已知限制"
             }
           },
           "failures": []
@@ -636,14 +575,14 @@
         "detail": {
           "summary": {
             "total": 35,
-            "pass": 32,
-            "warn": 2,
+            "pass": 31,
+            "warn": 3,
             "fail": 0,
             "gate": {
               "state": "conditional",
               "label": "RC1 条件通过",
               "tone": "warn",
-              "reason": "运行结构通过；2 个警告/已知限制"
+              "reason": "运行结构通过；3 个警告/已知限制"
             }
           }
         }
@@ -659,19 +598,6 @@
       {
         "name": "legacy unsafe IDs migrate with current/me/positions and relations",
         "ok": true
-      },
-      {
-        "name": "verified fixtures load and concurrent iztro requests coalesce",
-        "ok": true,
-        "detail": {
-          "iztro": true,
-          "lunar": true,
-          "iztroFetch": 1
-        }
-      },
-      {
-        "name": "modified executable vendor caches rejected",
-        "ok": true
       }
     ],
     "limitations": [
@@ -682,7 +608,7 @@
       "schema": "tianji.release.qa.v1",
       "build": "v215 RC1 · 2026-10-06 15:02 +08:00",
       "mode": "full",
-      "generatedAt": "2026-10-06T17:14:27.338Z",
+      "generatedAt": "2026-11-03T05:44:36.439Z",
       "viewport": {
         "width": 1440,
         "height": 1000,
@@ -691,23 +617,23 @@
       "performance": {
         "nav": {
           "type": "reload",
-          "domInteractive": 2428.2,
-          "domContentLoaded": 2432,
-          "loadEventEnd": 2446.4,
-          "transferSize": 5580671,
-          "decodedBodySize": 5580371
+          "domInteractive": 5338.2,
+          "domContentLoaded": 5340.2,
+          "loadEventEnd": 5351.4,
+          "transferSize": 5580791,
+          "decodedBodySize": 5580491
         },
         "paint": {
-          "first-paint": 428,
-          "first-contentful-paint": 428
+          "first-paint": 980,
+          "first-contentful-paint": 980
         },
         "startup": {
           "versionWrites": 0,
           "homepageReady": false,
           "windowLoaded": true,
           "firstInteraction": true,
-          "idleDone": true,
-          "elapsedMs": 2040.1,
+          "idleDone": false,
+          "elapsedMs": 3059.5,
           "consumerReportDeferred": true,
           "qimenCrosscheckDeferred": true,
           "globalLayoutAutoScan": false,
@@ -717,7 +643,7 @@
           "schema": "tianji.performance.v2",
           "build": "v181 · 2026-10-05 22:18 +08:00",
           "mode": "wide",
-          "sinceBootMs": 3966.7,
+          "sinceBootMs": 7735.5,
           "homepageReady": true,
           "lazy": {
             "insight": "ready"
@@ -731,14 +657,14 @@
             "inactive panes excluded from first layout"
           ]
         },
-        "now": 4010.1
+        "now": 7783.4
       },
       "checks": [
         {
           "id": "lazy.insight-load",
           "name": "Insight 懒链完整加载",
           "state": "pass",
-          "detail": "113.6 ms",
+          "detail": "147.3 ms",
           "group": "regression",
           "severity": "critical"
         },
@@ -770,7 +696,7 @@
           "id": "runtime.version",
           "name": "版本一致性",
           "state": "pass",
-          "detail": "title=丑时 · 秋分后 · 天机盘；build=版本 · V237.2 · 代码整理与性能优化版",
+          "detail": "title=未时 · 霜降后 · 天机盘；build=版本 · V237.2 · 代码整理与性能优化版",
           "group": "runtime",
           "severity": "critical"
         },
@@ -945,8 +871,8 @@
         {
           "id": "perf.dcl",
           "name": "DOMContentLoaded",
-          "state": "pass",
-          "detail": "2432 ms",
+          "state": "warn",
+          "detail": "5340 ms",
           "group": "performance",
           "severity": "normal"
         },
@@ -954,7 +880,7 @@
           "id": "perf.load",
           "name": "load / 当前加载点",
           "state": "pass",
-          "detail": "2446 ms",
+          "detail": "5351 ms",
           "group": "performance",
           "severity": "normal"
         },
@@ -962,7 +888,7 @@
           "id": "perf.fcp",
           "name": "First Contentful Paint",
           "state": "pass",
-          "detail": "428 ms",
+          "detail": "980 ms",
           "group": "performance",
           "severity": "normal"
         },
@@ -1165,12 +1091,12 @@
               {
                 "id": "overlap.shape",
                 "ok": true,
-                "detail": "5"
+                "detail": "8"
               },
               {
                 "id": "evidence.shape",
                 "ok": true,
-                "detail": "25"
+                "detail": "28"
               }
             ]
           }
@@ -1827,13 +1753,13 @@
           "times": [
             {
               "id": "jinkou",
-              "ms": 1.2,
-              "size": 4060
+              "ms": 1.4,
+              "size": 4185
             },
             {
               "id": "qizheng",
-              "ms": 0.8,
-              "size": 4476
+              "ms": 0.9,
+              "size": 4495
             },
             {
               "id": "taiyi",
@@ -1842,157 +1768,157 @@
             },
             {
               "id": "fun",
-              "ms": 0.1,
+              "ms": 0.3,
               "size": 3710
             },
             {
               "id": "over",
-              "ms": 10.3,
-              "size": 18385
+              "ms": 16.1,
+              "size": 18430
             },
             {
               "id": "guide",
-              "ms": 9.9,
-              "size": 24107
+              "ms": 13.6,
+              "size": 25114
             },
             {
               "id": "astro",
-              "ms": 1.2,
-              "size": 11451
+              "ms": 1.3,
+              "size": 11533
             },
             {
               "id": "bazi",
-              "ms": 1.1,
-              "size": 16571
+              "ms": 1.5,
+              "size": 17134
             },
             {
               "id": "qimen",
-              "ms": 2.7,
-              "size": 12688
+              "ms": 3.4,
+              "size": 13117
             },
             {
               "id": "liuren",
-              "ms": 14.9,
-              "size": 22614
+              "ms": 25.5,
+              "size": 22598
             },
             {
               "id": "liuyao",
-              "ms": 6.2,
-              "size": 15119
+              "ms": 6.5,
+              "size": 14744
             },
             {
               "id": "yi",
-              "ms": 0.4,
-              "size": 6237
+              "ms": 0.5,
+              "size": 6167
             },
             {
               "id": "ziwei",
-              "ms": 2,
-              "size": 29578
+              "ms": 2.5,
+              "size": 29871
             },
             {
               "id": "xk",
-              "ms": 2.9,
+              "ms": 5.3,
               "size": 23985
             },
             {
               "id": "zeri",
-              "ms": 14.2,
-              "size": 13137
+              "ms": 24.4,
+              "size": 13333
             },
             {
               "id": "hepan",
-              "ms": 4.3,
-              "size": 9801
+              "ms": 6.1,
+              "size": 9392
             },
             {
               "id": "house",
-              "ms": 2,
+              "ms": 2.7,
               "size": null
             },
             {
               "id": "hetu",
-              "ms": 0.9,
+              "ms": 1.1,
               "size": null
             },
             {
               "id": "review",
-              "ms": 1.2,
+              "ms": 1.5,
               "size": null
             },
             {
               "id": "jiazi",
-              "ms": 0.3,
+              "ms": 0.6,
               "size": 11211
             },
             {
               "id": "jingluo",
-              "ms": 2.6,
-              "size": 29236
+              "ms": 3.4,
+              "size": 29569
             },
             {
               "id": "xingkong",
-              "ms": 0.3,
+              "ms": 0.5,
               "size": 7695
             },
             {
               "id": "sha",
-              "ms": 2,
+              "ms": 2.9,
               "size": 24468
             },
             {
               "id": "taisui",
-              "ms": 0.3,
+              "ms": 0.5,
               "size": 4106
             },
             {
               "id": "jifang",
-              "ms": 3,
-              "size": 11647
+              "ms": 3.1,
+              "size": 11648
             },
             {
               "id": "luopan",
-              "ms": 4.4,
+              "ms": 7.7,
               "size": 46610
             },
             {
               "id": "bridge",
-              "ms": 0.9,
-              "size": 28056
+              "ms": 1.2,
+              "size": 28053
             },
             {
               "id": "verify",
-              "ms": 10.4,
+              "ms": 14.6,
               "size": 133686
             },
             {
               "id": "natal",
-              "ms": 2.5,
-              "size": 24422
+              "ms": 3,
+              "size": 24632
             },
             {
               "id": "vedic",
-              "ms": 1,
-              "size": 7921
+              "ms": 1.3,
+              "size": 7927
             },
             {
               "id": "me",
-              "ms": 0.4,
-              "size": 2841
+              "ms": 0.5,
+              "size": 2787
             },
             {
               "id": "zwfly",
-              "ms": 28.5,
-              "size": 39421
+              "ms": 43.1,
+              "size": 39188
             },
             {
               "id": "wxflow",
-              "ms": 3.1,
-              "size": 18734
+              "ms": 4.5,
+              "size": 18730
             },
             {
               "id": "people",
-              "ms": 9.4,
+              "ms": 15,
               "size": 35192
             },
             {
@@ -2077,14 +2003,14 @@
       ],
       "summary": {
         "total": 55,
-        "pass": 49,
-        "warn": 5,
+        "pass": 48,
+        "warn": 6,
         "fail": 0,
         "gate": {
           "state": "conditional",
           "label": "RC1 条件通过",
           "tone": "warn",
-          "reason": "运行结构通过；5 个警告/已知限制"
+          "reason": "运行结构通过；6 个警告/已知限制"
         }
       },
       "knownLimitations": [
@@ -2108,7 +2034,7 @@
       "schema": "tianji.release.qa.v1",
       "build": "v215 RC1 · 2026-10-06 15:02 +08:00",
       "mode": "layout",
-      "generatedAt": "2026-10-06T17:14:29.946Z",
+      "generatedAt": "2026-11-03T05:44:41.805Z",
       "viewport": {
         "width": 390,
         "height": 844,
@@ -2117,15 +2043,15 @@
       "performance": {
         "nav": {
           "type": "reload",
-          "domInteractive": 2428.2,
-          "domContentLoaded": 2432,
-          "loadEventEnd": 2446.4,
-          "transferSize": 5580671,
-          "decodedBodySize": 5580371
+          "domInteractive": 5338.2,
+          "domContentLoaded": 5340.2,
+          "loadEventEnd": 5351.4,
+          "transferSize": 5580791,
+          "decodedBodySize": 5580491
         },
         "paint": {
-          "first-paint": 428,
-          "first-contentful-paint": 428
+          "first-paint": 980,
+          "first-contentful-paint": 980
         },
         "startup": {
           "versionWrites": 0,
@@ -2133,7 +2059,7 @@
           "windowLoaded": true,
           "firstInteraction": true,
           "idleDone": true,
-          "elapsedMs": 4648.1,
+          "elapsedMs": 8426.1,
           "consumerReportDeferred": true,
           "qimenCrosscheckDeferred": true,
           "globalLayoutAutoScan": false,
@@ -2143,7 +2069,7 @@
           "schema": "tianji.performance.v2",
           "build": "v181 · 2026-10-05 22:18 +08:00",
           "mode": "compact",
-          "sinceBootMs": 6574.7,
+          "sinceBootMs": 13102.1,
           "homepageReady": true,
           "lazy": {
             "insight": "ready"
@@ -2157,7 +2083,7 @@
             "inactive panes excluded from first layout"
           ]
         },
-        "now": 6618.1
+        "now": 13150
       },
       "checks": [
         {
@@ -2188,7 +2114,7 @@
           "id": "runtime.version",
           "name": "版本一致性",
           "state": "pass",
-          "detail": "title=丑时 · 秋分后 · 天机盘；build=版本 · V237.2 · 代码整理与性能优化版",
+          "detail": "title=未时 · 霜降后 · 天机盘；build=版本 · V237.2 · 代码整理与性能优化版",
           "group": "runtime",
           "severity": "critical"
         },
@@ -2363,8 +2289,8 @@
         {
           "id": "perf.dcl",
           "name": "DOMContentLoaded",
-          "state": "pass",
-          "detail": "2432 ms",
+          "state": "warn",
+          "detail": "5340 ms",
           "group": "performance",
           "severity": "normal"
         },
@@ -2372,7 +2298,7 @@
           "id": "perf.load",
           "name": "load / 当前加载点",
           "state": "pass",
-          "detail": "2446 ms",
+          "detail": "5351 ms",
           "group": "performance",
           "severity": "normal"
         },
@@ -2380,7 +2306,7 @@
           "id": "perf.fcp",
           "name": "First Contentful Paint",
           "state": "pass",
-          "detail": "428 ms",
+          "detail": "980 ms",
           "group": "performance",
           "severity": "normal"
         },
@@ -2452,7 +2378,7 @@
                 "tag": "div",
                 "id": "",
                 "cls": "panel dialbox",
-                "overflow": 6
+                "overflow": 10
               },
               {
                 "tag": "div",
@@ -2580,7 +2506,7 @@
                 "tag": "div",
                 "id": "",
                 "cls": "panel dialbox",
-                "overflow": 6
+                "overflow": 10
               },
               {
                 "tag": "div",
@@ -2715,14 +2641,14 @@
       ],
       "summary": {
         "total": 35,
-        "pass": 32,
-        "warn": 2,
+        "pass": 31,
+        "warn": 3,
         "fail": 0,
         "gate": {
           "state": "conditional",
           "label": "RC1 条件通过",
           "tone": "warn",
-          "reason": "运行结构通过；2 个警告/已知限制"
+          "reason": "运行结构通过；3 个警告/已知限制"
         }
       },
       "knownLimitations": [
@@ -2748,43 +2674,23 @@
       "originalStartupRequests": 7
     },
     "performance": {
-      "originalDCLms": 3685.7000000001863,
-      "revisedDCLms": 3328.100000000559,
+      "originalDCLms": 7150,
+      "revisedDCLms": 7462.200000000186,
       "note": "单次样本，网络请求均被阻断，不能代表真实用户设备性能"
     },
     "ok": true
   },
   "artifact": {
     "file": "天机盘_v237.2_代码整理性能优化版.html",
-    "bytes": 5580371,
-    "sha256": "d5cadcc82bc306291e54af73b98de1d3418bd6aefb310d08cad0b451c07986af"
-  },
-  "mystilight": {
-    "ok": true,
-    "rejected": {
-      "status": "unavailable",
-      "error": "八字校验器完整性校验失败",
-      "probe": 0
-    },
-    "accepted": {
-      "status": "ready",
-      "api": "function"
-    },
-    "requests": 4,
-    "sourceSHA256": "75893e7a97aaae4029137077ee0e06f4ecb5b10ea9e47191b4480b0056ffc9a1",
-    "checks": [
-      "same-length altered code is rejected before module execution",
-      "fixed snapshot loads after validation",
-      "parallel force loads share one fetch",
-      "in-memory module URL is revoked in finally"
-    ]
+    "bytes": 5580491,
+    "sha256": "a46ec259c3a45a59a271df1e2519d9fbf7110f3cda6d5266bd9a52873a5244ed"
   },
   "performance": {
     "samples": [
       {
         "artifact": "V237.1",
         "startup": {
-          "dclMs": 3417.9000000003725,
+          "dclMs": 6358.59999999986,
           "storageWrites": {
             "tianjipan.people.master.v1": 2,
             "tianjipan.people.v3": 2,
@@ -2795,7 +2701,7 @@
             "tianjipan.relation.timeline.v212": 1,
             "tianjipan.relation.timeline.v213": 1
           },
-          "bodyMutations": 64,
+          "bodyMutations": 57,
           "intervals": [
             60000,
             1000,
@@ -2808,13 +2714,13 @@
         },
         "chart": {
           "qzCalls": 1,
-          "domMutations": 51
+          "domMutations": 31
         }
       },
       {
         "artifact": "V237.2",
         "startup": {
-          "dclMs": 2978.399999999441,
+          "dclMs": 7567,
           "storageWrites": {
             "tianjipan.people.master.v1": 2,
             "tianjipan.bell.v2": 1,
@@ -2824,7 +2730,7 @@
             "tianjipan.relation.timeline.v212": 1,
             "tianjipan.relation.timeline.v213": 1
           },
-          "bodyMutations": 33,
+          "bodyMutations": 28,
           "intervals": [
             60000,
             1000,
@@ -2836,7 +2742,7 @@
         },
         "chart": {
           "qzCalls": 1,
-          "domMutations": 42,
+          "domMutations": 28,
           "scheduler": {
             "flushes": 1,
             "mounts": 14,
@@ -2849,7 +2755,7 @@
       {
         "artifact": "V237.2",
         "startup": {
-          "dclMs": 2933.800000000745,
+          "dclMs": 5649.199999999953,
           "storageWrites": {
             "tianjipan.people.master.v1": 2,
             "tianjipan.bell.v2": 1,
@@ -2859,7 +2765,7 @@
             "tianjipan.relation.timeline.v212": 1,
             "tianjipan.relation.timeline.v213": 1
           },
-          "bodyMutations": 33,
+          "bodyMutations": 29,
           "intervals": [
             60000,
             1000,
@@ -2871,7 +2777,7 @@
         },
         "chart": {
           "qzCalls": 1,
-          "domMutations": 40,
+          "domMutations": 55,
           "scheduler": {
             "flushes": 1,
             "mounts": 14,
@@ -2884,7 +2790,7 @@
       {
         "artifact": "V237.1",
         "startup": {
-          "dclMs": 3286.2999999998137,
+          "dclMs": 6308.600000000093,
           "storageWrites": {
             "tianjipan.people.master.v1": 2,
             "tianjipan.people.v3": 2,
@@ -2895,7 +2801,7 @@
             "tianjipan.relation.timeline.v212": 1,
             "tianjipan.relation.timeline.v213": 1
           },
-          "bodyMutations": 59,
+          "bodyMutations": 57,
           "intervals": [
             60000,
             1000,
@@ -2908,13 +2814,13 @@
         },
         "chart": {
           "qzCalls": 1,
-          "domMutations": 53
+          "domMutations": 33
         }
       },
       {
         "artifact": "V237.1",
         "startup": {
-          "dclMs": 3351.4000000003725,
+          "dclMs": 7279.199999999721,
           "storageWrites": {
             "tianjipan.people.master.v1": 2,
             "tianjipan.people.v3": 2,
@@ -2925,7 +2831,7 @@
             "tianjipan.relation.timeline.v212": 1,
             "tianjipan.relation.timeline.v213": 1
           },
-          "bodyMutations": 75,
+          "bodyMutations": 58,
           "intervals": [
             60000,
             1000,
@@ -2938,13 +2844,13 @@
         },
         "chart": {
           "qzCalls": 1,
-          "domMutations": 51
+          "domMutations": 34
         }
       },
       {
         "artifact": "V237.2",
         "startup": {
-          "dclMs": 3080,
+          "dclMs": 5906.899999999907,
           "storageWrites": {
             "tianjipan.people.master.v1": 2,
             "tianjipan.bell.v2": 1,
@@ -2954,7 +2860,7 @@
             "tianjipan.relation.timeline.v212": 1,
             "tianjipan.relation.timeline.v213": 1
           },
-          "bodyMutations": 33,
+          "bodyMutations": 32,
           "intervals": [
             60000,
             1000,
@@ -2966,7 +2872,7 @@
         },
         "chart": {
           "qzCalls": 1,
-          "domMutations": 42,
+          "domMutations": 32,
           "scheduler": {
             "flushes": 1,
             "mounts": 14,
@@ -2979,23 +2885,23 @@
     ],
     "comparison": {
       "V237.1": {
-        "dclMedianMs": 3351.4000000003725,
+        "dclMedianMs": 6358.59999999986,
         "startupRequests": 7,
-        "startupDOMMutations": 64,
+        "startupDOMMutations": 57,
         "qizhengPublicCalls": 1,
-        "qizhengDOMMutations": 51
+        "qizhengDOMMutations": 33
       },
       "V237.2": {
-        "dclMedianMs": 2978.399999999441,
+        "dclMedianMs": 5906.899999999907,
         "startupRequests": 0,
-        "startupDOMMutations": 33,
+        "startupDOMMutations": 29,
         "qizhengPublicCalls": 1,
-        "qizhengDOMMutations": 42
+        "qizhengDOMMutations": 32
       }
     },
     "bytes": {
       "before": 5990230,
-      "after": 5580371
+      "after": 5580491
     },
     "method": "同一 Chromium、全新 context、外网阻断、交替顺序，各 3 次；启动等待 1000 ms，点击七政页后等待 500 ms。DCL 不包含全部异步工作。"
   },

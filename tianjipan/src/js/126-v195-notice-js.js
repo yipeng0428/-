@@ -243,7 +243,7 @@
     const m = ensureModal(),
       body = m.querySelector("#tjnModalBody");
     currentId = null;
-    body.innerHTML = `<header class="tjn-head"><div class="tjn-head-main"><h2>消息与通知</h2><p>道长通知 · 更新公告 · 使用提醒</p></div><button class="tjn-close" id="tjnClose">关闭 ✕</button></header><div class="tjn-content"><div class="tjn-adminbar"><button id="tjnMarkAll">全部标为已读</button><span class="spacer"></span>${admin ? '<button class="primary" id="tjnAdminOpen">站长控制台</button>' : ""}</div>${listHTML()}</div>`;
+    body.innerHTML = `<header class="tjn-head"><div class="tjn-head-main"><h2>消息与通知</h2><p>道长通知 · 更新公告 · 使用提醒</p></div><button class="tjn-close" id="tjnClose" aria-label="关闭">关闭 ✕</button></header><div class="tjn-content"><div class="tjn-adminbar"><button id="tjnMarkAll">全部标为已读</button><span class="spacer"></span>${admin ? '<button class="primary" id="tjnAdminOpen">站长控制台</button>' : ""}</div>${listHTML()}</div>`;
     bindModal(body, false);
   }
   function renderDetail(n, auto = false) {
@@ -251,7 +251,7 @@
       body = m.querySelector("#tjnModalBody");
     currentId = n?.id || null;
     if (n) markRead(n.id);
-    body.innerHTML = `<header class="tjn-head"><div class="tjn-head-main"><h2>${auto ? "道长通知" : "消息详情"}</h2><p>${auto ? "天机盘开屏公告" : "站长发布的消息与通知"}</p></div><button class="tjn-close" id="tjnClose">关闭 ✕</button></header><div class="tjn-content">${featureHTML(n, auto)}${auto ? "" : '<div class="tjn-actions"><button id="tjnBack">← 返回消息列表</button></div>'}</div>`;
+    body.innerHTML = `<header class="tjn-head"><div class="tjn-head-main"><h2>${auto ? "道长通知" : "消息详情"}</h2><p>${auto ? "天机盘开屏公告" : "站长发布的消息与通知"}</p></div><button class="tjn-close" id="tjnClose" aria-label="关闭">关闭 ✕</button></header><div class="tjn-content">${featureHTML(n, auto)}${auto ? "" : '<div class="tjn-actions"><button id="tjnBack">← 返回消息列表</button></div>'}</div>`;
     bindModal(body, auto);
     body.querySelector("#tjnBack")?.addEventListener("click", renderCenter);
   }
@@ -350,7 +350,7 @@
     const m = ensureModal(),
       body = m.querySelector("#tjnModalBody"),
       n = adminItem();
-    body.innerHTML = `<header class="tjn-head"><div class="tjn-head-main"><h2>站长控制台</h2><p>发布道长通知 · 跑马灯 · 开屏公告</p></div><button class="tjn-close" id="tjnClose">关闭 ✕</button></header><div class="tjn-content"><div class="tjn-adminbar"><button id="tjnAdminBack">← 消息中心</button><button id="tjnAdminRefresh">刷新</button><span class="spacer"></span><button class="primary" id="tjnAdminNew">＋ 新建通知</button></div><div class="tjn-global-switches"><strong>全站通知频道</strong><label><input id="tjnGlobalTicker" type="checkbox"${noticeSettings.ticker_enabled ? " checked" : ""}> 信息跑马灯</label><label><input id="tjnGlobalPopup" type="checkbox"${noticeSettings.popup_enabled ? " checked" : ""}> 开屏通知弹页</label><button id="tjnGlobalSave">保存频道开关</button><span class="state">关闭频道不会删除历史通知。</span></div><div class="tjn-adminshell"><aside class="tjn-admin-list" id="tjnAdminList">${adminListHTML()}</aside><section class="tjn-editor"><div class="tjn-form">
+    body.innerHTML = `<header class="tjn-head"><div class="tjn-head-main"><h2>站长控制台</h2><p>发布道长通知 · 跑马灯 · 开屏公告</p></div><button class="tjn-close" id="tjnClose" aria-label="关闭">关闭 ✕</button></header><div class="tjn-content"><div class="tjn-adminbar"><button id="tjnAdminBack">← 消息中心</button><button id="tjnAdminRefresh">刷新</button><span class="spacer"></span><button class="primary" id="tjnAdminNew">＋ 新建通知</button></div><div class="tjn-global-switches"><strong>全站通知频道</strong><label><input id="tjnGlobalTicker" type="checkbox"${noticeSettings.ticker_enabled ? " checked" : ""}> 信息跑马灯</label><label><input id="tjnGlobalPopup" type="checkbox"${noticeSettings.popup_enabled ? " checked" : ""}> 开屏通知弹页</label><button id="tjnGlobalSave">保存频道开关</button><span class="state">关闭频道不会删除历史通知。</span></div><div class="tjn-adminshell"><aside class="tjn-admin-list" id="tjnAdminList">${adminListHTML()}</aside><section class="tjn-editor"><div class="tjn-form">
     <label class="wide">标题 *<input id="tjnAdminTitle" maxlength="100" value="${E(n.title)}" placeholder="例如：V195 更新通知"></label>
     <label>发布时间<input id="tjnAdminDate" type="date" value="${E((n.published_at || "").slice(0, 10))}"></label>
     <label>优先级<select id="tjnAdminPriority"><option value="0"${+n.priority === 0 ? " selected" : ""}>普通</option><option value="10"${+n.priority === 10 ? " selected" : ""}>重要</option><option value="20"${+n.priority === 20 ? " selected" : ""}>置顶</option></select></label>
